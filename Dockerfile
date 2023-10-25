@@ -1,45 +1,59 @@
-# syntax = docker/dockerfile:1
+# base node image
+FROM node:18-bullseye-slim as base
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.18.2
-FROM node:${NODE_VERSION}-slim as base
+# install openssl and sqlite3 for prisma
+RUN apt-get update && apt-get install -y openssl sqlite3
 
-LABEL fly_launch_runtime="Remix"
+# install all node_modules, including dev
+FROM base as deps
 
-# Remix app lives here
-WORKDIR /app
+RUN mkdir /app/
+WORKDIR /app/
 
-# Set production environment
-ENV NODE_ENV="production"
+ADD package.json package-lock.json ./
+RUN npm install
 
+# setup production node_modules
+FROM base as production-deps
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+RUN mkdir /app/
+WORKDIR /app/
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install -y build-essential pkg-config python-is-python3
-
-# Install node modules
-COPY --link package-lock.json package.json ./
-RUN npm ci --include=dev
-
-# Copy application code
-COPY --link . .
-
-# Build application
-RUN npm run build
-
-# Remove development dependencies
+COPY --from=deps /app/node_modules /app/node_modules
+ADD package.json package-lock.json ./
 RUN npm prune --omit=dev
 
+# build app
+FROM base as build
 
-# Final stage for app image
+RUN mkdir /app/
+WORKDIR /app/
+
+COPY --from=deps /app/node_modules /app/node_modules
+
+# schema doesn't change much so these will stay cached
+ADD prisma /app/prisma
+
+RUN npx prisma generate
+
+# app code changes all the time
+ADD . .
+RUN npm run build
+
+# build smaller image for running
 FROM base
 
-# Copy built application
-COPY --from=build /app /app
+ENV DATABASE_URL="file:/app/data/sqlite.db"
+ENV PORT="8080"
+ENV NODE_ENV="production"
 
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+RUN mkdir /app/
+WORKDIR /app/
+
+COPY --from=production-deps /app/node_modules /app/node_modules
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
+COPY --from=build /app/build /app/build
+
+ADD . .
+
+CMD ["npm", "start"]

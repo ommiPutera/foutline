@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  username     String    @unique
+  role         Role      @default(BASIC)
+  email        String    @unique
+  fullName     String
+  passwordHash String
+  projects     Project[]
+  posts        Post[]
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  title       String
+  content     Json?
+  authorId    String
+  userId      String?
+  createdAt   DateTime   @default(now())
+  isFavorite  Boolean    @default(false)
+  isLocked    Boolean    @default(false)
+  isPublished Boolean    @default(false)
+  type        PostType   @default(BASIC_NOTES)
+  status      PostStatus @default(NOT_STARTED)
+  updatedAt   DateTime   @default(now())
+  User        User?      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String
+  type        String
+  heroId      String
+  userId      String
+  liveLink    String
+  content     String?
+  owner       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+enum Role {
+  OWNER
+  CLIENT
+  BASIC
+}
+
+enum PostType {
+  MONTHLY_PLANNING
+  BASIC_NOTES
+  DEBT
+  INVESTMENT
+  SAVING
+  GOLD
+  STOCK
+}
+
+enum PostStatus {
+  COMPLETED
+  UNDERWAY
+  NOT_STARTED
+}

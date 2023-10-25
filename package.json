@@ -1,6 +1,9 @@
 {
   "name": "omition",
-  "private": true,
+  "version": "1.0.0",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Ommi Putera (https://ommiputera.com/)",
   "sideEffects": false,
   "type": "module",
   "scripts": {
@@ -10,13 +13,15 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@prisma/client": "^4.9.0",
     "@remix-run/css-bundle": "^2.1.0",
     "@remix-run/node": "^2.1.0",
     "@remix-run/react": "^2.1.0",
     "@remix-run/serve": "^2.1.0",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tsx": "^3.12.2"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.10",
@@ -25,6 +30,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
+    "prisma": "^4.9.0",
     "typescript": "^5.1.6"
   },
   "engines": {

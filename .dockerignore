@@ -1,6 +1,9 @@
 node_modules
-
-/.cache
-/build
-/public/build
 .env
+/build
+/.vscode
+prisma/sqlite.db
+prisma/sqlite.db-journal
+Dockerfile
+.dockerignore
+.git
