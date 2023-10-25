@@ -8,10 +8,9 @@
   "type": "module",
   "scripts": {
     "build": "remix build",
-    "dev": "conc \"npm:remix-dev\" \"npm:pscale-dev-server\"",
+    "dev": "remix dev --manual",
     "pscale-dev-server": "pscale connect ommiputera development --port 3306",
     "pscale-prod-server": "pscale connect ommiputera main --port 3306",
-    "remix-dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
   },
@@ -30,6 +29,7 @@
     "@remix-run/node": "^2.1.0",
     "@remix-run/react": "^2.1.0",
     "@remix-run/serve": "^2.1.0",
+    "chalk": "^5.3.0",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -41,7 +41,6 @@
     "@remix-run/eslint-config": "^2.1.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "concurrently": "^8.2.0",
     "eslint": "^8.38.0",
     "prisma": "^4.9.0",
     "remix-flat-routes": "^0.5.8",
@@ -50,5 +49,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "prisma": {
+    "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
   }
 }
