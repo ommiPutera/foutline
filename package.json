@@ -8,10 +8,22 @@
   "type": "module",
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev --manual",
+    "dev": "conc \"npm:remix-dev\" \"npm:pscale-dev-server\"",
+    "pscale-dev-server": "pscale connect ommiputera development --port 3306",
+    "pscale-prod-server": "pscale connect ommiputera main --port 3306",
+    "remix-dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
   },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "server-build",
+    "build",
+    "public/build",
+    "*.ignored/",
+    "*.ignored.*"
+  ],
   "dependencies": {
     "@prisma/client": "^4.9.0",
     "@remix-run/css-bundle": "^2.1.0",
@@ -29,8 +41,11 @@
     "@remix-run/eslint-config": "^2.1.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "concurrently": "^8.2.0",
     "eslint": "^8.38.0",
     "prisma": "^4.9.0",
+    "remix-flat-routes": "^0.5.8",
+    "tailwindcss": "^3.3.4",
     "typescript": "^5.1.6"
   },
   "engines": {

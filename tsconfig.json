@@ -1,13 +1,16 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["jest"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
+    "module": "nodenext",
     "target": "ES2022",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": true,
     "strict": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
@@ -15,6 +18,9 @@
     "paths": {
       "~/*": ["./app/*"]
     },
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "typeRoots": ["./types", "./node_modules/@types"],
 
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
