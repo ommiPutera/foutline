@@ -32,8 +32,8 @@ model Post {
   isLocked    Boolean    @default(false)
   isPublished Boolean    @default(false)
   type        PostType   @default(BASIC_NOTES)
-  status      PostStatus @default(NOT_STARTED)
   updatedAt   DateTime   @default(now())
+  status      PostStatus @default(NOT_STARTED)
   User        User?      @relation(fields: [userId], references: [id])
 
   @@index([userId])

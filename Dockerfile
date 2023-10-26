@@ -4,6 +4,8 @@
 ARG NODE_VERSION=18.18.2
 FROM node:${NODE_VERSION}-slim as base
 
+RUN apt-get update && apt-get install -y openssl
+
 LABEL fly_launch_runtime="Remix"
 
 # Remix app lives here
@@ -12,6 +14,9 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+# schema doesn't change much so these will stay cached
+ADD prisma /app/prisma
+RUN npx prisma generate
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -33,7 +38,6 @@ RUN npm run build
 # Remove development dependencies
 RUN npm prune --omit=dev
 
-
 # Final stage for app image
 FROM base
 
@@ -42,4 +46,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "start" ]
