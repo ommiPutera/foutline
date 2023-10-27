@@ -9,7 +9,7 @@ export type LoaderData = {
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: "New Remix App - Staging" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
