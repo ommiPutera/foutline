@@ -1,33 +1,35 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.18.2
-FROM node:${NODE_VERSION}-slim as base
+FROM node:18-bullseye-slim as base
 
-RUN apt-get update && apt-get install -y openssl
+LABEL fly_launch_runtime="Remix/Prisma"
 
-LABEL fly_launch_runtime="Remix"
+# Added `ca-certificates` to container
+RUN apt-get update && apt-get install -y ca-certificates
 
-# Remix app lives here
+# Remix/Prisma app lives here
 WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-
-# schema doesn't change much so these will stay cached
-ADD prisma /app/prisma
-RUN npx prisma generate
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install -y build-essential pkg-config python-is-python3
+    apt-get install -y build-essential openssl pkg-config python-is-python3
 
 # Install node modules
 COPY --link package-lock.json package.json ./
 RUN npm ci --include=dev
+
+# Generate Prisma Client
+COPY --link prisma .
+
+ADD prisma /app/prisma
+RUN npx prisma generate
 
 # Copy application code
 COPY --link . .
@@ -40,6 +42,11 @@ RUN npm prune --omit=dev
 
 # Final stage for app image
 FROM base
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y openssl && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built application
 COPY --from=build /app /app

@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for omition on 2023-10-26T23:49:03+07:00
+# fly.toml app configuration file generated for omition on 2023-10-27T10:42:52+07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -8,6 +8,13 @@ primary_region = "sin"
 
 [build]
 
+[mounts]
+  source = "data"
+  destination = "/data"
+
+[experimental]
+  auto_rollback = true
+
 [http_service]
   internal_port = 3000
   force_https = true
@@ -15,3 +22,31 @@ primary_region = "sin"
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+
+[[services.tcp_checks]]
+  grace_period = "1s"
+  interval = "15s"
+  restart_limit = 0
+  timeout = "2s"
+
+[[services.http_checks]]
+  interval = 10000
+  grace_period = "5s"
+  method = "get"
+  path = "/"
+  protocol = "http"
+  restart_limit = 0
+  timeout = 2000
+  tls_skip_verify = false
+  [services.http_checks.headers]
+
+[[services.http_checks]]
+  interval = 10000
+  grace_period = "1s"
+  method = "get"
+  path = "/healthcheck"
+  protocol = "http"
+  restart_limit = 0
+  timeout = 500
+  tls_skip_verify = false
+  [services.http_checks.headers]
