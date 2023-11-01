@@ -1,6 +1,6 @@
 import type { Post } from "@prisma/client";
 import type { DataFunctionArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+// import { useLoaderData } from "@remix-run/react";
 import { prisma } from "~/utils/prisma.server.ts";
 
 export type LoaderData = {
@@ -24,13 +24,13 @@ export const loader = async ({ params }: DataFunctionArgs) => {
 }
 
 export default function Index() {
-  const { posts } = useLoaderData<LoaderData>()
+  // const { posts } = useLoaderData<LoaderData>()
   return (
-    <div className="">
-      <h1>Welcome to Remix</h1>
-      {posts.map(post => (
+    <div>
+      <h1>Welcome to Omition</h1>
+      {/* {posts.map(post => (
         <p key={post.id}>{post.title}</p>
-      ))}
+      ))} */}
     </div>
   );
 }
