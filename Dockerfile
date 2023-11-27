@@ -14,6 +14,8 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 ENV PORT="3000"
+ENV DATABASE_URL=${DATABASE_URL}
+ENV SESSION_SECRET=${SESSION_SECRET}
 
 # Throw-away build stage to reduce size of final image
 FROM base as build

@@ -21,14 +21,19 @@
     "build",
     "public/build",
     "*.ignored/",
-    "*.ignored.*"
+    "*.ignored.*",
+    "/content/blog/fix-the-not-wrapped-in-act-warning/components.jsx",
+    "/test-results/",
+    "/playwright-report/",
+    "/playwright/.cache/"
   ],
   "dependencies": {
+    "@kinde-oss/kinde-typescript-sdk": "^2.3.1",
     "@prisma/client": "^5.5.2",
-    "@remix-run/css-bundle": "^2.1.0",
-    "@remix-run/node": "^2.1.0",
-    "@remix-run/react": "^2.1.0",
-    "@remix-run/serve": "^2.1.0",
+    "@remix-run/css-bundle": "^2.3.0",
+    "@remix-run/node": "^2.3.0",
+    "@remix-run/react": "^2.3.0",
+    "@remix-run/serve": "^2.3.0",
     "chalk": "^5.3.0",
     "isbot": "^3.6.8",
     "prisma": "^5.5.2",
@@ -39,16 +44,17 @@
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.10",
-    "@remix-run/dev": "^2.1.0",
-    "@remix-run/eslint-config": "^2.1.0",
+    "@remix-run/dev": "^2.3.0",
+    "@remix-run/eslint-config": "^2.3.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
-    "remix-flat-routes": "^0.5.8",
+    "remix-flat-routes": "^0.5.10",
     "typescript": "^5.1.6"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18",
+    "npm": ">=8"
   },
   "prisma": {
     "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"

@@ -26,8 +26,10 @@ export const loader = async ({ params }: DataFunctionArgs) => {
 export default function Index() {
   // const { posts } = useLoaderData<LoaderData>()
   return (
-    <div>
+    <div className="bg-red-100">
       <h1>Welcome to Omition</h1>
+      <p>you not log in</p>
+      <a href="/login">Sign in</a>
       {/* {posts.map(post => (
         <p key={post.id}>{post.title}</p>
       ))} */}
