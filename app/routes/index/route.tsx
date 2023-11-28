@@ -19,7 +19,6 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager } = await getSessionManager(request)
   const isAuthenticated = await kindeClient.isAuthenticated(sessionManager);
-  // console.log('session:::::: ', session.get(''))
   if (!isAuthenticated) return { isAuthenticated }
 
   const profile = await kindeClient.getUserProfile(sessionManager);

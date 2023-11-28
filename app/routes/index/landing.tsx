@@ -8,7 +8,6 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Landing() {
-  // const { posts } = useLoaderData<LoaderData>()
   return (
     <div className="bg-red-100">
       <h1>Landing Page</h1>
@@ -16,7 +15,6 @@ export default function Landing() {
       <p>you not log in</p>
       <a href="/login">Sign in</a>
       <a href="/register">Sign up</a>
-      <a href="/logout">Logout</a>
     </div>
   );
 }
