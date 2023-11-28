@@ -11,7 +11,12 @@ export default function Landing() {
   // const { posts } = useLoaderData<LoaderData>()
   return (
     <div className="bg-red-100">
-      <h1>Landing</h1>
+      <h1>Landing Page</h1>
+      <h1>Welcome to Omition</h1>
+      <p>you not log in</p>
+      <a href="/login">Sign in</a>
+      <a href="/register">Sign up</a>
+      <a href="/logout">Logout</a>
     </div>
   );
 }

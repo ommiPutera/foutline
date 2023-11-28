@@ -28,6 +28,7 @@
     "/playwright/.cache/"
   ],
   "dependencies": {
+    "@epic-web/remember": "^1.0.2",
     "@kinde-oss/kinde-typescript-sdk": "^2.3.1",
     "@prisma/client": "^5.5.2",
     "@remix-run/css-bundle": "^2.3.0",

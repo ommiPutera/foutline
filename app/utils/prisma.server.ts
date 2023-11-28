@@ -1,10 +1,10 @@
 import {PrismaClient} from '@prisma/client'
-import { singleton } from './singleton.server.ts'
+import {remember} from '@epic-web/remember'
 import chalk from 'chalk'
 
 const logThreshold = 500
-
-const prisma = singleton('prisma', getClient)
+const sessionExpirationTime = 1000 * 60 * 60 * 24 * 365
+const prisma = remember('prisma', getClient)
 
 function getClient(): PrismaClient {
   // NOTE: during development if you change anything in this function, remember
@@ -38,4 +38,7 @@ function getClient(): PrismaClient {
   return client
 }
 
-export {prisma}
+export {
+  prisma,
+  sessionExpirationTime
+}

@@ -4,10 +4,10 @@ import { getSessionManager, kindeClient, sessionStorage } from "~/utils/kinde.se
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager, session } = await getSessionManager(request)
-  const loginUrl = await kindeClient.login(sessionManager);
-  return redirect(loginUrl.toString(), {
+  const logout = await kindeClient.logout(sessionManager);
+  return redirect(logout.toString(), {
     headers: {
-      'Set-Cookie': await sessionStorage.commitSession(session),
+      'Set-Cookie': await sessionStorage.destroySession(session),
     },
   })
 }
