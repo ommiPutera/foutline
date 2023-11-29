@@ -1,12 +1,3 @@
-import type { MetaFunction } from "@remix-run/node";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Landing" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
 export default function Landing() {
   return (
     <div className="bg-red-100">

@@ -1,5 +1,5 @@
 import type { UserType } from "@kinde-oss/kinde-typescript-sdk";
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import Landing from "./landing.tsx";
 import { getSessionManager, kindeClient } from "~/utils/kinde.server.ts";
@@ -8,13 +8,6 @@ export type LoaderData = {
   isAuthenticated: boolean
   profile?: UserType
 }
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager } = await getSessionManager(request)
