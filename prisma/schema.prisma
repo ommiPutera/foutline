@@ -42,7 +42,7 @@ model Post {
 model Session {
   id             String   @id @default(uuid())
   createdAt      DateTime @default(now())
-  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   expirationDate DateTime
 

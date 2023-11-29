@@ -11,6 +11,7 @@ const kindeClient = createKindeServerClient(GrantType.AUTHORIZATION_CODE, {
   logoutRedirectURL: process.env.KINDE_LOGOUT_REDIRECT_URL ?? '',
 });
 
+const sessionIdKey = '__session_id__'
 let sessionSecret = process.env.SESSION_SECRET
 if (!sessionSecret) {
   throw new Error('Must enviornment variable SESSION_SECRET')
@@ -30,7 +31,6 @@ const sessionStorage = createCookieSessionStorage({
 
 async function getSessionManager(request: Request) {
   const session = await sessionStorage.getSession(request.headers.get('Cookie'));
-  
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
       return session.get(key);
@@ -50,5 +50,8 @@ async function getSessionManager(request: Request) {
 }
 
 export {
-  getSessionManager, kindeClient, sessionStorage
+  getSessionManager,
+  kindeClient,
+  sessionIdKey,
+  sessionStorage
 };

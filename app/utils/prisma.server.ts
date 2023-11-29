@@ -1,3 +1,4 @@
+import type { Session} from '@prisma/client';
 import {PrismaClient} from '@prisma/client'
 import {remember} from '@epic-web/remember'
 import chalk from 'chalk'
@@ -38,7 +39,19 @@ function getClient(): PrismaClient {
   return client
 }
 
+async function createSession(
+  sessionData: Omit<Session, 'id' | 'expirationDate' | 'createdAt'>,
+) {
+  return prisma.session.create({
+    data: {
+      ...sessionData,
+      expirationDate: new Date(Date.now() + sessionExpirationTime),
+    },
+  })
+}
+
 export {
   prisma,
-  sessionExpirationTime
+  sessionExpirationTime,
+  createSession
 }
