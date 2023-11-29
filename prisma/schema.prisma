@@ -17,7 +17,7 @@ model User {
   email        String    @unique
   fullName     String
   passwordHash String
-  projects     Project[]
+  sessions     Session[]
   posts        Post[]
 }
 
@@ -34,23 +34,17 @@ model Post {
   type        PostType   @default(BASIC_NOTES)
   updatedAt   DateTime   @default(now())
   status      PostStatus @default(NOT_STARTED)
-  User        User?      @relation(fields: [userId], references: [id])
+  user        User?      @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
 
-model Project {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String
-  description String
-  type        String
-  heroId      String
-  userId      String
-  liveLink    String
-  content     String?
-  owner       User     @relation(fields: [userId], references: [id])
+model Session {
+  id             String   @id @default(uuid())
+  createdAt      DateTime @default(now())
+  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  expirationDate DateTime
 
   @@index([userId])
 }
