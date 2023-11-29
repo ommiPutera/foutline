@@ -1,5 +1,5 @@
-import { GrantType, createKindeServerClient } from "@kinde-oss/kinde-typescript-sdk";
 import type { SessionManager } from "@kinde-oss/kinde-typescript-sdk";
+import { GrantType, createKindeServerClient } from "@kinde-oss/kinde-typescript-sdk";
 import { createCookieSessionStorage } from "@remix-run/node";
 import { sessionExpirationTime } from "./prisma.server.ts";
 
@@ -50,7 +50,5 @@ async function getSessionManager(request: Request) {
 }
 
 export {
-  getSessionManager,
-  sessionStorage,
-  kindeClient
-}
+  getSessionManager, kindeClient, sessionStorage
+};
