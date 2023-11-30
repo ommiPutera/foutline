@@ -1,7 +1,7 @@
 import type { SessionManager } from "@kinde-oss/kinde-typescript-sdk";
 import { GrantType, createKindeServerClient } from "@kinde-oss/kinde-typescript-sdk";
 import { createCookieSessionStorage } from "@remix-run/node";
-import { createSession, prisma, sessionExpirationTime } from "./prisma.server.ts";
+import { createSession, getUserFormSessionId, prisma, sessionExpirationTime } from "./prisma.server.ts";
 import type { User } from "@prisma/client";
 import bcrypt from 'bcryptjs'
 
@@ -55,6 +55,11 @@ async function getSessionManager(request: Request) {
   return {
     sessionManager,
     session,
+    getUser: async () => {
+      const token = getSessionId()
+      if (!token) return null
+      return getUserFormSessionId(token)
+    },
     signUp: async ({ fullName, username, kindeId, email }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
       const existingUser = await prisma.user.findFirst({where: {email}})
       if (existingUser?.id && kindeId) {

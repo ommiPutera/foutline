@@ -1,4 +1,5 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import { cssBundleHref } from "@remix-run/css-bundle";
+import { json, type DataFunctionArgs, type LinksFunction, type MetaFunction, type SerializeFrom } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -8,7 +9,21 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import tailwindStyles from './styles/tailwind.css';
-import { cssBundleHref } from "@remix-run/css-bundle";
+import Navbar from "./components/navbar.tsx";
+import { getSessionManager } from "./utils/kinde.server.ts";
+
+export type LoaderData = SerializeFrom<typeof loader>
+export const handle: { id: string } = {
+  id: 'root',
+}
+
+export async function loader({ request }: DataFunctionArgs) {
+  const { getUser } = await getSessionManager(request)
+  const user = await getUser()
+  const data = { user }
+  const headers: HeadersInit = new Headers()
+  return json(data, { headers })
+}
 
 export const meta: MetaFunction = () => {
   return [
@@ -82,6 +97,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <Navbar />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

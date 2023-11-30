@@ -50,8 +50,19 @@ async function createSession(
   })
 }
 
+async function getUserFormSessionId(sessionId: string) {
+  const session = await prisma.session.findUnique({
+    where: { id: sessionId },
+    include: {user: true}
+  })
+  
+  if (!session) throw new Error('No user found')
+  return session.user
+}
+
 export {
   prisma,
   sessionExpirationTime,
+  getUserFormSessionId,
   createSession
 }
