@@ -10,6 +10,7 @@ datasource db {
 
 model User {
   id           String    @id @default(uuid())
+  kindeId      String?   @unique
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   username     String    @unique
@@ -42,7 +43,7 @@ model Post {
 model Session {
   id             String   @id @default(uuid())
   createdAt      DateTime @default(now())
-  User           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   expirationDate DateTime
 

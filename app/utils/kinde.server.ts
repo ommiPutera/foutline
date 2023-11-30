@@ -55,12 +55,13 @@ async function getSessionManager(request: Request) {
   return {
     sessionManager,
     session,
-    signUp: async ({ fullName, username, id, email  }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role">) => {
-      if(!process.env.PASSWORD) throw(new Error('need a password'))
+    signUp: async ({ fullName, username, kindeId, email  }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
+      console.log('SIGN_UP_FORM: =================', { fullName, username, kindeId, email  })
+      if (!process.env.PASSWORD) throw (new Error('need a password'))
       const passwordHash = await bcrypt.hash(process.env.PASSWORD, 10)
-      await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
-          id,
+          kindeId: kindeId,
           fullName,
           username,
           passwordHash,
@@ -68,7 +69,8 @@ async function getSessionManager(request: Request) {
           role: 'BASIC'
         },
       })
-      const userSession = await createSession({ userId: id })
+      console.log('SIGN_UP: =================', user)
+      const userSession = await createSession({ userId: user.id })
       session.set(sessionIdKey, userSession.id)
     },
     signIn: async ({ id }: Pick<User,"id">) => {
@@ -89,9 +91,9 @@ async function getSessionManager(request: Request) {
   }
 }
 
-async function findUser(userId: string) {
-  if (!userId) return null
-  return prisma.user.findUnique({where: {id: userId}})
+async function findUser(kindeId: string) {
+  if (!kindeId) return null
+  return prisma.user.findUnique({where: {kindeId: kindeId}})
 }
 
 export {
