@@ -22,9 +22,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       throw new Error('Something went wrong')
     }
 
-    const user = await findUser(kindeUser.id)
+    const user = await findUser(kindeUser.email)
     if (kindeUser.id !== user?.kindeId) {
-      console.log('ID____', kindeUser.id)
       await signUp({
         fullName: kindeUser.given_name + " " + kindeUser.family_name,
         email: kindeUser.email,

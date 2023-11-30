@@ -57,33 +57,26 @@ async function getSessionManager(request: Request) {
     session,
     signUp: async ({ fullName, username, kindeId, email }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
       const existingUser = await prisma.user.findFirst({where: {email}})
-      if (existingUser?.id) {
-        const user = await prisma.user.update({
-          where: {email},
-          data: {
-            kindeId: kindeId,
-          }
-        })
+      if (existingUser?.id && kindeId) {
+        let user = await updateExistingUser(email, kindeId)
+        if(!user) return null
         const userSession = await createSession({ userId: user.id })
         session.set(sessionIdKey, userSession.id)
       } else {
         if (!process.env.PASSWORD) throw (new Error('need a password'))
-        const passwordHash = await bcrypt.hash(process.env.PASSWORD, 10)
-        await prisma.user.create
-        const user = await prisma.user.create({
-          data: {username, passwordHash, email, fullName: ''},
-          // data: {
-          //   kindeId: kindeId,
-          //   fullName,
-          //   username,
-          //   passwordHash,
-          //   email
-          // },
+        const passwordHash = await bcrypt.hash(kindeId + process.env.PASSWORD, 10)
+        let user = await prisma.user.create({
+          data: {
+            kindeId: kindeId,
+            fullName,
+            username,
+            passwordHash,
+            email
+          },
         })
         const userSession = await createSession({ userId: user.id })
         session.set(sessionIdKey, userSession.id)
       }
-      
     },
     signIn: async ({ id }: Pick<User,"id">) => {
       const userSession = await createSession({ userId: id })
@@ -103,9 +96,18 @@ async function getSessionManager(request: Request) {
   }
 }
 
-async function findUser(kindeId: string) {
-  if (!kindeId) return null
-  return prisma.user.findUnique({where: {kindeId: kindeId}})
+async function findUser(email: string) {
+  if (!email) return null
+  return prisma.user.findUnique({where: {email: email}})
+}
+
+async function updateExistingUser(email: string, kindeId: string) {
+  if (!email || !kindeId) return null
+  const user = await prisma.user.update({
+    where: { email },
+    data: { kindeId: kindeId }
+  })
+  return user
 }
 
 export {

@@ -12,18 +12,18 @@ model User {
   id           String    @id @default(uuid())
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  username     String    @unique
+  username     String
   role         Role      @default(BASIC)
   email        String    @unique
   fullName     String
   passwordHash String
-  kindeId      String?   @unique
+  kindeId      String?
   sessions     Session[]
   posts        Post[]
 }
 
 model Post {
-  id          String     @id @default(cuid())
+  id          String     @id @default(uuid())
   title       String
   content     Json?
   authorId    String
