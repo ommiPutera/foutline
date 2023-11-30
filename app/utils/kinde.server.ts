@@ -1,7 +1,9 @@
 import type { SessionManager } from "@kinde-oss/kinde-typescript-sdk";
 import { GrantType, createKindeServerClient } from "@kinde-oss/kinde-typescript-sdk";
 import { createCookieSessionStorage } from "@remix-run/node";
-import { sessionExpirationTime } from "./prisma.server.ts";
+import { createSession, prisma, sessionExpirationTime } from "./prisma.server.ts";
+import type { User } from "@prisma/client";
+import bcrypt from 'bcryptjs'
 
 const kindeClient = createKindeServerClient(GrantType.AUTHORIZATION_CODE, {
   authDomain: process.env.KINDE_DOMAIN ?? '',
@@ -31,6 +33,9 @@ const sessionStorage = createCookieSessionStorage({
 
 async function getSessionManager(request: Request) {
   const session = await sessionStorage.getSession(request.headers.get('Cookie'));
+  const getSessionId = () => session.get(sessionIdKey) as string | undefined
+  const unsetSessionId = () => session.unset(sessionIdKey)
+
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
       return session.get(key);
@@ -46,12 +51,53 @@ async function getSessionManager(request: Request) {
       sessionStorage.destroySession(session)
     }
   };
-  return {sessionManager, session}
+
+  return {
+    sessionManager,
+    session,
+    signUp: async ({ fullName, username, id, email  }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role">) => {
+      if(!process.env.PASSWORD) throw(new Error('need a password'))
+      const passwordHash = await bcrypt.hash(process.env.PASSWORD, 10)
+      await prisma.user.create({
+        data: {
+          id,
+          fullName,
+          username,
+          passwordHash,
+          email,
+          role: 'BASIC'
+        },
+      })
+      const userSession = await createSession({ userId: id })
+      session.set(sessionIdKey, userSession.id)
+    },
+    signIn: async ({ id }: Pick<User,"id">) => {
+      const userSession = await createSession({ userId: id })
+      session.set(sessionIdKey, userSession.id)
+    },
+    signOut: async () => {
+      const sessionId = getSessionId()
+      if (sessionId) {
+        unsetSessionId()
+        prisma.session
+          .delete({where: {id: sessionId}})
+          .catch((error: unknown) => {
+            console.error(`Failure deleting user session: `, error)
+          })
+      }
+    }
+  }
+}
+
+async function findUser(userId: string) {
+  if (!userId) return null
+  return prisma.user.findUnique({where: {id: userId}})
 }
 
 export {
   getSessionManager,
   kindeClient,
   sessionIdKey,
-  sessionStorage
+  sessionStorage,
+  findUser
 };

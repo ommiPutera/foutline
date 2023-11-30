@@ -1,8 +1,9 @@
 import type { UserType } from "@kinde-oss/kinde-typescript-sdk";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import Landing from "./landing.tsx";
 import { getSessionManager, kindeClient } from "~/utils/kinde.server.ts";
+import { useLiveLoader } from "~/components/hooks/use-live-loader.ts";
 
 export type LoaderData = {
   isAuthenticated: boolean
@@ -22,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export default function Index() {
-  const { isAuthenticated, profile } = useLoaderData<LoaderData>()
+  const { isAuthenticated, profile } = useLiveLoader<LoaderData>();
 
   if (!isAuthenticated) return <Landing />
   return (
