@@ -55,23 +55,35 @@ async function getSessionManager(request: Request) {
   return {
     sessionManager,
     session,
-    signUp: async ({ fullName, username, kindeId, email  }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
-      console.log('SIGN_UP_FORM: =================', { fullName, username, kindeId, email  })
-      if (!process.env.PASSWORD) throw (new Error('need a password'))
-      const passwordHash = await bcrypt.hash(process.env.PASSWORD, 10)
-      const user = await prisma.user.create({
-        data: {
-          kindeId: kindeId,
-          fullName,
-          username,
-          passwordHash,
-          email,
-          role: 'BASIC'
-        },
-      })
-      console.log('SIGN_UP: =================', user)
-      const userSession = await createSession({ userId: user.id })
-      session.set(sessionIdKey, userSession.id)
+    signUp: async ({ fullName, username, kindeId, email }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
+      const existingUser = await prisma.user.findFirst({where: {email}})
+      if (existingUser?.id) {
+        const user = await prisma.user.update({
+          where: {email},
+          data: {
+            kindeId: kindeId,
+          }
+        })
+        const userSession = await createSession({ userId: user.id })
+        session.set(sessionIdKey, userSession.id)
+      } else {
+        if (!process.env.PASSWORD) throw (new Error('need a password'))
+        const passwordHash = await bcrypt.hash(process.env.PASSWORD, 10)
+        await prisma.user.create
+        const user = await prisma.user.create({
+          data: {username, passwordHash, email, fullName: ''},
+          // data: {
+          //   kindeId: kindeId,
+          //   fullName,
+          //   username,
+          //   passwordHash,
+          //   email
+          // },
+        })
+        const userSession = await createSession({ userId: user.id })
+        session.set(sessionIdKey, userSession.id)
+      }
+      
     },
     signIn: async ({ id }: Pick<User,"id">) => {
       const userSession = await createSession({ userId: id })
