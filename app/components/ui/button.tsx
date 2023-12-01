@@ -1,31 +1,36 @@
-import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
+import * as React from "react"
 import { cn } from "~/lib/utils.ts"
 import { AnchorOrLink } from "~/utils/misc.tsx"
 
+const variants = {
+  default:
+    "bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:bg-primary/90",
+  destructive:
+    "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+  outline:
+    "border border-input hover:bg-accent hover:text-accent-foreground",
+  secondary:
+    "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+  ghost:
+    "hover:bg-accent focus-visible:bg-accent",
+  link:
+    "text-primary underline-offset-4 hover:underline",
+}
+
+const sizes = {
+  default: "h-[36px] px-[18px] rounded-[6px] text-sm",
+  sm: "h-[30px] px-[14px] rounded-[6px] text-xs",
+  icon: "h-10 w-10",
+}
+
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
+      variant: { ...variants },
+      size: { ...sizes },
     },
     defaultVariants: {
       variant: "default",
@@ -40,29 +45,38 @@ export interface ButtonProps
   asChild?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Button.displayName = "Button"
+const Button = React.forwardRef<
+  HTMLButtonElement,
+  ButtonProps
+>(function Button({ className, variant, size, asChild = false, ...props }, ref) {
+  const Comp = asChild ? Slot : "button"
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  )
+})
 
 /**
  * A button that looks like a link
  */
-const ButtonLink = ({ ...props }: JSX.IntrinsicElements['button']) => {
+const ButtonLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentPropsWithRef<typeof AnchorOrLink> & ButtonProps
+>(function ButtonLink({ children, ...props }, ref) {
+  const { variant, size } = props
   return (
-    <AnchorOrLink>
-      test
-    </AnchorOrLink>
+    <Button
+      asChild
+      variant={variant}
+      size={size}
+    >
+      <AnchorOrLink ref={ref} {...props}>{children}</AnchorOrLink>
+    </Button>
   )
-}
+})
 
-export { Button, buttonVariants, ButtonLink }
+export { Button, ButtonLink, buttonVariants }
+

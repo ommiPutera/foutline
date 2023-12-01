@@ -22,6 +22,9 @@ module.exports = {
         '10vw': '10vw',
         '15vw': '15vw',
       },
+      boxShadow: {
+        'navbar': '2px 2px 10px 0px rgba(0, 0, 0, 0.02)'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

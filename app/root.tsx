@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import tailwindStyles from './styles/tailwind.css';
+import globalStyles from './styles/globals.css';
 import Navbar from "./components/navbar.tsx";
 import { getSessionManager } from "./utils/kinde.server.ts";
 
@@ -80,6 +81,7 @@ export const links: LinksFunction = () => [
   { rel: 'icon', href: '/favicon.ico' },
   { rel: 'manifest', href: '/site.webmanifest' },
   { rel: 'stylesheet', href: tailwindStyles },
+  { rel: 'stylesheet', href: globalStyles },
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
