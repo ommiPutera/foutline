@@ -52,9 +52,12 @@ async function getSessionManager(request: Request) {
     }
   };
 
+  const isAuthenticated = await kindeClient.isAuthenticated(sessionManager);
+
   return {
     sessionManager,
     session,
+    isAuthenticated,
     getUser: async () => {
       const token = getSessionId()
       if (!token) return null
