@@ -12,6 +12,12 @@ export default {
       fontFamily: {
         sans: [...defaultTheme.fontFamily.sans],
       },
+      spacing: {
+        '5vw': '5vw',
+        '8vw': '8vw',
+        '10vw': '10vw',
+        '15vw': '15vw',
+      }
     },
   },
 } satisfies Config
