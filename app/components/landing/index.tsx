@@ -1,7 +1,14 @@
-export default function Landing() {
+import Hero from "./hero.tsx";
+
+function Landing() {
   return (
     <div className="use-matter">
-      Landing
+      <Hero />
+      <div>
+        {/* Content */}
+      </div>
     </div>
   );
 }
+
+export default Landing
