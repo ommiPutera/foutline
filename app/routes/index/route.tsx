@@ -1,9 +1,9 @@
 import type { UserType } from "@kinde-oss/kinde-typescript-sdk";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import Landing from "./landing.tsx";
 import { getSessionManager, kindeClient } from "~/utils/kinde.server.ts";
 import { useLiveLoader } from "~/components/hooks/use-live-loader.ts";
+import Landing from "~/components/landing/index.tsx";
 
 export type LoaderData = {
   isAuthenticated: boolean

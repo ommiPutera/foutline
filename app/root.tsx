@@ -10,19 +10,14 @@ import {
   Links,
   LiveReload,
   Meta,
-  Outlet as RouterOutlet,
+  Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
-  useNavigation,
 } from "@remix-run/react";
-import { useSpinDelay } from 'spin-delay';
 import Navbar from "./components/navbar.tsx";
-import { Progress } from "./components/ui/progress.tsx";
 import globalStyles from './styles/globals.css';
 import tailwindStyles from './styles/tailwind.css';
 import { getSessionManager } from "./utils/kinde.server.ts";
-import React from "react";
 
 export type LoaderData = SerializeFrom<typeof loader>
 export const handle: { id: string } = {
@@ -99,48 +94,6 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
-function Splash() {
-  const { isAuthenticated } = useLoaderData<typeof loader>()
-  const navigation = useNavigation()
-  const [stop, setStop] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
-  const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
-    delay: 400,
-    minDuration: 1000,
-  })
-
-  React.useEffect(() => {
-    if (stop || !showLoader) return
-    const interval = setInterval(() => {
-      setProgress((prev) => prev + 1);
-    }, 45);
-
-    return () => clearInterval(interval);
-  }, [navigation.state, showLoader, stop])
-
-  React.useEffect(() => {
-    if (progress === 100) {
-      setStop(true);
-    }
-  }, [progress]);
-
-  if (navigation.state === 'loading' && isAuthenticated && showLoader) return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4 max-w-xs w-full">
-        <Progress value={progress} />
-        <p className="font-medium text-sm">{progress > 95 ? 'Redirect..' : `${progress}%`}</p>
-      </div>
-    </div>
-  )
-  return <></>
-}
-
-function Outlet() {
-  const navigation = useNavigation()
-  if (navigation.state !== 'idle') return <></>
-  return <RouterOutlet />
-}
-
 export default function App() {
   return (
     <html lang="en">
@@ -155,7 +108,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Splash />
         <Navbar />
         <Outlet />
         <ScrollRestoration />
