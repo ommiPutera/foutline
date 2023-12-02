@@ -137,7 +137,7 @@ function Splash() {
 
 function Outlet() {
   const navigation = useNavigation()
-  if (navigation.state === 'loading') return <></>
+  if (navigation.state !== 'idle') return <></>
   return <RouterOutlet />
 }
 

@@ -20,13 +20,13 @@ const variants = {
 }
 
 const sizes = {
-  default: "h-[34px] px-[18px] rounded-md text-sm",
-  sm: "h-[30px] px-[14px] rounded-md text-xs",
+  default: "h-9 px-4 rounded-md text-sm",
+  sm: "h-8 px-3 rounded-md text-xs",
   icon: "h-10 w-10",
 }
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: { ...variants },

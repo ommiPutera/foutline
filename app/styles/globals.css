@@ -68,6 +68,7 @@
 
 @layer base {
   * {
+    -webkit-tap-highlight-color: transparent;
     @apply border-border;
   }
   body {
