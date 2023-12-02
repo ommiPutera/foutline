@@ -8,9 +8,9 @@ function Footer() {
 
   if (user) return <></>
   return (
-    <div className="bg-background">
+    <footer className="bg-background border-t border-accent pb-16 pt-12 dark:border-gray-600 mt-auto">
       <div className="max-w-screen-2xl mx-auto h-16 md:h-24 flex items-center use-matter">
-        <footer className="flex items-center w-full px-5vw">
+        <div className="flex items-center w-full px-5vw">
           <Link to="/" className="flex-1 place-content-start">
             <OmitionLogo />
           </Link>
@@ -19,9 +19,9 @@ function Footer() {
             <li>Fitur</li>
             <li>Tutorial</li>
           </ul>
-        </footer>
+        </div>
       </div>
-    </div>
+    </footer>
   )
 }
 

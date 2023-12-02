@@ -14,6 +14,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import Footer from "./components/footer.tsx";
 import Navbar from "./components/navbar.tsx";
 import globalStyles from './styles/globals.css';
 import tailwindStyles from './styles/tailwind.css';
@@ -110,6 +111,7 @@ export default function App() {
       <body>
         <Navbar />
         <Outlet />
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

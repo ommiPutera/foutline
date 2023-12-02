@@ -71,7 +71,15 @@
     -webkit-tap-highlight-color: transparent;
     @apply border-border;
   }
+  html {
+    height: 100%;
+    box-sizing: border-box;
+  }
   body {
-    @apply bg-background text-foreground;
+    box-sizing: inherit;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
