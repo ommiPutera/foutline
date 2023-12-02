@@ -20,8 +20,8 @@ const variants = {
 }
 
 const sizes = {
-  default: "h-[36px] px-[18px] rounded-[6px] text-sm",
-  sm: "h-[30px] px-[14px] rounded-[6px] text-xs",
+  default: "h-[34px] px-[18px] rounded-md text-sm",
+  sm: "h-[30px] px-[14px] rounded-md text-xs",
   icon: "h-10 w-10",
 }
 

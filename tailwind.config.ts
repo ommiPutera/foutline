@@ -12,7 +12,17 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        md: '425px',
+        lg: '1024px',
+        xl: '1440px', // this is the "design resolution"
+      },
+      borderRadius: {
+        none: '0',
+        sm: '0.225rem',
+        md: '0.375rem',
+        lg: '0.5rem',
+        full: '9999px',
+        large: '12px',
       },
     },
     extend: {
