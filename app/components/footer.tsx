@@ -20,10 +20,10 @@ function Footer() {
               <Logo />
             </Link>
             <div className="mt-auto">
-              <p className="text-sm">
+              <p className="text-sm text-muted-foreground">
                 © {new Date().getFullYear()} Omition, Inc.
               </p>
-              <p className="text-sm mt-1">
+              <p className="text-sm mt-1 text-muted-foreground">
                 Built by <span><Link to='https://github.com/ommiPutera' target="_blank" className="underline">Ommi Putera</Link></span>
               </p>
             </div>
@@ -70,7 +70,7 @@ function SitemapSection() {
   return (
     <div>
       <h5 className="whitespace-nowrap text-md font-medium">Peta Situs</h5>
-      <ul className="mt-1 md:mt-4">
+      <ul className="mt-1 md:mt-4 text-muted-foreground">
         <FooterLink name="Beranda" href="/" />
         <FooterLink name="Tutorial" href="/tutorial" />
       </ul>
@@ -82,7 +82,7 @@ function ProductSection() {
   return (
     <div>
       <h5 className="whitespace-nowrap text-md font-medium">Produk</h5>
-      <ul className="mt-1 md:mt-4">
+      <ul className="mt-1 md:mt-4 text-muted-foreground">
         <FooterLink name="Catatan" href="/" />
         <FooterLink name="Keuangan Bulanan" href="/tutorial" />
         <FooterLink name="Hutang" href="/tutorial" />
@@ -103,24 +103,25 @@ function ToggleTheme() {
         variant="ghost"
         onClick={() => setTheme(Theme.LIGHT)}
       >
-        <Sun size="18" className="text-foreground" />
+        <Sun size="16" className="text-foreground" />
       </Button>
       <Button
         size="icon"
         variant="ghost"
         onClick={() => setTheme(Theme.DARK)}
       >
-        <MoonStar size="18" />
+        <MoonStar size="16" />
       </Button>
       <Button
         size="icon"
         variant="ghost"
         onClick={() => setTheme(systemTheme)}
       >
-        <Laptop size="18" />
+        <Laptop size="16" />
       </Button>
     </div>
   )
 }
 
 export default Footer
+export { ToggleTheme }

@@ -23,7 +23,7 @@ const sizes = {
   lg: "h-12 md:h-11 px-6 rounded-md text-md",
   default: "h-11 md:h-9 px-4 rounded-md text-sm",
   sm: "h-10 md:h-8 px-3 rounded-md text-xs",
-  icon: "h-10 w-10",
+  icon: "h-8 w-8",
 }
 
 const buttonVariants = cva(
@@ -73,6 +73,7 @@ const ButtonLink = React.forwardRef<
       asChild
       variant={variant}
       size={size}
+      className={props.className}
     >
       <AnchorOrLink ref={ref} {...props}>{children}</AnchorOrLink>
     </Button>

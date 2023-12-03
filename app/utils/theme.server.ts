@@ -4,7 +4,7 @@ import { Theme, isTheme } from './theme-provider.tsx'
 
 const themeStorage = createCookieSessionStorage({
   cookie: {
-    name: 'KCD_theme',
+    name: 'OMITION_THEME',
     secure: true,
     secrets: [getRequiredServerEnvVar('SESSION_SECRET')],
     sameSite: 'lax',

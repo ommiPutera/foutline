@@ -73,11 +73,15 @@
   }
   html {
     height: 100%;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    overflow-y: scroll;
+    overflow-x: scroll;
     box-sizing: border-box;
   }
   body {
     box-sizing: inherit;
-    min-height: calc(100vh + 6rem);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     @apply bg-background text-foreground overflow-x-hidden;
