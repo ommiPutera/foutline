@@ -32,10 +32,10 @@ export default function Index() {
   return (
     <div className="bg-background h-full">
       <div className="flex">
-        <div className="max-w-[240px] h-full fixed overflow-visible w-fit border-r border-border">
+        <div className="max-w-[280px] px-3 h-full fixed overflow-visible w-fit border-r border-border">
           <Sidebar className="hidden lg:block" />
         </div>
-        <div className="md:ml-auto md:w-[calc(100%_-_240px)] w-full">
+        <div className="md:ml-auto md:w-[calc(100%_-_280px)] w-full">
           <div className="w-full">
             <div className="w-full px-6 py-3 pr-8 items-center flex justify-between mx-auto max-w-screen-2xl border-b border-border">
               <div>

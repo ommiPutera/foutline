@@ -32,22 +32,21 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             <Template />
           </div>
         </div>
-        <div className="border-t border-border" />
+        <Files />
         <div className="px-3 py-2 space-y-1">
-          <Button variant="ghost" className="w-full justify-start">
+          <Button variant="ghost" className="w-full justify-start text-xs">
             <FileHeart className="mr-3 h-5 w-5" />
             Halaman Favorit
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
+          <Button variant="ghost" className="w-full justify-start text-xs">
             <FileClock className="mr-3 h-5 w-5" />
             Draf
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
+          <Button variant="ghost" className="w-full justify-start text-xs">
             <Trash2 className="mr-3 h-5 w-5" />
             Sampah
           </Button>
         </div>
-        <Files />
       </div>
     </div>
   )
@@ -80,7 +79,7 @@ function Files() {
           Kamu dengan mudah mencari halaman disini
         </p>
       </div>
-      <ScrollArea className="h-[320px]">
+      <ScrollArea className="h-[350px]">
         {isScroll && <div className="h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80 -mt-1 absolute top-0"></div>}
         {isScroll && <div className="h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80 -mt-1 absolute bottom-0"></div>}
         <div ref={tabRef}></div>
@@ -89,7 +88,7 @@ function Files() {
             <Button
               key={`${playlist}-${i}`}
               variant="ghost"
-              className="w-full justify-start font-normal rounded-none"
+              className="w-full justify-start font-normal rounded-none text-xs"
             >
               <FileText className="mr-3 h-5 w-5" />
               {playlist}
@@ -107,7 +106,7 @@ function Home() {
   return (
     <ButtonLink
       variant="ghost"
-      className={cn("w-full justify-start", {
+      className={cn("w-full justify-start text-xs", {
         'text-foreground': active,
         'text-muted-foreground': !active,
       })}
@@ -151,7 +150,7 @@ function Template() {
   return (
     <ButtonLink
       variant="ghost"
-      className={cn("w-full justify-start", {
+      className={cn("w-full justify-start text-xs", {
         'text-foreground': active,
         'text-muted-foreground': !active,
       })}
