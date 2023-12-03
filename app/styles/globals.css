@@ -77,7 +77,7 @@
   }
   body {
     box-sizing: inherit;
-    min-height: 100vh;
+    min-height: calc(100vh + 6rem);
     display: flex;
     flex-direction: column;
     @apply bg-background text-foreground overflow-x-hidden;

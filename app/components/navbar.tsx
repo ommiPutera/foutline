@@ -24,10 +24,6 @@ function Navbar() {
             <Link to="/">
               <Logo />
             </Link>
-            <ul className="hidden md:flex items-center gap-8 text-md mt-1">
-              <li>Produk</li>
-              <li>Blog</li>
-            </ul>
           </div>
           <div className="hidden md:flex place-content-end flex-1 gap-3">
             <ButtonLink to="/login" variant="outline">Masuk</ButtonLink>
