@@ -13,12 +13,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import Footer from "./components/footer.tsx";
 import Navbar from "./components/navbar.tsx";
 import globalStyles from './styles/globals.css';
 import tailwindStyles from './styles/tailwind.css';
 import { getSessionManager } from "./utils/kinde.server.ts";
+import { ThemeProvider, useTheme } from "./utils/theme-provider.tsx";
+import { getThemeSession } from "./utils/theme.server.ts";
 
 export type LoaderData = SerializeFrom<typeof loader>
 export const handle: { id: string } = {
@@ -28,9 +31,15 @@ export const handle: { id: string } = {
 export async function loader({ request }: DataFunctionArgs) {
   const { getUser, isAuthenticated } = await getSessionManager(request)
   const user = await getUser()
+  const [themeSession] = await Promise.all([getThemeSession(request)])
   const data = {
     user,
-    isAuthenticated
+    isAuthenticated,
+    requestInfo: {
+      session: {
+        theme: themeSession.getTheme(),
+      },
+    },
   }
   const headers: HeadersInit = new Headers()
   return json(data, { headers })
@@ -95,9 +104,19 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
-export default function App() {
+export default function AppWithProviders() {
+  const data = useLoaderData<LoaderData>()
   return (
-    <html lang="en">
+    <ThemeProvider specifiedTheme={data.requestInfo.session.theme}>
+      <App />
+    </ThemeProvider>
+  )
+}
+
+function App() {
+  const [theme] = useTheme()
+  return (
+    <html lang="en" className={`${theme}`} data-color-scheme={theme}>
       <head>
         <Meta />
         <meta charSet="utf-8" />
@@ -105,7 +124,10 @@ export default function App() {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#111827" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta
+          name="theme-color"
+          content={theme === 'dark' ? '#111827' : '#FFF'}
+        />
         <Links />
       </head>
       <body>
