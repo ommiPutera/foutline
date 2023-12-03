@@ -30,111 +30,111 @@ export default function Index() {
 
   if (!isAuthenticated) return <Landing />
   return (
-    <div className="hidden md:block">
-      <div className="bg-background h-full">
-        <div className="flex">
-          <div className="max-w-[240px] h-full fixed overflow-visible w-fit border-r border-border">
-            <Sidebar className="hidden lg:block" />
-          </div>
-          <div style={{ width: 'calc(100% - 240px)' }} className="ml-auto">
-            <div className="w-full">
-              <div className="px-6 py-3 pr-8 items-center flex justify-between mx-auto max-w-screen-2xl border-b border-border">
-                <div>
-                  header
-                </div>
-                <div className="flex items-center gap-6">
+    <div className="bg-background h-full">
+      <div className="flex">
+        <div className="max-w-[240px] h-full fixed overflow-visible w-fit border-r border-border">
+          <Sidebar className="hidden lg:block" />
+        </div>
+        <div className="md:ml-auto md:w-[calc(100%_-_240px)] w-full">
+          <div className="w-full">
+            <div className="w-full px-6 py-3 pr-8 items-center flex justify-between mx-auto max-w-screen-2xl border-b border-border">
+              <div>
+                header
+              </div>
+              <div className="flex items-center gap-6">
+                <div className="hidden md:block">
                   <ToggleTheme />
-                  <UserNav {...profile} />
                 </div>
+                <UserNav {...profile} />
               </div>
-              <div className="p-6 mx-auto max-w-screen-2xl">
-                <p>{profile?.email}</p>
-                <Link to="/logout">Logout</Link>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-              </div>
+            </div>
+            <div className="p-6 mx-auto max-w-screen-2xl">
+              <p>{profile?.email}</p>
+              <Link to="/logout">Logout</Link>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
             </div>
           </div>
         </div>
