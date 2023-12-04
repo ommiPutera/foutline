@@ -16,6 +16,7 @@ import {
 } from '~/components/ui/sheet.tsx'
 import { PanelLeft } from 'lucide-react'
 import { Button } from '~/components/ui/button.tsx'
+import React from 'react'
 
 export type LoaderData = {
   isAuthenticated: boolean
@@ -37,6 +38,32 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
 
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [touchStart, setTouchStart] = React.useState(null)
+  const [touchEnd, setTouchEnd] = React.useState(null)
+
+  // the required distance between touchStart and touchEnd to be detected as a swipe
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
+    if (isRightSwipe) {
+      setIsOpen(true)
+    }
+    // add your conditional logic here
+  }
+
   if (!isAuthenticated) return <Landing />
   return (
     <div className="h-full bg-background">
@@ -48,15 +75,16 @@ export default function Index() {
           <div className="w-full h-full relative">
             <div className="fixed h-[var(--header-height)] w-full md:relative top-0 mx-auto flex max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8">
               <div className="block md:hidden">
-                <Sheet>
+                <Sheet open={isOpen}>
                   <SheetTrigger>
-                    <Button size="icon" variant="ghost">
+                    <Button size="icon" variant="ghost" onClick={() => setIsOpen(true)}>
                       <PanelLeft />
                     </Button>
                   </SheetTrigger>
                   <SheetContent
+                    onClose={() => setIsOpen(false)}
                     side="left"
-                    className="w-[calc(3rem_+_var(--sidebar-width))] overflow-y-scroll px-2 no-scrollbar"
+                    className="w-[calc(3rem_+_var(--sidebar-width))] overflow-y-scroll px-2 no-scrollbar pb-64"
                   >
                     <SheetHeader>
                       <SheetTitle className="px-7 text-left">Menu</SheetTitle>
@@ -73,7 +101,10 @@ export default function Index() {
                 <UserNav {...profile} />
               </div>
             </div>
-            <div className="mx-auto mt-[var(--header-height)] md:mt-0 max-w-screen-2xl p-6">
+            <div
+              className="mx-auto mt-[var(--header-height)] md:mt-0 max-w-screen-2xl p-6"
+              onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+            >
               <p>{profile?.email}</p>
               <Link to="/logout">Logout</Link>
               <p>Test</p>
