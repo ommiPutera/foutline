@@ -41,12 +41,12 @@ export default function Index() {
   return (
     <div className="h-full bg-background">
       <div className="flex">
-        <div className="fixed hidden h-full w-fit max-w-[280px] overflow-scroll border-r border-border px-3 md:block">
+        <div className="fixed hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border px-3 md:block">
           <Sidebar />
         </div>
-        <div className="w-full h-full relative md:ml-auto md:w-[calc(100%_-_280px)]">
+        <div className="w-full h-full relative md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="w-full h-full relative">
-            <div className="fixed h-[59px] w-full md:relative top-0 mx-auto flex max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8">
+            <div className="fixed h-[var(--header-height)] w-full md:relative top-0 mx-auto flex max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8">
               <div className="block md:hidden">
                 <Sheet>
                   <SheetTrigger>
@@ -56,7 +56,7 @@ export default function Index() {
                   </SheetTrigger>
                   <SheetContent
                     side="left"
-                    className="w-[280px] overflow-y-scroll px-0"
+                    className="w-[calc(3rem_+_var(--sidebar-width))] overflow-y-scroll px-2 no-scrollbar"
                   >
                     <SheetHeader>
                       <SheetTitle className="px-7 text-left">Menu</SheetTitle>
@@ -73,7 +73,7 @@ export default function Index() {
                 <UserNav {...profile} />
               </div>
             </div>
-            <div className="mx-auto mt-[59px] md:mt-0 max-w-screen-2xl p-6">
+            <div className="mx-auto mt-[var(--header-height)] md:mt-0 max-w-screen-2xl p-6">
               <p>{profile?.email}</p>
               <Link to="/logout">Logout</Link>
               <p>Test</p>
