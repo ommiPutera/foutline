@@ -7,6 +7,9 @@ import { Sidebar } from "~/components/sidebar.tsx";
 import { Link } from "@remix-run/react";
 import { ToggleTheme } from "~/components/footer.tsx";
 import { UserNav } from "~/components/user-nav.tsx";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet.tsx";
+import { PanelLeft } from "lucide-react";
+import { Button } from "~/components/ui/button.tsx";
 
 export type LoaderData = {
   isAuthenticated: boolean
@@ -32,13 +35,28 @@ export default function Index() {
   return (
     <div className="bg-background h-full">
       <div className="flex">
-        <div className="max-w-[280px] px-3 h-full fixed overflow-visible w-fit border-r border-border">
-          <Sidebar className="hidden lg:block" />
+        <div className="hidden md:block max-w-[280px] px-3 h-full fixed overflow-scroll w-fit border-r border-border">
+          <Sidebar />
         </div>
         <div className="md:ml-auto md:w-[calc(100%_-_280px)] w-full">
           <div className="w-full">
             <div className="w-full px-6 py-3 pr-8 items-center flex justify-between mx-auto max-w-screen-2xl border-b border-border">
-              <div>
+              <div className="md:hidden block">
+                <Sheet>
+                  <SheetTrigger>
+                    <Button size="icon" variant="ghost">
+                      <PanelLeft />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="px-0 overflow-y-scroll w-[280px]">
+                    <SheetHeader>
+                      <SheetTitle className="text-left px-7">Menu</SheetTitle>
+                    </SheetHeader>
+                    <Sidebar />
+                  </SheetContent>
+                </Sheet>
+              </div>
+              <div className="hidden md:block">
                 header
               </div>
               <div className="flex items-center gap-6">

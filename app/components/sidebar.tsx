@@ -2,8 +2,7 @@ import { cn } from "~/lib/utils.ts"
 import { Button, ButtonLink } from "./ui/button.tsx"
 import { ScrollArea } from "./ui/scroll-area.tsx"
 import React from "react"
-import { useTheme } from "~/utils/theme-provider.tsx"
-import { FileClock, FileHeart, FileText, Trash2 } from "lucide-react"
+import { FileClock, FileHeart, FileText, HomeIcon, LayoutTemplate, Trash2 } from "lucide-react"
 
 export type Playlist = (typeof playlists)[number]
 
@@ -25,15 +24,27 @@ export const playlists = [
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={cn("overflow-x-hidden overflow-y-scroll min-h-screen", className)}>
-      <div className="space-y-4 py-3">
-        <div className="px-3 py-2">
-          <div className="space-y-1">
-            <Home />
-            <Template />
-          </div>
+      <div className="space-y-4 py-3 flex flex-col">
+        <div className="px-3 py-2 space-y-1 flex-1 place-content-start">
+          <ButtonLink
+            variant="ghost"
+            className="w-full justify-start text-xs"
+          >
+            <HomeIcon className="mr-3 h-5 w-5" />
+            Beranda
+          </ButtonLink>
+          <ButtonLink
+            variant="ghost"
+            className="w-full justify-start text-xs"
+          >
+            <LayoutTemplate className="mr-3 h-5 w-5" />
+            Template
+          </ButtonLink>
         </div>
-        <Files />
-        <div className="px-3 py-2 space-y-1">
+        <div className="flex-2 place-content-center">
+          <Files />
+        </div>
+        <div className="px-3 py-2 space-y-1 flex-1 place-content-end">
           <Button variant="ghost" className="w-full justify-start text-xs">
             <FileHeart className="mr-3 h-5 w-5" />
             Halaman Favorit
@@ -97,93 +108,5 @@ function Files() {
         </div>
       </ScrollArea>
     </div >
-  )
-}
-
-function Home() {
-  const [active] = React.useState(false)
-  const [theme] = useTheme()
-  return (
-    <ButtonLink
-      variant="ghost"
-      className={cn("w-full justify-start text-xs", {
-        'text-foreground': active,
-        'text-muted-foreground': !active,
-      })}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        fill="none"
-        viewBox="0 0 24 24"
-        className="mr-3 h-5 w-5"
-      >
-        <path
-          fill="url(#paint0_linear_100_2169)"
-          fillRule="evenodd"
-          d="M11.386 1.21a1 1 0 011.228 0l9 7A1 1 0 0122 9v11a3 3 0 01-3 3h-5v-6a2 2 0 10-4 0v6H5a3 3 0 01-3-3V9a1 1 0 01.386-.79l9-7z"
-          clipRule="evenodd"
-        ></path>
-        <defs>
-          <linearGradient
-            id="paint0_linear_100_2169"
-            x1="2"
-            x2="23.901"
-            y1="1"
-            y2="20.91"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor={active ? theme === 'dark' ? "#fff" : "#111827" : "#ABABAB"}></stop>
-            <stop offset="0.75" stopColor={active ? theme === 'dark' ? "#fff" : "#111827" : "#ABABAB"}></stop>
-          </linearGradient>
-        </defs>
-      </svg>
-      Beranda
-    </ButtonLink>
-  )
-}
-
-function Template() {
-  const [active] = React.useState(true)
-  const [theme] = useTheme()
-  return (
-    <ButtonLink
-      variant="ghost"
-      className={cn("w-full justify-start text-xs", {
-        'text-foreground': active,
-        'text-muted-foreground': !active,
-      })}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        fill="none"
-        viewBox="0 0 24 24"
-        className="mr-3 h-5 w-5"
-      >
-        <path
-          fill="url(#paint0_linear_282_459)"
-          fillRule="evenodd"
-          d="M20 3H4a1 1 0 00-1 1v5a1 1 0 001 1h16a1 1 0 001-1V4a1 1 0 00-1-1zm-9 11H4a1 1 0 00-1 1v5a1 1 0 001 1h7a1 1 0 001-1v-5a1 1 0 00-1-1zm6 0h3a1 1 0 011 1v5a1 1 0 01-1 1h-3a1 1 0 01-1-1v-5a1 1 0 011-1z"
-          clipRule="evenodd"
-        ></path>
-        <defs>
-          <linearGradient
-            id="paint0_linear_282_459"
-            x1="3"
-            x2="21"
-            y1="3"
-            y2="21"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor={active ? theme === 'dark' ? "#fff" : "#111827" : "#ABABAB"}></stop>
-            <stop offset="0.75" stopColor={active ? theme === 'dark' ? "#fff" : "#111827" : "#ABABAB"}></stop>
-          </linearGradient>
-        </defs>
-      </svg>
-      Template
-    </ButtonLink>
   )
 }
