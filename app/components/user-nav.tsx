@@ -55,7 +55,7 @@ export function UserNav({
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className='block md:hidden'>
           <ToggleTheme className="w-full" />
         </DropdownMenuItem>
         <DropdownMenuSeparator />

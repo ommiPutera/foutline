@@ -1,14 +1,14 @@
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {getLogo} from './omition-logo.tsx'
-import {Link} from '@remix-run/react'
-import {AnchorOrLink} from '~/utils/misc.tsx'
-import {Button} from './ui/button.tsx'
-import {Laptop, MoonStar, Sun} from 'lucide-react'
-import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
-import {cn} from '~/lib/utils.ts'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { getLogo } from './omition-logo.tsx'
+import { Link } from '@remix-run/react'
+import { AnchorOrLink } from '~/utils/misc.tsx'
+import { Button } from './ui/button.tsx'
+import { Laptop, MoonStar, Sun } from 'lucide-react'
+import { Theme, getSystemTheme, useTheme } from '~/utils/theme-provider.tsx'
+import { cn } from '~/lib/utils.ts'
 
 function Footer() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const Logo = getLogo()
 
   if (user) return <></>
@@ -21,9 +21,6 @@ function Footer() {
               <Logo />
             </Link>
             <div className="mt-auto">
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Omition, Inc.
-              </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 Built by{' '}
                 <span>
@@ -102,7 +99,7 @@ function ProductSection() {
   )
 }
 
-function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
+function ToggleTheme({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const [, setTheme] = useTheme()
   const systemTheme = getSystemTheme()
 
@@ -137,4 +134,4 @@ function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 export default Footer
-export {ToggleTheme}
+export { ToggleTheme }
