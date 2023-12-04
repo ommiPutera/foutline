@@ -1,4 +1,4 @@
-import { useMatches } from "@remix-run/react"
+import {useMatches} from '@remix-run/react'
 
 function useMatchLoaderData<LoaderData>(handleId: string) {
   const matches = useMatches()
@@ -7,4 +7,4 @@ function useMatchLoaderData<LoaderData>(handleId: string) {
   return match.data as LoaderData
 }
 
-export { useMatchLoaderData }
+export {useMatchLoaderData}

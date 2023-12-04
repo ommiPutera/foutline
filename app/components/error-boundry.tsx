@@ -3,7 +3,7 @@ import {
   isRouteErrorResponse,
   useParams,
 } from '@remix-run/react'
-import { getErrorMessage, useCapturedRouteError } from '~/utils/misc.tsx'
+import {getErrorMessage, useCapturedRouteError} from '~/utils/misc.tsx'
 
 type StatusHandler = (info: {
   error: ErrorResponse
@@ -11,7 +11,7 @@ type StatusHandler = (info: {
 }) => JSX.Element | null
 
 export function GeneralErrorBoundary({
-  defaultStatusHandler = ({ error }) => (
+  defaultStatusHandler = ({error}) => (
     <p>
       {error.status} {error.data}
     </p>
@@ -31,12 +31,12 @@ export function GeneralErrorBoundary({
   }
 
   return (
-    <div className="container mx-auto flex items-center justify-center p-20 text-h2">
+    <div className="text-h2 container mx-auto flex items-center justify-center p-20">
       {isRouteErrorResponse(error)
         ? (statusHandlers?.[error.status] ?? defaultStatusHandler)({
-          error,
-          params,
-        })
+            error,
+            params,
+          })
         : unexpectedErrorHandler(error)}
     </div>
   )

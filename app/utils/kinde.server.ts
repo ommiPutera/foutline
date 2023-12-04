@@ -1,8 +1,16 @@
-import type { SessionManager } from "@kinde-oss/kinde-typescript-sdk";
-import { GrantType, createKindeServerClient } from "@kinde-oss/kinde-typescript-sdk";
-import { createCookieSessionStorage } from "@remix-run/node";
-import { createSession, getUserFormSessionId, prisma, sessionExpirationTime } from "./prisma.server.ts";
-import type { User } from "@prisma/client";
+import type {SessionManager} from '@kinde-oss/kinde-typescript-sdk'
+import {
+  GrantType,
+  createKindeServerClient,
+} from '@kinde-oss/kinde-typescript-sdk'
+import {createCookieSessionStorage} from '@remix-run/node'
+import {
+  createSession,
+  getUserFormSessionId,
+  prisma,
+  sessionExpirationTime,
+} from './prisma.server.ts'
+import type {User} from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const kindeClient = createKindeServerClient(GrantType.AUTHORIZATION_CODE, {
@@ -11,7 +19,7 @@ const kindeClient = createKindeServerClient(GrantType.AUTHORIZATION_CODE, {
   clientSecret: process.env.KINDE_CLIENT_SECRET ?? '',
   redirectURL: process.env.KINDE_REDIRECT_URL ?? '',
   logoutRedirectURL: process.env.KINDE_LOGOUT_REDIRECT_URL ?? '',
-});
+})
 
 const sessionIdKey = '__session_id__'
 let sessionSecret = process.env.SESSION_SECRET
@@ -32,13 +40,13 @@ const sessionStorage = createCookieSessionStorage({
 })
 
 async function getSessionManager(request: Request) {
-  const session = await sessionStorage.getSession(request.headers.get('Cookie'));
+  const session = await sessionStorage.getSession(request.headers.get('Cookie'))
   const getSessionId = () => session.get(sessionIdKey) as string | undefined
   const unsetSessionId = () => session.unset(sessionIdKey)
 
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
-      return session.get(key);
+      return session.get(key)
     },
     async setSessionItem(key: string, value: unknown) {
       session.set(key, value)
@@ -49,10 +57,10 @@ async function getSessionManager(request: Request) {
     },
     async destroySession() {
       sessionStorage.destroySession(session)
-    }
-  };
+    },
+  }
 
-  const isAuthenticated = await kindeClient.isAuthenticated(sessionManager);
+  const isAuthenticated = await kindeClient.isAuthenticated(sessionManager)
 
   return {
     sessionManager,
@@ -63,31 +71,42 @@ async function getSessionManager(request: Request) {
       if (!token) return null
       return getUserFormSessionId(token)
     },
-    signUp: async ({ fullName, username, kindeId, email }: Omit<User, "createdAt" | "updatedAt" | "passwordHash" | "role" | "id">) => {
+    signUp: async ({
+      fullName,
+      username,
+      kindeId,
+      email,
+    }: Omit<
+      User,
+      'createdAt' | 'updatedAt' | 'passwordHash' | 'role' | 'id'
+    >) => {
       const existingUser = await prisma.user.findFirst({where: {email}})
       if (existingUser?.id && kindeId) {
         let user = await updateExistingUser(email, kindeId)
-        if(!user) return null
-        const userSession = await createSession({ userId: user.id })
+        if (!user) return null
+        const userSession = await createSession({userId: user.id})
         session.set(sessionIdKey, userSession.id)
       } else {
-        if (!process.env.PASSWORD) throw (new Error('need a password'))
-        const passwordHash = await bcrypt.hash(kindeId + process.env.PASSWORD, 10)
+        if (!process.env.PASSWORD) throw new Error('need a password')
+        const passwordHash = await bcrypt.hash(
+          kindeId + process.env.PASSWORD,
+          10,
+        )
         let user = await prisma.user.create({
           data: {
             kindeId: kindeId,
             fullName,
             username,
             passwordHash,
-            email
+            email,
           },
         })
-        const userSession = await createSession({ userId: user.id })
+        const userSession = await createSession({userId: user.id})
         session.set(sessionIdKey, userSession.id)
       }
     },
-    signIn: async ({ id }: Pick<User,"id">) => {
-      const userSession = await createSession({ userId: id })
+    signIn: async ({id}: Pick<User, 'id'>) => {
+      const userSession = await createSession({userId: id})
       session.set(sessionIdKey, userSession.id)
     },
     signOut: async () => {
@@ -100,7 +119,7 @@ async function getSessionManager(request: Request) {
             console.error(`Failure deleting user session: `, error)
           })
       }
-    }
+    },
   }
 }
 
@@ -112,16 +131,10 @@ async function findUser(email: string) {
 async function updateExistingUser(email: string, kindeId: string) {
   if (!email || !kindeId) return null
   const user = await prisma.user.update({
-    where: { email },
-    data: { kindeId: kindeId }
+    where: {email},
+    data: {kindeId: kindeId},
   })
   return user
 }
 
-export {
-  getSessionManager,
-  kindeClient,
-  sessionIdKey,
-  sessionStorage,
-  findUser
-};
+export {getSessionManager, kindeClient, sessionIdKey, sessionStorage, findUser}

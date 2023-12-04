@@ -12,7 +12,7 @@ async function seed() {
         passwordHash:
           '$2a$10$Y632TQG4s/MdTmIBjHl3..YlKO5CtiFnOmRHP6McJyyh9DPPoz/9e',
       },
-    })
+    }),
   ]
   return Promise.all(users)
 }

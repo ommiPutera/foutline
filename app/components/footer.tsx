@@ -1,21 +1,22 @@
-import { useRootLoader } from "~/utils/use-root-loader.tsx"
-import { getLogo } from "./omition-logo.tsx"
-import { Link } from "@remix-run/react"
-import { AnchorOrLink } from "~/utils/misc.tsx"
-import { Button } from "./ui/button.tsx"
-import { Laptop, MoonStar, Sun } from "lucide-react"
-import { Theme, getSystemTheme, useTheme } from "~/utils/theme-provider.tsx"
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {getLogo} from './omition-logo.tsx'
+import {Link} from '@remix-run/react'
+import {AnchorOrLink} from '~/utils/misc.tsx'
+import {Button} from './ui/button.tsx'
+import {Laptop, MoonStar, Sun} from 'lucide-react'
+import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
+import {cn} from '~/lib/utils.ts'
 
 function Footer() {
-  const { user } = useRootLoader()
+  const {user} = useRootLoader()
   const Logo = getLogo()
 
   if (user) return <></>
   return (
-    <footer className="bg-background border-t border-input mt-auto">
-      <div className="max-w-screen-2xl mx-auto h-16 md:h-24 flex flex-wrap items-center use-matter">
-        <div className="grid grid-rows-max-content w-full py-12 md:pb-32 md:pt-24 px-5vw grid-cols-4 md:grid-cols-8 xl:grid-cols-12 gap-8">
-          <div className="flex flex-col gap-12 col-span-full md:col-span-2 xl:row-span-3">
+    <footer className="mt-auto border-t border-input bg-background">
+      <div className="use-matter mx-auto flex h-16 max-w-screen-2xl flex-wrap items-center md:h-24">
+        <div className="grid-rows-max-content grid w-full grid-cols-4 gap-8 px-5vw py-12 md:grid-cols-8 md:pb-32 md:pt-24 xl:grid-cols-12">
+          <div className="col-span-full flex flex-col gap-12 md:col-span-2 xl:row-span-3">
             <Link to="/" className="w-fit">
               <Logo />
             </Link>
@@ -23,8 +24,17 @@ function Footer() {
               <p className="text-sm text-muted-foreground">
                 © {new Date().getFullYear()} Omition, Inc.
               </p>
-              <p className="text-sm mt-1 text-muted-foreground">
-                Built by <span><Link to='https://github.com/ommiPutera' target="_blank" className="underline">Ommi Putera</Link></span>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Built by{' '}
+                <span>
+                  <Link
+                    to="https://github.com/ommiPutera"
+                    target="_blank"
+                    className="underline"
+                  >
+                    Ommi Putera
+                  </Link>
+                </span>
               </p>
             </div>
           </div>
@@ -69,8 +79,8 @@ function FooterLink({
 function SitemapSection() {
   return (
     <div>
-      <h5 className="whitespace-nowrap text-md font-medium">Peta Situs</h5>
-      <ul className="mt-1 md:mt-4 text-muted-foreground">
+      <h5 className="text-md whitespace-nowrap font-medium">Peta Situs</h5>
+      <ul className="mt-1 text-muted-foreground md:mt-4">
         <FooterLink name="Beranda" href="/" />
         <FooterLink name="Tutorial" href="/tutorial" />
       </ul>
@@ -81,8 +91,8 @@ function SitemapSection() {
 function ProductSection() {
   return (
     <div>
-      <h5 className="whitespace-nowrap text-md font-medium">Produk</h5>
-      <ul className="mt-1 md:mt-4 text-muted-foreground">
+      <h5 className="text-md whitespace-nowrap font-medium">Produk</h5>
+      <ul className="mt-1 text-muted-foreground md:mt-4">
         <FooterLink name="Catatan" href="/" />
         <FooterLink name="Keuangan Bulanan" href="/tutorial" />
         <FooterLink name="Hutang" href="/tutorial" />
@@ -92,15 +102,16 @@ function ProductSection() {
   )
 }
 
-function ToggleTheme() {
+function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
   const [, setTheme] = useTheme()
   const systemTheme = getSystemTheme()
 
   return (
-    <div className="flex border rounded-md w-fit">
+    <div className={cn('flex w-fit rounded-md border', className)}>
       <Button
         size="icon"
         variant="ghost"
+        className="mx-2 my-px w-full"
         onClick={() => setTheme(Theme.LIGHT)}
       >
         <Sun size="16" className="text-foreground" />
@@ -108,6 +119,7 @@ function ToggleTheme() {
       <Button
         size="icon"
         variant="ghost"
+        className="mx-2 my-px w-full"
         onClick={() => setTheme(Theme.DARK)}
       >
         <MoonStar size="16" />
@@ -115,6 +127,7 @@ function ToggleTheme() {
       <Button
         size="icon"
         variant="ghost"
+        className="mx-2 my-px w-full"
         onClick={() => setTheme(systemTheme)}
       >
         <Laptop size="16" />
@@ -124,4 +137,4 @@ function ToggleTheme() {
 }
 
 export default Footer
-export { ToggleTheme }
+export {ToggleTheme}

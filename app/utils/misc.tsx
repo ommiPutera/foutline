@@ -1,6 +1,6 @@
-import type { LinkProps } from "@remix-run/react";
-import { Link, useRouteError } from "@remix-run/react";
-import React from "react";
+import type {LinkProps} from '@remix-run/react'
+import {Link, useRouteError} from '@remix-run/react'
+import React from 'react'
 
 function useCapturedRouteError() {
   const error = useRouteError()
@@ -47,8 +47,9 @@ const AnchorOrLink = React.forwardRef<
   }
 
   if (!shouldUserRegularAnchor && typeof to === 'object') {
-    toUrl = `${to.pathname ?? ''}${to.hash ? `#${to.hash}` : ''}${to.search ? `?${to.search}` : ''
-      }`
+    toUrl = `${to.pathname ?? ''}${to.hash ? `#${to.hash}` : ''}${
+      to.search ? `?${to.search}` : ''
+    }`
     shouldUserRegularAnchor = to.pathname?.includes(':')
   }
 
@@ -82,7 +83,6 @@ function getRequiredEnvVarFromObj(
   return value
 }
 
-
 function getRequiredServerEnvVar(key: string, devValue?: string) {
   return getRequiredEnvVarFromObj(process.env, key, devValue)
 }
@@ -91,5 +91,5 @@ export {
   AnchorOrLink,
   getErrorMessage,
   useCapturedRouteError,
-  getRequiredServerEnvVar
-};
+  getRequiredServerEnvVar,
+}

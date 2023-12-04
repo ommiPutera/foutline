@@ -1,21 +1,17 @@
-import {
-  useLoaderData,
-  useResolvedPath,
-  useRevalidator,
-} from "@remix-run/react";
-import { useEffect } from "react";
-import { useEventSource } from "remix-utils/sse/react";
+import {useLoaderData, useResolvedPath, useRevalidator} from '@remix-run/react'
+import {useEffect} from 'react'
+import {useEventSource} from 'remix-utils/sse/react'
 
 export function useLiveLoader<T>() {
-  const path = useResolvedPath("./stream");
-  const data = useEventSource(path.pathname);
+  const path = useResolvedPath('./stream')
+  const data = useEventSource(path.pathname)
 
-  const { revalidate } = useRevalidator();
+  const {revalidate} = useRevalidator()
 
   useEffect(() => {
-    revalidate();
+    revalidate()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- "we know better" — Moishi
-  }, [data]);
+  }, [data])
 
-  return useLoaderData<T>();
+  return useLoaderData<T>()
 }

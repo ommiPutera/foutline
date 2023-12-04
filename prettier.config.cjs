@@ -1,3 +1,4 @@
+process.env.RUNNING_PRETTIER = 'true'
 module.exports = {
   arrowParens: 'avoid',
   bracketSpacing: false,
@@ -16,4 +17,5 @@ module.exports = {
   tabWidth: 2,
   trailingComma: 'all',
   useTabs: false,
+  plugins: ['prettier-plugin-tailwindcss'],
 }

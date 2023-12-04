@@ -1,9 +1,9 @@
-import { useFetcher } from '@remix-run/react'
+import {useFetcher} from '@remix-run/react'
 import * as React from 'react'
 
 enum Theme {
   DARK = 'dark',
-  LIGHT = 'light'
+  LIGHT = 'light',
 }
 
 type ThemeContextType = [
@@ -35,7 +35,9 @@ const getPreferredTheme = () =>
 
 const getSystemTheme = () => {
   if (typeof window !== 'object') return null
-  const theme = window.matchMedia(prefersLightMQ).matches ? Theme.LIGHT : Theme.DARK
+  const theme = window.matchMedia(prefersLightMQ).matches
+    ? Theme.LIGHT
+    : Theme.DARK
   return theme
 }
 
@@ -84,8 +86,8 @@ function ThemeProvider({
       const newTheme = typeof cb === 'function' ? cb(theme) : cb
       if (newTheme) {
         persistThemeRef.current.submit(
-          { theme: newTheme },
-          { action: 'action/set-theme', method: 'POST' },
+          {theme: newTheme},
+          {action: 'action/set-theme', method: 'POST'},
         )
       }
       setThemeState(newTheme)
@@ -128,4 +130,4 @@ function Themed({
   }
 }
 
-export { useTheme, getSystemTheme, ThemeProvider, Theme, isTheme, Themed }
+export {useTheme, getSystemTheme, ThemeProvider, Theme, isTheme, Themed}

@@ -1,4 +1,4 @@
-import type { Session} from '@prisma/client';
+import type {Session} from '@prisma/client'
 import {PrismaClient} from '@prisma/client'
 import {remember} from '@epic-web/remember'
 import chalk from 'chalk'
@@ -25,12 +25,12 @@ function getClient(): PrismaClient {
       e.duration < logThreshold * 1.1
         ? 'green'
         : e.duration < logThreshold * 1.2
-        ? 'blue'
-        : e.duration < logThreshold * 1.3
-        ? 'yellow'
-        : e.duration < logThreshold * 1.4
-        ? 'redBright'
-        : 'red'
+          ? 'blue'
+          : e.duration < logThreshold * 1.3
+            ? 'yellow'
+            : e.duration < logThreshold * 1.4
+              ? 'redBright'
+              : 'red'
     const dur = chalk[color](`${e.duration}ms`)
     console.info(`prisma:query - ${dur} - ${e.query}`)
   })
@@ -52,17 +52,12 @@ async function createSession(
 
 async function getUserFormSessionId(sessionId: string) {
   const session = await prisma.session.findUnique({
-    where: { id: sessionId },
-    include: {user: true}
+    where: {id: sessionId},
+    include: {user: true},
   })
-  
+
   if (!session) throw new Error('No user found')
   return session.user
 }
 
-export {
-  prisma,
-  sessionExpirationTime,
-  getUserFormSessionId,
-  createSession
-}
+export {prisma, sessionExpirationTime, getUserFormSessionId, createSession}
