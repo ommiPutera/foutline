@@ -62,7 +62,7 @@ function MobileSidebar() {
   return (
     <div>
       <div
-        className='border md:hidden h-screen fixed left-0 w-6 top-0'
+        className='md:hidden h-screen fixed left-0 w-6 top-0'
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
