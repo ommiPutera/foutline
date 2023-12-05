@@ -1,9 +1,9 @@
-import {Link} from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import React from 'react'
-import {BurgerMenu} from '~/utils/icons.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {getLogo} from './omition-logo.tsx'
-import {ButtonLink} from './ui/button.tsx'
+import { BurgerMenu } from '~/utils/icons.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { getLogo } from './omition-logo.tsx'
+import { ButtonLink } from './ui/button.tsx'
 import {
   Popover,
   PopoverContent,
@@ -12,7 +12,7 @@ import {
 } from './ui/popover.tsx'
 
 function Navbar() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const Logo = getLogo()
 
   if (user) return <></>
@@ -52,7 +52,7 @@ function MobileNav() {
   )
 }
 
-function MobileMenuList({isOpen}: {isOpen: boolean}) {
+function MobileMenuList({ isOpen }: { isOpen: boolean }) {
   React.useEffect(() => {
     if (isOpen) {
       document.body.classList.add('fixed')

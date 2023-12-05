@@ -61,11 +61,16 @@ async function getSessionManager(request: Request) {
   }
 
   const isAuthenticated = await kindeClient.isAuthenticated(sessionManager)
+  let profile = null
+  if (isAuthenticated) {
+    profile = await kindeClient.getUserProfile(sessionManager)
+  }
 
   return {
     sessionManager,
     session,
     isAuthenticated,
+    profile,
     getUser: async () => {
       const token = getSessionId()
       if (!token) return null
@@ -80,7 +85,9 @@ async function getSessionManager(request: Request) {
       User,
       'createdAt' | 'updatedAt' | 'passwordHash' | 'role' | 'id'
     >) => {
-      const existingUser = await prisma.user.findFirst({where: {email}})
+      const existingUser = await prisma.user.findUnique({
+        where: { email: email }
+      })
       if (existingUser?.id && kindeId) {
         let user = await updateExistingUser(email, kindeId)
         if (!user) return null
@@ -125,7 +132,9 @@ async function getSessionManager(request: Request) {
 
 async function findUser(email: string) {
   if (!email) return null
-  return prisma.user.findUnique({where: {email: email}})
+  return prisma.user.findUnique({
+    where: { email: email }
+  })
 }
 
 async function updateExistingUser(email: string, kindeId: string) {

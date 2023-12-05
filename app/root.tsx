@@ -30,12 +30,18 @@ export const handle: { id: string } = {
 }
 
 export async function loader({ request }: DataFunctionArgs) {
-  const { getUser, isAuthenticated } = await getSessionManager(request)
-  const user = await getUser()
+  const { getUser, isAuthenticated, profile } = await getSessionManager(request)
+  const userFromSession = await getUser()
   const [themeSession] = await Promise.all([getThemeSession(request)])
+
+  const user = { ...userFromSession }
+  const { posts, sessions } = user
   const data = {
     user,
+    posts,
+    sessions,
     isAuthenticated,
+    profile,
     requestInfo: {
       session: {
         theme: themeSession.getTheme(),

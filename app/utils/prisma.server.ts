@@ -55,9 +55,11 @@ async function getUserFormSessionId(sessionId: string) {
     where: {id: sessionId},
     include: {user: true},
   })
-
   if (!session) throw new Error('No user found')
-  return session.user
+  return await prisma.user.findFirst({
+    where: { email: session.user?.email },
+    include: { posts: true, sessions: true }
+  })
 }
 
-export {prisma, sessionExpirationTime, getUserFormSessionId, createSession}
+export { prisma, sessionExpirationTime, getUserFormSessionId, createSession }
