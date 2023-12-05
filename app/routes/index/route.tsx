@@ -1,12 +1,12 @@
-import type {UserType} from '@kinde-oss/kinde-typescript-sdk'
-import type {LoaderFunctionArgs} from '@remix-run/node'
-import {getSessionManager, kindeClient} from '~/utils/kinde.server.ts'
-import {useLiveLoader} from '~/components/hooks/use-live-loader.ts'
+import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
+import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
-import {Sidebar} from '~/components/sidebar.tsx'
-import {Link} from '@remix-run/react'
-import {ToggleTheme} from '~/components/footer.tsx'
-import {UserNav} from '~/components/user-nav.tsx'
+import { Sidebar } from '~/components/sidebar.tsx'
+import { Link } from '@remix-run/react'
+import { ToggleTheme } from '~/components/footer.tsx'
+import { UserNav } from '~/components/user-nav.tsx'
 import {
   Sheet,
   SheetContent,
@@ -14,8 +14,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '~/components/ui/sheet.tsx'
-import {PanelLeft} from 'lucide-react'
-import {Button} from '~/components/ui/button.tsx'
+import { PanelLeft } from 'lucide-react'
+import { Button } from '~/components/ui/button.tsx'
 import React from 'react'
 
 export type LoaderData = {
@@ -23,10 +23,10 @@ export type LoaderData = {
   profile?: UserType
 }
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
-  const {sessionManager} = await getSessionManager(request)
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { sessionManager } = await getSessionManager(request)
   const isAuthenticated = await kindeClient.isAuthenticated(sessionManager)
-  if (!isAuthenticated) return {isAuthenticated}
+  if (!isAuthenticated) return { isAuthenticated }
 
   const profile = await kindeClient.getUserProfile(sessionManager)
   return {
@@ -64,15 +64,10 @@ function MobileSidebar() {
       <div
         className="fixed left-0 top-0 h-screen w-6 md:hidden"
         onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-      ></div>
-      <div
-        className="block md:hidden"
-        onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
+      />
+      <div className="block md:hidden">
         <Sheet open={isOpen}>
           <SheetTrigger>
             <Button size="icon" variant="ghost" onClick={() => setIsOpen(true)}>
@@ -88,6 +83,12 @@ function MobileSidebar() {
               <SheetTitle className="px-7 text-left">Menu</SheetTitle>
             </SheetHeader>
             <Sidebar />
+            <div
+              className='md:hidden fixed top-0 right-0 h-screen w-[calc(100%_-_var(--sidebar-width))]'
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              onTouchMove={onTouchMove}
+            />
           </SheetContent>
         </Sheet>
       </div>
@@ -96,7 +97,7 @@ function MobileSidebar() {
 }
 
 function User() {
-  const {isAuthenticated, profile} = useLiveLoader<LoaderData>()
+  const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
 
   if (!isAuthenticated) return <></>
   return (
@@ -112,7 +113,7 @@ function User() {
 }
 
 function Index() {
-  const {isAuthenticated, profile} = useLiveLoader<LoaderData>()
+  const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
 
   if (!isAuthenticated) return <Landing />
   return (
