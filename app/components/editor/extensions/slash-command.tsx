@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type {ReactNode} from 'react'
 import React, {
   useState,
   useEffect,
@@ -6,11 +6,11 @@ import React, {
   useRef,
   useLayoutEffect,
 } from 'react'
-import type { Editor, Range } from '@tiptap/core'
-import { Extension } from '@tiptap/core'
+import type {Editor, Range} from '@tiptap/core'
+import {Extension} from '@tiptap/core'
 import Suggestion from '@tiptap/suggestion'
-import { ReactRenderer } from '@tiptap/react'
-import { useCompletion } from 'ai/react'
+import {ReactRenderer} from '@tiptap/react'
+import {useCompletion} from 'ai/react'
 import tippy from 'tippy.js'
 import {
   Heading1,
@@ -25,11 +25,11 @@ import {
   Code,
   CheckSquare,
 } from 'lucide-react'
-import { toast } from 'sonner'
+import {toast} from 'sonner'
 import va from '@vercel/analytics'
 import Magic from '~/components/icons/magic.tsx'
-import { startImageUpload } from '../plugins/upload-images.tsx'
-import { getPrevText } from '~/lib/editor.ts'
+import {startImageUpload} from '../plugins/upload-images.tsx'
+import {getPrevText} from '~/lib/editor.ts'
 import LoadingCircle from '~/components/icons/loading-circle.tsx'
 import clsx from 'clsx'
 
@@ -59,7 +59,7 @@ const Command = Extension.create({
           range: Range
           props: any
         }) => {
-          props.command({ editor, range })
+          props.command({editor, range})
         },
       },
     }
@@ -74,7 +74,7 @@ const Command = Extension.create({
   },
 })
 
-const getSuggestionItems = ({ query }: { query: string }) => {
+const getSuggestionItems = ({query}: {query: string}) => {
   return [
     {
       title: 'Continue writing',
@@ -86,7 +86,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Send Feedback',
       description: 'Let us know how we can improve.',
       icon: <MessageSquarePlus size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor.chain().focus().deleteRange(range).run()
         window.open('/feedback', '_blank')
       },
@@ -96,7 +96,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Just start typing with plain text.',
       searchTerms: ['p', 'paragraph'],
       icon: <Text size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor
           .chain()
           .focus()
@@ -110,7 +110,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Track tasks with a to-do list.',
       searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
       icon: <CheckSquare size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleTaskList().run()
       },
     },
@@ -119,12 +119,12 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Big section heading.',
       searchTerms: ['title', 'big', 'large'],
       icon: <Heading1 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .setNode('heading', { level: 1 })
+          .setNode('heading', {level: 1})
           .run()
       },
     },
@@ -133,12 +133,12 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Medium section heading.',
       searchTerms: ['subtitle', 'medium'],
       icon: <Heading2 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .setNode('heading', { level: 2 })
+          .setNode('heading', {level: 2})
           .run()
       },
     },
@@ -147,12 +147,12 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Small section heading.',
       searchTerms: ['subtitle', 'small'],
       icon: <Heading3 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .setNode('heading', { level: 3 })
+          .setNode('heading', {level: 3})
           .run()
       },
     },
@@ -161,7 +161,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Create a simple bullet list.',
       searchTerms: ['unordered', 'point'],
       icon: <List size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleBulletList().run()
       },
     },
@@ -170,7 +170,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Create a list with numbering.',
       searchTerms: ['ordered'],
       icon: <ListOrdered size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run()
       },
     },
@@ -179,7 +179,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Capture a quote.',
       searchTerms: ['blockquote'],
       icon: <TextQuote size={18} />,
-      command: ({ editor, range }: CommandProps) =>
+      command: ({editor, range}: CommandProps) =>
         editor
           .chain()
           .focus()
@@ -193,7 +193,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Capture a code snippet.',
       searchTerms: ['codeblock'],
       icon: <Code size={18} />,
-      command: ({ editor, range }: CommandProps) =>
+      command: ({editor, range}: CommandProps) =>
         editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
     },
     {
@@ -201,7 +201,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Upload an image from your computer.',
       searchTerms: ['photo', 'picture', 'media'],
       icon: <ImageIcon size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({editor, range}: CommandProps) => {
         editor.chain().focus().deleteRange(range).run()
         // upload image
         const input = document.createElement('input')
@@ -258,7 +258,7 @@ const CommandList = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const { complete, isLoading } = useCompletion({
+  const {complete, isLoading} = useCompletion({
     id: 'novel',
     api: '/api/generate',
     onResponse: response => {
@@ -390,7 +390,7 @@ const renderItems = () => {
   let popup: any | null = null
 
   return {
-    onStart: (props: { editor: Editor; clientRect: DOMRect }) => {
+    onStart: (props: {editor: Editor; clientRect: DOMRect}) => {
       component = new ReactRenderer(CommandList, {
         props,
         editor: props.editor,
@@ -407,7 +407,7 @@ const renderItems = () => {
         placement: 'bottom-start',
       })
     },
-    onUpdate: (props: { editor: Editor; clientRect: DOMRect }) => {
+    onUpdate: (props: {editor: Editor; clientRect: DOMRect}) => {
       component?.updateProps(props)
 
       popup &&
@@ -415,7 +415,7 @@ const renderItems = () => {
           getReferenceClientRect: props.clientRect,
         })
     },
-    onKeyDown: (props: { event: KeyboardEvent }) => {
+    onKeyDown: (props: {event: KeyboardEvent}) => {
       if (props.event.key === 'Escape') {
         popup?.[0].hide()
 

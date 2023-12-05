@@ -1,9 +1,9 @@
-import { Button } from './ui/button.tsx'
-import { Laptop, MoonStar, Sun } from 'lucide-react'
-import { Theme, getSystemTheme, useTheme } from '~/utils/theme-provider.tsx'
-import { cn } from '~/lib/utils.ts'
+import {Button} from './ui/button.tsx'
+import {Laptop, MoonStar, Sun} from 'lucide-react'
+import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
+import {cn} from '~/lib/utils.ts'
 
-function ToggleTheme({ className }: React.HTMLAttributes<HTMLDivElement>) {
+function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
   const [, setTheme] = useTheme()
   const systemTheme = getSystemTheme()
 
@@ -37,4 +37,4 @@ function ToggleTheme({ className }: React.HTMLAttributes<HTMLDivElement>) {
   )
 }
 
-export { ToggleTheme }
+export {ToggleTheme}

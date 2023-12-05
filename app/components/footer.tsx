@@ -1,11 +1,11 @@
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './omition-logo.tsx'
-import { Link } from '@remix-run/react'
-import { AnchorOrLink } from '~/utils/misc.tsx'
-import { ToggleTheme } from './toggle-theme.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {getLogo} from './omition-logo.tsx'
+import {Link} from '@remix-run/react'
+import {AnchorOrLink} from '~/utils/misc.tsx'
+import {ToggleTheme} from './toggle-theme.tsx'
 
 function Footer() {
-  const { isAuthenticated } = useRootLoader()
+  const {isAuthenticated} = useRootLoader()
   const Logo = getLogo()
 
   if (isAuthenticated) return <></>

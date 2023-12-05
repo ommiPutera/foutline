@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
+import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Button } from './ui/button.tsx'
-import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
-import { Link } from '@remix-run/react'
-import { LogOut, Settings } from 'lucide-react'
-import { ToggleTheme } from './toggle-theme.tsx'
+import {Button} from './ui/button.tsx'
+import type {UserType} from '@kinde-oss/kinde-typescript-sdk'
+import {Link} from '@remix-run/react'
+import {LogOut, Settings} from 'lucide-react'
+import {ToggleTheme} from './toggle-theme.tsx'
 
 export function UserNav({
   family_name,

@@ -1,7 +1,7 @@
-import type { BubbleMenuProps } from '@tiptap/react'
-import { BubbleMenu, isNodeSelection } from '@tiptap/react'
-import type { FC } from 'react'
-import { useState } from 'react'
+import type {BubbleMenuProps} from '@tiptap/react'
+import {BubbleMenu, isNodeSelection} from '@tiptap/react'
+import type {FC} from 'react'
+import {useState} from 'react'
 import {
   BoldIcon,
   ItalicIcon,
@@ -9,10 +9,10 @@ import {
   StrikethroughIcon,
   CodeIcon,
 } from 'lucide-react'
-import { NodeSelector } from './node-selector.tsx'
-import { ColorSelector } from './color-selector.tsx'
-import { LinkSelector } from './link-selector.tsx'
-import { cn } from '~/lib/utils.ts'
+import {NodeSelector} from './node-selector.tsx'
+import {ColorSelector} from './color-selector.tsx'
+import {LinkSelector} from './link-selector.tsx'
+import {cn} from '~/lib/utils.ts'
 
 export interface BubbleMenuItem {
   name: string
@@ -59,9 +59,9 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = props => {
 
   const bubbleMenuProps: EditorBubbleMenuProps = {
     ...props,
-    shouldShow: ({ state, editor }) => {
-      const { selection } = state
-      const { empty } = selection
+    shouldShow: ({state, editor}) => {
+      const {selection} = state
+      const {empty} = selection
 
       // don't show bubble menu if:
       // - the selected node is an image
@@ -89,7 +89,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = props => {
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="rounded flex w-fit divide-x divide-gray-200 border border-gray-200 bg-white shadow-xl"
+      className="flex w-fit divide-x divide-gray-200 rounded border border-gray-200 bg-white shadow-xl"
     >
       <NodeSelector
         editor={props.editor}

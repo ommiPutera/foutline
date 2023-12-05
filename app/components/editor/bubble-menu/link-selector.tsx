@@ -1,8 +1,8 @@
-import { cn, getUrlFromString } from '~/lib/utils.ts'
-import type { Editor } from '@tiptap/core'
-import { Check, Trash } from 'lucide-react'
-import type { Dispatch, FC, SetStateAction } from 'react'
-import { useEffect, useRef } from 'react'
+import {cn, getUrlFromString} from '~/lib/utils.ts'
+import type {Editor} from '@tiptap/core'
+import {Check, Trash} from 'lucide-react'
+import type {Dispatch, FC, SetStateAction} from 'react'
+import {useEffect, useRef} from 'react'
 
 interface LinkSelectorProps {
   editor: Editor
@@ -46,10 +46,10 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             e.preventDefault()
             const input = e.currentTarget[0] as HTMLInputElement
             const url = getUrlFromString(input.value)
-            url && editor.chain().focus().setLink({ href: url }).run()
+            url && editor.chain().focus().setLink({href: url}).run()
             setIsOpen(false)
           }}
-          className="rounded fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden border border-gray-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-gray-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           <input
             ref={inputRef}

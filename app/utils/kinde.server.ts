@@ -86,7 +86,7 @@ async function getSessionManager(request: Request) {
       'createdAt' | 'updatedAt' | 'passwordHash' | 'role' | 'id'
     >) => {
       const existingUser = await prisma.user.findUnique({
-        where: { email: email }
+        where: {email: email},
       })
       if (existingUser?.id && kindeId) {
         let user = await updateExistingUser(email, kindeId)
@@ -133,7 +133,7 @@ async function getSessionManager(request: Request) {
 async function findUser(email: string) {
   if (!email) return null
   return prisma.user.findUnique({
-    where: { email: email }
+    where: {email: email},
   })
 }
 

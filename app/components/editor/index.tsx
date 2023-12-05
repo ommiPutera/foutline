@@ -1,15 +1,15 @@
 import React from 'react'
-import { useEditor, EditorContent } from '@tiptap/react'
-import { defaultEditorProps } from './props.ts'
-import { useDebouncedCallback } from 'use-debounce'
-import { useCompletion } from 'ai/react'
-import { toast } from 'sonner'
+import {useEditor, EditorContent} from '@tiptap/react'
+import {defaultEditorProps} from './props.ts'
+import {useDebouncedCallback} from 'use-debounce'
+import {useCompletion} from 'ai/react'
+import {toast} from 'sonner'
 import va from '@vercel/analytics'
-import { EditorBubbleMenu } from './bubble-menu/index.tsx'
-import { getPrevText } from '~/lib/editor.ts'
-import type { Editor as EditorClass, Extension, JSONContent } from '@tiptap/core'
-import { defaultExtensions } from './extensions/index.tsx'
-import { ImageResizer } from './extensions/image-resizer.tsx'
+import {EditorBubbleMenu} from './bubble-menu/index.tsx'
+import {getPrevText} from '~/lib/editor.ts'
+import type {Editor as EditorClass, Extension, JSONContent} from '@tiptap/core'
+import {defaultExtensions} from './extensions/index.tsx'
+import {ImageResizer} from './extensions/image-resizer.tsx'
 
 type EditorProps = {
   submit: () => void
@@ -36,7 +36,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
     titletEl,
     extensions = [],
     editorProps = {},
-    onUpdate = () => { },
+    onUpdate = () => {},
     completionApi = '/api/generate',
   },
   ref,
@@ -44,7 +44,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
   const [hydrated, setHydrated] = React.useState(false)
 
   const debouncedUpdates = useDebouncedCallback(
-    async ({ editor }: { editor: EditorClass }) => {
+    async ({editor}: {editor: EditorClass}) => {
       const json = editor.getJSON()
       setSaveStatus('Saving..')
       setContent(json)
@@ -89,7 +89,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
     autofocus: false,
   })
 
-  const { complete, completion, isLoading, stop } = useCompletion({
+  const {complete, completion, isLoading, stop} = useCompletion({
     id: 'novel',
     api: completionApi,
     onFinish: (_prompt, completion) => {
@@ -173,7 +173,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
       // onClick={() => {
       //   editor?.chain().focus().run()
       // }}
-      className="sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg relative min-h-[500px] w-full"
+      className="relative min-h-[500px] w-full sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg"
     >
       {editor && <EditorBubbleMenu editor={editor} />}
       {editor?.isActive('image') && <ImageResizer editor={editor} />}
