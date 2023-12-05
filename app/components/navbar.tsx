@@ -12,10 +12,10 @@ import {
 } from './ui/popover.tsx'
 
 function Navbar() {
-  const { user } = useRootLoader()
+  const { isAuthenticated } = useRootLoader()
   const Logo = getLogo()
 
-  if (user) return <></>
+  if (isAuthenticated) return <></>
   return (
     <div className="use-matter bg-background">
       <div className="mx-auto flex h-20 max-w-screen-2xl items-center md:h-28">

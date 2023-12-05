@@ -23,6 +23,7 @@ import tailwindStyles from './styles/tailwind.css'
 import { getSessionManager } from './utils/kinde.server.ts'
 import { ThemeProvider, useTheme } from './utils/theme-provider.tsx'
 import { getThemeSession } from './utils/theme.server.ts'
+import AppShell from './components/app-shell.tsx'
 
 export type LoaderData = SerializeFrom<typeof loader>
 export const handle: { id: string } = {
@@ -124,6 +125,14 @@ export default function AppWithProviders() {
   )
 }
 
+function OutletWithShell() {
+  return (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  )
+}
+
 function App() {
   const [theme] = useTheme()
   return (
@@ -146,7 +155,7 @@ function App() {
       </head>
       <body>
         <Navbar />
-        <Outlet />
+        <OutletWithShell />
         <Footer />
         <ScrollRestoration />
         <Scripts />

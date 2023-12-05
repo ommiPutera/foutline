@@ -6,9 +6,12 @@ import { ToggleTheme } from "./toggle-theme.tsx"
 import { Button } from "./ui/button.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
 import { UserNav } from "./user-nav.tsx"
+import { useLocation } from "@remix-run/react"
 
 function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+  const { profile, isAuthenticated } = useRootLoader()
+
+  if (!isAuthenticated) return <>{children}</>
   return (
     <div className="h-full bg-background">
       <div className="flex">
@@ -17,7 +20,7 @@ function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8 md:relative">
+            <div className="fixed top-0 mx-auto flex h-[var(--header-height)] w-full items-center max-w-screen-2xl justify-between border-b md:border-0 border-border bg-background px-6 py-3 pr-8 md:relative">
               <MobileSidebar />
               <div className="flex items-center gap-6">
                 <div className="hidden md:block">
@@ -28,7 +31,7 @@ function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                 </div>
               </div>
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl p-6 md:mt-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-6 py-2 md:mt-0">
               {children}
             </div>
           </div>
@@ -39,6 +42,7 @@ function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function MobileSidebar() {
+  const location = useLocation()
   const [isOpen, setIsOpen] = React.useState(false)
   const [touchStart, setTouchStart] = React.useState<number | null>(null)
   const [touchEnd, setTouchEnd] = React.useState<number | null>(null)
@@ -61,6 +65,13 @@ function MobileSidebar() {
     if (isRightSwipe) setIsOpen(true)
     if (isLeftSwipe) setIsOpen(false)
   }
+
+  React.useEffect(() => {
+    // Close when route changed
+    if (location.pathname) {
+      setIsOpen(false)
+    }
+  }, [location.pathname])
 
   return (
     <div>

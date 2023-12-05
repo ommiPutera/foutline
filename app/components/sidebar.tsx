@@ -22,11 +22,11 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     >
       <div className="flex flex-col space-y-4 py-3">
         <div className="flex-1 place-content-start space-y-1 px-3 py-2">
-          <ButtonLink variant="ghost" className="w-full justify-start text-xs">
+          <ButtonLink href='/' variant="ghost" className="w-full justify-start text-xs">
             <HomeIcon className="mr-3 h-5 w-5" />
             Beranda
           </ButtonLink>
-          <ButtonLink variant="ghost" className="w-full justify-start text-xs">
+          <ButtonLink href='/template' variant="ghost" className="w-full justify-start text-xs">
             <LayoutTemplate className="mr-3 h-5 w-5" />
             Template
           </ButtonLink>
@@ -126,7 +126,7 @@ function Files() {
 
 function EmptyState() {
   return (
-    <div className='px-5 mt-7 flex flex-col gap-3 items-center text-center'>
+    <div className='px-5 mt-6 flex flex-col gap-3 items-center text-center'>
       <h4 className="relative px-5 text-sm font-semibold leading-none">
         Koleksi Halaman
       </h4>

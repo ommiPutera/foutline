@@ -5,10 +5,10 @@ import { AnchorOrLink } from '~/utils/misc.tsx'
 import { ToggleTheme } from './toggle-theme.tsx'
 
 function Footer() {
-  const { user } = useRootLoader()
+  const { isAuthenticated } = useRootLoader()
   const Logo = getLogo()
 
-  if (user) return <></>
+  if (isAuthenticated) return <></>
   return (
     <footer className="mt-auto border-t border-input bg-background">
       <div className="use-matter mx-auto flex h-16 max-w-screen-2xl flex-wrap items-center md:h-24">

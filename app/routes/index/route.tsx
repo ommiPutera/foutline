@@ -1,6 +1,5 @@
 import type { LoaderFunctionArgs } from '@remix-run/node'
 import { Link } from '@remix-run/react'
-import AppShell from '~/components/app-shell.tsx'
 import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
 import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
@@ -22,9 +21,9 @@ function Index() {
 
   if (!isAuthenticated) return <Landing />
   return (
-    <AppShell>
+    <div>
       <Link to="/logout">Logout</Link>
-    </AppShell>
+    </div>
   )
 }
 
