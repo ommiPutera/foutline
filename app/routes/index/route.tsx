@@ -35,34 +35,88 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 }
 
-export default function Index() {
-  const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
-
+function MobileSidebar() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const [touchStart, setTouchStart] = React.useState(null)
-  const [touchEnd, setTouchEnd] = React.useState(null)
+  const [touchStart, setTouchStart] = React.useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = React.useState<number | null>(null)
 
-  // the required distance between touchStart and touchEnd to be detected as a swipe
-  const minSwipeDistance = 50
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+  const minSwipeDistance = 24
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setTouchEnd(null)
+    if (!e.targetTouches[0]) return
     setTouchStart(e.targetTouches[0].clientX)
   }
-
-  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
-
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!e.targetTouches[0]) return
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
-    if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
-    if (isRightSwipe) {
-      setIsOpen(true)
-    }
-    // add your conditional logic here
+    if (isRightSwipe) setIsOpen(true)
+    if (isLeftSwipe) setIsOpen(false)
   }
+
+  return (
+    <div>
+      <div
+        className='border md:hidden h-screen fixed left-0 w-6 top-0'
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      ></div>
+      <div
+        className="block md:hidden"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <Sheet open={isOpen}>
+          <SheetTrigger>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => setIsOpen(true)}
+            >
+              <PanelLeft />
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            onClose={() => setIsOpen(false)}
+            side="left"
+            className="w-[var(--sidebar-width)] overflow-y-scroll px-2 no-scrollbar pb-8"
+          >
+            <SheetHeader>
+              <SheetTitle className="px-7 text-left">Menu</SheetTitle>
+            </SheetHeader>
+            <Sidebar />
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+  )
+}
+
+function User() {
+  const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
+
+  if (!isAuthenticated) return <></>
+  return (
+    <div className="flex items-center gap-6">
+      <div className="hidden md:block">
+        <ToggleTheme />
+      </div>
+      <div>
+        <UserNav {...profile} />
+      </div>
+    </div>
+  )
+}
+
+function Index() {
+  const { isAuthenticated, profile } = useLiveLoader<LoaderData>()
 
   if (!isAuthenticated) return <Landing />
   return (
@@ -74,37 +128,10 @@ export default function Index() {
         <div className="w-full h-full relative md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="w-full h-full relative">
             <div className="fixed h-[var(--header-height)] w-full md:relative top-0 mx-auto flex max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8">
-              <div className="block md:hidden">
-                <Sheet open={isOpen}>
-                  <SheetTrigger>
-                    <Button size="icon" variant="ghost" onClick={() => setIsOpen(true)}>
-                      <PanelLeft />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent
-                    onClose={() => setIsOpen(false)}
-                    side="left"
-                    className="w-[calc(3rem_+_var(--sidebar-width))] overflow-y-scroll px-2 no-scrollbar pb-64"
-                  >
-                    <SheetHeader>
-                      <SheetTitle className="px-7 text-left">Menu</SheetTitle>
-                    </SheetHeader>
-                    <Sidebar />
-                  </SheetContent>
-                </Sheet>
-              </div>
-              <div className="hidden md:block">header</div>
-              <div className="flex items-center gap-6">
-                <div className="hidden md:block">
-                  <ToggleTheme />
-                </div>
-                <UserNav {...profile} />
-              </div>
+              <MobileSidebar />
+              <User />
             </div>
-            <div
-              className="mx-auto mt-[var(--header-height)] md:mt-0 max-w-screen-2xl p-6"
-              onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-            >
+            <div className="mx-auto mt-[var(--header-height)] md:mt-0 max-w-screen-2xl p-6">
               <p>{profile?.email}</p>
               <Link to="/logout">Logout</Link>
               <p>Test</p>
@@ -198,3 +225,5 @@ export default function Index() {
     </div>
   )
 }
+
+export default Index
