@@ -1,6 +1,6 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type {LoaderFunctionArgs} from '@remix-run/node'
 import Editor from '~/components/editor/index.tsx'
-import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
+import {useLiveLoader} from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
 import {
   Tabs,
@@ -8,22 +8,22 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/ui/tabs.tsx'
-import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
+import {getSessionManager, kindeClient} from '~/utils/kinde.server.ts'
 
 export type LoaderData = {
   isAuthenticated: boolean
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { sessionManager } = await getSessionManager(request)
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  const {sessionManager} = await getSessionManager(request)
   const isAuthenticated = await kindeClient.isAuthenticated(sessionManager)
-  if (!isAuthenticated) return { isAuthenticated }
+  if (!isAuthenticated) return {isAuthenticated}
 
-  return { isAuthenticated }
+  return {isAuthenticated}
 }
 
 function Index() {
-  const { isAuthenticated } = useLiveLoader<LoaderData>()
+  const {isAuthenticated} = useLiveLoader<LoaderData>()
 
   if (!isAuthenticated) return <Landing />
   return (
@@ -33,7 +33,6 @@ function Index() {
         <TabsTrigger value="password">Password</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        Make changes to your account here.
         <Editor />
       </TabsContent>
       <TabsContent value="password">Change your password here.</TabsContent>
