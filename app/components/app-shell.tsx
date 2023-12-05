@@ -31,7 +31,7 @@ function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                 </div>
               </div>
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-6 py-2 md:mt-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-6 py-6 md:py-0 md:mt-0">
               {children}
             </div>
           </div>

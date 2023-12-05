@@ -20,7 +20,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
         className,
       )}
     >
-      <div className="flex flex-col space-y-4 py-3">
+      <div className="flex flex-col space-y-4 pt-6 pb-3">
         <div className="flex-1 place-content-start space-y-1 px-3 py-2">
           <ButtonLink href='/' variant="ghost" className="w-full justify-start text-xs">
             <HomeIcon className="mr-3 h-5 w-5" />
@@ -30,15 +30,15 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             <LayoutTemplate className="mr-3 h-5 w-5" />
             Template
           </ButtonLink>
+          <ButtonLink href='/fav' variant="ghost" className="w-full justify-start text-xs">
+            <FileHeart className="mr-3 h-5 w-5" />
+            Halaman Favorit
+          </ButtonLink>
         </div>
         <div className="flex-2 place-content-center">
           <Files />
         </div>
         <div className="flex-1 place-content-end space-y-1 px-3 py-2">
-          <Button variant="ghost" className="w-full justify-start text-xs">
-            <FileHeart className="mr-3 h-5 w-5" />
-            Halaman Favorit
-          </Button>
           <Button variant="ghost" className="w-full justify-start text-xs">
             <FileClock className="mr-3 h-5 w-5" />
             Draf

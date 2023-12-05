@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import { Link } from '@remix-run/react'
 import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs.tsx'
 import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
 
 export type LoaderData = {
@@ -21,9 +21,14 @@ function Index() {
 
   if (!isAuthenticated) return <Landing />
   return (
-    <div>
-      <Link to="/logout">Logout</Link>
-    </div>
+    <Tabs defaultValue="account">
+      <TabsList>
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">Make changes to your account here.</TabsContent>
+      <TabsContent value="password">Change your password here.</TabsContent>
+    </Tabs>
   )
 }
 
