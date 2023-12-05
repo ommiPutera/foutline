@@ -1,4 +1,4 @@
-import type {Editor} from '@tiptap/core'
+import type { Editor } from '@tiptap/core'
 import {
   Check,
   ChevronDown,
@@ -12,8 +12,8 @@ import {
   CheckSquare,
 } from 'lucide-react'
 import * as Popover from '@radix-ui/react-popover'
-import type {Dispatch, FC, SetStateAction} from 'react'
-import type {BubbleMenuItem} from '.'
+import type { Dispatch, FC, SetStateAction } from 'react'
+import { type BubbleMenuItem } from './index.tsx'
 
 interface NodeSelectorProps {
   editor: Editor
@@ -41,20 +41,20 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
     {
       name: 'Heading 1',
       icon: Heading1,
-      command: () => editor.chain().focus().toggleHeading({level: 1}).run(),
-      isActive: () => editor.isActive('heading', {level: 1}),
+      command: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      isActive: () => editor.isActive('heading', { level: 1 }),
     },
     {
       name: 'Heading 2',
       icon: Heading2,
-      command: () => editor.chain().focus().toggleHeading({level: 2}).run(),
-      isActive: () => editor.isActive('heading', {level: 2}),
+      command: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      isActive: () => editor.isActive('heading', { level: 2 }),
     },
     {
       name: 'Heading 3',
       icon: Heading3,
-      command: () => editor.chain().focus().toggleHeading({level: 3}).run(),
-      isActive: () => editor.isActive('heading', {level: 3}),
+      command: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+      isActive: () => editor.isActive('heading', { level: 3 }),
     },
     {
       name: 'To-do List',
