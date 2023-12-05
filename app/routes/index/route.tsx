@@ -1,12 +1,13 @@
 import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
+import { Link } from '@remix-run/react'
+import { PanelLeft } from 'lucide-react'
+import React from 'react'
 import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
 import { Sidebar } from '~/components/sidebar.tsx'
-import { Link } from '@remix-run/react'
-import { ToggleTheme } from '~/components/footer.tsx'
-import { UserNav } from '~/components/user-nav.tsx'
+import { ToggleTheme } from '~/components/toggle-theme.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -14,9 +15,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '~/components/ui/sheet.tsx'
-import { PanelLeft } from 'lucide-react'
-import { Button } from '~/components/ui/button.tsx'
-import React from 'react'
+import { UserNav } from '~/components/user-nav.tsx'
+import { getSessionManager, kindeClient } from '~/utils/kinde.server.ts'
 
 export type LoaderData = {
   isAuthenticated: boolean
