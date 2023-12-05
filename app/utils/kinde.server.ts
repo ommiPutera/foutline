@@ -113,7 +113,7 @@ async function getSessionManager(request: Request) {
       const sessionId = getSessionId()
       if (sessionId) {
         unsetSessionId()
-        prisma.session
+        await prisma.session
           .delete({where: {id: sessionId}})
           .catch((error: unknown) => {
             console.error(`Failure deleting user session: `, error)
