@@ -1,14 +1,17 @@
-import { CalculatorIcon, MoreHorizontal } from "lucide-react"
+import { LayoutGrid, List, MoreHorizontal } from "lucide-react"
+import CardItem from "~/components/board/card-item.tsx"
+import FilterButton from "~/components/board/filter-button.tsx"
+import SortButton from "~/components/board/sort-button.tsx"
 import { Button } from "~/components/ui/button.tsx"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card.tsx"
 
 function Board() {
   return (
-    <div className="h-full min-h-screen flex gap-6 py-6">
-      <div className="w-full lg:border-r lg:pr-6">
+    <div className="h-full min-h-screen flex md:gap-3 lg:gap-6 py-6">
+      <div className="flex flex-col gap-6 w-full md:border-r md:pr-3 lg:pr-6">
+        <Tools />
         <Cards />
       </div>
-      <div className="hidden lg:block max-w-[260px] min-w-[260px]">
+      <div className="hidden md:block md:max-w-[200px] md:min-w-[200px] lg:max-w-[260px] lg:min-w-[260px]">
         <div className="flex items-center justify-between">
           <Button>
             Halaman baru
@@ -22,41 +25,49 @@ function Board() {
   )
 }
 
-function Cards() {
+function Tools() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 w-full gap-3 lg:gap-4">
-      <CardItem content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca asc" />
-      <CardItem content="ascs" />
+    <div className="flex justify-between items-center">
+      <div className="flex items-center gap-1">
+        <Button size="icon" variant="ghost">
+          <LayoutGrid size={16} />
+        </Button>
+        <Button size="icon" variant="ghost">
+          <List size={16} />
+        </Button>
+      </div>
+      <div className="flex items-center gap-1">
+        <FilterButton />
+        <SortButton />
+      </div>
     </div>
   )
 }
 
-function CardItem({ content }: { content: string }) {
+function Cards() {
   return (
-    <Card className="col-span-1 overflow-hidden h-fit hover:border-ring cursor-default">
-      <CardHeader className="bg-monthly-background">
-        <CardTitle className="flex items-start gap-2.5">
-          <div className="flex items-center justify-center">
-            <CalculatorIcon size={16} />
-          </div>
-          <div className="text-xs -mt-[2px] font-semibold line-clamp-2">
-            Tech Startup Pitch Deck Outline
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="bg-monthly-background relative pb-4">
-        <p className="text-xs">{content}</p>
-        <div className="absolute left-0 bottom-0 -mt-1 h-full w-full bg-gradient-to-t to-monthly-background/10 from-monthly-background/70"></div>
-      </CardContent>
-      <CardFooter className="gap-2 py-3 justify-between">
-        <div className="text-muted-foreground text-[11px] leading-none line-clamp-1">Diedit 10 menit yang lalu</div>
-        <div className="flex items-center">
-          <Button size="icon-sm" variant="ghost" className="rounded-sm">
-            <MoreHorizontal size={16} />
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="grid w-full gap-3 lg:gap-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <CardItem
+        title="Desember 2023"
+        content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca ascsss sascc ascascascs asca ass ss sssssa dsss ascascas as112 asscsmmms"
+      />
+      <CardItem
+        title="Point - poitn diskusi tentang Omition"
+        content="ascs"
+      />
+      <CardItem
+        title="November 2023"
+        content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
+      />
+      <CardItem
+        title="September 2023"
+        content="ascsss ssssa kklm asklaso1 askln1"
+      />
+      <CardItem
+        title="Mei 2023"
+        content="ascs"
+      />
+    </div>
   )
 }
 

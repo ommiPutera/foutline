@@ -12,14 +12,15 @@ const variants = {
   outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   ghost: 'hover:bg-accent focus-visible:bg-accent',
+  transparent: 'bg-none focus-visible:bg-none',
   link: 'text-primary underline-offset-4 hover:underline',
 }
 
 const sizes = {
   lg: 'h-12 md:h-11 px-6 rounded-md text-md',
-  default: 'h-11 md:h-9 px-4 rounded-md text-sm',
-  sm: 'h-8 md:h-6 px-3 rounded-md text-xs',
-  icon: 'h-8 w-8',
+  default: 'h-10 md:h-8 px-4 rounded-md text-xs',
+  sm: 'h-8 md:h-6 px-2 rounded-md text-xs',
+  icon: 'h-8 w-8 rounded-sm',
   'icon-sm': 'h-5 w-5',
 }
 

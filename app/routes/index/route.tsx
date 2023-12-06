@@ -33,7 +33,7 @@ function Index() {
           Board
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="board">
+      <TabsContent value="board" asChild>
         <Board />
       </TabsContent>
     </Tabs>
