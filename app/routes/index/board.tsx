@@ -1,4 +1,4 @@
-import { LayoutGrid, List, MoreHorizontal } from "lucide-react"
+import { LayoutGrid, List, MoreHorizontal, Plus } from "lucide-react"
 import CardItem from "~/components/board/card-item.tsx"
 import FilterButton from "~/components/board/filter-button.tsx"
 import SortButton from "~/components/board/sort-button.tsx"
@@ -13,8 +13,9 @@ function Board() {
       </div>
       <div className="hidden md:block md:max-w-[200px] md:min-w-[200px] lg:max-w-[260px] lg:min-w-[260px]">
         <div className="flex items-center justify-between">
-          <Button>
+          <Button className="flex items-center gap-2">
             Halaman baru
+            <Plus size={16} />
           </Button>
           <Button size="icon" variant="ghost">
             <MoreHorizontal size={18} />

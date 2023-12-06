@@ -4,13 +4,42 @@ import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
-  FileHeart,
   FileText,
   HomeIcon,
   LayoutTemplate,
+  Plus,
+  Star,
   Trash2,
 } from 'lucide-react'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
+// import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion.tsx'
+
+const example = [
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+]
+
+const example2 = [
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+]
 
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
@@ -27,7 +56,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             variant="ghost"
             className="w-full justify-start text-xs"
           >
-            <HomeIcon className="mr-3 h-5 w-5" />
+            <HomeIcon className="mr-3 h-5 w-5" strokeWidth={2.1} />
             Beranda
           </ButtonLink>
           <ButtonLink
@@ -35,22 +64,23 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             variant="ghost"
             className="w-full justify-start text-xs"
           >
-            <LayoutTemplate className="mr-3 h-5 w-5" />
+            <LayoutTemplate className="mr-3 h-5 w-5" strokeWidth={2.1} />
             Template
           </ButtonLink>
           <ButtonLink
-            href="/fav"
+            href="/template"
             variant="ghost"
             className="w-full justify-start text-xs"
           >
-            <FileHeart className="mr-3 h-5 w-5" />
-            Halaman Favorit
+            <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
+            Buat halaman
           </ButtonLink>
         </div>
         <div className="flex-2 place-content-center">
           <Files />
         </div>
         <div className="flex-1 place-content-end space-y-1 px-3 py-2">
+          <Favorite />
           <Button variant="ghost" className="w-full justify-start text-xs">
             <FileClock className="mr-3 h-5 w-5" />
             Draf
@@ -65,23 +95,55 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   )
 }
 
-function Files() {
-  const { posts } = useRootLoader()
-  const maxContentHeight = 300
-
-  const [isScroll, setIsScroll] = React.useState(false)
-  const [contentHeight, setContentHeight] =
-    React.useState<number>(maxContentHeight)
-  const topFileRef = React.useRef(null)
+function Favorite() {
+  // const { posts } = useRootLoader()
   const contentRef = React.useRef(null)
+  const isPostEmpty = !example?.length
 
-  const isPostEmpty = !posts?.length
+  return (
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1" className='border-0'>
+        <AccordionTrigger className='px-4 pt-0 pb-1'>
+          <Button
+            variant="transparent"
+            className="w-fit text-xs p-0"
+          >
+            Halaman Favorit
+          </Button>
+        </AccordionTrigger>
+        <AccordionContent className='pl-4 pt-0 pb-3 w-full relative'>
+          <div ref={contentRef} className='w-full'>
+            {!isPostEmpty ? (
+              example?.map((post, i) => (
+                <div key={`${post}-${i}`} className='relative'>
+                  <ButtonLink
+                    href='/aneh'
+                    variant="ghost"
+                    className="ml-4 flex justify-between rounded-md text-xs font-normal"
+                  >
+                    <span>{post.title}</span>
+                  </ButtonLink>
+                  <Button size="icon" variant="transparent" className='absolute right-0 z-10 top-0'>
+                    <Star size={12} fill='#FFA500' color='#FFA500' />
+                  </Button>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
 
-  React.useEffect(() => {
-    if (!contentRef?.current) return
-    // @ts-ignore
-    setContentHeight(Number(contentRef.current.clientHeight))
-  }, [])
+function Files() {
+  // const { posts } = useRootLoader()
+  const [isScroll, setIsScroll] = React.useState(false)
+  const topFileRef = React.useRef(null)
+
+  const isPostEmpty = !example2?.length
 
   React.useEffect(() => {
     if (!topFileRef?.current) return
@@ -108,21 +170,20 @@ function Files() {
       )}
       <ScrollArea
         className={cn(
-          '',
-          contentHeight > maxContentHeight && `h-[${maxContentHeight}px]`,
-          contentHeight < maxContentHeight && `h-[${contentHeight}px]`,
+          'h-[240px]',
+          isPostEmpty && 'h-[150px]'
         )}
       >
-        {isScroll && !isPostEmpty && (
+        {(isScroll && !isPostEmpty) && (
           <div className="absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80"></div>
         )}
-        {isScroll && !isPostEmpty && (
+        {(isScroll && !isPostEmpty) && (
           <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
-        <div className="space-y-2 pb-6" ref={contentRef}>
+        <div className="space-y-2 pb-6">
           {!isPostEmpty ? (
-            posts?.map((post, i) => (
+            example2?.map((post, i) => (
               <Button
                 key={`${post}-${i}`}
                 variant="ghost"

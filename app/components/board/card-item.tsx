@@ -1,17 +1,38 @@
-import { CalculatorIcon, MoreHorizontal } from "lucide-react";
+import { CalculatorIcon, MoreHorizontal, Star } from "lucide-react";
 import { Button } from "../ui/button.tsx";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card.tsx";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip.tsx";
+import React from "react";
 
 function CardItem({ content, title }: { content: string, title: string }) {
+  const [isHover, setIsHover] = React.useState(false)
   return (
-    <Card className="col-span-1 overflow-hidden h-full md:h-fit hover:border-ring cursor-default">
+    <Card
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      className="col-span-1 overflow-hidden h-full md:h-fit hover:border-ring cursor-default"
+    >
       <CardHeader className="bg-monthly-background pb-3">
-        <CardTitle className="flex items-start gap-2.5">
-          <div className="flex items-center justify-center">
-            <CalculatorIcon size={18} />
+        <CardTitle className="flex items-start gap-2">
+          <div className="flex items-center w-[18px] h-[18px] justify-center">
+            {isHover ?
+              <TooltipProvider delayDuration={50}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="icon" variant="transparent" className='h-5 w-5 [&:hover>svg]:fill-[#FFA500] [&:hover>svg]:text-[#FFA500]'>
+                      <Star size={16} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs">Tambahkan ke halaman favorit</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              :
+              <CalculatorIcon size={18} />
+            }
           </div>
-          <div className="text-xs font-semibold line-clamp-2">{title}</div>
+          <div className="text-xs font-semibold line-clamp-2 mt-[1px]">{title}</div>
         </CardTitle>
       </CardHeader>
       <CardContent className="bg-monthly-background relative pb-4">
