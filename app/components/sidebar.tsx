@@ -143,13 +143,15 @@ function Files() {
 
 function EmptyState() {
   return (
-    <div className="mt-6 flex flex-col items-center gap-3 px-5 text-center">
-      <h4 className="relative px-5 text-sm font-semibold leading-none">
-        Koleksi Halaman
-      </h4>
-      <p className="max-w-[150px] text-xs">
-        Semua daftar halamanmu akan tampil disini.
-      </p>
+    <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
+      <div className='flex flex-col gap-2'>
+        <h4 className="relative px-5 text-sm font-semibold leading-none">
+          Koleksi Halaman
+        </h4>
+        <p className="max-w-[150px] text-xs">
+          Semua daftar halamanmu akan tampil disini.
+        </p>
+      </div>
       <Button>Buat halaman</Button>
     </div>
   )

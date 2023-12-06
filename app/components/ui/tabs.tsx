@@ -1,13 +1,13 @@
 import * as React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
 const Tabs = TabsPrimitive.Root
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({className, ...props}, ref) => (
+>(({ className, ...props }, ref) => (
   <div className="h-[41px] overflow-hidden">
     <TabsPrimitive.List
       ref={ref}
@@ -25,11 +25,11 @@ TabsList.displayName = TabsPrimitive.List.displayName
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({className, ...props}, ref) => (
+>(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'z-2 -mb-[1px] inline-flex items-center justify-center whitespace-nowrap rounded-t-lg border px-6 py-2.5 text-sm font-medium transition-all hover:bg-muted disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground',
+      'z-2 -mb-[1px] inline-flex items-center justify-center whitespace-nowrap rounded-t-lg border px-6 py-2.5 text-sm font-semibold transition-all hover:bg-muted disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground',
       className,
     )}
     {...props}
@@ -40,7 +40,7 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({className, ...props}, ref) => (
+>(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
@@ -52,4 +52,4 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-export {Tabs, TabsList, TabsTrigger, TabsContent}
+export { Tabs, TabsList, TabsTrigger, TabsContent }

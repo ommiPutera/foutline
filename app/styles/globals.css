@@ -36,6 +36,9 @@
 
     --sidebar-width: 280px;
     --header-height: 59px;
+
+    --monthly: 36 100% 97%;
+    --monthly-background: 36 100% 97%;
   }
 
   .dark {

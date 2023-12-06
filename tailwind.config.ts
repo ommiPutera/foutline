@@ -69,6 +69,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        monthly: {
+          DEFAULT: 'hsl(var(--monthly))',
+          background: 'hsl(var(--monthly-background))',
+        }
       },
       borderRadius: {
         lg: 'var(--radius)',
