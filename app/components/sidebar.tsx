@@ -1,6 +1,6 @@
-import {cn} from '~/lib/utils.ts'
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { cn } from '~/lib/utils.ts'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -10,9 +10,9 @@ import {
   LayoutTemplate,
   Trash2,
 } from 'lucide-react'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -66,7 +66,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Files() {
-  const {posts} = useRootLoader()
+  const { posts } = useRootLoader()
   const maxContentHeight = 300
 
   const [isScroll, setIsScroll] = React.useState(false)
@@ -150,7 +150,7 @@ function EmptyState() {
       <p className="max-w-[150px] text-xs">
         Semua daftar halamanmu akan tampil disini.
       </p>
-      <Button size="sm">Buat halaman</Button>
+      <Button>Buat halaman</Button>
     </div>
   )
 }
