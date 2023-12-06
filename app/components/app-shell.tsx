@@ -1,9 +1,9 @@
-import {PanelLeft} from 'lucide-react'
+import { PanelLeft } from 'lucide-react'
 import React from 'react'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {Sidebar} from './sidebar.tsx'
-import {ToggleTheme} from './toggle-theme.tsx'
-import {Button} from './ui/button.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { Sidebar } from './sidebar.tsx'
+import { ToggleTheme } from './toggle-theme.tsx'
+import { Button } from './ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -11,11 +11,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import {UserNav} from './user-nav.tsx'
-import {useLocation} from '@remix-run/react'
+import { UserNav } from './user-nav.tsx'
+import { useLocation } from '@remix-run/react'
 
-function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile, isAuthenticated} = useRootLoader()
+function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile, isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return (
@@ -26,7 +26,7 @@ function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8 md:relative md:border-0">
+            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8 md:relative md:border-0">
               <MobileSidebar />
               <div className="flex items-center gap-6">
                 <div className="hidden md:block">
@@ -53,7 +53,7 @@ function MobileSidebar() {
   const [touchStart, setTouchStart] = React.useState<number | null>(null)
   const [touchEnd, setTouchEnd] = React.useState<number | null>(null)
 
-  const minSwipeDistance = 24
+  const minSwipeDistance = 10
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setTouchEnd(null)
     if (!e.targetTouches[0]) return
@@ -97,7 +97,7 @@ function MobileSidebar() {
           <SheetContent
             onClose={() => setIsOpen(false)}
             side="left"
-            className="no-scrollbar w-[var(--sidebar-width)] overflow-y-scroll px-2 pb-8"
+            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] overflow-y-scroll px-2 pb-8"
           >
             <SheetHeader>
               <SheetTitle className="px-7 text-left">Menu</SheetTitle>
