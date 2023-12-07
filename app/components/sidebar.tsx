@@ -123,7 +123,7 @@ function Favorite() {
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
-                  <Button size="icon" variant="transparent" className='absolute right-0 z-10 top-0'>
+                  <Button size="icon" variant="transparent" className='absolute right-0 z-10 mt-1 md:mt-0 top-0'>
                     <Star size={12} fill='#FFA500' color='#FFA500' />
                   </Button>
                 </div>

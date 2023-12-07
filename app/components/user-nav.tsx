@@ -1,4 +1,4 @@
-import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar.tsx'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import {Button} from './ui/button.tsx'
-import type {UserType} from '@kinde-oss/kinde-typescript-sdk'
-import {Link} from '@remix-run/react'
-import {LogOut, Settings} from 'lucide-react'
-import {ToggleTheme} from './toggle-theme.tsx'
+import { Button } from './ui/button.tsx'
+import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
+import { Link } from '@remix-run/react'
+import { LogOut, Settings } from 'lucide-react'
+import { ToggleTheme } from './toggle-theme.tsx'
 
 export function UserNav({
   family_name,
@@ -33,12 +33,12 @@ export function UserNav({
               </AvatarFallback>
             </Avatar>
           </Button>
-          <div className="flex max-w-[100px] flex-col space-y-1">
+          <div className="flex w-full flex-col space-y-1">
             <div className="line-clamp-1 overflow-visible text-[10px] leading-none text-muted-foreground">
               Masuk sebagai
             </div>
             <div className="line-clamp-1 text-xs font-medium leading-none">
-              {given_name + ' ' + family_name}
+              {email}
             </div>
           </div>
         </div>

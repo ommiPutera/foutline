@@ -64,7 +64,7 @@ function CardItem({ content, title }: { content: string, title: string }) {
 }
 
 function ContentPreview({ content }: { content: string | JSX.Element }) {
-  if (typeof content === 'string') return <div className="text-xs line-clamp-6">{content}</div>
+  if (typeof content === 'string') return <div className="text-[11px] leading-4 md:leading-snug md:text-xs line-clamp-6">{content}</div>
   return (
     <div>
       <p className="text-xs">{content}</p>

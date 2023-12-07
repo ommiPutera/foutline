@@ -14,8 +14,8 @@ function Board() {
       <div className="hidden md:block md:max-w-[200px] md:min-w-[200px] lg:max-w-[260px] lg:min-w-[260px]">
         <div className="flex items-center justify-between">
           <Button className="flex items-center gap-2">
-            Halaman baru
             <Plus size={16} />
+            Halaman baru
           </Button>
           <Button size="icon" variant="ghost">
             <MoreHorizontal size={18} />

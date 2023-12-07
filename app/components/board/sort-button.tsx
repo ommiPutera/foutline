@@ -17,7 +17,7 @@ function SortButton() {
           Urutkan
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-1 w-56" align="end" forceMount>
+      <DropdownMenuContent className="mt-1 w-40" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-xs text-muted-foreground font-medium leading-none">Urutkan berdasarkan</p>
