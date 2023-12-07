@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 // import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
 
 const example = [
   { title: 'woi' },
@@ -53,6 +54,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
         <div className="flex-1 place-content-start space-y-1 px-3 py-2">
           <ButtonLink
             href="/"
+            prefetch='intent'
             variant="ghost"
             className="w-full justify-start text-xs"
           >
@@ -62,19 +64,30 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           <ButtonLink
             href="/template"
             variant="ghost"
+            prefetch='intent'
             className="w-full justify-start text-xs"
           >
             <LayoutTemplate className="mr-3 h-5 w-5" strokeWidth={2.1} />
             Template
           </ButtonLink>
-          <ButtonLink
-            href="/template"
-            variant="ghost"
-            className="w-full justify-start text-xs"
-          >
-            <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
-            Buat halaman
-          </ButtonLink>
+          <Tooltip>
+            <div className="flex h-full">
+              <TooltipTrigger className='w-full'>
+                <ButtonLink
+                  href="/template"
+                  variant="ghost"
+                  prefetch='intent'
+                  className="w-full justify-start text-xs"
+                >
+                  <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
+                  Buat
+                </ButtonLink>
+              </TooltipTrigger>
+              <TooltipContent side='right'>
+                <p className="text-xs">Buat halaman baru</p>
+              </TooltipContent>
+            </div>
+          </Tooltip>
         </div>
         <div className="flex-2 place-content-center">
           <Files />
@@ -103,29 +116,40 @@ function Favorite() {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1" className='border-0'>
-        <AccordionTrigger className='px-4 pt-0 pb-1'>
-          <Button
-            variant="transparent"
-            className="w-fit text-xs p-0"
-          >
+        <Button
+          asChild
+          variant="transparent"
+          className="w-fit text-xs p-0 justify-start px-4"
+        >
+          <AccordionTrigger>
             Halaman Favorit
-          </Button>
-        </AccordionTrigger>
-        <AccordionContent className='pl-4 pt-0 pb-3 w-full relative'>
+          </AccordionTrigger>
+        </Button>
+        <AccordionContent className='pl-4 pt-1 pr-1 pb-3 w-full relative'>
           <div ref={contentRef} className='w-full'>
             {!isPostEmpty ? (
               example?.map((post, i) => (
                 <div key={`${post}-${i}`} className='relative'>
                   <ButtonLink
                     href='/aneh'
+                    prefetch='intent'
                     variant="ghost"
                     className="ml-4 flex justify-between rounded-md text-xs font-normal"
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
-                  <Button size="icon" variant="transparent" className='absolute right-0 z-10 mt-1 md:mt-0 top-0'>
-                    <Star size={12} fill='#FFA500' color='#FFA500' />
-                  </Button>
+                  <Tooltip>
+                    <div className="flex h-full">
+                      <Button asChild size="icon" variant="transparent" className='absolute right-0 z-10 mt-1 md:mt-0 top-0'>
+                        <TooltipTrigger>
+                          <Star size={13} fill='#FFA500' color='#FFA500' />
+                        </TooltipTrigger>
+                      </Button>
+                      <TooltipContent side='right'>
+                        <p className="text-xs">Hapus halaman ini dari favorit</p>
+                      </TooltipContent>
+                    </div>
+                  </Tooltip>
                 </div>
               ))
             ) : (
@@ -150,7 +174,7 @@ function Files() {
     const observer = new IntersectionObserver(function (entries) {
       for (let entry of entries) {
         if (entry.isIntersecting) setIsScroll(false)
-        setIsScroll(true)
+        else setIsScroll(true)
       }
     })
     observer.observe(topFileRef.current)

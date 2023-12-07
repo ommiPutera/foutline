@@ -11,7 +11,7 @@ import {
 import { Button } from './ui/button.tsx'
 import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
 import { Link } from '@remix-run/react'
-import { LogOut, Settings } from 'lucide-react'
+import { CircleUser, LogOut } from 'lucide-react'
 import { ToggleTheme } from './toggle-theme.tsx'
 
 export function UserNav({
@@ -43,7 +43,7 @@ export function UserNav({
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-1 w-56" align="end" forceMount>
+      <DropdownMenuContent className="mt-1 w-44" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
@@ -60,10 +60,10 @@ export function UserNav({
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link to="/">
+          <Link to="/user/account" prefetch='intent'>
             <DropdownMenuItem>
-              <Settings size="16" className="mr-3" />
-              <span>Pengaturan</span>
+              <CircleUser size="16" className="mr-3" />
+              <span>Akun anda</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>

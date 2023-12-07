@@ -1,7 +1,7 @@
 import { CalculatorIcon, MoreHorizontal, Star } from "lucide-react";
 import { Button } from "../ui/button.tsx";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card.tsx";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip.tsx";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip.tsx";
 import React from "react";
 
 function CardItem({ content, title }: { content: string, title: string }) {
@@ -16,18 +16,16 @@ function CardItem({ content, title }: { content: string, title: string }) {
         <CardTitle className="flex items-start gap-2">
           <div className="flex items-center w-[18px] h-[18px] justify-center">
             {isHover ?
-              <TooltipProvider delayDuration={50}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="icon" variant="transparent" className='h-5 w-5 [&:hover>svg]:fill-[#FFA500] [&:hover>svg]:text-[#FFA500]'>
-                      <Star size={16} />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="text-xs">Tambahkan ke halaman favorit</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="icon" variant="transparent" className='h-5 w-5 [&:hover>svg]:fill-[#FFA500] [&:hover>svg]:text-[#FFA500]'>
+                    <Star size={16} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-xs">Tambahkan ke halaman favorit</p>
+                </TooltipContent>
+              </Tooltip>
               :
               <CalculatorIcon size={18} />
             }
@@ -41,23 +39,28 @@ function CardItem({ content, title }: { content: string, title: string }) {
       </CardContent>
       <CardFooter className="gap-2 py-2.5 justify-between">
         <div className="flex flex-col gap-1.5">
-          <div className="text-[9px] rounded-sm leading-none line-clamp-1 bg-ring w-fit px-1 py-[3px] text-white">Selesai</div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="text-[9px] rounded-sm leading-none line-clamp-1 bg-ring w-fit px-1 py-[3px] text-white">Selesai</div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-xs">Status halaman</p>
+            </TooltipContent>
+          </Tooltip>
           <div className="text-muted-foreground text-[10px] leading-none line-clamp-1">Diedit 10 menit yang lalu</div>
         </div>
-        <TooltipProvider delayDuration={50}>
-          <Tooltip>
-            <div className="flex h-full">
-              <TooltipTrigger asChild>
-                <Button size="icon-sm" variant="transparent" className="rounded-sm">
-                  <MoreHorizontal size={16} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">Lainnya</p>
-              </TooltipContent>
-            </div>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <div className="flex h-full">
+            <TooltipTrigger asChild>
+              <Button size="icon-sm" variant="transparent" className="rounded-sm">
+                <MoreHorizontal size={16} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-xs">Lainnya</p>
+            </TooltipContent>
+          </div>
+        </Tooltip>
       </CardFooter>
     </Card>
   )

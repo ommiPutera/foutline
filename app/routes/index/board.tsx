@@ -17,7 +17,7 @@ function Board() {
             <Plus size={16} />
             Halaman baru
           </Button>
-          <Button size="icon" variant="ghost">
+          <Button size="icon" variant="transparent">
             <MoreHorizontal size={18} />
           </Button>
         </div>
@@ -54,6 +54,30 @@ function Cards() {
       />
       <CardItem
         title="Point - poitn diskusi tentang Omition"
+        content="ascs"
+      />
+      <CardItem
+        title="November 2023"
+        content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
+      />
+      <CardItem
+        title="September 2023"
+        content="ascsss ssssa kklm asklaso1 askln1"
+      />
+      <CardItem
+        title="Mei 2023"
+        content="ascs"
+      />
+      <CardItem
+        title="November 2023"
+        content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
+      />
+      <CardItem
+        title="September 2023"
+        content="ascsss ssssa kklm asklaso1 askln1"
+      />
+      <CardItem
+        title="Mei 2023"
         content="ascs"
       />
       <CardItem

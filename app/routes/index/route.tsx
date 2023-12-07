@@ -30,7 +30,7 @@ function Index() {
     <Tabs defaultValue="board">
       <TabsList>
         <TabsTrigger value="board">
-          Board
+          Board view
         </TabsTrigger>
       </TabsList>
       <TabsContent value="board" asChild>

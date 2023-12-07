@@ -1,9 +1,11 @@
-import { PanelLeft } from 'lucide-react'
+import { Link, useLocation } from '@remix-run/react'
+import { FileKey2, MoreVertical, PanelLeft, Settings } from 'lucide-react'
 import React from 'react'
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import { Sidebar } from './sidebar.tsx'
 import { ToggleTheme } from './toggle-theme.tsx'
 import { Button } from './ui/button.tsx'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu.tsx'
 import {
   Sheet,
   SheetContent,
@@ -11,33 +13,41 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip.tsx'
 import { UserNav } from './user-nav.tsx'
-import { useLocation } from '@remix-run/react'
 
 function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile, isAuthenticated } = useRootLoader()
+  const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return (
+    <TooltipProvider delayDuration={80} disableHoverableContent>
+      <Shell>
+        {children}
+      </Shell>
+    </TooltipProvider>
+  )
+}
+
+function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
+  return (
     <div className="h-full bg-background">
       <div className="flex">
-        <div className="fixed hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border px-1 md:block">
+        <div className="fixed hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border px-1 md:block z-50">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-6 py-3 pr-8 md:relative md:border-0">
+            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background pl-6 pr-4 py-3 md:relative md:border-0">
               <MobileSidebar />
               <div className="flex items-center gap-6">
-                <div className="hidden md:block">
-                  <ToggleTheme />
-                </div>
-                <div>
-                  <UserNav {...profile} />
-                </div>
+                <ToggleTheme className="hidden md:flex" />
+                <UserNav {...profile} />
+                <More />
               </div>
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-6 py-6 md:mt-0 md:py-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-0">
               {children}
             </div>
           </div>
@@ -115,4 +125,42 @@ function MobileSidebar() {
     </div>
   )
 }
+
+function More() {
+  return (
+    <DropdownMenu>
+      <Tooltip>
+        <div className="flex h-full">
+          <TooltipTrigger>
+            <DropdownMenuTrigger asChild>
+              <Button size="icon" variant="transparent" className="rounded-sm">
+                <MoreVertical size={18} />
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent className='mr-2 mt-2'>
+            <p className="text-xs">Pengaturan, kunci, style, dan lainnya..</p>
+          </TooltipContent>
+        </div>
+      </Tooltip>
+      <DropdownMenuContent className="mt-1 w-44" align="end" forceMount>
+        <DropdownMenuGroup>
+          <Link to="/" prefetch='intent'>
+            <DropdownMenuItem>
+              <Settings size="16" className="mr-3" />
+              <span>Pengaturan</span>
+            </DropdownMenuItem>
+          </Link>
+          <Link to="/" prefetch='intent'>
+            <DropdownMenuItem>
+              <FileKey2 size="16" className="mr-3" />
+              <span>Kunci halaman</span>
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
 export default AppShell
