@@ -72,7 +72,7 @@ module.exports = {
         monthly: {
           DEFAULT: 'hsl(var(--monthly))',
           background: 'hsl(var(--monthly-background))',
-        }
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

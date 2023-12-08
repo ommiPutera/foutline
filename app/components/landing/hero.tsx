@@ -1,4 +1,4 @@
-import { ButtonLink } from '../ui/button.tsx'
+import {ButtonLink} from '../ui/button.tsx'
 
 function Hero() {
   return (
@@ -17,18 +17,20 @@ function Hero() {
           membuat kesalahan dalam pengambilan keputusan ekonomi.
         </h6>
         <div className="hidden place-content-center gap-3 md:flex">
-          <ButtonLink to="/" prefetch='intent' variant="outline" size="lg">
+          <ButtonLink to="/" prefetch="intent" variant="outline" size="lg">
             Baca tutorial
           </ButtonLink>
-          <ButtonLink to="/register" prefetch='intent' size="lg">
+          <ButtonLink to="/register" prefetch="intent" size="lg">
             Daftar sekarang
           </ButtonLink>
         </div>
         <div className="flex flex-col place-content-center gap-3 md:hidden">
-          <ButtonLink prefetch='intent' to="/" variant="outline">
+          <ButtonLink prefetch="intent" to="/" variant="outline">
             Baca tutorial
           </ButtonLink>
-          <ButtonLink prefetch='intent' to="/register">Daftar sekarang</ButtonLink>
+          <ButtonLink prefetch="intent" to="/register">
+            Daftar sekarang
+          </ButtonLink>
         </div>
       </div>
     </div>

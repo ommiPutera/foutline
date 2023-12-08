@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -12,37 +12,42 @@ import {
   Trash2,
 } from 'lucide-react'
 // import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from './ui/accordion.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
 
 const example = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
 ]
 
 const example2 = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
 ]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -54,7 +59,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
         <div className="flex-1 place-content-start space-y-1 px-3 py-2">
           <ButtonLink
             href="/"
-            prefetch='intent'
+            prefetch="intent"
             variant="ghost"
             className="w-full justify-start text-xs"
           >
@@ -64,7 +69,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           <ButtonLink
             href="/template"
             variant="ghost"
-            prefetch='intent'
+            prefetch="intent"
             className="w-full justify-start text-xs"
           >
             <LayoutTemplate className="mr-3 h-5 w-5" strokeWidth={2.1} />
@@ -72,18 +77,18 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           </ButtonLink>
           <Tooltip>
             <div className="flex h-full">
-              <TooltipTrigger className='w-full'>
+              <TooltipTrigger className="w-full">
                 <ButtonLink
                   href="/template"
                   variant="ghost"
-                  prefetch='intent'
+                  prefetch="intent"
                   className="w-full justify-start text-xs"
                 >
                   <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
                   Buat
                 </ButtonLink>
               </TooltipTrigger>
-              <TooltipContent side='right'>
+              <TooltipContent side="right">
                 <p className="text-xs">Buat halaman baru</p>
               </TooltipContent>
             </div>
@@ -115,24 +120,22 @@ function Favorite() {
 
   return (
     <Accordion type="single" collapsible>
-      <AccordionItem value="item-1" className='border-0'>
+      <AccordionItem value="item-1" className="border-0">
         <Button
           asChild
           variant="transparent"
-          className="w-fit text-xs p-0 justify-start px-4"
+          className="w-fit justify-start p-0 px-4 text-xs"
         >
-          <AccordionTrigger>
-            Halaman Favorit
-          </AccordionTrigger>
+          <AccordionTrigger>Halaman Favorit</AccordionTrigger>
         </Button>
-        <AccordionContent className='pl-4 pt-1 pr-1 pb-3 w-full relative'>
-          <div ref={contentRef} className='w-full'>
+        <AccordionContent className="relative w-full pb-3 pl-4 pr-1 pt-1">
+          <div ref={contentRef} className="w-full">
             {!isPostEmpty ? (
               example?.map((post, i) => (
-                <div key={`${post}-${i}`} className='relative'>
+                <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
-                    href='/aneh'
-                    prefetch='intent'
+                    href="/aneh"
+                    prefetch="intent"
                     variant="ghost"
                     className="ml-4 flex justify-between rounded-md text-xs font-normal"
                   >
@@ -140,13 +143,20 @@ function Favorite() {
                   </ButtonLink>
                   <Tooltip>
                     <div className="flex h-full">
-                      <Button asChild size="icon" variant="transparent" className='absolute right-0 z-10 mt-1 md:mt-0 top-0'>
+                      <Button
+                        asChild
+                        size="icon"
+                        variant="transparent"
+                        className="absolute right-0 top-0 z-10 mt-1 md:mt-0"
+                      >
                         <TooltipTrigger>
-                          <Star size={13} fill='#FFA500' color='#FFA500' />
+                          <Star size={13} fill="#FFA500" color="#FFA500" />
                         </TooltipTrigger>
                       </Button>
-                      <TooltipContent side='right'>
-                        <p className="text-xs">Hapus halaman ini dari favorit</p>
+                      <TooltipContent side="right">
+                        <p className="text-xs">
+                          Hapus halaman ini dari favorit
+                        </p>
                       </TooltipContent>
                     </div>
                   </Tooltip>
@@ -192,16 +202,11 @@ function Files() {
           </p>
         </div>
       )}
-      <ScrollArea
-        className={cn(
-          'h-[240px]',
-          isPostEmpty && 'h-[150px]'
-        )}
-      >
-        {(isScroll && !isPostEmpty) && (
+      <ScrollArea className={cn('h-[240px]', isPostEmpty && 'h-[150px]')}>
+        {isScroll && !isPostEmpty && (
           <div className="absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80"></div>
         )}
-        {(isScroll && !isPostEmpty) && (
+        {isScroll && !isPostEmpty && (
           <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
@@ -229,7 +234,7 @@ function Files() {
 function EmptyState() {
   return (
     <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
-      <div className='flex flex-col gap-2'>
+      <div className="flex flex-col gap-2">
         <h4 className="relative px-5 text-sm font-semibold leading-none">
           Koleksi Halaman
         </h4>

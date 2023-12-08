@@ -1,9 +1,9 @@
-import { Link } from '@remix-run/react'
+import {Link} from '@remix-run/react'
 import React from 'react'
-import { BurgerMenu } from '~/utils/icons.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './omition-logo.tsx'
-import { ButtonLink } from './ui/button.tsx'
+import {BurgerMenu} from '~/utils/icons.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {getLogo} from './omition-logo.tsx'
+import {ButtonLink} from './ui/button.tsx'
 import {
   Popover,
   PopoverContent,
@@ -12,7 +12,7 @@ import {
 } from './ui/popover.tsx'
 
 function Navbar() {
-  const { isAuthenticated } = useRootLoader()
+  const {isAuthenticated} = useRootLoader()
   const Logo = getLogo()
 
   if (isAuthenticated) return <></>
@@ -21,15 +21,17 @@ function Navbar() {
       <div className="mx-auto flex h-20 max-w-screen-2xl items-center md:h-28">
         <nav className="flex w-full items-center px-5vw">
           <div className="flex flex-1 place-content-start items-center gap-8">
-            <Link to="/" prefetch='intent'>
+            <Link to="/" prefetch="intent">
               <Logo />
             </Link>
           </div>
           <div className="hidden flex-1 place-content-end gap-3 md:flex">
-            <ButtonLink to="/login" prefetch='intent' variant="outline">
+            <ButtonLink to="/login" prefetch="intent" variant="outline">
               Masuk
             </ButtonLink>
-            <ButtonLink to="/register" prefetch='intent'>Buat akun</ButtonLink>
+            <ButtonLink to="/register" prefetch="intent">
+              Buat akun
+            </ButtonLink>
           </div>
           <MobileNav />
         </nav>
@@ -52,7 +54,7 @@ function MobileNav() {
   )
 }
 
-function MobileMenuList({ isOpen }: { isOpen: boolean }) {
+function MobileMenuList({isOpen}: {isOpen: boolean}) {
   React.useEffect(() => {
     if (isOpen) {
       document.body.classList.add('fixed')

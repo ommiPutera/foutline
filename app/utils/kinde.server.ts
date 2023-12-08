@@ -3,15 +3,15 @@ import {
   GrantType,
   createKindeServerClient,
 } from '@kinde-oss/kinde-typescript-sdk'
+import type {User} from '@prisma/client'
 import {createCookieSessionStorage} from '@remix-run/node'
+import bcrypt from 'bcryptjs'
 import {
   createSession,
   getUserFormSessionId,
   prisma,
   sessionExpirationTime,
 } from './prisma.server.ts'
-import type {User} from '@prisma/client'
-import bcrypt from 'bcryptjs'
 
 const kindeClient = createKindeServerClient(GrantType.AUTHORIZATION_CODE, {
   authDomain: process.env.KINDE_DOMAIN ?? '',
@@ -146,4 +146,4 @@ async function updateExistingUser(email: string, kindeId: string) {
   return user
 }
 
-export {getSessionManager, kindeClient, sessionIdKey, sessionStorage, findUser}
+export {findUser, getSessionManager, kindeClient, sessionIdKey, sessionStorage}

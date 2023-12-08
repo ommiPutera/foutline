@@ -32,8 +32,8 @@ export const handle: {id: string} = {
 
 export async function loader({request}: DataFunctionArgs) {
   const {getUser, isAuthenticated, profile} = await getSessionManager(request)
-  const userFromSession = await getUser()
   const [themeSession] = await Promise.all([getThemeSession(request)])
+  const userFromSession = await getUser()
 
   const user = {...userFromSession}
   const {posts, sessions} = user

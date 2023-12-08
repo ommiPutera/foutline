@@ -1,14 +1,14 @@
-import { Button } from './ui/button.tsx'
-import { Laptop, MoonStar, Sun } from 'lucide-react'
-import { Theme, getSystemTheme, useTheme } from '~/utils/theme-provider.tsx'
-import { cn } from '~/lib/utils.ts'
+import {Button} from './ui/button.tsx'
+import {Laptop, MoonStar, Sun} from 'lucide-react'
+import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
+import {cn} from '~/lib/utils.ts'
 
-function ToggleTheme({ className }: React.HTMLAttributes<HTMLDivElement>) {
+function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
   const [, setTheme] = useTheme()
   const systemTheme = getSystemTheme()
 
   return (
-    <div className={cn('flex gap-4 p-2 w-fit rounded-md border', className)}>
+    <div className={cn('flex w-fit gap-4 rounded-md border p-2', className)}>
       <Button
         size="icon-sm"
         variant="ghost"
@@ -37,4 +37,4 @@ function ToggleTheme({ className }: React.HTMLAttributes<HTMLDivElement>) {
   )
 }
 
-export { ToggleTheme }
+export {ToggleTheme}

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
+import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Button } from './ui/button.tsx'
-import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
-import { Link } from '@remix-run/react'
-import { CircleUser, LogOut } from 'lucide-react'
-import { ToggleTheme } from './toggle-theme.tsx'
+import {Button} from './ui/button.tsx'
+import type {UserType} from '@kinde-oss/kinde-typescript-sdk'
+import {Link} from '@remix-run/react'
+import {CircleUser, LogOut} from 'lucide-react'
+import {ToggleTheme} from './toggle-theme.tsx'
 
 export function UserNav({
   family_name,
@@ -60,7 +60,7 @@ export function UserNav({
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link to="/user/account" prefetch='intent'>
+          <Link to="/user/account" prefetch="intent">
             <DropdownMenuItem>
               <CircleUser size="16" className="mr-3" />
               <span>Akun anda</span>
