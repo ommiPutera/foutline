@@ -12,32 +12,31 @@ import {
   prisma,
   sessionExpirationTime,
 } from './prisma.server.ts'
-import {createUpstashSessionStorage} from './upstash.server.ts'
+import {createUpstashSessionStorage} from '../sessions/upstash.server.ts'
 
-const EXPIRATION_DURATION_IN_SECONDS = sessionExpirationTime / 1000
+const EXPIRATION_DURATION_IN_SECONDS = 60;
+
+const sessionSecret = process.env.SESSION_SECRET
+if(!sessionSecret) throw new Error (`Session secret needed: SESSION_SECRET`)
+
+const expires = new Date();
+expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS);
 const sessionIdKey = '__session_id__'
 
-let sessionSecret = process.env.SESSION_SECRET
-if (!sessionSecret) {
-  throw new Error('Must enviornment variable SESSION_SECRET')
-}
-
-const expires = new Date()
-expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
-
-const sessionCookie = createCookie('upstash_session', {
+const sessionCookie = createCookie('__session', {
   secure: true,
   secrets: [sessionSecret],
   sameSite: 'lax',
   path: '/',
   maxAge: sessionExpirationTime / 1000,
+  expires,
   httpOnly: true,
 })
 
 const {getSession, commitSession, destroySession} =
   process.env.NODE_ENV === 'development'
     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
-    : createUpstashSessionStorage(sessionCookie)
+    : createUpstashSessionStorage({ cookie: sessionCookie });
 
 async function getSessionManager(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
