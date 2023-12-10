@@ -1,18 +1,19 @@
 import type {LoaderFunctionArgs} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 import {
+  destroySession,
   getSessionManager,
   kindeClient,
-  sessionStorage,
-} from '~/utils/kinde.server.ts'
+} from '~/utils/kinde2.server.ts'
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const {sessionManager, session, signOut} = await getSessionManager(request)
-  const logout = await kindeClient.logout(sessionManager)
-  await signOut()
-  return redirect(logout.toString(), {
+
+  const logoutUrl = await kindeClient.logout(sessionManager)
+  await signOut(request)
+  return redirect(logoutUrl.toString(), {
     headers: {
-      'Set-Cookie': await sessionStorage.destroySession(session),
+      'Set-Cookie': await destroySession(session),
     },
   })
 }

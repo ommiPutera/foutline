@@ -20,10 +20,10 @@ import Footer from './components/footer.tsx'
 import Navbar from './components/navbar.tsx'
 import globalStyles from './styles/globals.css'
 import tailwindStyles from './styles/tailwind.css'
-import {getSessionManager} from './utils/kinde.server.ts'
 import {ThemeProvider, useTheme} from './utils/theme-provider.tsx'
 import {getThemeSession} from './utils/theme.server.ts'
 import AppShell from './components/app-shell.tsx'
+import {getKindeSession, getUser} from './utils/kinde2.server.ts'
 
 export type LoaderData = SerializeFrom<typeof loader>
 export const handle: {id: string} = {
@@ -31,18 +31,20 @@ export const handle: {id: string} = {
 }
 
 export async function loader({request}: DataFunctionArgs) {
-  const {getUser, isAuthenticated, profile} = await getSessionManager(request)
-  const [themeSession] = await Promise.all([getThemeSession(request)])
-  const userFromSession = await getUser()
+  const [themeSession, kindeSession, userFromSession] = await Promise.all([
+    getThemeSession(request),
+    getKindeSession(request),
+    getUser(request),
+  ])
 
-  const user = {...userFromSession}
-  const {posts, sessions} = user
+  // console.log('themeSession: ', themeSession)
+  // console.log('kindeSession: ', kindeSession)
+  // console.log('userFromSession: ', userFromSession)
+
   const data = {
-    user,
-    posts,
-    sessions,
-    isAuthenticated,
-    profile,
+    user: userFromSession,
+    isAuthenticated: kindeSession.isAuthenticated,
+    profile: kindeSession.profile,
     requestInfo: {
       session: {
         theme: themeSession.getTheme(),

@@ -2,8 +2,10 @@ import type {Session} from '@prisma/client'
 import {PrismaClient} from '@prisma/client'
 import {remember} from '@epic-web/remember'
 import chalk from 'chalk'
+import {redirect} from '@remix-run/node'
 
 const logThreshold = 500
+// const sessionExpirationTime = 1000 * 20
 const sessionExpirationTime = 1000 * 60 * 60 * 24 * 365
 const prisma = remember('prisma', getClient)
 
@@ -55,7 +57,10 @@ async function getUserFormSessionId(sessionId: string) {
     where: {id: sessionId},
     include: {user: true},
   })
-  if (!session) throw new Error('No user found')
+  if (!session) {
+    console.log('WHHHHHH))))))))')
+    throw redirect('/logout')
+  }
   return await prisma.user.findFirst({
     where: {email: session.user?.email},
     include: {posts: true, sessions: true},

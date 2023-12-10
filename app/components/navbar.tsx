@@ -26,12 +26,10 @@ function Navbar() {
             </Link>
           </div>
           <div className="hidden flex-1 place-content-end gap-3 md:flex">
-            <ButtonLink to="/login" prefetch="intent" variant="outline">
+            <ButtonLink to="/login" variant="outline">
               Masuk
             </ButtonLink>
-            <ButtonLink to="/register" prefetch="intent">
-              Buat akun
-            </ButtonLink>
+            <ButtonLink to="/register">Buat akun</ButtonLink>
           </div>
           <MobileNav />
         </nav>

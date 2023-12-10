@@ -1,4 +1,4 @@
-import type {LoaderFunctionArgs} from '@remix-run/node'
+import {type LoaderFunctionArgs} from '@remix-run/node'
 import {useLiveLoader} from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
 import {
@@ -7,7 +7,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/ui/tabs.tsx'
-import {getSessionManager, kindeClient} from '~/utils/kinde.server.ts'
+import {getSessionManager} from '~/utils/kinde2.server.ts'
 import Board from './board.tsx'
 
 export type LoaderData = {
@@ -15,11 +15,10 @@ export type LoaderData = {
 }
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
-  const {sessionManager} = await getSessionManager(request)
-  const isAuthenticated = await kindeClient.isAuthenticated(sessionManager)
+  const {isAuthenticated} = await getSessionManager(request)
   if (!isAuthenticated) return {isAuthenticated}
 
-  return {isAuthenticated}
+  return {isAuthenticated: isAuthenticated}
 }
 
 function Index() {
