@@ -31,7 +31,7 @@
 
 .use-matter {
   font-family:
-    Matter, 
+    Matter,
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -45,5 +45,5 @@
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol',
-    'Noto Color Emoji';;
+    'Noto Color Emoji';
 }

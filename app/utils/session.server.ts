@@ -3,10 +3,10 @@ import {
   GrantType,
   type SessionManager,
 } from '@kinde-oss/kinde-typescript-sdk'
-import type { User } from '@prisma/client'
-import { createCookie, createFileSessionStorage } from '@remix-run/node'
+import type {User} from '@prisma/client'
+import {createCookie, createFileSessionStorage} from '@remix-run/node'
 import bcrypt from 'bcryptjs'
-import { createUpstashSessionStorage } from '../sessions/upstash.server.ts'
+import {createUpstashSessionStorage} from '../sessions/upstash.server.ts'
 import {
   createSession,
   getUserFormSessionId,
@@ -15,7 +15,7 @@ import {
 } from './prisma.server.ts'
 
 const sessionSecret = process.env.SESSION_SECRET
-if(!sessionSecret) throw new Error (`Session secret needed: SESSION_SECRET`)
+if (!sessionSecret) throw new Error(`Session secret needed: SESSION_SECRET`)
 
 const sessionIdKey = '__session_id__'
 const sessionCookie = createCookie('__session', {
@@ -30,7 +30,7 @@ const sessionCookie = createCookie('__session', {
 const {getSession, commitSession, destroySession} =
   process.env.NODE_ENV === 'development'
     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
-    : createUpstashSessionStorage({ cookie: sessionCookie });
+    : createUpstashSessionStorage({cookie: sessionCookie})
 
 async function getSessionManager(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
@@ -185,6 +185,5 @@ export {
   getSessionManager,
   getUser,
   kindeClient,
-  sessionIdKey
+  sessionIdKey,
 }
-
