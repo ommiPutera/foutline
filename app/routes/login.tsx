@@ -4,7 +4,7 @@ import {
   commitSession,
   getSessionManager,
   kindeClient,
-} from '~/utils/kinde2.server.ts'
+} from '~/utils/session.server.ts'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager, session } = await getSessionManager(request)

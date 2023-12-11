@@ -3,33 +3,27 @@ import {
   GrantType,
   type SessionManager,
 } from '@kinde-oss/kinde-typescript-sdk'
-import type {User} from '@prisma/client'
-import {createCookie, createFileSessionStorage} from '@remix-run/node'
+import type { User } from '@prisma/client'
+import { createCookie, createFileSessionStorage } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
+import { createUpstashSessionStorage } from '../sessions/upstash.server.ts'
 import {
   createSession,
   getUserFormSessionId,
   prisma,
   sessionExpirationTime,
 } from './prisma.server.ts'
-import {createUpstashSessionStorage} from '../sessions/upstash.server.ts'
-
-const EXPIRATION_DURATION_IN_SECONDS = 60;
 
 const sessionSecret = process.env.SESSION_SECRET
 if(!sessionSecret) throw new Error (`Session secret needed: SESSION_SECRET`)
 
-const expires = new Date();
-expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS);
 const sessionIdKey = '__session_id__'
-
 const sessionCookie = createCookie('__session', {
   secure: true,
   secrets: [sessionSecret],
   sameSite: 'lax',
   path: '/',
   maxAge: sessionExpirationTime / 1000,
-  expires,
   httpOnly: true,
 })
 
@@ -49,13 +43,13 @@ async function getSessionManager(request: Request) {
     },
     async setSessionItem(key: string, value: unknown) {
       session.set(key, value)
-      await commitSession(session)
+      commitSession(session)
     },
     async removeSessionItem(key: string) {
       session.unset(key)
     },
     async destroySession() {
-      await destroySession(session)
+      destroySession(session)
     },
   }
 
@@ -89,6 +83,7 @@ async function getSessionManager(request: Request) {
 async function signOut(request: Request) {
   const {getSessionId, unsetSessionId} = await getSessionManager(request)
   const sessionId = await getSessionId()
+  // console.log('sessionId: ' + sessionId)
   if (sessionId) {
     unsetSessionId()
     await prisma.session
@@ -185,10 +180,11 @@ export {
   commitSession,
   destroySession,
   findUser,
-  getKindeSession,
   getSession,
+  getKindeSession,
   getSessionManager,
   getUser,
   kindeClient,
-  sessionIdKey,
+  sessionIdKey
 }
+
