@@ -1,10 +1,10 @@
-import {Link, useLocation} from '@remix-run/react'
-import {FileKey2, MoreVertical, PanelLeft, Settings} from 'lucide-react'
+import { Link, useLocation } from '@remix-run/react'
+import { FileKey2, MoreVertical, PanelLeft, Settings } from 'lucide-react'
 import React from 'react'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {Sidebar} from './sidebar.tsx'
-import {ToggleTheme} from './toggle-theme.tsx'
-import {Button} from './ui/button.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { Sidebar } from './sidebar.tsx'
+import { ToggleTheme } from './toggle-theme.tsx'
+import { Button } from './ui/button.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,24 +22,21 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip.tsx'
-import {UserNav} from './user-nav.tsx'
+import { UserNav } from './user-nav.tsx'
 
-function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
-  const {isAuthenticated} = useRootLoader()
+function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return (
-    <TooltipProvider delayDuration={80} disableHoverableContent>
-      <Shell>{children}</Shell>
-    </TooltipProvider>
+    <Shell>{children}</Shell>
   )
 }
 
-function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
   return (
     <div className="h-full bg-background">
       <div className="flex">

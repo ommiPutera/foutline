@@ -58,7 +58,6 @@ async function getUserFormSessionId(sessionId: string) {
     include: {user: true},
   })
   if (!session) {
-    console.log('WHHHHHH))))))))')
     throw redirect('/logout')
   }
   return await prisma.user.findFirst({

@@ -1,5 +1,3 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { useLiveLoader } from '~/components/hooks/use-live-loader.ts'
 import Landing from '~/components/landing/index.tsx'
 import {
   Tabs,
@@ -8,19 +6,14 @@ import {
   TabsTrigger,
 } from '~/components/ui/tabs.tsx'
 import Board from './board.tsx'
-import { getKindeSession } from '~/utils/session.server.ts'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 
 export type LoaderData = {
   isAuthenticated: boolean
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { isAuthenticated } = await getKindeSession(request)
-  return { isAuthenticated: isAuthenticated }
-}
-
 function Index() {
-  const { isAuthenticated } = useLiveLoader<LoaderData>()
+  const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <Landing />
   return (
