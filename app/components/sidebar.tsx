@@ -1,6 +1,6 @@
-import {cn} from '~/lib/utils.ts'
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { cn } from '~/lib/utils.ts'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -8,7 +8,6 @@ import {
   HomeIcon,
   LayoutTemplate,
   Plus,
-  Star,
   Trash2,
 } from 'lucide-react'
 // import { useRootLoader } from '~/utils/use-root-loader.tsx'
@@ -18,36 +17,37 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
+import { FavoriteButton } from './board/card-item.tsx'
 
-const example = [
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
+let example = [
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
 ]
 
 const example2 = [
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
 ]
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -117,6 +117,12 @@ function Favorite() {
   // const { posts } = useRootLoader()
   const contentRef = React.useRef(null)
   const isPostEmpty = !example?.length
+  const [data, setData] = React.useState(example ?? [])
+
+  const handleCallback = (title: string) => {
+    const filter = data.filter(el => el.title !== title)
+    setData([...filter])
+  }
 
   return (
     <Accordion type="single" collapsible>
@@ -126,12 +132,12 @@ function Favorite() {
           variant="transparent"
           className="w-fit justify-start p-0 px-4 text-xs"
         >
-          <AccordionTrigger>Halaman Favorit</AccordionTrigger>
+          <AccordionTrigger data-count={data.length}>Halaman Favorit</AccordionTrigger>
         </Button>
         <AccordionContent className="relative w-full pb-3 pl-4 pr-1 pt-1">
           <div ref={contentRef} className="w-full">
             {!isPostEmpty ? (
-              example?.map((post, i) => (
+              data?.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
                     href="/aneh"
@@ -141,25 +147,14 @@ function Favorite() {
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
-                  <Tooltip>
-                    <div className="flex h-full">
-                      <Button
-                        asChild
-                        size="icon"
-                        variant="transparent"
-                        className="absolute right-0 top-0 z-10 mt-1 md:mt-0"
-                      >
-                        <TooltipTrigger>
-                          <Star size={13} fill="#FFA500" color="#FFA500" />
-                        </TooltipTrigger>
-                      </Button>
-                      <TooltipContent side="right">
-                        <p className="text-xs">
-                          Hapus halaman ini dari favorit
-                        </p>
-                      </TooltipContent>
-                    </div>
-                  </Tooltip>
+                  <div className='h-full absolute top-0 right-1.5 flex items-center'>
+                    <FavoriteButton
+                      callBack={() => handleCallback(post.title)}
+                      tooltipText={{ active: "Hapus dari favorit", notActive: "" }}
+                      defaultValue={true}
+                      side='right'
+                    />
+                  </div>
                 </div>
               ))
             ) : (

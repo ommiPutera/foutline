@@ -1,8 +1,8 @@
-import {LayoutGrid, List, MoreHorizontal, Plus} from 'lucide-react'
+import { Info, LayoutGrid, List, Plus } from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 
 function Board() {
   return (
@@ -11,14 +11,14 @@ function Board() {
         <Tools />
         <Cards />
       </div>
-      <div className="hidden md:block md:min-w-[200px] md:max-w-[200px] lg:min-w-[260px] lg:max-w-[260px]">
+      <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[220px] lg:max-w-[220px]">
         <div className="flex items-center justify-between">
           <Button className="flex items-center gap-2">
             <Plus size={16} />
             Halaman baru
           </Button>
           <Button size="icon" variant="transparent">
-            <MoreHorizontal size={18} />
+            <Info size={18} />
           </Button>
         </div>
       </div>
