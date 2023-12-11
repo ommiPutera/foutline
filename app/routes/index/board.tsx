@@ -47,7 +47,7 @@ function Tools() {
 
 function Cards() {
   return (
-    <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 2xl:grid-cols-5">
+    <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-2.5 xl:grid-cols-4 2xl:grid-cols-5">
       <CardItem
         title="Desember 2023"
         content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca ascsss sascc ascascascs asca ass ss sssssa dsss ascascas as112 asscsmmms"

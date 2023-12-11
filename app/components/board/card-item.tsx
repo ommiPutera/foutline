@@ -9,15 +9,16 @@ import {
 } from '../ui/card.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
 import React from 'react'
-import { Link } from '@remix-run/react'
 import clsx from 'clsx'
 import type { TooltipContentProps } from '@radix-ui/react-tooltip'
+import { Link } from '@remix-run/react'
 
 function CardItem({ content, title }: { content: string; title: string }) {
   const [isHover, setIsHover] = React.useState(false)
   return (
     <Link
       to="/"
+      className='h-fit'
     // Must be Prefect but now lets disable it
     // prefetch='intent'
     >

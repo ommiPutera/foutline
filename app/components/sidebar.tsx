@@ -77,7 +77,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           </ButtonLink>
           <Tooltip>
             <div className="flex h-full">
-              <TooltipTrigger className="w-full">
+              <TooltipTrigger asChild className="w-full">
                 <ButtonLink
                   href="/template"
                   variant="ghost"
