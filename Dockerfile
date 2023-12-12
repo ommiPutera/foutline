@@ -16,6 +16,7 @@ ENV NODE_ENV="production"
 ENV PORT="3000"
 ENV DATABASE_URL=${DATABASE_URL}
 ENV SESSION_SECRET=${SESSION_SECRET}
+ENV REDIS_URL=${REDIS_URL}
 
 # Throw-away build stage to reduce size of final image
 FROM base as build

@@ -1,5 +1,5 @@
 import type { Redis as RedisType } from "ioredis";
-import Redis from "ioredis";
+import {Redis} from "ioredis";
 
 let redis: RedisType;
 
