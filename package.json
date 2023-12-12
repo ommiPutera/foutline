@@ -30,7 +30,6 @@
   "dependencies": {
     "@epic-web/remember": "^1.0.2",
     "@kinde-oss/kinde-typescript-sdk": "^2.3.1",
-    "@mcansh/remix-redis-session-storage": "^0.1.1",
     "@prisma/client": "^5.7.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -97,7 +96,6 @@
     "@remix-run/dev": "^2.3.0",
     "@remix-run/eslint-config": "^2.3.0",
     "@types/bcryptjs": "^2.4.6",
-    "@types/ioredis": "^5.0.0",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.20",
