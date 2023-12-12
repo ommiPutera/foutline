@@ -3,6 +3,7 @@ import { redirect } from 'react-router'
 import { emitter } from '~/utils/emitter.server.ts'
 import {
   commitSession,
+  destroySession,
   findUser,
   getSessionManager,
   kindeClient,
@@ -11,8 +12,10 @@ import {
 import { createSession } from '~/utils/prisma.server.ts'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { sessionManager, session } = await getSessionManager(request)
+  // console.log('AC-STATE-KEY: ', session.data)
+  await destroySession(session)
   try {
-    const { sessionManager, session } = await getSessionManager(request)
     await kindeClient.handleRedirectToApp(sessionManager, new URL(request.url))
 
     const kindeUser = await kindeClient.getUser(sessionManager)
@@ -32,8 +35,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     session.set(sessionIdKey, userSession.id)
     // console.log('sessionIdKey: ', sessionIdKey)
     // console.log('userSession.id: ', userSession.id)
+    // console.log('USER DATA: ', session.data)
     emitter.emit('kinde-callback')
-    console.log('session: data: ', session.data)
     await commitSession(session)
     return redirect('/')
   } catch (err) {
