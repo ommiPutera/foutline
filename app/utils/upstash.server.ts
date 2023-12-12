@@ -4,7 +4,7 @@ import { createSessionStorage } from "@remix-run/node";
 const upstashRedisRestUrl = process.env.UPSTASH_REDIS_REST_URL;
 const upstashRedisResToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-if(!upstashRedisRestUrl || upstashRedisResToken) throw new Error("error: REDIS NEED ENV")
+if(!upstashRedisRestUrl || !upstashRedisResToken) throw new Error("error: REDIS NEED ENV")
 
 const headers = {
   Authorization: `Bearer ${upstashRedisResToken}`,
