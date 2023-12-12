@@ -6,7 +6,7 @@ import {
 import type {User} from '@prisma/client'
 import {createCookie, createFileSessionStorage} from '@remix-run/node'
 import bcrypt from 'bcryptjs'
-import {createUpstashSessionStorage} from '../sessions/upstash.server.ts'
+import {createUpstashSessionStorage} from './upstash.server.ts'
 import {
   createSession,
   getUserFormSessionId,

@@ -123,7 +123,7 @@ export default function AppWithProviders() {
   const data = useLoaderData<LoaderData>()
   return (
     <ThemeProvider specifiedTheme={data?.requestInfo?.session.theme}>
-      <TooltipProvider delayDuration={40}>
+      <TooltipProvider delayDuration={1800}>
         <App />
       </TooltipProvider>
     </ThemeProvider>
