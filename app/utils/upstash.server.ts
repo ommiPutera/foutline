@@ -28,46 +28,56 @@ export function createUpstashSessionStorage({ cookie }: any) {
     async createData(data, expires) {
       const randomBytes = crypto.randomBytes(8);
       const id = Buffer.from(randomBytes).toString("hex");
-      await fetch(
-        `${upstashRedisRestUrl}/set/${id}?EX=${expiresToSeconds(expires)}`,
-        {
-          method: "post",
-          body: JSON.stringify({ data }),
-          headers,
-        },
-      );
-      console.log('--createData')
-      return id;
+      if (data) {
+        await fetch(
+          `${upstashRedisRestUrl}/set/${id}?EX=${expiresToSeconds(expires)}`,
+          {
+            method: "post",
+            body: JSON.stringify({ data }),
+            headers,
+          },
+        );
+        // console.log('--createData')
+        return id; 
+      } else {
+        return ''
+      }
     },
     async readData(id) {
-      const response = await fetch(`${upstashRedisRestUrl}/get/${id}`, {
-        headers,
-      });
-      console.log('--readData')
-      try {
-        const { result } = await response.json();
-        return JSON.parse(result).data;
-      } catch (error) {
-        return null;
+      if (id) {
+        const response = await fetch(`${upstashRedisRestUrl}/get/${id}`, {
+          headers,
+        });
+        // console.log('--readData', id)
+        try {
+          const { result } = await response.json();
+          return JSON.parse(result).data;
+        } catch (error) {
+          return null;
+        }
       }
     },
     async updateData(id, data, expires) {
-      console.log('--updateData')
-      await fetch(
-        `${upstashRedisRestUrl}/set/${id}?EX=${expiresToSeconds(expires)}`,
-        {
-          method: "post",
-          body: JSON.stringify({ data }),
-          headers,
-        },
-      );
+      if (id) {
+        // console.log('--updateData')
+        await fetch(
+          `${upstashRedisRestUrl}/set/${id}?EX=${expiresToSeconds(expires)}`,
+          {
+            method: "post",
+            body: JSON.stringify({ data }),
+            headers,
+          },
+        );
+      }
     },
     async deleteData(id) {
-      console.log('--deleteData')
-      await fetch(`${upstashRedisRestUrl}/del/${id}`, {
-        method: "post",
-        headers,
-      });
+      if (id) {
+        // console.log('--deleteData')
+        await fetch(`${upstashRedisRestUrl}/del/${id}`, {
+          method: "post",
+          headers,
+        });
+      }
     },
   });
 }

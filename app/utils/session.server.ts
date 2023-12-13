@@ -4,9 +4,9 @@ import {
   type SessionManager,
 } from '@kinde-oss/kinde-typescript-sdk'
 import type {User} from '@prisma/client'
-import {createCookie, createFileSessionStorage} from '@remix-run/node'
+import {createCookie, createCookieSessionStorage, createFileSessionStorage} from '@remix-run/node'
 import bcrypt from 'bcryptjs'
-import {createUpstashSessionStorage} from './upstash.server.ts'
+// import {createUpstashSessionStorage} from './upstash.server.ts'
 import {
   createSession,
   getUserFormSessionId,
@@ -27,10 +27,27 @@ const sessionCookie = createCookie('__session', {
   httpOnly: true,
 })
 
+const sessionStorage = createCookieSessionStorage({
+  cookie: {
+    name: '__session',
+    secure: true,
+    secrets: [sessionSecret],
+    sameSite: 'lax',
+    path: '/',
+    maxAge: sessionExpirationTime / 1000,
+    httpOnly: true,
+  },
+})
+
+// const {getSession, commitSession, destroySession} =
+//   process.env.NODE_ENV === 'development'
+//     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
+//     : createUpstashSessionStorage({cookie: sessionCookie})
+
 const {getSession, commitSession, destroySession} =
   process.env.NODE_ENV === 'development'
     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
-    : createUpstashSessionStorage({cookie: sessionCookie})
+    : sessionStorage
 
 async function getSessionManager(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
@@ -39,6 +56,8 @@ async function getSessionManager(request: Request) {
 
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
+      // console.log('dari sini: ', key)
+      // console.log('seesion.data: ', session.data)
       return await session.get(key)
     },
     async setSessionItem(key: string, value: unknown) {
@@ -138,7 +157,7 @@ async function getKindeSession(request: Request) {
 async function getUser(request: Request) {
   const {getSessionId, session} = await getSessionManager(request)
   const sessionId = await getSessionId()
-  console.log('HERE WOI')
+  // console.log('HERE WOI')
   if (!sessionId) {
     await signOut(sessionId)
     destroySession(session)
