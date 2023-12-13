@@ -79,12 +79,8 @@ async function getSessionManager(request: Request) {
   }
 }
 
-async function signOut(request: Request) {
-  const {getSessionId, unsetSessionId} = await getSessionManager(request)
-  const sessionId = await getSessionId()
-  // console.log('sessionId: ' + sessionId)
+async function signOut(sessionId: string | null) {
   if (sessionId) {
-    unsetSessionId()
     await prisma.session
       .delete({where: {id: sessionId}})
       .catch((error: unknown) => {
@@ -131,7 +127,6 @@ async function signUp({
 
 async function getKindeSession(request: Request) {
   const {profile, isAuthenticated} = await getSessionManager(request)
-  // console.log('getSessionId: ', await getSessionId())
   
   const data = {
     profile,
@@ -143,9 +138,9 @@ async function getKindeSession(request: Request) {
 async function getUser(request: Request) {
   const {getSessionId, session} = await getSessionManager(request)
   const sessionId = await getSessionId()
-
+  console.log('HERE WOI')
   if (!sessionId) {
-    await signOut(request)
+    await signOut(sessionId)
     destroySession(session)
     return null
   }
