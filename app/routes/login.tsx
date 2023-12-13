@@ -10,7 +10,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager, session } = await getSessionManager(request)
 
   const loginUrl = await kindeClient.login(sessionManager)
-  // console.log("UUUUUU: ", session.data)
   return redirect(loginUrl.toString(), {
     headers: {
       'Set-Cookie': await commitSession(session),

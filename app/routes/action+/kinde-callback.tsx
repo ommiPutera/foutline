@@ -13,11 +13,8 @@ import { createSession } from '~/utils/prisma.server.ts'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { sessionManager, session } = await getSessionManager(request)
-  // console.log('AC-STATE-KEY: ', session.data)
-  await destroySession(session)
   try {
     await kindeClient.handleRedirectToApp(sessionManager, new URL(request.url))
-
     const kindeUser = await kindeClient.getUser(sessionManager)
     if (
       typeof kindeUser.family_name !== 'string' ||
@@ -29,19 +26,29 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }
 
     const user = await findUser(kindeUser.email)
-    if (!user) return redirect('/')
+    if (!user) {
+      return redirect('/', {
+        headers: {
+          'Set-Cookie': await destroySession(session)
+        }
+      })
+    }
 
     const userSession = await createSession({ userId: user.id })
     session.set(sessionIdKey, userSession.id)
-    // console.log('sessionIdKey: ', sessionIdKey)
-    // console.log('userSession.id: ', userSession.id)
-    // console.log('USER DATA: ', session.data)
     emitter.emit('kinde-callback')
-    await commitSession(session)
-    return redirect('/')
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await commitSession(session),
+      },
+    })
   } catch (err) {
     emitter.emit('kinde-callback')
-    return redirect('/')
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await destroySession(session)
+      }
+    })
   }
 }
 

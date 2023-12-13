@@ -39,8 +39,11 @@ export async function loader({ request }: DataFunctionArgs) {
   ] = await Promise.all([
     getThemeSession(request),
     getKindeSession(request),
-    getUser(request),
+    getUser(request)
   ])
+
+  // console.log('kindeSession: ', kindeSession)
+  // console.log('userFromSession: ', userFromSession)
 
   const data = {
     user: userFromSession,

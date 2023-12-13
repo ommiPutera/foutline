@@ -39,17 +39,16 @@ async function getSessionManager(request: Request) {
 
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
-      return session.get(key)
+      return await session.get(key)
     },
     async setSessionItem(key: string, value: unknown) {
-      session.set(key, value)
-      commitSession(session)
+      await session.set(key, value)
     },
     async removeSessionItem(key: string) {
-      session.unset(key)
+      await session.unset(key)
     },
     async destroySession() {
-      destroySession(session)
+      await destroySession(session)
     },
   }
 
@@ -132,6 +131,8 @@ async function signUp({
 
 async function getKindeSession(request: Request) {
   const {profile, isAuthenticated} = await getSessionManager(request)
+  // console.log('getSessionId: ', await getSessionId())
+  
   const data = {
     profile,
     isAuthenticated,
