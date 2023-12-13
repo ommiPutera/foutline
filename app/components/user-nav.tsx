@@ -46,7 +46,7 @@ export function UserNav({
       <DropdownMenuContent className="mt-1 w-44" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
+            <p className="text-xs font-semibold leading-none">
               {given_name + ' ' + family_name}
             </p>
             <p className="truncate text-xs leading-none text-muted-foreground">
@@ -62,15 +62,15 @@ export function UserNav({
         <DropdownMenuGroup>
           <Link to="/user/account" prefetch="intent">
             <DropdownMenuItem>
-              <CircleUser size="16" className="mr-3" />
+              <CircleUser className="mr-3 h-4 w-4" />
               <span>Akun anda</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <Link to="/logout">
-          <DropdownMenuItem vaiant="destructive">
-            <LogOut size="16" className="mr-3" />
+          <DropdownMenuItem vaiant="destructive" preventDefault>
+            <LogOut className="mr-3 h-4 w-4" />
             <span>Keluar</span>
           </DropdownMenuItem>
         </Link>

@@ -11,77 +11,70 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
 import React from 'react'
 import clsx from 'clsx'
 import type { TooltipContentProps } from '@radix-ui/react-tooltip'
-import { Link } from '@remix-run/react'
+import _ from 'lodash'
 
 function CardItem({ content, title }: { content: string; title: string }) {
   const [isHover, setIsHover] = React.useState(false)
   return (
-    <Link
-      to="/"
-      className='h-fit'
-    // Must be Prefect but now lets disable it
-    // prefetch='intent'
+    <Card
+      onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
+      onMouseLeave={() => _.delay(() => setIsHover(false), 30)}
+      className="col-span-1 h-full overflow-hidden cursor-pointer hover:border-ring md:h-fit"
     >
-      <Card
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-        className="col-span-1 h-full overflow-hidden cursor-pointer hover:border-ring md:h-fit"
-      >
-        <CardHeader className="bg-monthly-background pb-3">
-          <CardTitle className="flex items-start gap-2">
-            <div className="flex h-[18px] w-[18px] items-center justify-center">
-              {isHover ? (
-                <Favorite
-                  tooltipText={{ active: "Batalkan favorit", notActive: "Tambahkan ke favorit" }}
-                />
-              ) : (
-                <CalculatorIcon size={18} />
-              )}
-            </div>
-            <div className="mt-[1px] line-clamp-2 text-xs font-semibold">
-              {title}
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="relative bg-monthly-background pb-4">
-          <ContentPreview content={content} />
-          <div className="absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t from-monthly-background/70 to-monthly-background/10"></div>
-        </CardContent>
-        <CardFooter className="justify-between gap-2 py-2.5">
-          <div className="flex flex-col gap-1.5">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="line-clamp-1 w-fit rounded-sm bg-ring px-1 py-[3px] text-[9px] leading-none text-white">
-                  Selesai
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">Status halaman</p>
-              </TooltipContent>
-            </Tooltip>
-            <div className="line-clamp-1 text-[10px] leading-none text-muted-foreground">
-              Diedit 10 menit yang lalu
-            </div>
+      <CardHeader className="bg-monthly-background pb-3">
+        <CardTitle className="flex items-start gap-2">
+          <div className="flex h-[18px] w-[18px] items-center justify-center">
+            {isHover ? (
+              <Favorite
+                tooltipText={{ active: "Batalkan favorit", notActive: "Tambahkan ke favorit" }}
+              />
+            ) : (
+              <CalculatorIcon size={18} />
+            )}
           </div>
+          <div className="mt-[1px] line-clamp-2 text-xs font-semibold">
+            {title}
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="relative bg-monthly-background pb-4">
+        <ContentPreview content={content} />
+        <div className="absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t from-monthly-background/70 to-monthly-background/10"></div>
+      </CardContent>
+      <CardFooter className="justify-between gap-2 py-2.5">
+        <div className="flex flex-col gap-1.5">
           <Tooltip>
-            <div className="flex h-full">
-              <TooltipTrigger asChild>
-                <Button
-                  size="icon-sm"
-                  variant="transparent"
-                  className="rounded-sm"
-                >
-                  <MoreHorizontal size={16} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs">Lainnya</p>
-              </TooltipContent>
-            </div>
+            <TooltipTrigger asChild>
+              <div className="line-clamp-1 w-fit rounded-sm bg-ring px-1 py-[3px] text-[9px] leading-none text-white">
+                Selesai
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-xs">Status halaman</p>
+            </TooltipContent>
           </Tooltip>
-        </CardFooter>
-      </Card>
-    </Link>
+          <div className="line-clamp-1 text-[10px] leading-none text-muted-foreground">
+            Diedit 10 menit yang lalu
+          </div>
+        </div>
+        <Tooltip>
+          <div className="flex h-full">
+            <TooltipTrigger asChild>
+              <Button
+                size="icon-sm"
+                variant="transparent"
+                className="rounded-sm"
+              >
+                <MoreHorizontal size={16} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-xs">Lainnya</p>
+            </TooltipContent>
+          </div>
+        </Tooltip>
+      </CardFooter>
+    </Card>
   )
 }
 
@@ -122,7 +115,7 @@ function Favorite({
           <Star size={16} className={clsx({ "fill-[#FFA500]": isFavorited })} />
         </Button>
       </TooltipTrigger>
-      <TooltipContent side={side}>
+      <TooltipContent side={side} className='mb-1.5'>
         <p className="text-xs">{isFavorited ? tooltipText?.active : tooltipText?.notActive}</p>
       </TooltipContent>
     </Tooltip>
