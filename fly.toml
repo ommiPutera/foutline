@@ -4,50 +4,42 @@
 #
 
 app = "omition"
-primary_region = "sin"
 kill_signal = "SIGINT"
-kill_timeout = "5s"
+kill_timeout = 5
+primary_region = "sin"
+processes = []
+
+[mounts]
+  source = "data"
+  destination = "/data"
 
 [experimental]
   auto_rollback = true
 
-[build]
-
-[[mounts]]
-  source = "data"
-  destination = "/data"
-  auto_extend_size_threshold = 0
-
-[http_service]
-  internal_port = 3000
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ["app"]
-
 [[services]]
-  protocol = "tcp"
-  internal_port = 3000
+  internal_port = 3306
   processes = ["app"]
-
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
-
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
+  protocol = "tcp"
+  script_checks = []
   [services.concurrency]
-    type = "connections"
     hard_limit = 25
     soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
 
   [[services.tcp_checks]]
+    grace_period = "1s"
     interval = "15s"
+    restart_limit = 0
     timeout = "2s"
-    grace_period = "10s"
 
   [[services.http_checks]]
     interval = 10000
@@ -56,7 +48,7 @@ kill_timeout = "5s"
     path = "/"
     protocol = "http"
     restart_limit = 0
-    timeout = 500
+    timeout = 2000
     tls_skip_verify = false
     [services.http_checks.headers]
 
@@ -67,7 +59,7 @@ kill_timeout = "5s"
     path = "/healthcheck"
     protocol = "http"
     restart_limit = 0
-    timeout = 500
+    timeout = 2000
     tls_skip_verify = false
     [services.http_checks.headers]
 
