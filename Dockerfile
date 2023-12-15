@@ -13,7 +13,7 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV PORT="3000"
+ENV PORT="3306"
 ENV DATABASE_URL=${DATABASE_URL}
 ENV SESSION_SECRET=${SESSION_SECRET}
 
@@ -64,5 +64,5 @@ RUN apt-get update -qq && \
 COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
+EXPOSE 3306
 CMD [ "npm", "start" ]
