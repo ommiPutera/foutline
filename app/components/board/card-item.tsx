@@ -59,7 +59,7 @@ function CardItem({
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p className="text-xs">Status halaman</p>
+              <p>Status halaman</p>
             </TooltipContent>
           </Tooltip>
           <div className="line-clamp-1 text-[10px] leading-none text-muted-foreground">
@@ -140,10 +140,8 @@ function Favorite({
           />
         </Button>
       </TooltipTrigger>
-      <TooltipContent side={side} className="mt-1.5">
-        <p className="text-xs">
-          {isFavorited ? tooltipText?.active : tooltipText?.notActive}
-        </p>
+      <TooltipContent side={side}>
+        <p>{isFavorited ? tooltipText?.active : tooltipText?.notActive}</p>
       </TooltipContent>
     </Tooltip>
   )

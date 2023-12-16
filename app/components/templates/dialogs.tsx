@@ -21,13 +21,27 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group.tsx";
 import { Toggle } from "../ui/toggle.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip.tsx";
+import clsx from "clsx";
 
-function CreatePostDialog({ children, onTrigger }: { children: React.ReactNode } & { onTrigger?: () => void }) {
+function CreatePostDialog({
+  children,
+  onTrigger,
+  withoutTooltip
+}: { children: React.ReactNode } & { onTrigger?: () => void, withoutTooltip?: boolean }) {
   return (
     <Dialog modal>
-      <DialogTrigger asChild onClick={onTrigger}>
-        {children}
-      </DialogTrigger>
+      <Tooltip>
+        <div className="flex h-full">
+          <TooltipTrigger className="w-full">
+            <DialogTrigger asChild onClick={onTrigger}>
+              {children}
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="right" className={clsx("hidden md:block", { "md:hidden": withoutTooltip })}>
+            <p>Buat halaman baru</p>
+          </TooltipContent>
+        </div>
+      </Tooltip>
       <DialogPortal>
         <DialogContent className="h-full max-w-[580px] border border-muted md:h-fit">
           <DialogHeader>
@@ -56,7 +70,7 @@ function CreatePostDialog({ children, onTrigger }: { children: React.ReactNode }
                     </Toggle>
                   </TooltipTrigger>
                   <TooltipContent side="top">
-                    <div className="flex items-center gap-1 text-xs">
+                    <div className="flex items-center gap-1">
                       <Sparkles size={14} />
                       Akan datang.
                     </div>

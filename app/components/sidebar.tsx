@@ -18,7 +18,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
 import { FavoriteButton } from './board/card-item.tsx'
 import { CreatePostDialog } from './templates/dialogs.tsx'
 
@@ -77,24 +76,15 @@ export function Sidebar({
             <LayoutTemplate className="mr-3 h-5 w-5" strokeWidth={2.1} />
             Template
           </ButtonLink>
-          <Tooltip>
-            <div className="flex h-full">
-              <TooltipTrigger asChild className="w-full">
-                <CreatePostDialog>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-xs"
-                  >
-                    <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
-                    Buat
-                  </Button>
-                </CreatePostDialog>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p className="text-xs">Buat halaman baru</p>
-              </TooltipContent>
-            </div>
-          </Tooltip>
+          <CreatePostDialog>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-xs"
+            >
+              <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
+              Buat
+            </Button>
+          </CreatePostDialog>
         </div>
         <div className="flex-2 place-content-center">
           <Files />

@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu.tsx'
-import {Button} from '../ui/button.tsx'
+import { Button } from '../ui/button.tsx'
 import {
   Select,
   SelectContent,
@@ -30,7 +30,7 @@ function FilterButton() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="flex items-center justify-between gap-1 px-2 py-2">
+        <div className="flex items-center justify-between gap-1 p-2">
           <span className="text-xs">Halaman</span>
           <Select>
             <SelectTrigger className="w-[160px]">

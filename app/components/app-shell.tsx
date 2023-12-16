@@ -39,7 +39,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background py-3 pl-6 pr-4 md:relative md:border-0">
+            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background py-3 pl-6 pr-4 md:relative md:border-0 md:bg-transparent">
               <MobileSidebar />
               <div className="flex items-center gap-6">
                 <ToggleTheme className="hidden md:flex" />
@@ -47,7 +47,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                 <More />
               </div>
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-[-2rem] md:py-0">
               {children}
             </div>
           </div>
@@ -138,8 +138,8 @@ function More() {
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent className="mr-2 mt-2">
-            <p className="text-xs">Pengaturan, kunci, style, dan lainnya..</p>
+          <TooltipContent className='mr-2'>
+            <p>Pengaturan, kunci, style, dan lainnya..</p>
           </TooltipContent>
         </div>
       </Tooltip>
