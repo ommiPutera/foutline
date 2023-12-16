@@ -1,10 +1,11 @@
-import {Info, LayoutGrid, List, Plus} from 'lucide-react'
+import { Info, LayoutGrid, List, Plus } from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import {useMediaQuery} from '~/components/hooks/use-media-query.ts'
+import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
 import MasonryLayout from '~/components/masonry.tsx'
-import {Button} from '~/components/ui/button.tsx'
+import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
+import { Button } from '~/components/ui/button.tsx'
 
 function Board() {
   return (
@@ -15,10 +16,12 @@ function Board() {
       </div>
       <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[320px] lg:max-w-[320px]">
         <div className="flex items-center justify-between">
-          <Button className="flex items-center gap-2">
-            <Plus size={16} />
-            Halaman baru
-          </Button>
+          <CreatePostDialog>
+            <Button className="flex items-center gap-2">
+              <Plus size={16} />
+              Halaman baru
+            </Button>
+          </CreatePostDialog>
           <Button size="icon" variant="transparent">
             <Info size={18} />
           </Button>
@@ -81,7 +84,7 @@ function Cards() {
       <CardItem
         order={4}
         title="4 September 2023"
-        content="ascsss ssssa kklm asklaso1 askln1"
+        content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca ascsss sascc ascascascs asca ass ss sssssa dsss ascascas as112 asscsmmms"
       />
       <CardItem order={5} title="5 Mei 2023" content="ascs" />
       <CardItem
@@ -92,9 +95,13 @@ function Cards() {
       <CardItem
         order={7}
         title="7 September 2023"
-        content="ascsss ssssa kklm asklaso1 askln1"
+        content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
       />
-      <CardItem order={8} title="8 Mei 2023" content="ascs" />
+      <CardItem
+        order={8}
+        title="8 Mei 2023"
+        content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
+      />
       <CardItem
         order={9}
         title="9 November 2023"

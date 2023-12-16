@@ -1,9 +1,9 @@
-import {Link} from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import React from 'react'
-import {BurgerMenu} from '~/utils/icons.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {getLogo} from './omition-logo.tsx'
-import {ButtonLink} from './ui/button.tsx'
+import { BurgerMenu } from '~/utils/icons.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { getLogo } from './omition-logo.tsx'
+import { ButtonLink } from './ui/button.tsx'
 import {
   Popover,
   PopoverContent,
@@ -12,7 +12,7 @@ import {
 } from './ui/popover.tsx'
 
 function Navbar() {
-  const {isAuthenticated} = useRootLoader()
+  const { isAuthenticated } = useRootLoader()
   const Logo = getLogo()
 
   if (isAuthenticated) return <></>
@@ -52,7 +52,7 @@ function MobileNav() {
   )
 }
 
-function MobileMenuList({isOpen}: {isOpen: boolean}) {
+function MobileMenuList({ isOpen }: { isOpen: boolean }) {
   React.useEffect(() => {
     if (isOpen) {
       document.body.classList.add('fixed')
@@ -69,7 +69,7 @@ function MobileMenuList({isOpen}: {isOpen: boolean}) {
 
   return (
     <PopoverPortal>
-      <PopoverContent className="mt-5 h-screen w-screen overflow-y-scroll rounded-none border-b-0 border-l-0 border-r-0 border-t pb-32">
+      <PopoverContent className="mt-5 h-screen w-screen overflow-y-scroll rounded-none border-x-0 border-b-0 border-t pb-32">
         <div className="mt-4 flex flex-col gap-8">
           <div className="flex flex-col gap-3">
             <ButtonLink to="/login" variant="outline">

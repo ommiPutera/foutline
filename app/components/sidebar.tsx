@@ -1,6 +1,6 @@
-import {cn} from '~/lib/utils.ts'
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { cn } from '~/lib/utils.ts'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -18,33 +18,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
-import {FavoriteButton} from './board/card-item.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
+import { FavoriteButton } from './board/card-item.tsx'
+import { CreatePostDialog } from './templates/dialogs.tsx'
 
-let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
+let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
 
 const example2 = [
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
+  { title: 'woi' },
+  { title: 'santai aja bang' },
+  { title: 'sloww bro' },
 ]
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({
+  className
+}:
+  React.HTMLAttributes<HTMLDivElement>
+) {
   return (
     <div
       className={cn(
@@ -75,15 +80,15 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
           <Tooltip>
             <div className="flex h-full">
               <TooltipTrigger asChild className="w-full">
-                <ButtonLink
-                  href="/template"
-                  variant="ghost"
-                  prefetch="intent"
-                  className="w-full justify-start text-xs"
-                >
-                  <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
-                  Buat
-                </ButtonLink>
+                <CreatePostDialog>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-xs"
+                  >
+                    <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
+                    Buat
+                  </Button>
+                </CreatePostDialog>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p className="text-xs">Buat halaman baru</p>

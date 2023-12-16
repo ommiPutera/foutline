@@ -98,7 +98,7 @@ function MobileSidebar() {
         onTouchMove={onTouchMove}
       />
       <div className="block md:hidden">
-        <Sheet open={isOpen}>
+        <Sheet open={isOpen} key="testtt">
           <SheetTrigger>
             <Button size="icon" variant="ghost" onClick={() => setIsOpen(true)}>
               <PanelLeft />
