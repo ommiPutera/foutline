@@ -1,4 +1,4 @@
-import { cssBundleHref } from '@remix-run/css-bundle'
+import {cssBundleHref} from '@remix-run/css-bundle'
 import {
   json,
   type DataFunctionArgs,
@@ -21,25 +21,21 @@ import Footer from './components/footer.tsx'
 import Navbar from './components/navbar.tsx'
 import globalStyles from './styles/globals.css'
 import tailwindStyles from './styles/tailwind.css'
-import { getKindeSession, getUser } from './utils/session.server.ts'
-import { ThemeProvider, useTheme } from './utils/theme-provider.tsx'
-import { getThemeSession } from './utils/theme.server.ts'
-import { TooltipProvider } from './components/ui/tooltip.tsx'
+import {getKindeSession, getUser} from './utils/session.server.ts'
+import {ThemeProvider, useTheme} from './utils/theme-provider.tsx'
+import {getThemeSession} from './utils/theme.server.ts'
+import {TooltipProvider} from './components/ui/tooltip.tsx'
 
 export type LoaderData = SerializeFrom<typeof loader>
-export const handle: { id: string } = {
+export const handle: {id: string} = {
   id: 'root',
 }
 
-export async function loader({ request }: DataFunctionArgs) {
-  const [
-    themeSession,
-    kindeSession,
-    userFromSession
-  ] = await Promise.all([
+export async function loader({request}: DataFunctionArgs) {
+  const [themeSession, kindeSession, userFromSession] = await Promise.all([
     getThemeSession(request),
     getKindeSession(request),
-    getUser(request)
+    getUser(request),
   ])
 
   // console.log('kindeSession: ', kindeSession)
@@ -56,13 +52,13 @@ export async function loader({ request }: DataFunctionArgs) {
     },
   }
   const headers: HeadersInit = new Headers()
-  return json(data, { headers })
+  return json(data, {headers})
 }
 
 export const meta: MetaFunction = () => {
   return [
-    { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Omition - A new way of write your financial planning' },
+    {viewport: 'width=device-width,initial-scale=1,viewport-fit=cover'},
+    {title: 'Omition - A new way of write your financial planning'},
     {
       description:
         'Platform that provide you a simple canva to write your financial',
@@ -114,12 +110,12 @@ export const links: LinksFunction = () => [
     color: '#ffffff',
     href: '/safari-pinned-tab.svg',
   },
-  { rel: 'icon', href: '/favicon.ico' },
-  { rel: 'manifest', href: '/site.webmanifest' },
-  { rel: 'stylesheet', href: tailwindStyles },
-  { rel: 'stylesheet', href: globalStyles },
-  { rel: 'stylesheet', href: prosemirrorStyles },
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+  {rel: 'icon', href: '/favicon.ico'},
+  {rel: 'manifest', href: '/site.webmanifest'},
+  {rel: 'stylesheet', href: tailwindStyles},
+  {rel: 'stylesheet', href: globalStyles},
+  {rel: 'stylesheet', href: prosemirrorStyles},
+  ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
 ]
 
 export default function AppWithProviders() {

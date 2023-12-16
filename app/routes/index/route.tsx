@@ -6,14 +6,14 @@ import {
   TabsTrigger,
 } from '~/components/ui/tabs.tsx'
 import Board from './board.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
 export type LoaderData = {
   isAuthenticated: boolean
 }
 
 function Index() {
-  const { isAuthenticated } = useRootLoader()
+  const {isAuthenticated} = useRootLoader()
 
   if (!isAuthenticated) return <Landing />
   return (

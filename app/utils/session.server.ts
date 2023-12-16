@@ -4,7 +4,11 @@ import {
   type SessionManager,
 } from '@kinde-oss/kinde-typescript-sdk'
 import type {User} from '@prisma/client'
-import {createCookie, createCookieSessionStorage, createFileSessionStorage} from '@remix-run/node'
+import {
+  createCookie,
+  createCookieSessionStorage,
+  createFileSessionStorage,
+} from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 // import {createUpstashSessionStorage} from './upstash.server.ts'
 import {
@@ -146,7 +150,7 @@ async function signUp({
 
 async function getKindeSession(request: Request) {
   const {profile, isAuthenticated} = await getSessionManager(request)
-  
+
   const data = {
     profile,
     isAuthenticated,

@@ -19,20 +19,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from './ui/tooltip.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
 import { UserNav } from './user-nav.tsx'
 
 function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
-  return (
-    <Shell>{children}</Shell>
-  )
+  return <Shell>{children}</Shell>
 }
 
 function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {

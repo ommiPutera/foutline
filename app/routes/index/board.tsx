@@ -1,10 +1,10 @@
-import { Info, LayoutGrid, List, Plus } from 'lucide-react'
+import {Info, LayoutGrid, List, Plus} from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
+import {useMediaQuery} from '~/components/hooks/use-media-query.ts'
 import MasonryLayout from '~/components/masonry.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
 function Board() {
   return (
@@ -83,11 +83,7 @@ function Cards() {
         title="4 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem
-        order={5}
-        title="5 Mei 2023"
-        content="ascs"
-      />
+      <CardItem order={5} title="5 Mei 2023" content="ascs" />
       <CardItem
         order={6}
         title="6 November 2023"
@@ -98,11 +94,7 @@ function Cards() {
         title="7 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem
-        order={8}
-        title="8 Mei 2023"
-        content="ascs"
-      />
+      <CardItem order={8} title="8 Mei 2023" content="ascs" />
       <CardItem
         order={9}
         title="9 November 2023"
@@ -113,11 +105,7 @@ function Cards() {
         title="10 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem
-        order={11}
-        title="11 Mei 2023"
-        content="ascs"
-      />
+      <CardItem order={11} title="11 Mei 2023" content="ascs" />
     </MasonryLayout>
   )
 }

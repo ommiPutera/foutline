@@ -7,8 +7,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu.tsx'
-import { Button } from '../ui/button.tsx'
-import { Link } from '@remix-run/react'
+import {Button} from '../ui/button.tsx'
+import {Link} from '@remix-run/react'
 function SortButton() {
   return (
     <DropdownMenu>

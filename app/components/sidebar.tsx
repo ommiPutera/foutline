@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -18,37 +18,33 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { FavoriteButton } from './board/card-item.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {FavoriteButton} from './board/card-item.tsx'
 
-let example = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
 const example2 = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
 ]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -133,10 +129,12 @@ function Favorite() {
           variant="transparent"
           className="w-fit justify-start p-0 px-4 text-xs"
         >
-          <AccordionTrigger data-count={data.length}>Halaman Favorit</AccordionTrigger>
+          <AccordionTrigger data-count={data.length}>
+            Halaman Favorit
+          </AccordionTrigger>
         </Button>
         <AccordionContent className="relative w-full pb-3 pl-4 pr-1 pt-1">
-          <div ref={contentRef} className="w-full space-y-2" >
+          <div ref={contentRef} className="w-full space-y-2">
             {!isPostEmpty ? (
               data?.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
@@ -149,13 +147,16 @@ function Favorite() {
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
-                  <div className='h-full absolute top-0 right-1.5 flex items-center'>
+                  <div className="absolute right-1.5 top-0 flex h-full items-center">
                     <FavoriteButton
                       callBack={() => handleCallback(post.title)}
-                      tooltipText={{ active: "Hapus dari favorit", notActive: "" }}
+                      tooltipText={{
+                        active: 'Hapus dari favorit',
+                        notActive: '',
+                      }}
                       defaultValue={true}
-                      side='right'
-                      size='sm'
+                      side="right"
+                      size="sm"
                     />
                   </div>
                 </div>
@@ -192,8 +193,8 @@ function Files() {
     <div className="mx-3 overflow-x-hidden rounded-md border border-border">
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
-          <div className='relative px-5 flex items-center'>
-            <GalleryHorizontalEnd className='mr-3 h-5 w-5' />
+          <div className="relative flex items-center px-5">
+            <GalleryHorizontalEnd className="mr-3 h-5 w-5" />
             <h4 className="text-xs font-semibold leading-none">
               Koleksi Halaman
             </h4>
@@ -208,7 +209,7 @@ function Files() {
           <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
-        <div className="space-y-2 pb-6 mx-2">
+        <div className="mx-2 space-y-2 pb-6">
           {!isPostEmpty ? (
             example2?.map((post, i) => (
               <Button
@@ -217,7 +218,7 @@ function Files() {
                 size="sm"
                 className="w-full justify-start rounded-sm text-xs font-normal"
               >
-                <FileText className='mr-2 h-3.5 w-3.5' />
+                <FileText className="mr-2 h-3.5 w-3.5" />
                 {post.title}
               </Button>
             ))

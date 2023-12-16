@@ -1,6 +1,6 @@
 import type {Session} from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import {PrismaClient} from '@prisma/client'
+import {withAccelerate} from '@prisma/extension-accelerate'
 import {remember} from '@epic-web/remember'
 import chalk from 'chalk'
 import {redirect} from '@remix-run/node'
@@ -8,7 +8,10 @@ import {redirect} from '@remix-run/node'
 const logThreshold = 500
 // const sessionExpirationTime = 1000 * 20
 const sessionExpirationTime = 1000 * 60 * 60 * 24 * 365
-const prisma = process.env.NODE_ENV === 'development' ? remember('prisma', getClient) :  new PrismaClient().$extends(withAccelerate())
+const prisma =
+  process.env.NODE_ENV === 'development'
+    ? remember('prisma', getClient)
+    : new PrismaClient().$extends(withAccelerate())
 
 function getClient(): PrismaClient {
   // NOTE: during development if you change anything in this function, remember

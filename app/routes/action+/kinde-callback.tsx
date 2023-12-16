@@ -1,6 +1,6 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { redirect } from 'react-router'
-import { emitter } from '~/utils/emitter.server.ts'
+import {type LoaderFunctionArgs} from '@remix-run/node'
+import {redirect} from 'react-router'
+import {emitter} from '~/utils/emitter.server.ts'
 import {
   commitSession,
   destroySession,
@@ -9,10 +9,10 @@ import {
   kindeClient,
   sessionIdKey,
 } from '~/utils/session.server.ts'
-import { createSession } from '~/utils/prisma.server.ts'
+import {createSession} from '~/utils/prisma.server.ts'
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { sessionManager, session } = await getSessionManager(request)
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  const {sessionManager, session} = await getSessionManager(request)
   try {
     await kindeClient.handleRedirectToApp(sessionManager, new URL(request.url))
     const kindeUser = await kindeClient.getUser(sessionManager)
@@ -29,12 +29,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if (!user) {
       return redirect('/', {
         headers: {
-          'Set-Cookie': await destroySession(session)
-        }
+          'Set-Cookie': await destroySession(session),
+        },
       })
     }
 
-    const userSession = await createSession({ userId: user.id })
+    const userSession = await createSession({userId: user.id})
     session.set(sessionIdKey, userSession.id)
     emitter.emit('kinde-callback')
     return redirect('/', {
@@ -46,8 +46,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     emitter.emit('kinde-callback')
     return redirect('/', {
       headers: {
-        'Set-Cookie': await destroySession(session)
-      }
+        'Set-Cookie': await destroySession(session),
+      },
     })
   }
 }
