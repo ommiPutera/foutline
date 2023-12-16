@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu.tsx'
-import {Button} from '../ui/button.tsx'
+import { Button } from '../ui/button.tsx'
 import {
   Select,
   SelectContent,
@@ -21,7 +21,7 @@ function FilterButton() {
           Filter
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-1 w-72" align="end" forceMount>
+      <DropdownMenuContent className="mt-1 w-64" align="center" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-xs font-medium leading-none text-muted-foreground">
@@ -31,7 +31,7 @@ function FilterButton() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="flex items-center justify-between gap-1 px-2 py-2">
-          <span className="text-xs">Jenis Halaman</span>
+          <span className="text-xs">Halaman</span>
           <Select>
             <SelectTrigger className="w-[160px]">
               <SelectValue placeholder="Pilih halaman" />

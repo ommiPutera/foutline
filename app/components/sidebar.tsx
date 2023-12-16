@@ -5,6 +5,7 @@ import React from 'react'
 import {
   FileClock,
   FileText,
+  GalleryHorizontalEnd,
   HomeIcon,
   LayoutTemplate,
   Plus,
@@ -135,7 +136,7 @@ function Favorite() {
           <AccordionTrigger data-count={data.length}>Halaman Favorit</AccordionTrigger>
         </Button>
         <AccordionContent className="relative w-full pb-3 pl-4 pr-1 pt-1">
-          <div ref={contentRef} className="w-full">
+          <div ref={contentRef} className="w-full space-y-2" >
             {!isPostEmpty ? (
               data?.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
@@ -143,7 +144,8 @@ function Favorite() {
                     href="/aneh"
                     prefetch="intent"
                     variant="ghost"
-                    className="ml-4 flex justify-between rounded-md text-xs font-normal"
+                    size="sm"
+                    className="ml-6 flex justify-between rounded-md text-xs font-normal"
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
@@ -153,6 +155,7 @@ function Favorite() {
                       tooltipText={{ active: "Hapus dari favorit", notActive: "" }}
                       defaultValue={true}
                       side='right'
+                      size='sm'
                     />
                   </div>
                 </div>
@@ -189,12 +192,12 @@ function Files() {
     <div className="mx-3 overflow-x-hidden rounded-md border border-border">
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
-          <h4 className="relative px-5 text-sm font-semibold leading-none">
-            Koleksi Halaman
-          </h4>
-          <p className="line-clamp-2 px-5 text-xs text-muted-foreground">
-            Kamu dengan mudah mencari halaman disini
-          </p>
+          <div className='relative px-5 flex items-center'>
+            <GalleryHorizontalEnd className='mr-3 h-5 w-5' />
+            <h4 className="text-xs font-semibold leading-none">
+              Koleksi Halaman
+            </h4>
+          </div>
         </div>
       )}
       <ScrollArea className={cn('h-[240px]', isPostEmpty && 'h-[150px]')}>
@@ -205,15 +208,16 @@ function Files() {
           <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
-        <div className="space-y-2 pb-6">
+        <div className="space-y-2 pb-6 mx-2">
           {!isPostEmpty ? (
             example2?.map((post, i) => (
               <Button
                 key={`${post}-${i}`}
                 variant="ghost"
-                className="w-full justify-start rounded-none text-xs font-normal"
+                size="sm"
+                className="w-full justify-start rounded-sm text-xs font-normal"
               >
-                <FileText className="mr-3 h-5 w-5" />
+                <FileText className='mr-2 h-3.5 w-3.5' />
                 {post.title}
               </Button>
             ))

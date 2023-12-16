@@ -2,6 +2,8 @@ import { Info, LayoutGrid, List, Plus } from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
+import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
+import MasonryLayout from '~/components/masonry.tsx'
 import { Button } from '~/components/ui/button.tsx'
 
 function Board() {
@@ -11,7 +13,7 @@ function Board() {
         <Tools />
         <Cards />
       </div>
-      <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[220px] lg:max-w-[220px]">
+      <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[320px] lg:max-w-[320px]">
         <div className="flex items-center justify-between">
           <Button className="flex items-center gap-2">
             <Plus size={16} />
@@ -46,41 +48,77 @@ function Tools() {
 }
 
 function Cards() {
+  const md = useMediaQuery('(min-width: 425px)')
+  const lg = useMediaQuery('(min-width: 1024px)')
+  const xl = useMediaQuery('(min-width: 1440px)')
+  const xl2 = useMediaQuery('(min-width: 1540px)')
+
+  const getColumns = () => {
+    if (xl2) return 5
+    if (xl) return 4
+    if (lg) return 3
+    if (md) return 3
+    return 2
+  }
+
   return (
-    <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-2.5 xl:grid-cols-4 2xl:grid-cols-5">
+    <MasonryLayout columns={getColumns()}>
       <CardItem
-        title="Desember 2023"
+        order={1}
+        title="1 Desember 2023"
         content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca ascsss sascc ascascascs asca ass ss sssssa dsss ascascas as112 asscsmmms"
       />
-      <CardItem title="Point - poitn diskusi tentang Omition" content="ascs" />
       <CardItem
-        title="November 2023"
+        order={2}
+        title="2 Point - poitn diskusi tentang Omition"
+        content="ascs"
+      />
+      <CardItem
+        order={3}
+        title="3 November 2023"
         content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
       />
       <CardItem
-        title="September 2023"
+        order={4}
+        title="4 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem title="Mei 2023" content="ascs" />
       <CardItem
-        title="November 2023"
+        order={5}
+        title="5 Mei 2023"
+        content="ascs"
+      />
+      <CardItem
+        order={6}
+        title="6 November 2023"
         content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
       />
       <CardItem
-        title="September 2023"
+        order={7}
+        title="7 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem title="Mei 2023" content="ascs" />
       <CardItem
-        title="November 2023"
+        order={8}
+        title="8 Mei 2023"
+        content="ascs"
+      />
+      <CardItem
+        order={9}
+        title="9 November 2023"
         content="asdsdasda ss sdasdasd ascascascsac sss ascascasc kkks asddds ascss ssssdca asc"
       />
       <CardItem
-        title="September 2023"
+        order={10}
+        title="10 September 2023"
         content="ascsss ssssa kklm asklaso1 askln1"
       />
-      <CardItem title="Mei 2023" content="ascs" />
-    </div>
+      <CardItem
+        order={11}
+        title="11 Mei 2023"
+        content="ascs"
+      />
+    </MasonryLayout>
   )
 }
 

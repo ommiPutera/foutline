@@ -19,7 +19,7 @@ function Index() {
   return (
     <Tabs defaultValue="board">
       <TabsList>
-        <TabsTrigger value="board">Board view</TabsTrigger>
+        <TabsTrigger value="board">Semua</TabsTrigger>
       </TabsList>
       <TabsContent value="board" asChild>
         <Board />

@@ -40,7 +40,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className="h-full bg-background">
       <div className="flex">
-        <div className="fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border px-1 md:block">
+        <div className="fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border md:block">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
