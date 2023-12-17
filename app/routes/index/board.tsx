@@ -1,11 +1,11 @@
-import { Info, LayoutGrid, List, Plus } from 'lucide-react'
+import {Info, LayoutGrid, List, Plus} from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
+import {useMediaQuery} from '~/components/hooks/use-media-query.ts'
 import MasonryLayout from '~/components/masonry.tsx'
-import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
 function Board() {
   return (
@@ -33,7 +33,7 @@ function Board() {
 
 function Tools() {
   return (
-    <div className="flex items-center justify-between bg-background">
+    <div className="bg-background flex items-center justify-between">
       <div className="flex items-center gap-1">
         <Button size="icon" variant="ghost">
           <LayoutGrid size={16} />

@@ -1,15 +1,21 @@
-import { type DataFunctionArgs } from "@remix-run/node"
-import { useLocation } from "@remix-run/react"
-import Editor from "~/components/editor/index.tsx"
-import { GeneralErrorBoundary } from "~/components/error-boundry.tsx"
-import { ErrorPage } from "~/components/errors.tsx"
-import { Header } from "~/components/new-page/header.tsx"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select.tsx"
-import { getKindeSession } from "~/utils/session.server.ts"
+import {type DataFunctionArgs} from '@remix-run/node'
+import {useLocation} from '@remix-run/react'
+import Editor from '~/components/editor/index.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
+import {Header} from '~/components/new-page/header.tsx'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select.tsx'
+import {getKindeSession} from '~/utils/session.server.ts'
 
-export async function loader({ request }: DataFunctionArgs) {
-  const { isAuthenticated } = await getKindeSession(request)
-  if (!isAuthenticated) throw new Response('Not found', { status: 404 })
+export async function loader({request}: DataFunctionArgs) {
+  const {isAuthenticated} = await getKindeSession(request)
+  if (!isAuthenticated) throw new Response('Not found', {status: 404})
   return null
 }
 

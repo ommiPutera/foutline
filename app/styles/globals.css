@@ -93,7 +93,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    @apply overflow-x-hidden bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 

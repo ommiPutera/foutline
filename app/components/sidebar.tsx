@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -18,37 +18,33 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { FavoriteButton } from './board/card-item.tsx'
-import { CreatePostDialog } from './templates/dialogs.tsx'
+import {FavoriteButton} from './board/card-item.tsx'
+import {CreatePostDialog} from './templates/dialogs.tsx'
 
-let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
 const example2 = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
 ]
 
-export function Sidebar({
-  className
-}:
-  React.HTMLAttributes<HTMLDivElement>
-) {
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -77,10 +73,7 @@ export function Sidebar({
             Template
           </ButtonLink>
           <CreatePostDialog>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-xs"
-            >
+            <Button variant="ghost" className="w-full justify-start text-xs">
               <Plus className="mr-3 h-5 w-5" strokeWidth={2.1} />
               Buat
             </Button>
@@ -185,7 +178,7 @@ function Files() {
   }, [])
 
   return (
-    <div className="mx-3 overflow-x-hidden rounded-md border border-border">
+    <div className="border-border mx-3 overflow-x-hidden rounded-md border">
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
           <div className="relative flex items-center px-5">
@@ -198,10 +191,10 @@ function Files() {
       )}
       <ScrollArea className={cn('h-[240px]', isPostEmpty && 'h-[150px]')}>
         {isScroll && !isPostEmpty && (
-          <div className="absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80"></div>
+          <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div>
         )}
         {isScroll && !isPostEmpty && (
-          <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
+          <div className="from-background/30 absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
         <div className="mx-2 space-y-2 pb-6">

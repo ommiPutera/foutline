@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: 'Matter';
-  src:
-    url('/fonts/Matter-Medium.woff2') format('woff2'),
+  src: url('/fonts/Matter-Medium.woff2') format('woff2'),
     url('/fonts/Matter-Medium.woff') format('woff');
   font-style: normal;
   font-display: swap;
@@ -13,8 +12,7 @@
 
 @font-face {
   font-family: 'Matter';
-  src:
-    url('/fonts/Matter-Regular.woff2') format('woff2'),
+  src: url('/fonts/Matter-Regular.woff2') format('woff2'),
     url('/fonts/Matter-Regular.woff') format('woff');
   font-style: normal;
   font-display: swap;
@@ -22,28 +20,15 @@
 
 @font-face {
   font-family: 'Matter';
-  src:
-    url('/fonts/Matter-SemiBold.woff2') format('woff2'),
+  src: url('/fonts/Matter-SemiBold.woff2') format('woff2'),
     url('/fonts/Matter-SemiBold.woff') format('woff');
   font-style: normal;
   font-display: swap;
 }
 
 .use-matter {
-  font-family:
-    Matter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    'Noto Sans',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
+  font-family: Matter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
 }

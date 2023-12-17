@@ -127,7 +127,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
 
         <Popover.Content
           align="start"
-          className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-gray-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="animate-in fade-in slide-in-from-top-1 z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-gray-200 bg-white p-1 shadow-xl"
         >
           <div className="my-1 px-2 text-sm text-gray-500">Color</div>
           {TEXT_COLORS.map(({name, color}, index) => (

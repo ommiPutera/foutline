@@ -2,10 +2,10 @@ import {ButtonLink} from '../ui/button.tsx'
 
 function Hero() {
   return (
-    <div className="mx-auto max-w-screen-2xl px-5vw py-10 md:py-14">
+    <div className="px-5vw mx-auto max-w-screen-2xl py-10 md:py-14">
       <div className="mx-auto flex max-w-2xl flex-col gap-6 text-center md:gap-8">
         <div className="flex flex-col gap-4 md:gap-6">
-          <h6 className="text-sm text-muted-foreground md:text-lg">
+          <h6 className="text-muted-foreground text-sm md:text-lg">
             Financial web based application
           </h6>
           <h2 className="line-clamp-2 text-4xl font-bold md:text-7xl">

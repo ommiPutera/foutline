@@ -1,4 +1,4 @@
-import { PageIcon } from "../board/card-item.tsx";
+import {PageIcon} from '../board/card-item.tsx'
 
 function Header() {
   return (
@@ -11,4 +11,4 @@ function Header() {
   )
 }
 
-export { Header }
+export {Header}

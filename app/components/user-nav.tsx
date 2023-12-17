@@ -34,7 +34,7 @@ export function UserNav({
             </Avatar>
           </Button>
           <div className="flex w-full flex-col space-y-1">
-            <div className="line-clamp-1 overflow-visible text-[10px] leading-none text-muted-foreground">
+            <div className="text-muted-foreground line-clamp-1 overflow-visible text-[10px] leading-none">
               Masuk sebagai
             </div>
             <div className="line-clamp-1 text-xs font-medium leading-none">
@@ -49,7 +49,7 @@ export function UserNav({
             <p className="text-xs font-semibold leading-none">
               {given_name + ' ' + family_name}
             </p>
-            <p className="truncate text-xs leading-none text-muted-foreground">
+            <p className="text-muted-foreground truncate text-xs leading-none">
               {email}
             </p>
           </div>

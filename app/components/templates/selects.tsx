@@ -1,6 +1,6 @@
-import clsx from "clsx"
-import { icons } from "lucide-react"
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group.tsx"
+import clsx from 'clsx'
+import {icons} from 'lucide-react'
+import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
 
 function PageSelectGroup() {
   return (
@@ -19,73 +19,84 @@ function PageSelectGroup() {
 }
 
 function BasicNotes() {
-  return <PageSelectItem
-    title="Catatan biasa"
-    color="blue"
-    value="basic-notes"
-    iconName="PenLine"
-  />
+  return (
+    <PageSelectItem
+      title="Catatan biasa"
+      color="blue"
+      value="basic-notes"
+      iconName="PenLine"
+    />
+  )
 }
 function RegularSaving() {
-  return <PageSelectItem
-    title="Tabungan rutin"
-    color="green"
-    value="regular-saving"
-    iconName="CalendarCheck2"
-  />
+  return (
+    <PageSelectItem
+      title="Tabungan rutin"
+      color="green"
+      value="regular-saving"
+      iconName="CalendarCheck2"
+    />
+  )
 }
 function Investment() {
-  return <PageSelectItem
-    title="Investasi"
-    color="teal"
-    value="investment"
-    iconName="AreaChart"
-  />
+  return (
+    <PageSelectItem
+      title="Investasi"
+      color="teal"
+      value="investment"
+      iconName="AreaChart"
+    />
+  )
 }
 function MonthlyExpenses() {
-  return <PageSelectItem
-    title="Keuangan bulanan"
-    color="orange"
-    value="monthly-expenses"
-    iconName="ShoppingBag"
-  />
+  return (
+    <PageSelectItem
+      title="Keuangan bulanan"
+      color="orange"
+      value="monthly-expenses"
+      iconName="ShoppingBag"
+    />
+  )
 }
 function Debt() {
-  return <PageSelectItem
-    title="Hutang"
-    color="red"
-    value="debt"
-    iconName="ScrollText"
-  />
+  return (
+    <PageSelectItem
+      title="Hutang"
+      color="red"
+      value="debt"
+      iconName="ScrollText"
+    />
+  )
 }
 function EmergencyFund() {
-  return <PageSelectItem
-    title="Dana darurat"
-    color="cyan"
-    value="emergency-fund"
-    iconName="ShieldCheck"
-  />
+  return (
+    <PageSelectItem
+      title="Dana darurat"
+      color="cyan"
+      value="emergency-fund"
+      iconName="ShieldCheck"
+    />
+  )
 }
-
 
 function PageSelectItem({
   value,
   title,
   color,
-  iconName
+  iconName,
 }: {
-  value: string,
-  title: string,
-  color: string,
+  value: string
+  title: string
+  color: string
   iconName: keyof typeof icons
 }) {
-  const LucideIcon = icons[iconName];
+  const LucideIcon = icons[iconName]
   return (
     <ToggleGroupItem
       value={value}
       data-color={color}
       className={clsx(
-        "flex h-fit flex-1 items-center justify-start gap-2 rounded-md px-4 py-3 text-left",
+        'flex h-fit flex-1 items-center justify-start gap-2 rounded-md px-4 py-3 text-left',
         'data-[color=blue]:data-[state=on]:border-blue-500',
         'data-[color=red]:data-[state=on]:border-red-500',
         'data-[color=orange]:data-[state=on]:border-orange-500',
@@ -97,7 +108,7 @@ function PageSelectItem({
       <div
         data-color={color}
         className={clsx(
-          "flex h-5 w-5 items-center justify-center rounded-sm border bg-gradient-to-tr",
+          'flex h-5 w-5 items-center justify-center rounded-sm border bg-gradient-to-tr',
           'data-[color=blue]:border-blue-400 data-[color=blue]:from-blue-500 data-[color=blue]:to-blue-300',
           'data-[color=red]:border-red-400 data-[color=red]:from-red-500 data-[color=red]:to-red-300',
           'data-[color=orange]:border-orange-400 data-[color=orange]:from-orange-500 data-[color=orange]:to-orange-300',
@@ -120,5 +131,5 @@ export {
   MonthlyExpenses,
   Debt,
   EmergencyFund,
-  PageSelectGroup
+  PageSelectGroup,
 }

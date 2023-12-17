@@ -1,10 +1,10 @@
-import { Link, useLocation } from '@remix-run/react'
-import { FileKey2, MoreVertical, PanelLeft, Settings } from 'lucide-react'
+import {Link, useLocation} from '@remix-run/react'
+import {FileKey2, MoreVertical, PanelLeft, Settings} from 'lucide-react'
 import React from 'react'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { Sidebar } from './sidebar.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {Sidebar} from './sidebar.tsx'
 // import { ToggleTheme } from './toggle-theme.tsx'
-import { Button } from './ui/button.tsx'
+import {Button} from './ui/button.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,27 +19,27 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { UserNav } from './user-nav.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {UserNav} from './user-nav.tsx'
 
-function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { isAuthenticated } = useRootLoader()
+function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
+  const {isAuthenticated} = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return <Shell>{children}</Shell>
 }
 
-function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
+  const {profile} = useRootLoader()
   return (
-    <div className="h-full bg-background">
+    <div className="bg-background h-full">
       <div className="flex">
-        <div className="fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border md:block">
+        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r md:block">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background py-3 pl-6 pr-4 md:relative md:border-0 md:bg-transparent">
+            <div className="border-border bg-background fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b py-3 pl-6 pr-4 md:relative md:border-0 md:bg-transparent">
               <MobileSidebar />
               <div className="flex items-center gap-6">
                 {/* <ToggleTheme className="hidden md:flex" /> */}
@@ -48,12 +48,10 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
               </div>
             </div>
             <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-[-2rem] md:py-0">
-              <div className='min-h-[80vh]'>
-                {children}
-              </div>
-              <div className='m-[3rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:justify-end md:gap-6'>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  Built by indie developer {' '}
+              <div className="min-h-[80vh]">{children}</div>
+              <div className="m-[3rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:justify-end md:gap-6">
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  Built by indie developer{' '}
                   <Link
                     to="https://www.linkedin.com/in/ommiputera"
                     target="_blank"
@@ -62,8 +60,8 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                     Ommi Putera
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  The source code is available on {' '}
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  The source code is available on{' '}
                   <Link
                     to="https://github.com/ommiPutera/omition"
                     target="_blank"
@@ -72,21 +70,13 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                     Github
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link
-                    to="/"
-                    target="_blank"
-                    className="underline"
-                  >
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  <Link to="/" target="_blank" className="underline">
                     Syarat & Ketentuan
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link
-                    to="/"
-                    target="_blank"
-                    className="underline"
-                  >
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  <Link to="/" target="_blank" className="underline">
                     Kebijakan privasi
                   </Link>
                 </p>
@@ -180,7 +170,7 @@ function More() {
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent className='mr-2'>
+          <TooltipContent className="mr-2">
             <p>Pengaturan, kunci, style, dan lainnya..</p>
           </TooltipContent>
         </div>

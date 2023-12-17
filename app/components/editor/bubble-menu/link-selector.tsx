@@ -49,7 +49,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             url && editor.chain().focus().setLink({href: url}).run()
             setIsOpen(false)
           }}
-          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-gray-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="animate-in fade-in slide-in-from-top-1 fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-gray-200 bg-white p-1 shadow-xl"
         >
           <input
             ref={inputRef}

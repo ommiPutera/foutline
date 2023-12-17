@@ -1,17 +1,17 @@
 'use client'
 
-import type { Editor as EditorClass, Extension, JSONContent } from '@tiptap/core'
-import { EditorContent, useEditor } from '@tiptap/react'
+import type {Editor as EditorClass, Extension, JSONContent} from '@tiptap/core'
+import {EditorContent, useEditor} from '@tiptap/react'
 import va from '@vercel/analytics'
-import { useCompletion } from 'ai/react'
+import {useCompletion} from 'ai/react'
 import React from 'react'
-import { toast } from 'sonner'
-import { useDebouncedCallback } from 'use-debounce'
-import { getPrevText } from '~/lib/editor.ts'
-import { EditorBubbleMenu } from './bubble-menu/index.tsx'
-import { ImageResizer } from './extensions/image-resizer.tsx'
-import { defaultExtensions } from './extensions/index.tsx'
-import { defaultEditorProps } from './props.ts'
+import {toast} from 'sonner'
+import {useDebouncedCallback} from 'use-debounce'
+import {getPrevText} from '~/lib/editor.ts'
+import {EditorBubbleMenu} from './bubble-menu/index.tsx'
+import {ImageResizer} from './extensions/image-resizer.tsx'
+import {defaultExtensions} from './extensions/index.tsx'
+import {defaultEditorProps} from './props.ts'
 
 type EditorProps = {
   submit: () => void
@@ -38,7 +38,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
     titletEl,
     extensions = [],
     editorProps = {},
-    onUpdate = () => { },
+    onUpdate = () => {},
     completionApi = '/api/generate',
   },
   ref,
@@ -46,7 +46,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
   const [hydrated, setHydrated] = React.useState(false)
 
   const debouncedUpdates = useDebouncedCallback(
-    async ({ editor }: { editor: EditorClass }) => {
+    async ({editor}: {editor: EditorClass}) => {
       const json = editor.getJSON()
       setSaveStatus('Saving..')
       setContent(json)
@@ -91,7 +91,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(function Editor(
     autofocus: false,
   })
 
-  const { complete, completion, isLoading, stop } = useCompletion({
+  const {complete, completion, isLoading, stop} = useCompletion({
     id: 'novel',
     api: completionApi,
     onFinish: (_prompt, completion) => {
