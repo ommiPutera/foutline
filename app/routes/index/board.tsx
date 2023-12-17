@@ -33,7 +33,7 @@ function Board() {
 
 function Tools() {
   return (
-    <div className="sticky top-0 z-20 flex items-center justify-between bg-background">
+    <div className="flex items-center justify-between bg-background">
       <div className="flex items-center gap-1">
         <Button size="icon" variant="ghost">
           <LayoutGrid size={16} />

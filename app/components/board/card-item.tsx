@@ -18,6 +18,7 @@ import clsx from 'clsx'
 import type { TooltipContentProps } from '@radix-ui/react-tooltip'
 import _ from 'lodash'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover.tsx'
+import { Link } from '@remix-run/react'
 
 function CardItem({
   order,
@@ -30,60 +31,62 @@ function CardItem({
 }) {
   const [isHover, setIsHover] = React.useState(false)
   return (
-    <Card
-      key={order}
-      onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
-      onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
-      className="col-span-1 h-full cursor-pointer overflow-hidden hover:border-ring md:h-fit"
-    >
-      <CardHeader className="bg-monthly-background pb-3">
-        <CardTitle className="items-first flex gap-2">
-          <div>
-            <PageIcon />
+    <Link to="/new">
+      <Card
+        key={order}
+        onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
+        onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
+        className="col-span-1 h-full cursor-pointer overflow-hidden hover:border-ring md:h-fit"
+      >
+        <CardHeader className="bg-monthly-background pb-3">
+          <CardTitle className="items-first flex gap-2">
+            <div>
+              <PageIcon />
+            </div>
+            <div className="mt-[1.5px] line-clamp-2 w-full text-xs font-semibold">
+              {title}
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="relative bg-monthly-background pb-4">
+          <ContentPreview content={content} />
+          <div className="absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t from-monthly-background/90 to-monthly-background/20"></div>
+        </CardContent>
+        <CardFooter className="justify-between gap-2 py-2.5">
+          <div className="flex flex-1 flex-col justify-end gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="line-clamp-1 w-fit rounded-sm bg-ring px-1 py-[3px] text-[9px] leading-none text-white">
+                  Selesai
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Status halaman</p>
+              </TooltipContent>
+            </Tooltip>
+            <div className="line-clamp-1 text-[10px] leading-none text-muted-foreground">
+              10 menit yang lalu
+            </div>
           </div>
-          <div className="mt-[1.5px] line-clamp-2 w-full text-xs font-semibold">
-            {title}
+          <div className="-mr-2 flex justify-end" id="test">
+            <div
+              className={clsx('visible relative flex w-fit items-center gap-1', {
+                invisible: !isHover,
+              })}
+            >
+              <Favorite
+                side="bottom"
+                tooltipText={{
+                  active: 'Batalkan favorit',
+                  notActive: 'Tambahkan ke favorit',
+                }}
+              />
+              <More />
+            </div>
           </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="relative bg-monthly-background pb-4">
-        <ContentPreview content={content} />
-        <div className="absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t from-monthly-background/90 to-monthly-background/20"></div>
-      </CardContent>
-      <CardFooter className="justify-between gap-2 py-2.5">
-        <div className="flex flex-1 flex-col justify-end gap-1.5">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="line-clamp-1 w-fit rounded-sm bg-ring px-1 py-[3px] text-[9px] leading-none text-white">
-                Selesai
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Status halaman</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className="line-clamp-1 text-[10px] leading-none text-muted-foreground">
-            10 menit yang lalu
-          </div>
-        </div>
-        <div className="-mr-2 flex justify-end" id="test">
-          <div
-            className={clsx('visible relative flex w-fit items-center gap-1', {
-              invisible: !isHover,
-            })}
-          >
-            <Favorite
-              side="bottom"
-              tooltipText={{
-                active: 'Batalkan favorit',
-                notActive: 'Tambahkan ke favorit',
-              }}
-            />
-            <More />
-          </div>
-        </div>
-      </CardFooter>
-    </Card>
+        </CardFooter>
+      </Card>
+    </Link>
   )
 }
 
@@ -109,7 +112,7 @@ function Favorite({
   size?: 'sm' | 'default'
 }) {
   const [isFavorited, setIsFavorited] = React.useState(defaultValue)
-  const [showTooltip, setShowTooltip] = React.useState(false)
+  const [isHover, setIsHover] = React.useState(false)
 
   const handleClick = () => {
     setIsFavorited(!isFavorited)
@@ -119,12 +122,12 @@ function Favorite({
   }
 
   return (
-    <Tooltip disableHoverableContent open={showTooltip}>
+    <Tooltip disableHoverableContent open={isHover}>
       <TooltipTrigger asChild>
         <Button
           size="icon"
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
+          onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
+          onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
           onClick={handleClick}
           variant="transparent"
           className={clsx(
@@ -203,4 +206,4 @@ function More() {
 }
 
 export default CardItem
-export { Favorite as FavoriteButton }
+export { Favorite as FavoriteButton, PageIcon }

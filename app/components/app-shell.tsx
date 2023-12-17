@@ -3,7 +3,7 @@ import { FileKey2, MoreVertical, PanelLeft, Settings } from 'lucide-react'
 import React from 'react'
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import { Sidebar } from './sidebar.tsx'
-import { ToggleTheme } from './toggle-theme.tsx'
+// import { ToggleTheme } from './toggle-theme.tsx'
 import { Button } from './ui/button.tsx'
 import {
   DropdownMenu,
@@ -42,13 +42,55 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
             <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background py-3 pl-6 pr-4 md:relative md:border-0 md:bg-transparent">
               <MobileSidebar />
               <div className="flex items-center gap-6">
-                <ToggleTheme className="hidden md:flex" />
+                {/* <ToggleTheme className="hidden md:flex" /> */}
                 <UserNav {...profile} />
                 <More />
               </div>
             </div>
             <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-[-2rem] md:py-0">
-              {children}
+              <div className='min-h-[80vh]'>
+                {children}
+              </div>
+              <div className='m-[3rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:justify-end md:gap-6'>
+                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                  Built by indie developer {' '}
+                  <Link
+                    to="https://www.linkedin.com/in/ommiputera"
+                    target="_blank"
+                    className="underline"
+                  >
+                    Ommi Putera
+                  </Link>
+                </p>
+                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                  The source code is available on {' '}
+                  <Link
+                    to="https://github.com/ommiPutera/omition"
+                    target="_blank"
+                    className="underline"
+                  >
+                    Github
+                  </Link>
+                </p>
+                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                  <Link
+                    to="/"
+                    target="_blank"
+                    className="underline"
+                  >
+                    Syarat & Ketentuan
+                  </Link>
+                </p>
+                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                  <Link
+                    to="/"
+                    target="_blank"
+                    className="underline"
+                  >
+                    Kebijakan privasi
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -43,11 +43,6 @@ const sessionStorage = createCookieSessionStorage({
   },
 })
 
-// const {getSession, commitSession, destroySession} =
-//   process.env.NODE_ENV === 'development'
-//     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
-//     : createUpstashSessionStorage({cookie: sessionCookie})
-
 const {getSession, commitSession, destroySession} =
   process.env.NODE_ENV === 'development'
     ? createFileSessionStorage({cookie: sessionCookie, dir: './sessions'})
@@ -60,8 +55,6 @@ async function getSessionManager(request: Request) {
 
   const sessionManager: SessionManager = {
     async getSessionItem(key: string) {
-      // console.log('dari sini: ', key)
-      // console.log('seesion.data: ', session.data)
       return await session.get(key)
     },
     async setSessionItem(key: string, value: unknown) {
@@ -161,7 +154,6 @@ async function getKindeSession(request: Request) {
 async function getUser(request: Request) {
   const {getSessionId, session} = await getSessionManager(request)
   const sessionId = await getSessionId()
-  // console.log('HERE WOI')
   if (!sessionId) {
     await signOut(sessionId)
     destroySession(session)
