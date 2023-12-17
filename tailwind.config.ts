@@ -34,6 +34,7 @@ module.exports = {
       },
       boxShadow: {
         navbar: '2px 2px 10px 0px rgba(0, 0, 0, 0.02)',
+        '3xl': 'rgba(0, 0, 0, 0.1) 0px 10px 50px',
       },
       colors: {
         border: 'hsl(var(--border))',

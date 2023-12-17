@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
+import { Grid3X3, HeartHandshake, Sparkles } from 'lucide-react'
 import React from 'react'
-import {Button, ButtonLink} from '../ui/button.tsx'
+import { Button, ButtonLink } from '../ui/button.tsx'
 import {
   Dialog,
   DialogClose,
@@ -12,10 +12,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import {Toggle} from '../ui/toggle.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
+import { Toggle } from '../ui/toggle.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
 import _ from 'lodash'
-import {PageSelectGroup} from './selects.tsx'
+import { PageSelectGroup } from './selects.tsx'
 
 function CreatePostDialog({
   children,
@@ -44,14 +44,14 @@ function CreatePostDialog({
           </TooltipTrigger>
           <TooltipContent
             side="right"
-            className={clsx('hidden md:block', {'md:hidden': withoutTooltip})}
+            className={clsx('hidden md:block', { 'md:hidden': withoutTooltip })}
           >
             <p>Buat halaman baru</p>
           </TooltipContent>
         </div>
       </Tooltip>
       <DialogPortal>
-        <DialogContent className="border-muted h-full max-w-[650px] border md:h-fit">
+        <DialogContent className="h-full max-w-[650px] border border-muted md:h-fit">
           <DialogHeader>
             <DialogTitle>Buat halaman</DialogTitle>
             <div className="flex flex-col gap-4 py-4">
@@ -64,7 +64,7 @@ function CreatePostDialog({
                     <h4 className="text-sm font-semibold leading-none">
                       Templates
                     </h4>
-                    <p className="text-muted-foreground text-xs font-normal leading-4">
+                    <p className="text-xs font-normal leading-4 text-muted-foreground">
                       Buat halaman dengan template yang telah disediakan
                     </p>
                   </div>
@@ -82,7 +82,7 @@ function CreatePostDialog({
                         <h4 className="text-sm font-semibold leading-none">
                           Komunitas
                         </h4>
-                        <p className="text-muted-foreground text-xs font-normal leading-4">
+                        <p className="text-xs font-normal leading-4 text-muted-foreground">
                           Buat halaman berdasarkan koleksi dari pengguna lain
                         </p>
                       </div>
@@ -119,4 +119,4 @@ function CreatePostDialog({
   )
 }
 
-export {CreatePostDialog}
+export { CreatePostDialog }

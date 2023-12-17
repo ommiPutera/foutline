@@ -1,5 +1,5 @@
 import { type DataFunctionArgs } from '@remix-run/node'
-import { useLocation } from '@remix-run/react'
+import { useLoaderData, useLocation } from '@remix-run/react'
 import { Info } from 'lucide-react'
 // import Editor from '~/components/editor/index.tsx'
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
@@ -10,20 +10,28 @@ import { Button } from '~/components/ui/button.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
 import { getKindeSession } from '~/utils/session.server.ts'
 
-export async function loader({ request }: DataFunctionArgs) {
+type LoaderData = {
+  postId?: string
+}
+
+export async function loader({ request, params }: DataFunctionArgs) {
   const { isAuthenticated } = await getKindeSession(request)
   if (!isAuthenticated) throw new Response('Not found', { status: 404 })
-  return null
+
+  const { id } = params
+  const data: LoaderData = { postId: id }
+  return data
 }
 
 function Index() {
+  const { postId } = useLoaderData<LoaderData>()
   return (
     <div>
       <Header />
       <div className="flex min-h-screen py-6 md:gap-6">
         <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pr-4">
           {/* <Editor /> */}
-          editor
+          editor {postId}
         </div>
         <div className="mt-[1px] hidden md:block md:min-w-[140px] md:max-w-[140px] md:border-r md:pr-4 lg:min-w-[230px] lg:max-w-[230px]">
           <div className="flex flex-col gap-4">
