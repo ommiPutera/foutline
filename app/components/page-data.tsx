@@ -1,12 +1,52 @@
 import { ChevronDownCircle, Clock4, Info } from "lucide-react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip.tsx"
 import { Button } from "./ui/button.tsx"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
 import { Textarea } from "./ui/textarea.tsx"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip.tsx"
 
 function PageData() {
   return (
-    <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[250px] lg:max-w-[250px]">
+    <div>
+      <div className="fixed inset-x-0 bottom-0 flex w-full justify-between gap-2 border-t bg-background px-3 md:hidden">
+        <div className="flex-1 border-r border-border py-3">
+          <PageMobile />
+        </div>
+        <div className="flex-1 py-3">
+          <PageMobile />
+        </div>
+      </div>
+      <div className="hidden md:block">
+        <Page />
+      </div>
+    </div>
+  )
+}
+
+function PageMobile() {
+  return (
+    <Sheet>
+      <SheetTrigger>
+        <Button variant="transparent" size="default">
+          Informasi halaman
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="bottom"
+        className="h-3/4"
+      >
+        <SheetHeader className="mb-8">
+          <SheetTitle>Informasi halaman</SheetTitle>
+        </SheetHeader>
+        <Page />
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function Page() {
+  return (
+    <div className="md:min-w-[140px] md:max-w-[140px] lg:min-w-[250px] lg:max-w-[250px]">
       <div className="flex flex-col items-start justify-start gap-4">
         <div className="flex h-9 w-full items-center justify-between gap-1">
           <span className="flex items-center text-xs">
