@@ -183,7 +183,7 @@ function Files() {
         <div className="flex flex-col gap-2 py-5">
           <div className="relative flex items-center px-5">
             <GalleryHorizontalEnd className="mr-3 h-5 w-5" />
-            <h4 className="text-xs font-semibold leading-none">
+            <h4 className="text-xs font-medium leading-none">
               Koleksi Halaman
             </h4>
           </div>
@@ -223,7 +223,7 @@ function EmptyState() {
   return (
     <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
       <div className="flex flex-col gap-2">
-        <h4 className="relative px-5 text-sm font-semibold leading-none">
+        <h4 className="relative px-5 text-sm font-medium leading-none">
           Koleksi Halaman
         </h4>
         <p className="max-w-[150px] text-xs">

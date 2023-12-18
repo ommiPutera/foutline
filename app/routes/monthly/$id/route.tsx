@@ -34,7 +34,6 @@ function Index() {
 }
 
 
-
 function Summary() {
   return (
     <div className="mt-[1px] hidden md:block md:min-w-[140px] md:max-w-[140px] md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
@@ -55,15 +54,15 @@ function Summary() {
         <div className='flex flex-col gap-5'>
           <div>
             <h5 className='text-xs text-muted-foreground'>Pemasukan</h5>
-            <p className='text-sm font-semibold'>Rp. 5,000,000</p>
+            <p className='text-xs font-medium'>Rp. 5,000,000</p>
           </div>
           <div>
             <h5 className='text-xs text-muted-foreground'>Pengeluaran</h5>
-            <p className='text-sm font-semibold'>Rp. 5,000,000</p>
+            <p className='text-xs font-medium'>Rp. 5,000,000</p>
           </div>
           <div>
             <h5 className='text-xs text-muted-foreground'>Belum dialokasikan</h5>
-            <p className='text-sm font-semibold'>Rp. 5,000,000</p>
+            <p className='text-xs font-medium'>Rp. 5,000,000</p>
           </div>
         </div>
         {/* <div className='text-xs text-muted-foreground'>

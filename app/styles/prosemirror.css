@@ -2,19 +2,12 @@
   @apply p-0 text-gray-500 dark:text-gray-100;
 }
 
-.ProseMirror .is-editor-empty:first-child::before {
+.ProseMirror .is-editor-empty:first-child::before, .is-empty::before {
   content: attr(data-placeholder);
   float: left;
-  color: var(--novel-gray-400);
   pointer-events: none;
   height: 0;
-}
-.ProseMirror .is-empty::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: var(--novel-gray-400);
-  pointer-events: none;
-  height: 0;
+  @apply text-xs font-normal text-muted-foreground leading-5;
 }
 
 /* Custom image styles */

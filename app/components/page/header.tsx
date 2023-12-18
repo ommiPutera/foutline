@@ -8,9 +8,9 @@ function Header() {
         <PageIcon />
         <h4 className="text-sm font-medium">Keuangan bulanan</h4>
       </div>
-      <div className='ml-3 flex flex-1 justify-end gap-2'>
-        <Button variant="transparent">Cancel</Button>
-        <Button>Save</Button>
+      <div className='ml-3 flex flex-1 justify-end gap-3'>
+        <Button size="sm" variant="transparent">Cancel</Button>
+        <Button size="sm">Save</Button>
       </div>
     </div>
   )
