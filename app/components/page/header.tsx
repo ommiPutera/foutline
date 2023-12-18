@@ -1,14 +1,19 @@
-import {PageIcon} from '../board/card-item.tsx'
+import { PageIcon } from '../board/card-item.tsx'
+import { Button } from '../ui/button.tsx'
 
 function Header() {
   return (
-    <div className="ml-6 flex h-9 items-center">
+    <div className="flex h-9 items-center justify-between">
       <div className="flex items-center gap-2">
         <PageIcon />
         <h4 className="text-sm font-medium">Keuangan bulanan</h4>
+      </div>
+      <div className='ml-3 flex flex-1 justify-end gap-2'>
+        <Button variant="transparent">Cancel</Button>
+        <Button>Save</Button>
       </div>
     </div>
   )
 }
 
-export {Header}
+export { Header }

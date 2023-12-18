@@ -65,6 +65,7 @@ function CardItem({
           </div>
           <div className="-mr-2 flex justify-end" id="test">
             <div
+              onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
               className={clsx(
                 'visible relative flex w-fit items-center gap-1',
                 {
@@ -167,7 +168,11 @@ function More() {
     <Popover>
       <div className="flex h-full">
         <PopoverTrigger>
-          <Button size="icon" variant="transparent" className="rounded-sm">
+          <Button
+            size="icon"
+            variant="transparent"
+            className="rounded-sm"
+          >
             <MoreHorizontal size={18} />
           </Button>
         </PopoverTrigger>
