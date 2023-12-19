@@ -47,7 +47,7 @@ function PageMobile() {
 function Page() {
   return (
     <div className="lg:min-w-[230px] lg:max-w-[230px]">
-      <div className="flex flex-col items-start justify-start gap-4">
+      <div className="flex flex-col items-start justify-start gap-2">
         <div className="flex h-9 w-full items-center justify-between gap-1">
           <span className="flex w-40 items-center text-xs">
             Halaman

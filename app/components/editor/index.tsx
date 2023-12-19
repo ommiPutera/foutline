@@ -29,8 +29,8 @@ function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
           }}
           maxLength={512}
           autoComplete='off'
-          placeholder="Untitled"
-          className="w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-medium focus:outline-none"
+          placeholder="Judul"
+          className="w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-medium placeholder:text-muted-foreground focus:outline-none"
         />
       </div>
       <React.Suspense fallback={<div>Loading woi...</div>}>
@@ -39,7 +39,7 @@ function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
             onClick={() => {
               editor?.chain().focus().run();
             }}
-            className="max-w-screen-l relative mt-2 h-fit w-full sm:mb-[calc(20vh)]"
+            className="max-w-screen-l relative mt-4 h-fit w-full pr-6 sm:mb-[calc(20vh)]"
           >
             {editor ? (
               <>

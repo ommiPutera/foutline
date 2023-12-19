@@ -50,6 +50,15 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       },
     },
     {
+      title: 'To-do List',
+      description: 'Track tasks with a to-do list.',
+      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
+      iconName: "CheckSquare",
+      command: ({ editor, range }: Command) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run()
+      },
+    },
+    {
       title: "Heading 1",
       description: "Big section heading.",
       iconName: "Heading1",

@@ -26,9 +26,9 @@ function Index() {
   const { postId } = useLoaderData<LoaderData>()
   return (
     <div className="flex max-h-[90vh] p-4 md:mt-[0.5em] md:gap-6" stat-data={postId}>
-      <div hidden>
-        <Summary />
-      </div>
+      {/* <div hidden>
+      </div> */}
+      <Summary />
       <MonthlyEditor />
       <PageData />
     </div>

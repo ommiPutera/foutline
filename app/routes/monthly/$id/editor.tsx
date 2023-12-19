@@ -7,7 +7,7 @@ function MonthlyEditor() {
   return (
     <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pl-4 md:pr-10">
       <Header />
-      <div className='mt-6'>
+      <div className='mt-12'>
         <Editor />
       </div>
     </div>

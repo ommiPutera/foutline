@@ -52,14 +52,14 @@ export function ColorSelector({ editor, isOpen, setIsOpen }: ColorSelectorProps)
   const activeItem = items.find(({ color }) => editor.isActive("textStyle", { color }));
 
   return (
-    <div className="relative h-full">
+    <div className="relative">
       <Button
-        variant="ghost"
-        size="icon"
         onClick={() => setIsOpen(!isOpen)}
-        className="rounded-md p-2 hover:bg-muted"
+        variant="ghost"
+        size="icon-sm"
+        className="mb-1 rounded-md p-1 hover:bg-muted"
       >
-        <span style={{ color: activeItem?.color || "#000000" }}>A</span>
+        <div className="flex items-center justify-center text-xs" style={{ color: activeItem?.color || "#000000" }}>A</div>
       </Button>
 
       {isOpen && (

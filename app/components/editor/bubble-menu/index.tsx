@@ -72,7 +72,7 @@ export function EditorBubbleMenu({ editor, ...rest }: EditorBubbleMenuProps) {
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="flex items-center overflow-hidden rounded-sm border border-input bg-background p-1 shadow-md"
+      className="flex items-center justify-center gap-2 overflow-hidden rounded-sm border border-input bg-background p-1 shadow-lg"
     >
       {items.map((item, index) => {
         const Icon = icons[item.iconName]
@@ -81,10 +81,10 @@ export function EditorBubbleMenu({ editor, ...rest }: EditorBubbleMenuProps) {
             key={index}
             onClick={item.command}
             variant="ghost"
-            size="icon"
-            className="rounded-md p-2 hover:bg-muted"
+            size="icon-sm"
+            className="rounded-md p-1 hover:bg-muted"
           >
-            <Icon className="h-4 w-4" />
+            <Icon className="h-3 w-3" />
           </Button>
         )
       })}

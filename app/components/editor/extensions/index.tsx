@@ -1,12 +1,15 @@
 import StarterKit from "@tiptap/starter-kit";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import TiptapLink from "@tiptap/extension-link";
-import TiptapImage from "@tiptap/extension-image";
+import Highlight from '@tiptap/extension-highlight'
+import TaskItem from '@tiptap/extension-task-item';
+import TaskList from '@tiptap/extension-task-list';
 import Placeholder from "@tiptap/extension-placeholder";
 import TiptapUnderline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
-
+import DragAndDrop from './drag-and-drop.tsx';
+import CustomKeymap from './custom-keymap.ts'
 import SlashCommand from "./slash-command.tsx";
 import { InputRule } from "@tiptap/core";
 
@@ -51,7 +54,6 @@ export const TiptapExtensions = [
     },
     gapcursor: false,
   }),
-  // patch to fix horizontal rule bug: https://github.com/ueberdosis/tiptap/pull/3859#issuecomment-1536799740
   HorizontalRule.extend({
     addInputRules() {
       return [
@@ -83,23 +85,27 @@ export const TiptapExtensions = [
         "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
     },
   }),
-  TiptapImage.configure({
-    allowBase64: true,
+  Highlight.configure({
+    multicolor: true,
+  }),
+  TaskList.configure({
     HTMLAttributes: {
-      class: "rounded-lg border border-stone-200",
+      class: '',
     },
   }),
-  Placeholder.configure({
-    placeholder: ({ node }: { node: any }) => {
-      if (node.type.name === "heading") {
-        return `Heading ${node.attrs.level}`;
-      }
-      return "Press '/' for commands";
+  TaskItem.configure({
+    HTMLAttributes: {
+      class: 'flex items-start',
     },
-    includeChildren: true,
+    nested: true,
+  }),
+  Placeholder.configure({
+    placeholder: "Buat catatan.., '/' untuk perintah.."
   }),
   SlashCommand,
   TiptapUnderline,
   TextStyle,
   Color,
+  CustomKeymap,
+  DragAndDrop
 ];
