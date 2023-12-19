@@ -1,139 +1,100 @@
-import type {BubbleMenuProps} from '@tiptap/react'
-import {BubbleMenu, isNodeSelection} from '@tiptap/react'
-import type {FC} from 'react'
-import {useState} from 'react'
-import {
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
-  CodeIcon,
-} from 'lucide-react'
-import {NodeSelector} from './node-selector.tsx'
-import {ColorSelector} from './color-selector.tsx'
-import {LinkSelector} from './link-selector.tsx'
-import {cn} from '~/lib/utils.ts'
+import type { BubbleMenuProps } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react";
+import { icons } from "lucide-react";
+import React from "react";
+import { ColorSelector } from "./color-selector.tsx";
+import { Button } from "~/components/ui/button.tsx";
 
 export interface BubbleMenuItem {
-  name: string
-  isActive: () => boolean
-  command: () => void
-  icon: typeof BoldIcon
+  name: string;
+  isActive: () => boolean;
+  command: () => void;
+  iconName: keyof typeof icons;
 }
 
-type EditorBubbleMenuProps = Omit<BubbleMenuProps, 'children'>
+type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children">;
 
-export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = props => {
+export function EditorBubbleMenu({ editor, ...rest }: EditorBubbleMenuProps) {
+  const [isColorSelectorOpen, setIsColorSelectorOpen] = React.useState(false);
+
+  if (!editor) return <></>
   const items: BubbleMenuItem[] = [
     {
-      name: 'bold',
-      isActive: () => props.editor.isActive('bold'),
-      command: () => props.editor.chain().focus().toggleBold().run(),
-      icon: BoldIcon,
+      name: "bold",
+      isActive: () => editor.isActive("bold"),
+      command: () => editor.chain().focus().toggleBold().run(),
+      iconName: 'Bold',
     },
     {
-      name: 'italic',
-      isActive: () => props.editor.isActive('italic'),
-      command: () => props.editor.chain().focus().toggleItalic().run(),
-      icon: ItalicIcon,
+      name: "italic",
+      isActive: () => editor.isActive("italic"),
+      command: () => editor.chain().focus().toggleItalic().run(),
+      iconName: 'Italic',
     },
     {
-      name: 'underline',
-      isActive: () => props.editor.isActive('underline'),
-      command: () => props.editor.chain().focus().toggleUnderline().run(),
-      icon: UnderlineIcon,
+      name: "underline",
+      isActive: () => editor.isActive("underline"),
+      command: () => editor.chain().focus().toggleUnderline().run(),
+      iconName: 'Underline',
     },
     {
-      name: 'strike',
-      isActive: () => props.editor.isActive('strike'),
-      command: () => props.editor.chain().focus().toggleStrike().run(),
-      icon: StrikethroughIcon,
+      name: "strike",
+      isActive: () => editor.isActive("strike"),
+      command: () => editor.chain().focus().toggleStrike().run(),
+      iconName: 'Strikethrough',
     },
     {
-      name: 'code',
-      isActive: () => props.editor.isActive('code'),
-      command: () => props.editor.chain().focus().toggleCode().run(),
-      icon: CodeIcon,
+      name: "code",
+      isActive: () => editor.isActive("code"),
+      command: () => editor.chain().focus().toggleCode().run(),
+      iconName: 'Code',
     },
-  ]
+  ];
 
   const bubbleMenuProps: EditorBubbleMenuProps = {
-    ...props,
-    shouldShow: ({state, editor}) => {
-      const {selection} = state
-      const {empty} = selection
-
-      // don't show bubble menu if:
-      // - the selected node is an image
-      // - the selection is empty
-      // - the selection is a node selection (for drag handles)
-      if (editor.isActive('image') || empty || isNodeSelection(selection)) {
-        return false
+    ...rest,
+    editor,
+    shouldShow: ({ editor }) => {
+      // don't show if image is selected
+      if (editor.isActive("image")) {
+        return false;
       }
-      return true
+      return editor.view.state.selection.content().size > 0;
     },
     tippyOptions: {
-      moveTransition: 'transform 0.15s ease-out',
+      moveTransition: "transform 0.15s ease-out",
       onHidden: () => {
-        setIsNodeSelectorOpen(false)
-        setIsColorSelectorOpen(false)
-        setIsLinkSelectorOpen(false)
+        setIsColorSelectorOpen(false);
       },
     },
-  }
-
-  const [isNodeSelectorOpen, setIsNodeSelectorOpen] = useState(false)
-  const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false)
-  const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false)
+  };
 
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="flex w-fit divide-x divide-gray-200 rounded border border-gray-200 bg-white shadow-xl"
+      className="flex items-center overflow-hidden rounded-sm border border-input bg-background p-1 shadow-md"
     >
-      <NodeSelector
-        editor={props.editor}
-        isOpen={isNodeSelectorOpen}
-        setIsOpen={() => {
-          setIsNodeSelectorOpen(!isNodeSelectorOpen)
-          setIsColorSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
-        }}
-      />
-      <LinkSelector
-        editor={props.editor}
-        isOpen={isLinkSelectorOpen}
-        setIsOpen={() => {
-          setIsLinkSelectorOpen(!isLinkSelectorOpen)
-          setIsColorSelectorOpen(false)
-          setIsNodeSelectorOpen(false)
-        }}
-      />
-      <div className="flex">
-        {items.map((item, index) => (
-          <button
+      {items.map((item, index) => {
+        const Icon = icons[item.iconName]
+        return (
+          <Button
             key={index}
             onClick={item.command}
-            className="p-2 text-gray-600 hover:bg-gray-100 active:bg-gray-200"
-            type="button"
+            variant="ghost"
+            size="icon"
+            className="rounded-md p-2 hover:bg-muted"
           >
-            <item.icon
-              className={cn('h-4 w-4', {
-                'text-blue-500': item.isActive(),
-              })}
-            />
-          </button>
-        ))}
-      </div>
+            <Icon className="h-4 w-4" />
+          </Button>
+        )
+      })}
       <ColorSelector
-        editor={props.editor}
+        editor={editor}
         isOpen={isColorSelectorOpen}
         setIsOpen={() => {
-          setIsColorSelectorOpen(!isColorSelectorOpen)
-          setIsNodeSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
+          setIsColorSelectorOpen(!isColorSelectorOpen);
         }}
       />
     </BubbleMenu>
-  )
+  );
 }

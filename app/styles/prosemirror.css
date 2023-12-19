@@ -10,8 +10,6 @@
   @apply text-xs font-normal text-muted-foreground leading-5;
 }
 
-/* Custom image styles */
-
 .ProseMirror img {
   transition: filter 0.1s ease-in-out;
 
