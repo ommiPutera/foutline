@@ -71,12 +71,12 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                   </Link>
                 </p>
                 <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link to="/" target="_blank" className="underline">
+                  <Link to="/terms-condition" className='underline'>
                     Syarat & Ketentuan
                   </Link>
                 </p>
                 <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link to="/" target="_blank" className="underline">
+                  <Link to="/privacy-policy" className='underline'>
                     Kebijakan privasi
                   </Link>
                 </p>

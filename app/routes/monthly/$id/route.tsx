@@ -4,7 +4,7 @@ import { Info } from 'lucide-react'
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
 import { ErrorPage } from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
 import { getKindeSession } from '~/utils/session.server.ts'
 import MonthlyEditor from './editor.tsx'
@@ -36,38 +36,74 @@ function Index() {
 
 function Summary() {
   return (
-    <div className="mt-[1px] hidden md:block md:min-w-[140px] md:max-w-[140px] md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
-      <div className="flex flex-col gap-4">
-        <div className='flex items-center gap-1 text-xs font-semibold'>
-          Ringkasan bulan ini
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="transparent" size="icon">
-                <Info className='h-4 w-4 fill-blue-500 text-white' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>Buat halaman baru</p>
-            </TooltipContent>
-          </Tooltip>
+    <div className="mt-[1px] hidden md:block md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
+      <div className="flex flex-col gap-12">
+        <div className='flex flex-col gap-6'>
+          <div>
+            <div className='flex items-center text-xs font-semibold'>
+              Data halaman anda
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="transparent" size="icon">
+                    <Info className='h-4 w-4 fill-blue-500 text-white' />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Buat halaman baru</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className='text-[11px] text-muted-foreground'>
+              Selalu pastikan pengeluaran anda tidak melebihi pemasukan anda
+            </div>
+          </div>
+          <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-1'>
+              <h5 className='text-xs text-muted-foreground'>Pemasukan</h5>
+              <p className='text-xs font-medium'>Rp. 5,480,000</p>
+            </div>
+            <div className='flex flex-col gap-1'>
+              <h5 className='text-xs text-muted-foreground'>Pengeluaran</h5>
+              <p className='text-xs font-medium'>Rp. 1,790,000</p>
+            </div>
+            <div className='flex flex-col gap-1'>
+              <h5 className='text-xs text-muted-foreground'>Belum dialokasikan</h5>
+              <p className='text-xs font-medium'>Rp. 3,690,000</p>
+            </div>
+          </div>
         </div>
-        <div className='flex flex-col gap-5'>
-          <div>
-            <h5 className='text-xs text-muted-foreground'>Pemasukan</h5>
-            <p className='text-xs font-medium'>Rp. 5,000,000</p>
+
+        <div className='flex flex-col gap-3'>
+          <div className='flex items-center text-xs font-semibold'>
+            Kantong
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="transparent" size="icon">
+                  <Info className='h-4 w-4 fill-blue-500 text-white' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>Buat halaman baru</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
-          <div>
-            <h5 className='text-xs text-muted-foreground'>Pengeluaran</h5>
-            <p className='text-xs font-medium'>Rp. 5,000,000</p>
-          </div>
-          <div>
-            <h5 className='text-xs text-muted-foreground'>Belum dialokasikan</h5>
-            <p className='text-xs font-medium'>Rp. 5,000,000</p>
+          <div className='flex flex-col gap-2'>
+            <ButtonLink
+              asChild
+              variant="transparent"
+              to='/'
+              className='overflow-hidden border border-input bg-muted px-3.5 py-7'
+            >
+              <div className='flex w-full items-center gap-4'>
+                <div className='flex w-full flex-col gap-1'>
+                  <h5 className='text-[11px] text-muted-foreground'>Bank Mandiri</h5>
+                  <p className='text-xs font-medium'>Rp. 3,690,000</p>
+                </div>
+                <img src="/logos/bank_mandiri.png" alt="" width="34px" height="auto" />
+              </div>
+            </ButtonLink>
           </div>
         </div>
-        {/* <div className='text-xs text-muted-foreground'>
-              Untuk menjaga keuangan anda tetap dalam kondisi yang sehat, selalu pastikan pengeluaran anda tidak lebih dari pemasukan anda.
-            </div> */}
       </div>
     </div>
   )

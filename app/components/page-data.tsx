@@ -1,4 +1,4 @@
-import { ChevronDownCircle, Clock4, Info } from "lucide-react"
+import { Info } from "lucide-react"
 import { Button } from "./ui/button.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
@@ -46,15 +46,14 @@ function PageMobile() {
 
 function Page() {
   return (
-    <div className="md:min-w-[140px] md:max-w-[140px] lg:min-w-[250px] lg:max-w-[250px]">
+    <div className="lg:min-w-[230px] lg:max-w-[230px]">
       <div className="flex flex-col items-start justify-start gap-4">
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex items-center text-xs">
-            <ChevronDownCircle className='mr-1.5 h-3.5 w-3.5' />
+          <span className="flex w-40 items-center text-xs">
             Halaman
           </span>
           <Select defaultValue='monthly'>
-            <SelectTrigger className="w-[140px]" withoutIcon>
+            <SelectTrigger className="w-full" withoutIcon>
               <SelectValue placeholder="Pilih halaman" />
             </SelectTrigger>
             <SelectContent>
@@ -66,12 +65,11 @@ function Page() {
           </Select>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex items-center text-xs">
-            <ChevronDownCircle className='mr-1.5 h-3.5 w-3.5' />
+          <span className="flex w-40 items-center text-xs">
             Status
           </span>
           <Select defaultValue='not-started'>
-            <SelectTrigger className="w-[140px]" withoutIcon>
+            <SelectTrigger className="w-full" withoutIcon>
               <SelectValue placeholder="Pilih Status" />
             </SelectTrigger>
             <SelectContent>
@@ -82,40 +80,44 @@ function Page() {
           </Select>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-32 items-center text-xs">
-            <Clock4 className='mr-1.5 h-3.5 w-3.5' />
+          <span className="flex w-40 items-center text-xs">
             Dibuat
           </span>
-          <div className='text-xs text-accent-foreground'>
-            14 Desember 2023 18.00 WIB
-          </div>
-        </div>
-        <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-32 items-center text-xs">
-            <Clock4 className='mr-1.5 h-3.5 w-3.5' />
-            Diedit
-          </span>
-          <div className='text-xs text-accent-foreground'>
+          <div className='w-full px-3 text-xs text-accent-foreground'>
             17 Desember 2023 21.42 WIB
           </div>
         </div>
-        <div className='mt-6 flex w-full flex-col gap-2'>
-          <div className='flex items-center gap-1 text-xs font-semibold'>
-            Tidak ada komen
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="transparent" size="icon">
-                  <Info className='h-4 w-4 fill-blue-500 text-white' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                <p>Buat halaman baru</p>
-              </TooltipContent>
-            </Tooltip>
+        <div className="flex h-9 w-full items-center justify-between gap-1">
+          <span className="flex w-40 items-center text-xs">
+            Diedit
+          </span>
+          <div className='w-full px-3 text-xs text-accent-foreground'>
+            17 Desember 2023 21.42 WIB
           </div>
-          <Textarea className='w-full' placeholder='Tinggalkan komen disini' />
         </div>
+        <Comments />
       </div>
+    </div>
+  )
+}
+
+function Comments() {
+  return (
+    <div className='mt-6 flex w-full flex-col gap-2'>
+      <div className='flex items-center gap-1 text-xs font-semibold'>
+        Tidak ada komen
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="transparent" size="icon">
+              <Info className='h-4 w-4 fill-blue-500 text-white' />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>Buat halaman baru</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+      <Textarea className='w-full' placeholder='Tinggalkan komen disini' />
     </div>
   )
 }
