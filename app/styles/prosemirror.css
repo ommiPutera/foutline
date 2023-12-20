@@ -30,7 +30,7 @@ ul[data-type="taskList"] li > label {
 }
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
-    margin-right: 0.5rem;
+    @apply mr-[0.3rem] md:mr-[0.5rem];
   }
 }
 ul[data-type="taskList"] li > label input[type="checkbox"] {
@@ -43,7 +43,7 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
   display: grid;
   place-content: center;
   border-radius: 3px;
-  @apply border border-input w-[1.1em] h-[1.1em] md:w-[0.9em] md:h-[0.9em] mt-[0.1rem] md:mt-[0.2em] rounded-sm bg-transparent checked:bg-primary checked:border-primary;
+  @apply border border-input w-[1.1em] h-[1.1em] md:w-[0.9em] md:h-[0.9em] mt-[0.085rem] md:mt-[0.2em] rounded-sm bg-transparent checked:bg-primary checked:border-primary;
 
   &::before {
     content: "";

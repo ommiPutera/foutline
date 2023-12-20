@@ -34,7 +34,7 @@ function Board() {
 function Tools() {
   return (
     <div className="flex items-center justify-between bg-background">
-      <div className="flex items-center gap-1">
+      <div className="hidden md:flex md:items-center md:gap-1">
         <Button size="icon" variant="ghost">
           <LayoutGrid size={16} />
         </Button>
@@ -42,9 +42,17 @@ function Tools() {
           <List size={16} />
         </Button>
       </div>
-      <div className="flex items-center gap-1">
-        <FilterButton />
-        <SortButton />
+      <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
+        <div className='flex items-center'>
+          <FilterButton />
+          <SortButton />
+        </div>
+        <CreatePostDialog withoutTooltip>
+          <Button size="sm" className="flex items-center gap-2 md:hidden">
+            <Plus size={14} />
+            Halaman baru
+          </Button>
+        </CreatePostDialog>
       </div>
     </div>
   )
