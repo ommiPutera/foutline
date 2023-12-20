@@ -10,41 +10,10 @@ import TextStyle from "@tiptap/extension-text-style";
 import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
-import BasicSlashCommand from "../slash-command/index.tsx";
+import MonthlySlashCommand from "../slash-command/monthly.tsx";
 
-export const BasicExtensions = [
+export const MonthlyExtensions = [
   StarterKit.configure({
-    heading: {
-      HTMLAttributes: {
-        class: 'font-medium',
-      },
-    },
-    bulletList: {
-      HTMLAttributes: {
-        class: "list-disc list-outside leading-3",
-      },
-    },
-    orderedList: {
-      HTMLAttributes: {
-        class: "list-decimal list-outside leading-3",
-      },
-    },
-    listItem: {
-      HTMLAttributes: {
-        class: "leading-normal",
-      },
-    },
-    blockquote: {
-      HTMLAttributes: {
-        class: 'border-l-4 border-gray-100 dark:border-gray-800',
-      },
-    },
-    codeBlock: {
-      HTMLAttributes: {
-        class:
-          "rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800",
-      },
-    },
     horizontalRule: false,
     dropcursor: {
       color: "#DBEAFE",
@@ -100,7 +69,7 @@ export const BasicExtensions = [
   Placeholder.configure({
     placeholder: "Buat catatan.., '/' untuk perintah.."
   }),
-  BasicSlashCommand,
+  MonthlySlashCommand,
   TiptapUnderline,
   TextStyle,
   Color,

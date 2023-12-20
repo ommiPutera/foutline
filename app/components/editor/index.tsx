@@ -2,17 +2,27 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { ScrollArea } from '../ui/scroll-area.tsx';
-import { TiptapExtensions } from './extensions/index.tsx';
+import { BasicExtensions } from './extensions/index.tsx';
 import { TiptapEditorProps } from './props.ts';
 import { EditorBubbleMenu } from './bubble-menu/index.tsx';
+import { MonthlyExtensions } from './extensions/monthly.tsx';
 
 
 function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
 
+  const getExtensions = () => {
+    switch (type) {
+      case 'MONTHLY':
+        return MonthlyExtensions
+      default:
+        return BasicExtensions
+    }
+  }
+
   const editor = useEditor({
-    extensions: TiptapExtensions,
+    extensions: getExtensions(),
     editorProps: TiptapEditorProps,
   })
 

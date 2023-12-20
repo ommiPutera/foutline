@@ -49,7 +49,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
             </div>
             <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-0">
               {children}
-              <div className="m-[3rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:justify-end md:gap-6">
+              <div className="m-[3rem] mb-[8rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:mb-[2rem] md:justify-end md:gap-6">
                 <p className="text-center text-sm text-muted-foreground md:text-xs">
                   Built by indie developer{' '}
                   <Link

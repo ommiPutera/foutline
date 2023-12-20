@@ -8,7 +8,7 @@ function MonthlyEditor() {
     <div className="flex w-full flex-col gap-4 md:gap-3 md:pl-4">
       <Header />
       <div className='mt-12'>
-        <Editor />
+        <Editor type='MONTHLY' />
       </div>
     </div>
   )

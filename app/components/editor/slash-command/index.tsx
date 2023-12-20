@@ -6,18 +6,18 @@ import { icons } from "lucide-react";
 import React from "react";
 import tippy from "tippy.js";
 
-interface CommandItemProps {
+export interface CommandItemProps {
   title: string;
   description: string;
   iconName: keyof typeof icons;
 }
 
-interface Command {
+export interface Command {
   editor: Editor;
   range: Range;
 }
 
-const CommandExtension = Extension.create({
+export const CommandExtension = Extension.create({
   name: "slash-command",
   addOptions() {
     return {
@@ -126,7 +126,7 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   }
 };
 
-const CommandList = ({ items, command, editor, range }: { items: CommandItemProps[]; command: any; editor: any; range: any }) => {
+export const CommandList = ({ items, command, editor, range }: { items: CommandItemProps[]; command: any; editor: any; range: any }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const selectItem = React.useCallback(
@@ -252,11 +252,11 @@ const renderItems = () => {
   };
 };
 
-const SlashCommand = CommandExtension.configure({
+const BasicSlashCommand = CommandExtension.configure({
   suggestion: {
     items: getSuggestionItems,
     render: renderItems,
   },
 });
 
-export default SlashCommand;
+export default BasicSlashCommand;

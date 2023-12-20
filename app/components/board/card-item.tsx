@@ -26,7 +26,7 @@ function CardItem({
 }) {
   const [isHover, setIsHover] = React.useState(false)
   return (
-    <Link to="/monthly/123">
+    <Link to="/monthly/123" prefetch='render'>
       <Card
         key={order}
         onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
