@@ -5,7 +5,7 @@ const Editor = React.lazy(async () => await import('~/components/editor/index.ts
 
 function MonthlyEditor() {
   return (
-    <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pl-4 md:pr-10">
+    <div className="flex w-full flex-col gap-4 md:gap-3 md:pl-4">
       <Header />
       <div className='mt-12'>
         <Editor />

@@ -30,7 +30,7 @@ function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
           maxLength={512}
           autoComplete='off'
           placeholder="Judul"
-          className="w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-medium placeholder:text-muted-foreground focus:outline-none"
+          className="w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-normal placeholder:text-muted-foreground focus:outline-none"
         />
       </div>
       <React.Suspense fallback={<div>Loading woi...</div>}>

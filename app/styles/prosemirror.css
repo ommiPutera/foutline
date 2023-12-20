@@ -1,44 +1,49 @@
 @import url('./globals.css');
 
+/* PARAGRAPH */
 .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
   pointer-events: none;
   height: 0;
 }
-
 .tiptap p {
-  @apply text-sm mb-2 text-foreground leading-6;
+  @apply text-sm mb-2 text-foreground leading-5;
   
   &.is-editor-empty:first-child::before {
     @apply text-muted-foreground;
   }
 }
 
+
+
+/* TASK LIST */
+ul[class^="not-prose"] p {
+  @apply mb-0
+}
+ul[class^="not-prose"] {
+  @apply flex flex-col gap-0.5;
+}
 ul[data-type="taskList"] li > label {
   margin-right: 0.2rem;
   user-select: none;
 }
-
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
     margin-right: 0.5rem;
   }
 }
-
 ul[data-type="taskList"] li > label input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
   margin: 0;
-  cursor: pointer;
-  width: 0.9em;
-  height: 0.9em;
+  cursor: default;
   position: relative;
   margin-right: 0.3rem;
-  margin-top: 0.15em;
   display: grid;
   place-content: center;
-  @apply border border-input rounded-sm bg-transparent checked:bg-primary checked:border-primary;
+  border-radius: 3px;
+  @apply border border-input w-[1.1em] h-[1.1em] md:w-[0.9em] md:h-[0.9em] md:mt-[0.2em] rounded-sm bg-transparent checked:bg-primary checked:border-primary;
 
   &::before {
     content: "";
@@ -53,7 +58,31 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
     visibility: visible;
   }
 }
-
 ul[data-type="taskList"] li[data-checked="true"] > div > p {
   @apply text-foreground/60;
+}
+
+
+
+/* HEADING */
+.tiptap h1:first-child, 
+.tiptap h2:first-child, 
+.tiptap h3:first-child {
+  @apply mt-0;
+}
+.tiptap h1 {
+  @apply text-xl mb-4 mt-10;
+}
+.tiptap h2 {
+  @apply text-lg mb-3 mt-9;
+}
+.tiptap h3 {
+  @apply text-base mb-2 mt-8;
+}
+
+
+
+/* BLOCKQUOTE */
+.tiptap blockquote {
+  @apply pl-4;
 }

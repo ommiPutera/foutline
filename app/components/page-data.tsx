@@ -16,7 +16,7 @@ function PageData() {
           <PageMobile />
         </div>
       </div>
-      <div className="hidden md:block">
+      <div className="hidden xl:block xl:border-l xl:pl-10">
         <Page />
       </div>
     </div>

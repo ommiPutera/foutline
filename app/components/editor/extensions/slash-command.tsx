@@ -104,12 +104,6 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       iconName: "TextQuote",
       command: ({ editor, range }: Command) => editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").toggleBlockquote().run(),
     },
-    {
-      title: "Code",
-      description: "Capture a code snippet.",
-      iconName: "Code",
-      command: ({ editor, range }: Command) => editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
-    }
   ].filter((item) => {
     if (typeof query === "string" && query.length > 0) {
       return item.title.toLowerCase().includes(query.toLowerCase());
