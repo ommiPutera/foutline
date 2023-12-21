@@ -1,3 +1,4 @@
+import type { KeyboardShortcutCommand } from "@tiptap/core";
 import { InputRule } from "@tiptap/core";
 import { Color } from "@tiptap/extension-color";
 import Highlight from '@tiptap/extension-highlight';
@@ -10,10 +11,15 @@ import TextStyle from "@tiptap/extension-text-style";
 import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
-import MonthlySlashCommand from "../slash-command/monthly.tsx";
+import MonthlySlashCommand, { insertIncome } from "../slash-command/monthly.tsx";
 
 export const MonthlyExtensions = [
   StarterKit.configure({
+    heading: {
+      HTMLAttributes: {
+        class: 'font-medium',
+      },
+    },
     horizontalRule: false,
     dropcursor: {
       color: "#DBEAFE",
@@ -60,9 +66,45 @@ export const MonthlyExtensions = [
       class: 'not-prose',
     },
   }),
-  TaskItem.configure({
+  TaskItem.extend({
+    addAttributes() {
+      return {
+        for: {
+          default: 'none',
+          keepOnSplit: false,
+          renderHTML: attributes => ({
+            'data-for': attributes.for,
+          }),
+        },
+        checked: {
+          default: false,
+          keepOnSplit: false,
+          parseHTML: element => element.getAttribute('data-checked') === 'true',
+          renderHTML: attributes => ({
+            'data-checked': attributes.checked,
+          }),
+        },
+      }
+    },
+    addKeyboardShortcuts() {
+      const shortcuts: {
+        [key: string]: KeyboardShortcutCommand
+      } = {
+        Enter: () => insertIncome(this.editor, this.name),
+      }
+
+      if (!this.options.nested) {
+        return shortcuts
+      }
+
+      return {
+        ...shortcuts,
+        Tab: () => this.editor.commands.sinkListItem(this.name),
+      }
+    },
+  }).configure({
     HTMLAttributes: {
-      class: 'flex items-start',
+      class: 'flex items-start'
     },
     nested: true,
   }),

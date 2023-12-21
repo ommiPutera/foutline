@@ -8,7 +8,7 @@
   height: 0;
 }
 .tiptap p {
-  @apply text-sm mb-2 text-foreground leading-5;
+  @apply text-[13.5px] mb-2.5 text-foreground leading-5;
   
   &.is-editor-empty:first-child::before {
     @apply text-muted-foreground;
@@ -22,7 +22,7 @@ ul[class^="not-prose"] p {
   @apply mb-0
 }
 ul[class^="not-prose"] {
-  @apply flex flex-col gap-0.5;
+  @apply flex flex-col gap-1 pl-0.5 my-1;
 }
 ul[data-type="taskList"] li > label {
   margin-right: 0.2rem;
@@ -30,7 +30,7 @@ ul[data-type="taskList"] li > label {
 }
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
-    @apply mr-[0.3rem] md:mr-[0.5rem];
+    @apply mr-[0.3rem] md:mr-[0.4rem];
   }
 }
 ul[data-type="taskList"] li > label input[type="checkbox"] {
@@ -56,6 +56,18 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
   
   &:checked::before {
     visibility: visible;
+  }
+}
+ul[data-type="taskList"] li[data-for="monthly-income"] > label input[type="checkbox"] {
+  @apply border border-green-400 checked:bg-green-200;
+  &::before {
+    @apply border-primary
+  }
+}
+ul[data-type="taskList"] li[data-for="monthly-expense"] > label input[type="checkbox"] {
+  @apply border border-red-400 checked:bg-red-200;
+  &::before {
+    @apply border-primary
   }
 }
 ul[data-type="taskList"] li[data-checked="true"] > div > p {

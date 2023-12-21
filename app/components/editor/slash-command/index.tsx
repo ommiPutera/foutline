@@ -2,22 +2,25 @@ import type { Editor, Range } from "@tiptap/core";
 import { Extension } from "@tiptap/core";
 import { ReactRenderer } from "@tiptap/react";
 import Suggestion from "@tiptap/suggestion";
+import clsx from "clsx";
 import { icons } from "lucide-react";
 import React from "react";
 import tippy from "tippy.js";
 
-export interface CommandItemProps {
+type CommandItemProps = {
   title: string;
-  description: string;
-  iconName: keyof typeof icons;
+  icon: {
+    iconName: keyof typeof icons;
+    color: 'green' | 'red' | 'orange' | 'default'
+  }
 }
 
-export interface Command {
+type Command = {
   editor: Editor;
   range: Range;
 }
 
-export const CommandExtension = Extension.create({
+const CommandExtension = Extension.create({
   name: "slash-command",
   addOptions() {
     return {
@@ -43,65 +46,81 @@ const getSuggestionItems = ({ query }: { query: string }) => {
   return [
     {
       title: "Text",
-      description: "Just start typing with plain text.",
-      iconName: "Text",
+      icon: {
+        iconName: "Text",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").run();
       },
     },
     {
       title: 'To-do List',
-      description: 'Track tasks with a to-do list.',
       searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
-      iconName: "CheckSquare",
+      icon: {
+        iconName: "CheckSquare",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleTaskList().run()
       },
     },
     {
       title: "Heading 1",
-      description: "Big section heading.",
-      iconName: "Heading1",
+      icon: {
+        iconName: "Heading1",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).setNode("heading", { level: 1 }).run();
       },
     },
     {
       title: "Heading 2",
-      description: "Medium section heading.",
-      iconName: "Heading2",
+      icon: {
+        iconName: "Heading2",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).setNode("heading", { level: 2 }).run();
       },
     },
     {
       title: "Heading 3",
-      description: "Small section heading.",
-      iconName: "Heading3",
+      icon: {
+        iconName: "Heading3",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
       },
     },
     {
       title: "Bullet List",
-      description: "Create a simple bullet list.",
-      iconName: "Heading",
+      icon: {
+        iconName: "Heading",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleBulletList().run();
       },
     },
     {
       title: "Numbered List",
-      description: "Create a list with numbering.",
-      iconName: "ListOrdered",
+      icon: {
+        iconName: "ListOrdered",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run();
       },
     },
     {
       title: "Quote",
-      description: "Capture a quote.",
-      iconName: "TextQuote",
+      icon: {
+        iconName: "TextQuote",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").toggleBlockquote().run(),
     },
   ].filter((item) => {
@@ -112,7 +131,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
   });
 };
 
-export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
+const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   const containerHeight = container.offsetHeight;
   const itemHeight = item ? item.offsetHeight : 0;
 
@@ -126,7 +145,7 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   }
 };
 
-export const CommandList = ({ items, command, editor, range }: { items: CommandItemProps[]; command: any; editor: any; range: any }) => {
+const CommandList = ({ items, command, editor, range }: { items: CommandItemProps[]; command: any; editor: any; range: any }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const selectItem = React.useCallback(
@@ -181,23 +200,28 @@ export const CommandList = ({ items, command, editor, range }: { items: CommandI
     <div
       id="slash-command"
       ref={commandListContainer}
-      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto scroll-smooth rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+      className="z-50 h-auto max-h-[420px] w-56 overflow-y-auto scroll-smooth rounded-md border border-input bg-white p-1 shadow-md transition-all"
     >
-      {items.map((item: CommandItemProps, index: number) => {
-        const Icon = icons[item.iconName]
+      {items.map(({ title, icon: { iconName, color } }: CommandItemProps, index: number) => {
+        const Icon = icons[iconName]
         return (
           <button
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${index === selectedIndex ? "bg-stone-100 text-stone-900" : ""}`}
+            className={clsx('flex w-full items-center space-x-2 rounded-md p-1 text-left text-sm text-gray-900', {
+              'bg-gray-100/50 dark:bg-gray-700': selectedIndex === index,
+            })}
             key={index}
+            onMouseEnter={() => setSelectedIndex(index)}
             onClick={() => selectItem(index)}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-100 bg-white">
-              <Icon className="h-4 w-4" />
+            <div className={clsx("flex h-6 w-6 items-center justify-center rounded-md border", {
+              "border-red-200 bg-red-100": color === 'red',
+              "border-orange-200 bg-orange-100": color === 'orange',
+              "border-green-200 bg-green-100": color === 'green',
+              "border-gray-100 bg-white": color === 'default'
+            })}>
+              <Icon className="h-3 w-3" />
             </div>
-            <div>
-              <p className="font-medium">{item.title}</p>
-              <p className="text-xs text-stone-500">{item.description}</p>
-            </div>
+            <p className="text-xs font-medium">{title}</p>
           </button>
         );
       })}
@@ -260,3 +284,11 @@ const BasicSlashCommand = CommandExtension.configure({
 });
 
 export default BasicSlashCommand;
+export {
+  CommandExtension,
+  renderItems,
+  updateScrollView,
+  CommandList,
+  type CommandItemProps,
+  type Command
+}

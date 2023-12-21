@@ -1,25 +1,75 @@
 import type { Editor } from "@tiptap/core";
-import { ReactRenderer } from "@tiptap/react";
-import tippy from "tippy.js";
-import { CommandExtension, type Command, CommandList } from "./index.tsx";
+import {
+  CommandExtension,
+  type Command,
+  renderItems
+} from "./index.tsx";
+
+function insertIncome(editor: Editor, name: string) {
+  return editor
+    .chain()
+    .splitListItem(name)
+    // .insertContent('Rp. ')
+    .updateAttributes('taskItem', { for: 'monthly-income' })
+    .run();
+}
 
 const getSuggestionItems = ({ query }: { query: string }) => {
   return [
     {
+      title: 'Pemasukan',
+      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
+      icon: {
+        iconName: "ArrowDownLeft",
+        color: 'green',
+      },
+      command: ({ editor, range }: Command) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .insertContent('Rp. ')
+          .toggleTaskList()
+          .updateAttributes('taskItem', { for: 'monthly-income' })
+          .run();
+      },
+    },
+    {
+      title: 'Pengeluaran',
+      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
+      icon: {
+        iconName: "ArrowUpRight",
+        color: 'red',
+      },
+      command: ({ editor, range }: Command) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .insertContent('Rp. ')
+          .toggleTaskList()
+          .updateAttributes('taskItem', { for: 'monthly-expense' })
+          .run();
+      },
+    },
+    {
       title: "Text",
-      description: "Just testt start typing with plain text.",
-      iconName: "Text",
+      icon: {
+        iconName: "Text",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").run();
       },
     },
     {
-      title: 'To-do List',
-      description: 'Track tasks with a to-do list.',
-      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
-      iconName: "CheckSquare",
+      title: "Heading",
+      icon: {
+        iconName: "Heading",
+        color: 'default',
+      },
       command: ({ editor, range }: Command) => {
-        editor.chain().focus().deleteRange(range).toggleTaskList().run()
+        editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
       },
     },
   ].filter((item) => {
@@ -30,53 +80,6 @@ const getSuggestionItems = ({ query }: { query: string }) => {
   });
 };
 
-const renderItems = () => {
-  let component: ReactRenderer | null = null;
-  let popup: any | null = null;
-
-  return {
-    onStart: (props: { editor: Editor; clientRect: DOMRect }) => {
-      component = new ReactRenderer(CommandList, {
-        props,
-        editor: props.editor,
-      });
-
-      // @ts-ignore
-      popup = tippy("body", {
-        getReferenceClientRect: props.clientRect,
-        appendTo: () => document.body,
-        content: component.element,
-        showOnCreate: true,
-        interactive: true,
-        trigger: "manual",
-        placement: "bottom-start",
-      });
-    },
-    onUpdate: (props: { editor: Editor; clientRect: DOMRect }) => {
-      component?.updateProps(props);
-
-      popup &&
-        popup[0].setProps({
-          getReferenceClientRect: props.clientRect,
-        });
-    },
-    onKeyDown: (props: { event: KeyboardEvent }) => {
-      if (props.event.key === "Escape") {
-        popup?.[0].hide();
-
-        return true;
-      }
-
-      // @ts-ignore
-      return component?.ref?.onKeyDown(props);
-    },
-    onExit: () => {
-      popup?.[0].destroy();
-      component?.destroy();
-    },
-  };
-};
-
 const MonthlySlashCommand = CommandExtension.configure({
   suggestion: {
     items: getSuggestionItems,
@@ -85,3 +88,4 @@ const MonthlySlashCommand = CommandExtension.configure({
 });
 
 export default MonthlySlashCommand;
+export { insertIncome }
