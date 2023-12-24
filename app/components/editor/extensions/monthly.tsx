@@ -11,7 +11,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
-import MonthlySlashCommand, { insertIncome } from "../slash-command/monthly.tsx";
+import MonthlySlashCommand from "../slash-command/monthly.tsx";
 
 export const MonthlyExtensions = [
   StarterKit.configure({
@@ -90,7 +90,16 @@ export const MonthlyExtensions = [
       const shortcuts: {
         [key: string]: KeyboardShortcutCommand
       } = {
-        Enter: () => insertIncome(this.editor, this.name),
+        Enter: () => {
+          const isTaskItem = this.editor.getAttributes('taskItem')?.for
+          if (isTaskItem) {
+            // console.log('task')
+            return this.editor.chain().splitBlock().exitCode().run()
+          } else {
+            // console.log('bukan')
+            return this.editor.commands.splitBlock()
+          }
+        }
       }
 
       if (!this.options.nested) {
@@ -99,7 +108,6 @@ export const MonthlyExtensions = [
 
       return {
         ...shortcuts,
-        Tab: () => this.editor.commands.sinkListItem(this.name),
       }
     },
   }).configure({

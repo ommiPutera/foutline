@@ -1,24 +1,14 @@
-import type { Editor } from "@tiptap/core";
 import {
   CommandExtension,
   type Command,
   renderItems
 } from "./index.tsx";
 
-function insertIncome(editor: Editor, name: string) {
-  return editor
-    .chain()
-    .splitListItem(name)
-    // .insertContent('Rp. ')
-    .updateAttributes('taskItem', { for: 'monthly-income' })
-    .run();
-}
 
 const getSuggestionItems = ({ query }: { query: string }) => {
   return [
     {
       title: 'Pemasukan',
-      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
       icon: {
         iconName: "ArrowDownLeft",
         color: 'green',
@@ -36,7 +26,6 @@ const getSuggestionItems = ({ query }: { query: string }) => {
     },
     {
       title: 'Pengeluaran',
-      searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
       icon: {
         iconName: "ArrowUpRight",
         color: 'red',
@@ -88,4 +77,3 @@ const MonthlySlashCommand = CommandExtension.configure({
 });
 
 export default MonthlySlashCommand;
-export { insertIncome }
