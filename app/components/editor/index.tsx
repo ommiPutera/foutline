@@ -7,9 +7,9 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { TiptapEditorProps } from './props.ts';
 import { EditorBubbleMenu } from './bubble-menu/index.tsx';
 import { MonthlyExtensions } from './extensions/monthly.tsx';
+import type { Editor as EditorType } from '@tiptap/core';
 
-
-function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
+function Editor({ type, getData }: { type?: 'MONTHLY' | 'BASIC', getData: (data: EditorType) => null }) {
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
 
@@ -31,6 +31,11 @@ function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
       CustomPlaceholder,
       ...getExtensions()
     ],
+    onUpdate({ editor }) {
+      if (editor) {
+        getData(editor)
+      }
+    },
     editorProps: TiptapEditorProps,
   })
 

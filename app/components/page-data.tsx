@@ -5,12 +5,12 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 import { Textarea } from "./ui/textarea.tsx"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip.tsx"
 
-function PageData() {
+function PageData({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <div className="fixed inset-x-0 bottom-0 flex w-full justify-between gap-2 border-t bg-background px-3 md:hidden">
         <div className="flex-1 border-r border-border py-3 pb-12">
-          <PageMobile />
+          {children}
         </div>
         <div className="flex-1 py-3 pb-12">
           <PageMobile />

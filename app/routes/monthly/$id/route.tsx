@@ -1,13 +1,21 @@
 import { type DataFunctionArgs } from '@remix-run/node'
 import { useLoaderData, useLocation } from '@remix-run/react'
+import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import _ from "lodash"
 import { Info } from 'lucide-react'
+import React from 'react'
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
 import { ErrorPage } from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
+import { Header } from '~/components/page/header.tsx'
 import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '~/components/ui/sheet.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
+import { rupiah } from '~/utils/currency.ts'
+import { getNumberFromString } from '~/utils/get-number-from-string.ts'
 import { getKindeSession } from '~/utils/session.server.ts'
-import MonthlyEditor from './editor.tsx'
+
+const Editor = React.lazy(async () => await import('~/components/editor/index.tsx'))
 
 type LoaderData = {
   postId?: string
@@ -24,18 +32,100 @@ export async function loader({ request, params }: DataFunctionArgs) {
 
 function Index() {
   const { postId } = useLoaderData<LoaderData>()
+  const [incomesValues, setIncomesValues] = React.useState<number[]>([])
+  const [expensesValues, setExpensesValues] = React.useState<number[]>([])
+
+  const getData = (data: EditorType) => {
+    const json = data.getJSON()
+    const taskLists = _.filter(json.content, { type: "taskList" })
+
+    let taskItems = []
+    for (var taskList of taskLists) {
+      if (!taskList.content) break;
+      if (taskList.content?.length === 1) taskItems.push(taskList.content[0])
+      if (taskList.content?.length > 1) for (var item of taskList.content) { taskItems.push(item) }
+    }
+
+    const incomes = _.filter(taskItems, { attrs: { for: 'monthly-income', checked: true } })
+    const expenses = _.filter(taskItems, { attrs: { for: 'monthly-expense', checked: true } })
+
+    let incomesValues: number[] = []
+    for (var income of incomes) {
+      if (!income?.content) break;
+      const values = getValues(income.content[0])
+      incomesValues.push(values)
+    }
+
+    let expensesValues: number[] = []
+    for (var expense of expenses) {
+      if (!expense?.content) break;
+      const values = getValues(expense.content[0])
+      expensesValues.push(values)
+    }
+    setIncomesValues(incomesValues)
+    setExpensesValues(expensesValues)
+    return null
+  }
+
   return (
     <div className="flex max-h-[90vh]" stat-data={postId}>
-      <Summary />
-      <MonthlyEditor />
-      <PageData />
+      <div className='hidden md:block '>
+        <Summary
+          incomesValues={incomesValues}
+          expensesValues={expensesValues}
+        />
+      </div>
+      <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
+        <Header />
+        <div className='mt-12'>
+          <Editor type='MONTHLY' getData={getData} />
+        </div>
+      </div>
+      <PageData>
+        <SummaryMobile>
+          <Summary
+            incomesValues={incomesValues}
+            expensesValues={expensesValues}
+          />
+        </SummaryMobile>
+      </PageData>
     </div>
   )
 }
 
-function Summary() {
+function SummaryMobile({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-[1px] hidden md:block md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
+    <Sheet>
+      <SheetTrigger>
+        <Button variant="transparent" size="default">
+          Data halaman
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="bottom"
+        className="h-3/4"
+      >
+        <SheetHeader className="mb-8">
+          <SheetTitle>Data halaman</SheetTitle>
+        </SheetHeader>
+        {children}
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function Summary({
+  incomesValues,
+  expensesValues
+}: {
+  incomesValues: number[],
+  expensesValues: number[]
+}) {
+  const totalIncome = _.sum(incomesValues)
+  const totalExpense = _.sum(expensesValues)
+  const freeCash = totalIncome - totalExpense
+  return (
+    <div className="mt-[1px] md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
       <div className="flex flex-col gap-12">
         <div className='flex flex-col gap-6'>
           <div>
@@ -59,15 +149,15 @@ function Summary() {
           <div className='flex flex-col gap-5'>
             <div className='flex flex-col gap-1'>
               <h5 className='text-xs text-muted-foreground'>Pemasukan</h5>
-              <p className='text-xs font-medium'>Rp. 5,480,000</p>
+              <p className='text-xs font-medium'>{rupiah(totalIncome)}</p>
             </div>
             <div className='flex flex-col gap-1'>
               <h5 className='text-xs text-muted-foreground'>Pengeluaran</h5>
-              <p className='text-xs font-medium'>Rp. 1,790,000</p>
+              <p className='text-xs font-medium'>{rupiah(totalExpense)}</p>
             </div>
             <div className='flex flex-col gap-1'>
               <h5 className='text-xs text-muted-foreground'>Belum dialokasikan</h5>
-              <p className='text-xs font-medium'>Rp. 3,690,000</p>
+              <p className='text-xs font-medium'>{rupiah(freeCash)}</p>
             </div>
           </div>
         </div>
@@ -106,6 +196,11 @@ function Summary() {
       </div>
     </div>
   )
+}
+
+const getValues = (content: JSONContent | undefined): number => {
+  if (!content?.content?.[0]?.text) return 0
+  return getNumberFromString(content.content[0].text)
 }
 
 export function ErrorBoundary() {
