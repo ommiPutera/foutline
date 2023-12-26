@@ -3,6 +3,7 @@ import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { ScrollArea } from '../ui/scroll-area.tsx';
 import { BasicExtensions } from './extensions/index.tsx';
+import Placeholder from '@tiptap/extension-placeholder';
 import { TiptapEditorProps } from './props.ts';
 import { EditorBubbleMenu } from './bubble-menu/index.tsx';
 import { MonthlyExtensions } from './extensions/monthly.tsx';
@@ -21,8 +22,15 @@ function Editor({ type }: { type?: 'MONTHLY' | 'BASIC' }) {
     }
   }
 
+  const CustomPlaceholder = Placeholder.configure({
+    placeholder: "Buat catatan.., '/' untuk perintah.."
+  })
+
   const editor = useEditor({
-    extensions: getExtensions(),
+    extensions: [
+      CustomPlaceholder,
+      ...getExtensions()
+    ],
     editorProps: TiptapEditorProps,
   })
 

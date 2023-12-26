@@ -21,7 +21,7 @@ function FilterButton() {
           Filter
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-1 w-64" align="center" forceMount>
+      <DropdownMenuContent className="mt-1 w-48" align="center" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-xs font-medium leading-none text-muted-foreground">
@@ -30,11 +30,11 @@ function FilterButton() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="flex items-center justify-between gap-1 p-2">
+        <div className="flex items-center justify-between gap-2 p-2">
           <span className="text-xs">Halaman</span>
           <Select>
             <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Pilih halaman" />
+              <SelectValue placeholder="Semuanya" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="basic-notes">Catatan biasa</SelectItem>

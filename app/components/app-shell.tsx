@@ -1,17 +1,9 @@
 import { Link, useLocation } from '@remix-run/react'
-import { FileKey2, MoreVertical, PanelLeft, Settings } from 'lucide-react'
+import { PanelLeft } from 'lucide-react'
 import React from 'react'
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import { Sidebar } from './sidebar.tsx'
-// import { ToggleTheme } from './toggle-theme.tsx'
 import { Button } from './ui/button.tsx'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu.tsx'
 import {
   Sheet,
   SheetContent,
@@ -19,8 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { UserNav } from './user-nav.tsx'
+import { getLogo } from './omition-logo.tsx'
 
 function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const { isAuthenticated } = useRootLoader()
@@ -30,7 +21,7 @@ function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+  const Logo = getLogo('md')
   return (
     <div className="h-full bg-background">
       <div className="flex">
@@ -39,15 +30,17 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background py-3 pl-6 pr-4 md:relative md:border-0 md:bg-transparent">
-              <MobileSidebar />
-              <div className="flex items-center gap-6">
-                {/* <ToggleTheme className="hidden md:flex" /> */}
-                <UserNav {...profile} />
-                <More />
+            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-4 py-3 md:relative md:hidden md:border-0 md:bg-transparent">
+              <div className="flex w-full items-center justify-between gap-6">
+                <div className='flex items-center gap-6'>
+                  <Link to="/" className="w-fit">
+                    <Logo />
+                  </Link>
+                </div>
               </div>
+              <MobileSidebar />
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-9">
               {children}
               <div className="m-[3rem] mb-[8rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:mb-[2rem] md:justify-end md:gap-6">
                 <p className="text-center text-sm text-muted-foreground md:text-xs">
@@ -139,7 +132,7 @@ function MobileSidebar() {
           <SheetContent
             onClose={() => setIsOpen(false)}
             side="left"
-            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] overflow-y-scroll px-2 pb-8"
+            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] overflow-y-scroll px-2 pb-0"
           >
             <SheetHeader>
               <SheetTitle className="px-7 text-left">Menu</SheetTitle>
@@ -155,43 +148,6 @@ function MobileSidebar() {
         </Sheet>
       </div>
     </div>
-  )
-}
-
-function More() {
-  return (
-    <DropdownMenu>
-      <Tooltip>
-        <div className="flex h-full">
-          <TooltipTrigger>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="transparent" className="rounded-sm">
-                <MoreVertical size={18} />
-              </Button>
-            </DropdownMenuTrigger>
-          </TooltipTrigger>
-          <TooltipContent className="mr-2">
-            <p>Pengaturan, kunci, style, dan lainnya..</p>
-          </TooltipContent>
-        </div>
-      </Tooltip>
-      <DropdownMenuContent className="mt-1 w-44" align="end" forceMount>
-        <DropdownMenuGroup>
-          <Link to="/" prefetch="intent">
-            <DropdownMenuItem>
-              <Settings size="16" className="mr-3" />
-              <span>Pengaturan</span>
-            </DropdownMenuItem>
-          </Link>
-          <Link to="/" prefetch="intent">
-            <DropdownMenuItem>
-              <FileKey2 size="16" className="mr-3" />
-              <span>Kunci halaman</span>
-            </DropdownMenuItem>
-          </Link>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
   )
 }
 

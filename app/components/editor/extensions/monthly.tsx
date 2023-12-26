@@ -4,7 +4,6 @@ import { Color } from "@tiptap/extension-color";
 import Highlight from '@tiptap/extension-highlight';
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import TiptapLink from "@tiptap/extension-link";
-import Placeholder from "@tiptap/extension-placeholder";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import TextStyle from "@tiptap/extension-text-style";
@@ -12,6 +11,7 @@ import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
 import MonthlySlashCommand from "../slash-command/monthly.tsx";
+import GetSelectedText from "./selected-text.ts";
 
 export const MonthlyExtensions = [
   StarterKit.configure({
@@ -25,7 +25,7 @@ export const MonthlyExtensions = [
       color: "#DBEAFE",
       width: 4,
     },
-    gapcursor: false,
+    gapcursor: false
   }),
   HorizontalRule.extend({
     addInputRules() {
@@ -93,10 +93,26 @@ export const MonthlyExtensions = [
         Enter: () => {
           const isTaskItem = this.editor.getAttributes('taskItem')?.for
           if (isTaskItem) {
-            // console.log('task')
             return this.editor.chain().splitBlock().exitCode().run()
           } else {
-            // console.log('bukan')
+            return this.editor.commands.splitBlock()
+          }
+        },
+        Backspace: () => {
+          const isTaskItem = this.editor.getAttributes('taskItem')?.for
+          if (isTaskItem) {
+            // console.log()
+            return this.editor.commands.deleteSelection()
+          } else {
+            console.log('here')
+            return this.editor.commands.deleteCurrentNode()
+          }
+        },
+        'Shift-Enter': () => {
+          const isTaskItem = this.editor.getAttributes('taskItem')?.for
+          if (isTaskItem) {
+            return this.editor.chain().splitBlock().exitCode().run()
+          } else {
             return this.editor.commands.splitBlock()
           }
         }
@@ -116,12 +132,10 @@ export const MonthlyExtensions = [
     },
     nested: true,
   }),
-  Placeholder.configure({
-    placeholder: "Buat catatan.., '/' untuk perintah.."
-  }),
   MonthlySlashCommand,
   TiptapUnderline,
   TextStyle,
   Color,
-  CustomKeymap
+  CustomKeymap,
+  GetSelectedText
 ];

@@ -17,7 +17,7 @@ function Index() {
 
   if (!isAuthenticated) return <Landing />
   return (
-    <Tabs defaultValue="board" className='md:mt-[-2rem]'>
+    <Tabs defaultValue="board">
       <TabsList>
         <TabsTrigger value="board">Semua</TabsTrigger>
       </TabsList>

@@ -1,9 +1,11 @@
 import type { BubbleMenuProps } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react";
-import { icons } from "lucide-react";
+import { Banknote, icons } from "lucide-react";
 import React from "react";
 import { ColorSelector } from "./color-selector.tsx";
 import { Button } from "~/components/ui/button.tsx";
+import { getNumberFromString } from "~/utils/get-number-from-string.ts";
+import { rupiah } from "~/utils/currency.ts";
 
 export interface BubbleMenuItem {
   name: string;
@@ -74,6 +76,17 @@ export function EditorBubbleMenu({ editor, ...rest }: EditorBubbleMenuProps) {
       {...bubbleMenuProps}
       className="flex items-center justify-center gap-2 overflow-hidden rounded-sm border border-input bg-background p-1 shadow-lg"
     >
+      <Button
+        onClick={() => {
+          const text = String(editor.commands.getSelectedText())
+          editor.chain().insertContent(rupiah(getNumberFromString(text))).run()
+        }}
+        variant="ghost"
+        size="icon-sm"
+        className="rounded-md p-1 hover:bg-muted"
+      >
+        <Banknote className="h-3 w-3" />
+      </Button>
       {items.map((item, index) => {
         const Icon = icons[item.iconName]
         return (

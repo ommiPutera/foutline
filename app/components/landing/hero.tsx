@@ -1,21 +1,15 @@
-import {ButtonLink} from '../ui/button.tsx'
+import { ButtonLink } from '../ui/button.tsx'
 
 function Hero() {
   return (
-    <div className="px-5vw mx-auto max-w-screen-2xl py-10 md:py-14">
-      <div className="mx-auto flex max-w-2xl flex-col gap-6 text-center md:gap-8">
-        <div className="flex flex-col gap-4 md:gap-6">
-          <h6 className="text-muted-foreground text-sm md:text-lg">
-            Financial web based application
-          </h6>
-          <h2 className="line-clamp-2 text-4xl font-bold md:text-7xl">
-            Kelola, dan lacak keuangan Anda.
-          </h2>
-        </div>
-        <h6 className="text-md md:text-xl">
-          Omition adalah platform lengkap bagi mereka yang berjuang dan sering
-          membuat kesalahan dalam pengambilan keputusan ekonomi.
-        </h6>
+    <div className="mx-auto max-w-screen-2xl px-5vw py-10 md:py-14">
+      <div className="mx-auto flex flex-col items-center gap-6 text-center md:gap-8">
+        <h2 className="line-clamp-3 max-w-4xl text-2xl font-medium md:text-7xl">
+          Catatan Keuangan anda dalam Satu Aplikasi
+        </h2>
+        <p className="text-md max-w-2xl font-light md:text-2xl">
+          Solusi keuangan berbasis <b className='underline'>Note-Taking</b> yang mempermudah dalam mempelajari dan merekem keuangan anda
+        </p>
         <div className="hidden place-content-center gap-3 md:flex">
           <ButtonLink to="/" prefetch="intent" variant="outline" size="lg">
             Baca tutorial

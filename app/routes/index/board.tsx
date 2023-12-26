@@ -9,7 +9,7 @@ import { Button } from '~/components/ui/button.tsx'
 
 function Board() {
   return (
-    <div className="flex min-h-screen py-6 md:gap-4 md:py-12">
+    <div className="flex min-h-screen py-6 md:gap-4">
       <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pr-4">
         <Tools />
         <Cards />
@@ -17,7 +17,7 @@ function Board() {
       <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[240px] lg:max-w-[240px]">
         <div className="sticky flex items-center justify-between gap-2">
           <CreatePostDialog withoutTooltip>
-            <Button className="flex items-center gap-2">
+            <Button size="sm" className="flex items-center gap-2">
               <Plus size={14} />
               Halaman baru
             </Button>
@@ -43,7 +43,7 @@ function Tools() {
         </Button>
       </div>
       <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
-        <div className='flex items-center'>
+        <div className='flex items-center gap-2'>
           <FilterButton />
           <SortButton />
         </div>

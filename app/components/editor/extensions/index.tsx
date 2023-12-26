@@ -3,7 +3,6 @@ import { Color } from "@tiptap/extension-color";
 import Highlight from '@tiptap/extension-highlight';
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import TiptapLink from "@tiptap/extension-link";
-import Placeholder from "@tiptap/extension-placeholder";
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import TextStyle from "@tiptap/extension-text-style";
@@ -11,6 +10,7 @@ import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
 import BasicSlashCommand from "../slash-command/index.tsx";
+import GetSelectedText from "./selected-text.ts";
 
 export const BasicExtensions = [
   StarterKit.configure({
@@ -97,12 +97,10 @@ export const BasicExtensions = [
     },
     nested: true,
   }),
-  Placeholder.configure({
-    placeholder: "Buat catatan.., '/' untuk perintah.."
-  }),
   BasicSlashCommand,
   TiptapUnderline,
   TextStyle,
   Color,
-  CustomKeymap
+  CustomKeymap,
+  GetSelectedText
 ];
