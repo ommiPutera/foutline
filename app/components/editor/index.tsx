@@ -7,11 +7,21 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { TiptapEditorProps } from './props.ts';
 import { EditorBubbleMenu } from './bubble-menu/index.tsx';
 import { MonthlyExtensions } from './extensions/monthly.tsx';
-import type { Editor as EditorType } from '@tiptap/core';
+import type { Editor as EditorType, JSONContent } from '@tiptap/core';
 
-function Editor({ type, getData }: { type?: 'MONTHLY' | 'BASIC', getData: (data: EditorType) => null }) {
+function Editor({
+  type,
+  getData,
+  defaultContent,
+}: {
+  type?: 'MONTHLY' | 'BASIC',
+  getData: (data: EditorType) => null,
+  defaultContent: JSONContent | undefined
+}) {
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
+
+  const [hydrated, setHydrated] = React.useState(false);
 
   const getExtensions = () => {
     switch (type) {
@@ -27,6 +37,7 @@ function Editor({ type, getData }: { type?: 'MONTHLY' | 'BASIC', getData: (data:
   })
 
   const editor = useEditor({
+    editorProps: TiptapEditorProps,
     extensions: [
       CustomPlaceholder,
       ...getExtensions()
@@ -36,8 +47,14 @@ function Editor({ type, getData }: { type?: 'MONTHLY' | 'BASIC', getData: (data:
         getData(editor)
       }
     },
-    editorProps: TiptapEditorProps,
   })
+
+  React.useEffect(() => {
+    if (editor && defaultContent && !hydrated) {
+      editor.commands.setContent(defaultContent);
+      setHydrated(true);
+    }
+  }, [editor, defaultContent, hydrated]);
 
   return (
     <div className='relative'>

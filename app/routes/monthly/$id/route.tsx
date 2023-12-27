@@ -32,6 +32,193 @@ export async function loader({ request, params }: DataFunctionArgs) {
 
 function Index() {
   const { postId } = useLoaderData<LoaderData>()
+  const [content, setContent] = React.useState<JSONContent | undefined>([
+    {
+      "type": "taskList",
+      "content": [
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-income",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 123123"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "taskList",
+      "content": [
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-expense",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 123231"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "taskList",
+      "content": [
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-income",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 123"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-income",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 123"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-expense",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 123123"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "level": 3
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "12312312"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "//"
+        }
+      ]
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "12asdadsadsad"
+        }
+      ]
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "paragraph"
+    },
+    {
+      "type": "taskList",
+      "content": [
+        {
+          "type": "taskItem",
+          "attrs": {
+            "for": "monthly-income",
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Rp. 1231313"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]);
   const [incomesValues, setIncomesValues] = React.useState<number[]>([])
   const [expensesValues, setExpensesValues] = React.useState<number[]>([])
 
@@ -64,6 +251,7 @@ function Index() {
     }
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
+    setContent(json.content)
     return null
   }
 
@@ -77,10 +265,14 @@ function Index() {
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
-          <Button size="sm">Save</Button>
+          <Button size="sm" onClick={() => console.log(content)}>Save</Button>
         </Header>
         <div className='mt-2'>
-          <Editor type='MONTHLY' getData={getData} />
+          <Editor
+            type='MONTHLY'
+            getData={getData}
+            defaultContent={content}
+          />
         </div>
       </div>
       <PageData>

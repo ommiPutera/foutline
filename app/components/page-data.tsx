@@ -44,13 +44,13 @@ function PageMobile() {
 
 function Page() {
   return (
-    <div className="lg:min-w-[230px] lg:max-w-[230px]">
+    <div className="lg:min-w-[250px] lg:max-w-[250px]">
       <div className="mt-0.5 flex flex-col items-start justify-start gap-4">
         <div className="flex gap-2">
           <LabelButton />
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-40 items-center text-xs">
+          <span className="flex w-24 items-center text-xs">
             Status
           </span>
           <Select defaultValue='not-started'>
@@ -65,19 +65,19 @@ function Page() {
           </Select>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-40 items-center text-xs">
+          <span className="flex w-24 items-center text-xs">
             Dibuat
           </span>
           <div className='w-full px-3 text-xs text-accent-foreground'>
-            17 Desember 2023 21.42 WIB
+            17 Desember 2023 21.42
           </div>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-40 items-center text-xs">
+          <span className="flex w-24 items-center text-xs">
             Diedit
           </span>
           <div className='w-full px-3 text-xs text-accent-foreground'>
-            17 Desember 2023 21.42 WIB
+            17 Desember 2023 21.42
           </div>
         </div>
       </div>
