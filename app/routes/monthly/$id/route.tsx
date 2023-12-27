@@ -79,7 +79,7 @@ function Index() {
         <Header>
           <Button size="sm">Save</Button>
         </Header>
-        <div className='mt-12'>
+        <div className='mt-2'>
           <Editor type='MONTHLY' getData={getData} />
         </div>
       </div>

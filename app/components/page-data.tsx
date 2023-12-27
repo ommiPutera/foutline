@@ -1,3 +1,4 @@
+import LabelButton from "./board/label-button.tsx"
 import { Button } from "./ui/button.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
@@ -44,22 +45,9 @@ function PageMobile() {
 function Page() {
   return (
     <div className="lg:min-w-[230px] lg:max-w-[230px]">
-      <div className="flex flex-col items-start justify-start gap-2">
-        <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-40 items-center text-xs">
-            Halaman
-          </span>
-          <Select defaultValue='monthly'>
-            <SelectTrigger className="w-full" withoutIcon>
-              <SelectValue placeholder="Pilih halaman" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="basic-notes">Catatan biasa</SelectItem>
-              <SelectItem value="monthly">Keuangan bulanan</SelectItem>
-              <SelectItem value="saving">Tabungan</SelectItem>
-              <SelectItem value="debt">Hutang</SelectItem>
-            </SelectContent>
-          </Select>
+      <div className="mt-0.5 flex flex-col items-start justify-start gap-4">
+        <div className="flex gap-2">
+          <LabelButton />
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
           <span className="flex w-40 items-center text-xs">

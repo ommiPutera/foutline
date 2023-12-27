@@ -13,13 +13,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select.tsx'
+import { Tag } from 'lucide-react'
 
-function FilterButton() {
+function LabelButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="relative flex gap-1">
-          Filter
+        <Button variant="secondary" size="sm" className="relative flex gap-1">
+          <Tag className='mr-1 h-4 w-4' />
+          Label
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mt-1 w-48" align="center" forceMount>
@@ -50,4 +52,4 @@ function FilterButton() {
   )
 }
 
-export default FilterButton
+export default LabelButton

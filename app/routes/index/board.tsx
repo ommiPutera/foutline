@@ -1,4 +1,4 @@
-import { Info, LayoutGrid, List, Plus } from 'lucide-react'
+import { Info, LayoutGrid, List, Plus, WalletCards } from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -31,7 +31,7 @@ function Board() {
                 </TooltipContent>
               </Tooltip>
             </div>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-4'>
               <ButtonLink
                 asChild
                 variant="transparent"
@@ -46,20 +46,20 @@ function Board() {
                   <img src="/logos/bank_mandiri.png" alt="" width="34px" height="auto" />
                 </div>
               </ButtonLink>
+              <div className='flex flex-col gap-2'>
+                <CreatePostDialog withoutTooltip>
+                  <Button size="sm" className="flex w-full items-center gap-2">
+                    Atur kantong
+                  </Button>
+                </CreatePostDialog>
+                <CreatePostDialog withoutTooltip>
+                  <Button variant="ghost" size="sm" className="flex w-full items-center gap-2">
+                    <WalletCards size={16} />
+                    Buat kantong
+                  </Button>
+                </CreatePostDialog>
+              </div>
             </div>
-          </div>
-          <div className='sticky bottom-3 flex w-full flex-col gap-2'>
-            <CreatePostDialog withoutTooltip>
-              <Button variant="secondary" size="sm" className="flex w-full items-center gap-2">
-                Buat kantong
-              </Button>
-            </CreatePostDialog>
-            <CreatePostDialog withoutTooltip>
-              <Button size="sm" className="flex w-full items-center gap-2">
-                <Plus size={16} />
-                Halaman baru
-              </Button>
-            </CreatePostDialog>
           </div>
         </div>
       </div>
@@ -82,6 +82,12 @@ function Tools() {
         <div className='flex items-center gap-2'>
           <FilterButton />
           <SortButton />
+          <CreatePostDialog withoutTooltip>
+            <Button size="sm" className="flex w-full items-center gap-2">
+              <Plus size={16} />
+              Halaman baru
+            </Button>
+          </CreatePostDialog>
         </div>
         <CreatePostDialog withoutTooltip>
           <Button size="sm" className="flex items-center gap-2 md:hidden">
