@@ -1,26 +1,11 @@
 import clsx from 'clsx'
-import {icons} from 'lucide-react'
-import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
-
-function PageSelectGroup() {
-  return (
-    <ToggleGroup
-      type="single"
-      className="grid w-full grid-cols-1 gap-2 md:grid-cols-3"
-    >
-      <BasicNotes />
-      <RegularSaving />
-      <Investment />
-      <MonthlyExpenses />
-      <Debt />
-      <EmergencyFund />
-    </ToggleGroup>
-  )
-}
+import { icons } from 'lucide-react'
+import { ToggleGroupItem } from '../ui/toggle-group.tsx'
 
 function BasicNotes() {
   return (
     <PageSelectItem
+      disabled
       title="Catatan biasa"
       color="blue"
       value="basic-notes"
@@ -31,6 +16,7 @@ function BasicNotes() {
 function RegularSaving() {
   return (
     <PageSelectItem
+      disabled
       title="Tabungan rutin"
       color="green"
       value="regular-saving"
@@ -41,6 +27,7 @@ function RegularSaving() {
 function Investment() {
   return (
     <PageSelectItem
+      disabled
       title="Investasi"
       color="teal"
       value="investment"
@@ -51,9 +38,10 @@ function Investment() {
 function MonthlyExpenses() {
   return (
     <PageSelectItem
+      disabled={false}
       title="Keuangan bulanan"
       color="orange"
-      value="monthly-expenses"
+      value="monthly"
       iconName="ShoppingBag"
     />
   )
@@ -61,6 +49,7 @@ function MonthlyExpenses() {
 function Debt() {
   return (
     <PageSelectItem
+      disabled
       title="Hutang"
       color="red"
       value="debt"
@@ -71,6 +60,7 @@ function Debt() {
 function EmergencyFund() {
   return (
     <PageSelectItem
+      disabled
       title="Dana darurat"
       color="cyan"
       value="emergency-fund"
@@ -84,16 +74,19 @@ function PageSelectItem({
   title,
   color,
   iconName,
+  disabled,
 }: {
   value: string
   title: string
   color: string
-  iconName: keyof typeof icons
+  iconName: keyof typeof icons,
+  disabled: boolean
 }) {
   const LucideIcon = icons[iconName]
   return (
     <ToggleGroupItem
       value={value}
+      disabled={disabled}
       data-color={color}
       className={clsx(
         'flex h-fit flex-1 items-center justify-start gap-2 rounded-md px-4 py-3 text-left',
@@ -131,5 +124,4 @@ export {
   MonthlyExpenses,
   Debt,
   EmergencyFund,
-  PageSelectGroup,
 }

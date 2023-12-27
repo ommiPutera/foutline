@@ -15,7 +15,8 @@ import {
 import { Toggle } from '../ui/toggle.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
 import _ from 'lodash'
-import { PageSelectGroup } from './selects.tsx'
+import { ToggleGroup } from '../ui/toggle-group.tsx'
+import { BasicNotes, Debt, EmergencyFund, Investment, MonthlyExpenses, RegularSaving } from './selects.tsx'
 
 function CreatePostDialog({
   children,
@@ -28,6 +29,7 @@ function CreatePostDialog({
   withoutTooltip?: boolean
 }) {
   const [isHover, setIsHover] = React.useState(false)
+  const [value, setValue] = React.useState('')
 
   return (
     <Dialog modal>
@@ -96,7 +98,18 @@ function CreatePostDialog({
                   </TooltipContent>
                 </Tooltip>
               </div>
-              <PageSelectGroup />
+              <ToggleGroup
+                type="single"
+                className="grid w-full grid-cols-1 gap-2 md:grid-cols-3"
+                onValueChange={(v) => setValue(v)}
+              >
+                <BasicNotes />
+                <RegularSaving />
+                <Investment />
+                <MonthlyExpenses />
+                <Debt />
+                <EmergencyFund />
+              </ToggleGroup>
             </div>
             <DialogFooter className="flex w-full items-center justify-end gap-2 md:gap-0">
               <DialogClose asChild>
@@ -104,11 +117,12 @@ function CreatePostDialog({
               </DialogClose>
               <DialogClose asChild>
                 <ButtonLink
-                  to="/new"
+                  disabled={!value}
+                  to={`/${value}/templates`}
                   prefetch="intent"
                   className="w-full md:w-fit"
                 >
-                  Buat
+                  Lanjutkan
                 </ButtonLink>
               </DialogClose>
             </DialogFooter>

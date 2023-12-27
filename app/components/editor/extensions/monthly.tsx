@@ -18,7 +18,19 @@ export const MonthlyExtensions = [
     heading: {
       HTMLAttributes: {
         class: 'font-medium',
+        autocomplete: "off",
+        autocorrect: "off",
+        autocapitalize: "off",
+        spellcheck: false,
       },
+    },
+    paragraph: {
+      HTMLAttributes: {
+        autocomplete: "off",
+        autocorrect: "off",
+        autocapitalize: "off",
+        spellcheck: false,
+      }
     },
     horizontalRule: false,
     dropcursor: {

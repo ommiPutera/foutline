@@ -66,9 +66,15 @@ const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithRef<typeof AnchorOrLink> & ButtonProps
 >(function ButtonLink({ children, ...props }, ref) {
-  const { variant, size } = props
+  const { variant, size, disabled } = props
   return (
-    <Button asChild variant={variant} size={size} className={props.className}>
+    <Button
+      asChild={disabled ? false : true}
+      variant={variant}
+      size={size}
+      disabled={disabled}
+      className={props.className}
+    >
       <AnchorOrLink ref={ref} {...props}>
         {children}
       </AnchorOrLink>
