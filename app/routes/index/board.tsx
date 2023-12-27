@@ -5,7 +5,8 @@ import SortButton from '~/components/board/sort-button.tsx'
 import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
 import MasonryLayout from '~/components/masonry.tsx'
 import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
 
 function Board() {
   return (
@@ -15,16 +16,51 @@ function Board() {
         <Cards />
       </div>
       <div className="hidden md:block md:min-w-[140px] md:max-w-[140px] lg:min-w-[240px] lg:max-w-[240px]">
-        <div className="sticky flex items-center justify-between gap-2">
-          <CreatePostDialog withoutTooltip>
-            <Button size="sm" className="flex items-center gap-2">
-              <Plus size={14} />
-              Halaman baru
-            </Button>
-          </CreatePostDialog>
-          <Button size="icon" variant="transparent">
-            <Info size={18} />
-          </Button>
+        <div className="relative flex h-full flex-col justify-between gap-6">
+          <div className='flex flex-col gap-3'>
+            <div className='flex items-center text-xs font-semibold'>
+              Kantong
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="transparent" size="icon">
+                    <Info className='h-4 w-4 fill-blue-500 text-white' />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Buat halaman baru</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className='flex flex-col gap-2'>
+              <ButtonLink
+                asChild
+                variant="transparent"
+                to='/'
+                className='overflow-hidden border border-input bg-muted px-3.5 py-7'
+              >
+                <div className='flex w-full items-center gap-4'>
+                  <div className='flex w-full flex-col gap-1'>
+                    <h5 className='text-[11px] text-muted-foreground'>Bank Mandiri</h5>
+                    <p className='text-xs font-medium'>Rp. 3,690,000</p>
+                  </div>
+                  <img src="/logos/bank_mandiri.png" alt="" width="34px" height="auto" />
+                </div>
+              </ButtonLink>
+            </div>
+          </div>
+          <div className='sticky bottom-3 flex w-full flex-col gap-2'>
+            <CreatePostDialog withoutTooltip>
+              <Button variant="secondary" size="sm" className="flex w-full items-center gap-2">
+                Buat kantong
+              </Button>
+            </CreatePostDialog>
+            <CreatePostDialog withoutTooltip>
+              <Button size="sm" className="flex w-full items-center gap-2">
+                <Plus size={16} />
+                Halaman baru
+              </Button>
+            </CreatePostDialog>
+          </div>
         </div>
       </div>
     </div>

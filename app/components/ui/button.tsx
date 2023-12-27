@@ -20,7 +20,7 @@ const variants = {
 const sizes = {
   lg: 'h-12 md:h-11 px-6 rounded-md text-md',
   default: 'h-10 md:h-10 px-5 rounded-md text-sm',
-  sm: 'h-8 md:h-8 px-3 rounded-md text-xs',
+  sm: 'h-8 md:h-8 px-4 rounded-md text-xs',
   icon: 'h-8 w-8 rounded-sm hover:[&:has(svg)]:before:rounded-full hover:[&:has(svg)]:before:content-[""] hover:[&:has(svg)]:before:absolute hover:[&:has(svg)]:before:z-[0] hover:[&:has(svg)]:before:w-7 hover:[&:has(svg)]:before:h-7',
   'icon-sm': 'h-5 w-5',
 }

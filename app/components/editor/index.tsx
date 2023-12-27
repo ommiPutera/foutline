@@ -62,7 +62,7 @@ function Editor({ type, getData }: { type?: 'MONTHLY' | 'BASIC', getData: (data:
             onClick={() => {
               editor?.chain().focus().run();
             }}
-            className="max-w-screen-l relative mt-4 h-fit w-full pr-6 sm:mb-[calc(20vh)]"
+            className="max-w-screen-l relative mt-4 min-h-[200px] w-full pr-6 sm:mb-[calc(20vh)]"
           >
             {editor ? (
               <>

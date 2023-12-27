@@ -1,9 +1,6 @@
-import { Info } from "lucide-react"
 import { Button } from "./ui/button.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
-import { Textarea } from "./ui/textarea.tsx"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip.tsx"
 
 function PageData({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +13,7 @@ function PageData({ children }: { children: React.ReactNode }) {
           <PageMobile />
         </div>
       </div>
-      <div className="hidden xl:block xl:border-l xl:pl-4">
+      <div className="hidden h-full xl:block xl:border-l xl:pl-4">
         <Page />
       </div>
     </div>
@@ -95,29 +92,7 @@ function Page() {
             17 Desember 2023 21.42 WIB
           </div>
         </div>
-        <Comments />
       </div>
-    </div>
-  )
-}
-
-function Comments() {
-  return (
-    <div className='mt-6 flex w-full flex-col gap-2'>
-      <div className='flex items-center gap-1 text-xs font-semibold'>
-        Tidak ada komen
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="transparent" size="icon">
-              <Info className='h-4 w-4 fill-blue-500 text-white' />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            <p>Buat halaman baru</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-      <Textarea className='w-full' placeholder='Tinggalkan komen disini' />
     </div>
   )
 }

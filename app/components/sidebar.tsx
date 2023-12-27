@@ -218,7 +218,7 @@ function Files() {
           </div>
         </div>
       )}
-      <ScrollArea className={cn('h-[160px]', isPostEmpty && 'h-[130px]')}>
+      <ScrollArea className={cn('h-[190px]', isPostEmpty && 'h-[140px]')}>
         {isScroll && !isPostEmpty && (
           <div className="absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80"></div>
         )}

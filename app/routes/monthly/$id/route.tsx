@@ -76,7 +76,9 @@ function Index() {
         />
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
-        <Header />
+        <Header>
+          <Button size="sm">Save</Button>
+        </Header>
         <div className='mt-12'>
           <Editor type='MONTHLY' getData={getData} />
         </div>
@@ -125,7 +127,7 @@ function Summary({
   const totalExpense = _.sum(expensesValues)
   const freeCash = totalIncome - totalExpense
   return (
-    <div className="mt-[1px] md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
+    <div className="mt-[1px] h-full md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
       <div className="flex flex-col gap-12">
         <div className='flex flex-col gap-6'>
           <div>
@@ -161,7 +163,6 @@ function Summary({
             </div>
           </div>
         </div>
-
         <div className='flex flex-col gap-3'>
           <div className='flex items-center text-xs font-semibold'>
             Kantong
