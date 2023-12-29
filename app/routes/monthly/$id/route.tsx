@@ -22,11 +22,8 @@ type LoaderData = {
 }
 
 type MonthlyState = {
-  incomesValues: number[]
-  setIncomesValues: (data: number[]) => void
-
-  expensesValues: number[]
-  setExpensesValues: (data: number[]) => void
+  valueToFire: number
+  setValueToFire: (value: number) => void
 }
 
 export async function loader({ request, params }: DataFunctionArgs) {
@@ -39,32 +36,59 @@ export async function loader({ request, params }: DataFunctionArgs) {
 }
 
 export const useMonthlyStore = create<MonthlyState>((set) => ({
-  incomesValues: [],
-  setIncomesValues: (data) => set(() => ({ incomesValues: data })),
-
-  expensesValues: [],
-  setExpensesValues: (data) => set(() => ({ expensesValues: data })),
+  valueToFire: 0,
+  setValueToFire: (value) => set(() => ({ valueToFire: value })),
 }))
 
 function Index() {
   const { postId } = useLoaderData<LoaderData>()
-  const { setIncomesValues, setExpensesValues } = useMonthlyStore()
+
+  const {
+    valueToFire,
+    setValueToFire,
+  } = useMonthlyStore()
 
   const [content, setContent] = React.useState<JSONContent | undefined>(undefined);
-  const [isOpen, setIsOpen] = React.useState<boolean>(true);
+  const [data, setData] = React.useState<EditorType | undefined>(undefined);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [currentPosition, setCurrentPosition] = React.useState<number>(0);
+
+  const [incomesValues, setIncomesValues] = React.useState<number[]>([]);
+  const [expensesValues, setExpensesValues] = React.useState<number[]>([]);
+
+  const getPocket = (value: string) => {
+    if (currentPosition && data) {
+      data.chain().command(({ tr }) => {
+        const currentNode = tr.doc.nodeAt(currentPosition)
+        if (currentNode?.attrs.checked) {
+          tr.setNodeMarkup(currentPosition, undefined, {
+            ...currentNode?.attrs,
+            pocket: value,
+          })
+          setCurrentPosition(0)
+        }
+        return true
+      }).run()
+    }
+  }
 
   const getData = (data: EditorType) => {
+    setData(data)
     const json = data.getJSON()
     const taskLists = _.filter(json.content, { type: "taskList" })
+
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
 
     if (position) {
+      setCurrentPosition(position)
       data.chain().command(({ tr }) => {
         const currentNode = tr.doc.nodeAt(position)
-        console.log('woii disini: ', currentNode?.attrs.checked)
+        // @ts-ignore
+        const value = getValues(currentNode?.content?.content[0]?.content)
         if (currentNode?.attrs.checked) {
           setIsOpen(true)
+          setValueToFire(value)
         }
         setPos(0)
         return true
@@ -103,7 +127,10 @@ function Index() {
   return (
     <div className="flex max-h-[90vh]" stat-data={postId}>
       <div className='hidden md:block '>
-        <Summary />
+        <Summary
+          incomesValues={incomesValues}
+          expensesValues={expensesValues}
+        />
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
@@ -119,12 +146,17 @@ function Index() {
       </div>
       <PageData>
         <SummaryMobile>
-          <Summary />
+          <Summary
+            incomesValues={incomesValues}
+            expensesValues={expensesValues}
+          />
         </SummaryMobile>
       </PageData>
       <UpdatePocket
+        value={valueToFire}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        onChange={getPocket}
       ></UpdatePocket>
     </div>
   )

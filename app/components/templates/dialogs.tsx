@@ -18,6 +18,7 @@ import _ from 'lodash'
 import { ToggleGroup } from '../ui/toggle-group.tsx'
 import { BasicNotes, Debt, EmergencyFund, Investment, MonthlyExpenses, RegularSaving } from './selects.tsx'
 import { PocketGroup } from './pocket.tsx'
+import { rupiah } from '~/utils/currency.ts'
 
 function CreatePostDialog({
   children,
@@ -135,26 +136,29 @@ function CreatePostDialog({
 }
 
 function UpdatePocket({
+  value,
   isOpen,
-  setIsOpen
+  setIsOpen,
+  onChange
 }: {
+  value: number,
   isOpen: boolean,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onChange: (value: string) => void
 }) {
   return (
     <Dialog open={isOpen}>
       <DialogTrigger></DialogTrigger>
       <DialogContent close={() => setIsOpen(false)} className='w-[500px]'>
         <DialogHeader>
-          <DialogTitle>Debit ke kantong mana?</DialogTitle>
+          <DialogTitle>Masuk</DialogTitle>
         </DialogHeader>
         <div className='mt-4'>
-          <PocketGroup />
+          <div>
+            Nominal: {rupiah(value)}
+          </div>
+          <PocketGroup onChange={onChange} onClose={() => setIsOpen(false)} />
         </div>
-        <DialogFooter className="flex w-full items-center justify-end gap-2 md:gap-0">
-          <Button variant="transparent" onClick={() => setIsOpen(false)}>Batalkan</Button>
-          <Button className="w-full md:w-fit" onClick={() => setIsOpen(false)}>Lanjutkan</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

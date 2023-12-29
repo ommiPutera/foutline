@@ -1,10 +1,10 @@
 import _ from "lodash"
 import { Info } from "lucide-react"
-import { Button, ButtonLink } from "~/components/ui/button.tsx"
+import { PocketItem } from "~/components/templates/pocket.tsx"
+import { Button } from "~/components/ui/button.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet.tsx"
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip.tsx"
 import { rupiah } from "~/utils/currency.ts"
-import { useMonthlyStore } from "./route.tsx"
 
 function SummaryMobile({ children }: { children: React.ReactNode }) {
   return (
@@ -27,9 +27,7 @@ function SummaryMobile({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Summary() {
-  const { incomesValues, expensesValues } = useMonthlyStore()
-
+function Summary({ incomesValues, expensesValues }: { incomesValues: number[], expensesValues: number[] }) {
   const totalIncome = _.sum(incomesValues)
   const totalExpense = _.sum(expensesValues)
   const freeCash = totalIncome - totalExpense
@@ -85,21 +83,10 @@ function Summary() {
               </TooltipContent>
             </Tooltip>
           </div>
-          <div className='flex flex-col gap-2'>
-            <ButtonLink
-              asChild
-              variant="transparent"
-              to='/'
-              className='overflow-hidden border border-input bg-muted px-3.5 py-7'
-            >
-              <div className='flex w-full items-center gap-4'>
-                <div className='flex w-full flex-col gap-1'>
-                  <h5 className='text-[11px] text-muted-foreground'>Bank Mandiri</h5>
-                  <p className='text-xs font-medium'>Rp. 3,690,000</p>
-                </div>
-                <img src="/logos/bank_mandiri.png" alt="" width="34px" height="auto" />
-              </div>
-            </ButtonLink>
+          <div>
+            <div className="rounded-md border p-3">
+              <PocketItem />
+            </div>
           </div>
         </div>
       </div>

@@ -92,6 +92,13 @@ export const MonthlyExtensions = [
   TaskItem.extend({
     addAttributes() {
       return {
+        pocket: {
+          default: 'none',
+          keepOnSplit: false,
+          renderHTML: attributes => ({
+            'data-pocket': attributes.pocket,
+          }),
+        },
         for: {
           default: 'none',
           keepOnSplit: false,
@@ -224,8 +231,10 @@ export const MonthlyExtensions = [
             // console.log(updatedNode.attrs)
             listItem.dataset.checked = updatedNode.attrs.checked
             if (updatedNode.attrs.checked) {
+              listItem.setAttribute('data-pocket', updatedNode.attrs.pocket)
               checkbox.setAttribute('checked', 'checked')
             } else {
+              listItem.setAttribute('data-pocket', 'none')
               checkbox.removeAttribute('checked')
             }
 
