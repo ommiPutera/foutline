@@ -123,7 +123,7 @@ function Cards() {
       />
       <CardItem
         order={2}
-        title="2 Point - poitn diskusi tentang Omition"
+        title="2 Point - poitn diskusi tentang Cparibus"
         content="ascs"
       />
       <CardItem

@@ -57,7 +57,7 @@ export async function loader({ request }: DataFunctionArgs) {
 export const meta: MetaFunction = () => {
   return [
     { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Omition - A new way of write your financial planning' },
+    { title: 'Cparibus | Kelola keuangan anda' },
     {
       description:
         'Platform that provide you a simple canva to write your financial',

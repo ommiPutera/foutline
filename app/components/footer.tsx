@@ -1,5 +1,5 @@
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './omition-logo.tsx'
+import { getLogo } from './cparibus-logo.tsx'
 import { Link } from '@remix-run/react'
 import { AnchorOrLink } from '~/utils/misc.tsx'
 import { ToggleTheme } from './toggle-theme.tsx'
@@ -13,29 +13,27 @@ function Footer() {
     <footer className="mt-auto bg-background">
       <div className="use-matter mx-auto flex h-16 max-w-screen-2xl flex-wrap items-center md:h-24">
         <div className="grid-rows-max-content grid w-full grid-cols-4 gap-8 px-5vw py-12 md:grid-cols-8 md:pb-32 md:pt-24 xl:grid-cols-12">
-          <div className="col-span-full flex flex-col gap-12 md:col-span-2 xl:row-span-3">
+          <div className="col-span-full flex flex-col gap-5 md:col-span-2 xl:row-span-3">
             <Link to="/" className="w-fit">
               <Logo />
             </Link>
-            <div className="mt-auto">
-              <p className="mt-1 text-sm text-muted-foreground">
-                Built by{' '}
-                <span>
-                  <Link
-                    to="https://github.com/ommiPutera"
-                    target="_blank"
-                    className="underline"
-                  >
-                    Ommi Putera
-                  </Link>
-                </span>
-              </p>
+            <div className="mt-1 text-sm">
+              Built by{' '}
+              <span>
+                <Link
+                  to="https://github.com/ommiPutera"
+                  target="_blank"
+                  className="underline"
+                >
+                  Ommi Putera
+                </Link>
+              </span>
             </div>
           </div>
-          <div className="col-span-2 md:col-start-3 md:row-start-1 md:pb-32">
+          <div className="col-span-2 mt-2 md:col-start-3 md:row-start-1 md:pb-32">
             <SitemapSection />
           </div>
-          <div className="col-span-2 md:col-start-4 md:row-start-1 md:pb-32">
+          <div className="col-span-2 mt-2 md:col-start-4 md:row-start-1 md:pb-32">
             <ProductSection />
           </div>
           <div className="col-span-2 md:col-start-12 md:row-start-1 md:pb-32">

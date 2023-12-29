@@ -1,9 +1,9 @@
-import {useLocation} from '@remix-run/react'
-import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
-import {ErrorPage} from '~/components/errors.tsx'
+import { useLocation } from '@remix-run/react'
+import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
+import { ErrorPage } from '~/components/errors.tsx'
 
 export async function loader() {
-  throw new Response('Not found', {status: 404})
+  throw new Response('Not found', { status: 404 })
 }
 
 export default function NotFound() {
@@ -18,7 +18,7 @@ export function ErrorBoundary() {
         404: () => (
           <ErrorPage
             title="404 - Oh no, you found a page that's missing stuff."
-            subtitle={`"${location.pathname}" is not a page on omition.com. So sorry.`}
+            subtitle={`"${location.pathname}" is not a page on cparibus.com. So sorry.`}
           />
         ),
       }}

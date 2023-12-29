@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import { getLogo } from './omition-logo.tsx'
+import { getLogo } from './cparibus-logo.tsx'
 
 function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const { isAuthenticated } = useRootLoader()
@@ -56,7 +56,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                 <p className="text-center text-sm text-muted-foreground md:text-xs">
                   The source code is available on{' '}
                   <Link
-                    to="https://github.com/ommiPutera/omition"
+                    to="https://github.com/ommiPutera/cparibus"
                     target="_blank"
                     className="underline"
                   >

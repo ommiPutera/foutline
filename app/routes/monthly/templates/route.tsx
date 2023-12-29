@@ -13,7 +13,7 @@ function Templates() {
         </div>
         <div className="flex max-w-[480px] flex-col gap-2">
           <h3 className="text-2xl font-bold">Template Keuangan Bulanan</h3>
-          <p className="text-sm text-muted-foreground">Template Omition yang lengkap memudahkan Anda mengendalikan keuangan Anda. Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan penghematan, semuanya di satu tempat yang terorganisir.</p>
+          <p className="text-sm text-muted-foreground">Template Cparibus yang lengkap memudahkan Anda mengendalikan keuangan Anda. Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan penghematan, semuanya di satu tempat yang terorganisir.</p>
         </div>
       </div>
       <ToggleGroup
