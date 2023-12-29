@@ -18,7 +18,7 @@ function Templates() {
       </div>
       <ToggleGroup
         type="single"
-        className="grid grid-cols-2 gap-x-8 gap-y-12"
+        className="grid grid-cols-3 gap-x-8 gap-y-12"
         onValueChange={(v) => setValue(v)}
         value={value}
       >

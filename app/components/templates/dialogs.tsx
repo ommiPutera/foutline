@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
 import _ from 'lodash'
 import { ToggleGroup } from '../ui/toggle-group.tsx'
 import { BasicNotes, Debt, EmergencyFund, Investment, MonthlyExpenses, RegularSaving } from './selects.tsx'
+import { PocketGroup } from './pocket.tsx'
 
 function CreatePostDialog({
   children,
@@ -133,4 +134,30 @@ function CreatePostDialog({
   )
 }
 
-export { CreatePostDialog }
+function UpdatePocket({
+  isOpen,
+  setIsOpen
+}: {
+  isOpen: boolean,
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+  return (
+    <Dialog open={isOpen}>
+      <DialogTrigger></DialogTrigger>
+      <DialogContent close={() => setIsOpen(false)} className='w-[500px]'>
+        <DialogHeader>
+          <DialogTitle>Debit ke kantong mana?</DialogTitle>
+        </DialogHeader>
+        <div className='mt-4'>
+          <PocketGroup />
+        </div>
+        <DialogFooter className="flex w-full items-center justify-end gap-2 md:gap-0">
+          <Button variant="transparent" onClick={() => setIsOpen(false)}>Batalkan</Button>
+          <Button className="w-full md:w-fit" onClick={() => setIsOpen(false)}>Lanjutkan</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export { CreatePostDialog, UpdatePocket }

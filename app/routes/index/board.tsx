@@ -82,16 +82,10 @@ function Tools() {
         <div className='flex items-center gap-2'>
           <FilterButton />
           <SortButton />
-          <CreatePostDialog withoutTooltip>
-            <Button size="sm" className="flex w-full items-center gap-2">
-              <Plus size={16} />
-              Halaman baru
-            </Button>
-          </CreatePostDialog>
         </div>
         <CreatePostDialog withoutTooltip>
-          <Button size="sm" className="flex items-center gap-2 md:hidden">
-            <Plus size={14} />
+          <Button size="sm" className="flex w-full items-center gap-2">
+            <Plus size={16} />
             Halaman baru
           </Button>
         </CreatePostDialog>

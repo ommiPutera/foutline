@@ -12,6 +12,17 @@ import StarterKit from "@tiptap/starter-kit";
 import CustomKeymap from './custom-keymap.ts';
 import MonthlySlashCommand from "../slash-command/monthly.tsx";
 import GetSelectedText from "./selected-text.ts";
+import { create } from 'zustand'
+
+interface PositionState {
+  postion: number
+  setPos: (pos: number) => void
+}
+
+export const usePositionStore = create<PositionState>((set) => ({
+  postion: 0,
+  setPos: (position) => set((state) => ({ postion: position })),
+}))
 
 export const MonthlyExtensions = [
   StarterKit.configure({
@@ -113,10 +124,8 @@ export const MonthlyExtensions = [
         Backspace: () => {
           const isTaskItem = this.editor.getAttributes('taskItem')?.for
           if (isTaskItem) {
-            // console.log()
             return this.editor.commands.deleteSelection()
           } else {
-            console.log('here')
             return this.editor.commands.deleteCurrentNode()
           }
         },
@@ -136,6 +145,93 @@ export const MonthlyExtensions = [
 
       return {
         ...shortcuts,
+      }
+    },
+    addNodeView() {
+      return ({
+        node, HTMLAttributes, getPos, editor,
+      }) => {
+        const listItem = document.createElement('li')
+        const checkboxWrapper = document.createElement('label')
+        const checkboxStyler = document.createElement('span')
+        const checkbox = document.createElement('input')
+        const content = document.createElement('div')
+
+        checkboxWrapper.contentEditable = 'false'
+        checkbox.type = 'checkbox'
+        checkbox.addEventListener('change', event => {
+          // if the editor isn’t editable and we don't have a handler for
+          // readonly checks we have to undo the latest change
+          if (!editor.isEditable && !this.options.onReadOnlyChecked) {
+            checkbox.checked = !checkbox.checked
+
+            return
+          }
+
+          const { checked } = event.target as any
+          const setPos = usePositionStore.getState().setPos
+
+          if (editor.isEditable && typeof getPos === 'function') {
+            editor
+              .chain()
+              .focus(undefined, { scrollIntoView: false })
+              .command(({ tr }) => {
+                const position = getPos()
+                setPos(position)
+
+                const currentNode = tr.doc.nodeAt(position)
+                tr.setNodeMarkup(position, undefined, {
+                  ...currentNode?.attrs,
+                  checked,
+                })
+
+                return true
+              })
+              .run()
+          }
+          if (!editor.isEditable && this.options.onReadOnlyChecked) {
+            // Reset state if onReadOnlyChecked returns false
+            if (!this.options.onReadOnlyChecked(node, checked)) {
+              checkbox.checked = !checkbox.checked
+            }
+          }
+        })
+
+        Object.entries(this.options.HTMLAttributes).forEach(([key, value]) => {
+          listItem.setAttribute(key, value)
+        })
+
+        listItem.dataset.checked = node.attrs.checked
+        if (node.attrs.checked) {
+          checkbox.setAttribute('checked', 'checked')
+        }
+
+        checkboxWrapper.append(checkbox, checkboxStyler)
+        listItem.append(checkboxWrapper, content)
+
+        Object.entries(HTMLAttributes).forEach(([key, value]) => {
+          listItem.setAttribute(key, value)
+        })
+
+        return {
+          dom: listItem,
+          contentDOM: content,
+          update: updatedNode => {
+            if (updatedNode.type !== this.type) {
+              return false
+            }
+
+            // console.log(updatedNode.attrs)
+            listItem.dataset.checked = updatedNode.attrs.checked
+            if (updatedNode.attrs.checked) {
+              checkbox.setAttribute('checked', 'checked')
+            } else {
+              checkbox.removeAttribute('checked')
+            }
+
+            return true
+          },
+        }
       }
     },
   }).configure({

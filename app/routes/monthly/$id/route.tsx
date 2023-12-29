@@ -2,23 +2,31 @@ import { type DataFunctionArgs } from '@remix-run/node'
 import { useLoaderData, useLocation } from '@remix-run/react'
 import type { Editor as EditorType, JSONContent } from '@tiptap/core'
 import _ from "lodash"
-import { Info } from 'lucide-react'
 import React from 'react'
+import { create } from 'zustand'
+import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
 import { ErrorPage } from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
 import { Header } from '~/components/page/header.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '~/components/ui/sheet.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
-import { rupiah } from '~/utils/currency.ts'
+import { UpdatePocket } from '~/components/templates/dialogs.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import { getNumberFromString } from '~/utils/get-number-from-string.ts'
 import { getKindeSession } from '~/utils/session.server.ts'
+import { Summary, SummaryMobile } from './summary.tsx'
 
 const Editor = React.lazy(async () => await import('~/components/editor/index.tsx'))
 
 type LoaderData = {
   postId?: string
+}
+
+type MonthlyState = {
+  incomesValues: number[]
+  setIncomesValues: (data: number[]) => void
+
+  expensesValues: number[]
+  setExpensesValues: (data: number[]) => void
 }
 
 export async function loader({ request, params }: DataFunctionArgs) {
@@ -30,15 +38,38 @@ export async function loader({ request, params }: DataFunctionArgs) {
   return data
 }
 
+export const useMonthlyStore = create<MonthlyState>((set) => ({
+  incomesValues: [],
+  setIncomesValues: (data) => set(() => ({ incomesValues: data })),
+
+  expensesValues: [],
+  setExpensesValues: (data) => set(() => ({ expensesValues: data })),
+}))
+
 function Index() {
   const { postId } = useLoaderData<LoaderData>()
+  const { setIncomesValues, setExpensesValues } = useMonthlyStore()
+
   const [content, setContent] = React.useState<JSONContent | undefined>(undefined);
-  const [incomesValues, setIncomesValues] = React.useState<number[]>([])
-  const [expensesValues, setExpensesValues] = React.useState<number[]>([])
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
   const getData = (data: EditorType) => {
     const json = data.getJSON()
     const taskLists = _.filter(json.content, { type: "taskList" })
+    const position = usePositionStore.getState().postion
+    const setPos = usePositionStore.getState().setPos
+
+    if (position) {
+      data.chain().command(({ tr }) => {
+        const currentNode = tr.doc.nodeAt(position)
+        console.log('woii disini: ', currentNode?.attrs.checked)
+        if (currentNode?.attrs.checked) {
+          setIsOpen(true)
+        }
+        setPos(0)
+        return true
+      }).run()
+    }
 
     let taskItems = []
     for (var taskList of taskLists) {
@@ -72,10 +103,7 @@ function Index() {
   return (
     <div className="flex max-h-[90vh]" stat-data={postId}>
       <div className='hidden md:block '>
-        <Summary
-          incomesValues={incomesValues}
-          expensesValues={expensesValues}
-        />
+        <Summary />
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
@@ -91,116 +119,13 @@ function Index() {
       </div>
       <PageData>
         <SummaryMobile>
-          <Summary
-            incomesValues={incomesValues}
-            expensesValues={expensesValues}
-          />
+          <Summary />
         </SummaryMobile>
       </PageData>
-    </div>
-  )
-}
-
-function SummaryMobile({ children }: { children: React.ReactNode }) {
-  return (
-    <Sheet>
-      <SheetTrigger>
-        <Button variant="transparent" size="default">
-          Data halaman
-        </Button>
-      </SheetTrigger>
-      <SheetContent
-        side="bottom"
-        className="h-3/4"
-      >
-        <SheetHeader className="mb-8">
-          <SheetTitle>Data halaman</SheetTitle>
-        </SheetHeader>
-        {children}
-      </SheetContent>
-    </Sheet>
-  )
-}
-
-function Summary({
-  incomesValues,
-  expensesValues
-}: {
-  incomesValues: number[],
-  expensesValues: number[]
-}) {
-  const totalIncome = _.sum(incomesValues)
-  const totalExpense = _.sum(expensesValues)
-  const freeCash = totalIncome - totalExpense
-  return (
-    <div className="mt-[1px] h-full md:border-r md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
-      <div className="flex flex-col gap-12">
-        <div className='flex flex-col gap-6'>
-          <div>
-            <div className='flex items-center text-xs font-semibold'>
-              Data halaman anda
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="transparent" size="icon">
-                    <Info className='h-4 w-4 fill-blue-500 text-white' />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="top">
-                  <p>Buat halaman baru</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-            <div className='text-[11px] text-muted-foreground'>
-              Selalu pastikan pengeluaran anda tidak melebihi pemasukan anda
-            </div>
-          </div>
-          <div className='flex flex-col gap-5'>
-            <div className='flex flex-col gap-1'>
-              <h5 className='text-xs text-muted-foreground'>Pemasukan</h5>
-              <p className='text-xs font-medium'>{rupiah(totalIncome)}</p>
-            </div>
-            <div className='flex flex-col gap-1'>
-              <h5 className='text-xs text-muted-foreground'>Pengeluaran</h5>
-              <p className='text-xs font-medium'>{rupiah(totalExpense)}</p>
-            </div>
-            <div className='flex flex-col gap-1'>
-              <h5 className='text-xs text-muted-foreground'>Belum dialokasikan</h5>
-              <p className='text-xs font-medium'>{rupiah(freeCash)}</p>
-            </div>
-          </div>
-        </div>
-        <div className='flex flex-col gap-3'>
-          <div className='flex items-center text-xs font-semibold'>
-            Kantong
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="transparent" size="icon">
-                  <Info className='h-4 w-4 fill-blue-500 text-white' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                <p>Buat halaman baru</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div className='flex flex-col gap-2'>
-            <ButtonLink
-              asChild
-              variant="transparent"
-              to='/'
-              className='overflow-hidden border border-input bg-muted px-3.5 py-7'
-            >
-              <div className='flex w-full items-center gap-4'>
-                <div className='flex w-full flex-col gap-1'>
-                  <h5 className='text-[11px] text-muted-foreground'>Bank Mandiri</h5>
-                  <p className='text-xs font-medium'>Rp. 3,690,000</p>
-                </div>
-                <img src="/logos/bank_mandiri.png" alt="" width="34px" height="auto" />
-              </div>
-            </ButtonLink>
-          </div>
-        </div>
-      </div>
+      <UpdatePocket
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      ></UpdatePocket>
     </div>
   )
 }
