@@ -1,11 +1,15 @@
+import { rupiah } from "~/utils/currency.ts"
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group.tsx"
+import type { PocketsValues } from "~/routes/monthly/$id/route.tsx"
 
 function PocketGroup({
   onChange,
-  onClose
+  onClose,
+  dataset,
 }: {
   onChange: (value: string) => void,
-  onClose: () => void
+  onClose: () => void,
+  dataset: PocketsValues[]
 }) {
   return (
     <ToggleGroup
@@ -16,14 +20,18 @@ function PocketGroup({
       }}
       className="grid grid-cols-2 gap-3"
     >
-      <ToggleItem value="MANDIRI" />
-      <ToggleItem value="BNI" />
-      <ToggleItem value="BCA" />
+      {dataset.map((pocket) => (
+        <ToggleItem
+          key={pocket.name}
+          value={pocket.name}
+          nominal={pocket.nominal}
+        />
+      ))}
     </ToggleGroup>
   )
 }
 
-function ToggleItem({ value }: { value: string }) {
+function ToggleItem({ value, nominal }: { value: string, nominal: number }) {
   return (
     <ToggleGroupItem
       value={value}
@@ -31,8 +39,8 @@ function ToggleItem({ value }: { value: string }) {
     >
       <div className='flex w-full items-center gap-4'>
         <div className='flex w-full flex-col gap-1 text-left'>
-          <h5 className='text-xs text-muted-foreground'>Bank Mandiri</h5>
-          <p className='text-sm font-medium'>Rp. 3,690,000</p>
+          <h5 className='text-xs text-muted-foreground'>{value}</h5>
+          <p className='text-sm font-medium'>{rupiah(nominal)}</p>
         </div>
         <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
       </div>
@@ -40,12 +48,12 @@ function ToggleItem({ value }: { value: string }) {
   )
 }
 
-function PocketItem() {
+function PocketItem({ name, nominal }: { name: string; nominal: number }) {
   return (
     <div className='flex w-full items-center gap-4'>
       <div className='flex w-full flex-col gap-1 text-left'>
-        <h5 className='text-xs text-muted-foreground'>Bank Mandiri</h5>
-        <p className='text-sm font-medium'>Rp. 3,690,000</p>
+        <h5 className='text-xs text-muted-foreground'>{name}</h5>
+        <p className='text-sm font-medium'>{rupiah(nominal)}</p>
       </div>
       <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
     </div>

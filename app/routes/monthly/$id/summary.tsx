@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet.tsx"
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip.tsx"
 import { rupiah } from "~/utils/currency.ts"
+import { getValues, type PocketsValues } from "./route.tsx"
 
 function SummaryMobile({ children }: { children: React.ReactNode }) {
   return (
@@ -27,7 +28,15 @@ function SummaryMobile({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Summary({ incomesValues, expensesValues }: { incomesValues: number[], expensesValues: number[] }) {
+function Summary({
+  incomesValues,
+  expensesValues,
+  pocketsValues
+}: {
+  incomesValues: number[],
+  expensesValues: number[],
+  pocketsValues: PocketsValues[]
+}) {
   const totalIncome = _.sum(incomesValues)
   const totalExpense = _.sum(expensesValues)
   const freeCash = totalIncome - totalExpense
@@ -83,13 +92,54 @@ function Summary({ incomesValues, expensesValues }: { incomesValues: number[], e
               </TooltipContent>
             </Tooltip>
           </div>
-          <div>
-            <div className="rounded-md border p-3">
-              <PocketItem />
-            </div>
-          </div>
+          <Pockets pocketsValues={pocketsValues} />
         </div>
       </div>
+    </div>
+  )
+}
+
+function Pockets({ pocketsValues }: { pocketsValues: PocketsValues[] }) {
+
+  const Item = ({ nominal, name, dataIncomes, dataExpenses }: PocketsValues) => {
+    const incomes = dataIncomes;
+    const expenses = dataExpenses;
+
+    let incomesValues: number[] = []
+    for (var income of incomes) {
+      if (!income?.content) break;
+      const values = getValues(income.content[0])
+      incomesValues.push(values)
+    }
+
+    let expensesValues: number[] = []
+    for (var expense of expenses) {
+      if (!expense?.content) break;
+      const values = getValues(expense.content[0])
+      expensesValues.push(values)
+    }
+
+    const totalIncome = _.sum(incomesValues)
+    const totalExpense = _.sum(expensesValues)
+    const total = totalIncome - totalExpense
+
+    // console.log('totalIncome: ', totalIncome)
+    // console.log('totalExpense: ', totalExpense)
+    // console.log('total: ', total)
+
+    return (
+      <div className="rounded-md border p-3">
+        <PocketItem
+          name={name}
+          nominal={total + nominal}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      {pocketsValues.map((pocket) => <Item key={pocket.name} {...pocket} />)}
     </div>
   )
 }

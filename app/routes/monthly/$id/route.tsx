@@ -26,6 +26,13 @@ type MonthlyState = {
   setValueToFire: (value: number) => void
 }
 
+export type PocketsValues = {
+  name: string,
+  nominal: number,
+  dataIncomes: (JSONContent | undefined)[],
+  dataExpenses: (JSONContent | undefined)[]
+}
+
 export async function loader({ request, params }: DataFunctionArgs) {
   const { isAuthenticated } = await getKindeSession(request)
   if (!isAuthenticated) throw new Response('Not found', { status: 404 })
@@ -43,6 +50,21 @@ export const useMonthlyStore = create<MonthlyState>((set) => ({
 function Index() {
   const { postId } = useLoaderData<LoaderData>()
 
+  const dataset = [
+    {
+      name: 'MANDIRI',
+      nominal: 800000,
+      dataIncomes: [undefined],
+      dataExpenses: [undefined]
+    },
+    {
+      name: 'BCA',
+      nominal: 25000,
+      dataIncomes: [undefined],
+      dataExpenses: [undefined]
+    }
+  ]
+
   const {
     valueToFire,
     setValueToFire,
@@ -55,6 +77,8 @@ function Index() {
 
   const [incomesValues, setIncomesValues] = React.useState<number[]>([]);
   const [expensesValues, setExpensesValues] = React.useState<number[]>([]);
+
+  const [pocketsValues, setPocketsValues] = React.useState<PocketsValues[]>(dataset);
 
   const getPocket = (value: string) => {
     if (currentPosition && data) {
@@ -118,9 +142,41 @@ function Index() {
       const values = getValues(expense.content[0])
       expensesValues.push(values)
     }
+
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
     setContent(json.content)
+    getPocketData(data)
+    return null
+  }
+
+  const getPocketData = (data: EditorType) => {
+    const json = data.getJSON()
+    const taskLists = _.filter(json.content, { type: "taskList" })
+
+    let taskItems = []
+    for (var taskList of taskLists) {
+      if (!taskList.content) break;
+      if (taskList.content?.length === 1) taskItems.push(taskList.content[0])
+      if (taskList.content?.length > 1) for (var item of taskList.content) { taskItems.push(item) }
+    }
+
+    const pockets = []
+
+    for (var pocket of dataset) {
+      if (!taskItems) break;
+      const itemIncomes = _.filter(taskItems, { attrs: { pocket: pocket.name, for: 'monthly-income', checked: true } })
+      const itemExpenses = _.filter(taskItems, { attrs: { pocket: pocket.name, for: 'monthly-expense', checked: true } })
+      pockets.push({
+        name: pocket.name,
+        nominal: pocket.nominal,
+        dataIncomes: itemIncomes,
+        dataExpenses: itemExpenses,
+      })
+    }
+
+    console.log('pockets: ', pockets)
+    setPocketsValues(pockets)
     return null
   }
 
@@ -130,6 +186,7 @@ function Index() {
         <Summary
           incomesValues={incomesValues}
           expensesValues={expensesValues}
+          pocketsValues={pocketsValues}
         />
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
@@ -149,6 +206,7 @@ function Index() {
           <Summary
             incomesValues={incomesValues}
             expensesValues={expensesValues}
+            pocketsValues={pocketsValues}
           />
         </SummaryMobile>
       </PageData>
@@ -157,12 +215,13 @@ function Index() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         onChange={getPocket}
+        dataset={dataset}
       ></UpdatePocket>
     </div>
   )
 }
 
-const getValues = (content: JSONContent | undefined): number => {
+export const getValues = (content: JSONContent | undefined): number => {
   if (!content?.content?.[0]?.text) return 0
   return getNumberFromString(content.content[0].text)
 }

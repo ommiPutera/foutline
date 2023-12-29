@@ -19,6 +19,7 @@ import { ToggleGroup } from '../ui/toggle-group.tsx'
 import { BasicNotes, Debt, EmergencyFund, Investment, MonthlyExpenses, RegularSaving } from './selects.tsx'
 import { PocketGroup } from './pocket.tsx'
 import { rupiah } from '~/utils/currency.ts'
+import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
 
 function CreatePostDialog({
   children,
@@ -139,12 +140,14 @@ function UpdatePocket({
   value,
   isOpen,
   setIsOpen,
-  onChange
+  onChange,
+  dataset
 }: {
   value: number,
   isOpen: boolean,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  onChange: (value: string) => void
+  onChange: (value: string) => void,
+  dataset: PocketsValues[]
 }) {
   return (
     <Dialog open={isOpen}>
@@ -157,7 +160,11 @@ function UpdatePocket({
           <div>
             Nominal: {rupiah(value)}
           </div>
-          <PocketGroup onChange={onChange} onClose={() => setIsOpen(false)} />
+          <PocketGroup
+            dataset={dataset}
+            onChange={onChange}
+            onClose={() => setIsOpen(false)}
+          />
         </div>
       </DialogContent>
     </Dialog>
