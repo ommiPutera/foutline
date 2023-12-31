@@ -22,7 +22,7 @@ function Navbar() {
     <div className="use-matter bg-background">
       <div className="mx-auto flex h-20 max-w-screen-2xl items-center md:h-28">
         <nav className="flex w-full items-center px-5vw">
-          <div className="flex flex-1 place-content-start items-center gap-8">
+          <div className="flex flex-1 place-content-start items-center gap-6">
             <Link to="/" prefetch="intent">
               <Logo />
             </Link>

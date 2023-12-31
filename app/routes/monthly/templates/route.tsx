@@ -18,7 +18,7 @@ function Templates() {
       </div>
       <ToggleGroup
         type="single"
-        className="grid grid-cols-3 gap-x-8 gap-y-12"
+        className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3"
         onValueChange={(v) => setValue(v)}
         value={value}
       >
@@ -27,11 +27,8 @@ function Templates() {
         <Card value="item-3" />
         <Card value="item-4" />
       </ToggleGroup>
-      <div className="sticky bottom-0 mt-12 flex justify-between gap-3 border-t bg-white py-8">
-        <div className="flex items-center gap-3">
-          <Button size="sm" variant="secondary" onClick={() => console.log('woi')}>Mulai upload template anda</Button>
-        </div>
-        <div className="flex items-center gap-3">
+      <div className="sticky bottom-0 mt-12 border-t bg-white py-8">
+        <div className="flex w-full items-center justify-between gap-3 md:justify-end">
           <Button size="sm" variant="transparent" onClick={() => setValue('')}>Batalkan</Button>
           <Button size="sm" onClick={() => console.log('woi')} disabled={!value}>Gunakan template</Button>
         </div>
