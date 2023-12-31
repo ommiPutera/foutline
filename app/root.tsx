@@ -57,7 +57,7 @@ export async function loader({ request }: DataFunctionArgs) {
 export const meta: MetaFunction = () => {
   return [
     { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Cparibus | Kelola keuangan anda' },
+    { title: 'Outline | Kelola keuangan anda' },
     {
       description:
         'Platform that provide you a simple canva to write your financial',
@@ -148,10 +148,10 @@ function App() {
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#111827" />
+        <meta name="msapplication-TileColor" content="#000" />
         <meta
           name="theme-color"
-          content={theme === 'dark' ? '#111827' : '#FFF'}
+          content={theme === 'dark' ? '#000' : '#FFF'}
         />
         <Links />
       </head>

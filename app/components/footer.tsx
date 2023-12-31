@@ -1,5 +1,5 @@
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './cparibus-logo.tsx'
+import { getLogo } from './outline-logo.tsx'
 import { Link } from '@remix-run/react'
 import { AnchorOrLink } from '~/utils/misc.tsx'
 import { ToggleTheme } from './toggle-theme.tsx'

@@ -2,7 +2,7 @@ import { Link } from '@remix-run/react'
 import React from 'react'
 import { BurgerMenu } from '~/utils/icons.tsx'
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './cparibus-logo.tsx'
+import { getLogo } from './outline-logo.tsx'
 import { ButtonLink } from './ui/button.tsx'
 import {
   Popover,
@@ -22,7 +22,7 @@ function Navbar() {
     <div className="use-matter bg-background">
       <div className="mx-auto flex h-20 max-w-screen-2xl items-center md:h-28">
         <nav className="flex w-full items-center px-5vw">
-          <div className="flex flex-1 place-content-start items-center gap-14">
+          <div className="flex flex-1 place-content-start items-center gap-8">
             <Link to="/" prefetch="intent">
               <Logo />
             </Link>

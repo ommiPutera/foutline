@@ -4,7 +4,7 @@ import {Theme, isTheme} from './theme-provider.tsx'
 
 const themeStorage = createCookieSessionStorage({
   cookie: {
-    name: 'CPARIBUS_THEME',
+    name: 'OUTLINE_THEME',
     secure: true,
     secrets: [getRequiredServerEnvVar('SESSION_SECRET')],
     sameSite: 'lax',

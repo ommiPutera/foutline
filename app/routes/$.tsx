@@ -18,7 +18,7 @@ export function ErrorBoundary() {
         404: () => (
           <ErrorPage
             title="404 - Oh no, you found a page that's missing stuff."
-            subtitle={`"${location.pathname}" is not a page on cparibus.com. So sorry.`}
+            subtitle={`"${location.pathname}" is not a page on outline.com. So sorry.`}
           />
         ),
       }}

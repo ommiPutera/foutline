@@ -117,7 +117,7 @@ function Cards() {
       />
       <CardItem
         order={2}
-        title="2 Point - poitn diskusi tentang Cparibus"
+        title="2 Point - poitn diskusi tentang Outline"
         content="ascs"
       />
       <CardItem

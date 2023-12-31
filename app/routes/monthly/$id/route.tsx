@@ -87,7 +87,6 @@ function Index() {
   const getPocket = (value: string) => {
     if (currentPosition && data) {
       data.chain().command(({ tr }) => {
-        console.log('value: ', value);
         const currentNode = tr.doc.nodeAt(currentPosition)
         if (currentNode?.attrs.checked) {
           tr.setNodeMarkup(currentPosition, undefined, {
@@ -125,7 +124,6 @@ function Index() {
             pocket: 'none',
           })
         }
-        console.log("currentNode?.attrs: ", currentNode?.attrs)
         setPos(0)
         return true
       }).run()
@@ -186,9 +184,6 @@ function Index() {
         dataExpenses: itemExpenses,
       })
     }
-
-    console.log('taskItems: ', taskItems)
-    console.log('pockets: ', pockets)
     setPocketsValues(pockets)
     return null
   }
@@ -247,7 +242,7 @@ export function ErrorBoundary() {
         404: () => (
           <ErrorPage
             title="404 - Oh no, you found a page that's missing stuff."
-            subtitle={`"${location.pathname}" is not a page on cparibus.com. So sorry.`}
+            subtitle={`"${location.pathname}" is not a page on outline.com. So sorry.`}
           />
         ),
       }}
