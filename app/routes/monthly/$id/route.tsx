@@ -1,9 +1,11 @@
 import { type DataFunctionArgs } from '@remix-run/node'
 import { useLoaderData, useLocation } from '@remix-run/react'
 import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+
 import _ from "lodash"
 import React from 'react'
 import { create } from 'zustand'
+
 import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
 import { ErrorPage } from '~/components/errors.tsx'
@@ -11,6 +13,7 @@ import PageData from '~/components/page-data.tsx'
 import { Header } from '~/components/page/header.tsx'
 import { UpdatePocket } from '~/components/templates/dialogs.tsx'
 import { Button } from '~/components/ui/button.tsx'
+
 import { getNumberFromString } from '~/utils/get-number-from-string.ts'
 import { getKindeSession } from '~/utils/session.server.ts'
 import { Summary, SummaryMobile } from './summary.tsx'
@@ -72,6 +75,7 @@ function Index() {
 
   const [content, setContent] = React.useState<JSONContent | undefined>(undefined);
   const [data, setData] = React.useState<EditorType | undefined>(undefined);
+
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [currentPosition, setCurrentPosition] = React.useState<number>(0);
 
@@ -83,6 +87,7 @@ function Index() {
   const getPocket = (value: string) => {
     if (currentPosition && data) {
       data.chain().command(({ tr }) => {
+        console.log('value: ', value);
         const currentNode = tr.doc.nodeAt(currentPosition)
         if (currentNode?.attrs.checked) {
           tr.setNodeMarkup(currentPosition, undefined, {
@@ -114,6 +119,13 @@ function Index() {
           setIsOpen(true)
           setValueToFire(value)
         }
+        if (currentNode?.attrs?.pocket !== 'none') {
+          tr.setNodeMarkup(currentPosition, undefined, {
+            ...currentNode?.attrs,
+            pocket: 'none',
+          })
+        }
+        console.log("currentNode?.attrs: ", currentNode?.attrs)
         setPos(0)
         return true
       }).run()
@@ -175,6 +187,7 @@ function Index() {
       })
     }
 
+    console.log('taskItems: ', taskItems)
     console.log('pockets: ', pockets)
     setPocketsValues(pockets)
     return null

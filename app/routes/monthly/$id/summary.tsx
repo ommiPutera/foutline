@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { Info } from "lucide-react"
-import { PocketItem } from "~/components/templates/pocket.tsx"
+import { PocketItem as PocketToggle } from "~/components/templates/pocket.tsx"
 import { Button } from "~/components/ui/button.tsx"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet.tsx"
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip.tsx"
@@ -100,46 +100,41 @@ function Summary({
 }
 
 function Pockets({ pocketsValues }: { pocketsValues: PocketsValues[] }) {
-
-  const Item = ({ nominal, name, dataIncomes, dataExpenses }: PocketsValues) => {
-    const incomes = dataIncomes;
-    const expenses = dataExpenses;
-
-    let incomesValues: number[] = []
-    for (var income of incomes) {
-      if (!income?.content) break;
-      const values = getValues(income.content[0])
-      incomesValues.push(values)
-    }
-
-    let expensesValues: number[] = []
-    for (var expense of expenses) {
-      if (!expense?.content) break;
-      const values = getValues(expense.content[0])
-      expensesValues.push(values)
-    }
-
-    const totalIncome = _.sum(incomesValues)
-    const totalExpense = _.sum(expensesValues)
-    const total = totalIncome - totalExpense
-
-    // console.log('totalIncome: ', totalIncome)
-    // console.log('totalExpense: ', totalExpense)
-    // console.log('total: ', total)
-
-    return (
-      <div className="rounded-md border p-3">
-        <PocketItem
-          name={name}
-          nominal={total + nominal}
-        />
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col gap-3">
-      {pocketsValues.map((pocket) => <Item key={pocket.name} {...pocket} />)}
+      {pocketsValues.map((pocket) => <PocketItem key={pocket.name} {...pocket} />)}
+    </div>
+  )
+}
+
+function PocketItem({ nominal, name, dataIncomes, dataExpenses }: PocketsValues) {
+  const incomes = dataIncomes;
+  const expenses = dataExpenses;
+
+  let incomesValues: number[] = []
+  for (var income of incomes) {
+    if (!income?.content) break;
+    const values = getValues(income.content[0])
+    incomesValues.push(values)
+  }
+
+  let expensesValues: number[] = []
+  for (var expense of expenses) {
+    if (!expense?.content) break;
+    const values = getValues(expense.content[0])
+    expensesValues.push(values)
+  }
+
+  const totalIncome = _.sum(incomesValues)
+  const totalExpense = _.sum(expensesValues)
+  const total = totalIncome - totalExpense
+
+  return (
+    <div className="rounded-md border p-3">
+      <PocketToggle
+        name={name}
+        nominal={total + nominal}
+      />
     </div>
   )
 }
