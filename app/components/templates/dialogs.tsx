@@ -147,18 +147,18 @@ function UpdatePocket({
   isOpen: boolean,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   onChange: (value: string) => void,
-  dataset: PocketsValues[]
+  dataset: PocketsValues[],
 }) {
   return (
     <Dialog open={isOpen}>
       <DialogTrigger></DialogTrigger>
-      <DialogContent close={() => setIsOpen(false)} className='w-[500px]'>
+      <DialogContent close={() => setIsOpen(false)} className='w-[80vw] md:w-[500px]'>
         <DialogHeader>
           <DialogTitle>Masuk</DialogTitle>
         </DialogHeader>
-        <div className='mt-4'>
-          <div>
-            Nominal: {rupiah(value)}
+        <div className='mt-4 flex flex-col gap-4'>
+          <div className='text-sm font-medium'>
+            {rupiah(value)}
           </div>
           <PocketGroup
             dataset={dataset}

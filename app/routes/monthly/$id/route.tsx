@@ -115,6 +115,7 @@ function Index() {
         // @ts-ignore
         const value = getValues(currentNode?.content?.content[0]?.content)
         if (currentNode?.attrs.checked) {
+          console.log(currentNode?.attrs)
           setIsOpen(true)
           setValueToFire(value)
         }

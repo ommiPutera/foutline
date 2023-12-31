@@ -18,7 +18,7 @@ function PocketGroup({
         onChange(v)
         onClose()
       }}
-      className="grid grid-cols-2 gap-3"
+      className="grid grid-cols-1 gap-3 md:grid-cols-2"
     >
       {dataset.map((pocket) => (
         <ToggleItem
@@ -40,7 +40,7 @@ function ToggleItem({ value, nominal }: { value: string, nominal: number }) {
       <div className='flex w-full items-center gap-4'>
         <div className='flex w-full flex-col gap-1 text-left'>
           <h5 className='text-xs text-muted-foreground'>{value}</h5>
-          <p className='text-sm font-medium'>{rupiah(nominal)}</p>
+          <p className='text-xs font-medium'>{rupiah(nominal)}</p>
         </div>
         <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
       </div>
@@ -53,7 +53,7 @@ function PocketItem({ name, nominal }: { name: string; nominal: number }) {
     <div className='flex w-full items-center gap-4'>
       <div className='flex w-full flex-col gap-1 text-left'>
         <h5 className='text-xs text-muted-foreground'>{name}</h5>
-        <p className='text-sm font-medium'>{rupiah(nominal)}</p>
+        <p className='text-xs font-medium'>{rupiah(nominal)}</p>
       </div>
       <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
     </div>
