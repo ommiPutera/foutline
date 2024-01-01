@@ -1,9 +1,4 @@
-# fly.toml app configuration file generated for omition on 2023-12-13T00:04:59+07:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = "omition"
+app = "outline"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "sin"
@@ -59,8 +54,3 @@ primary_region = "sin"
     restart_limit = 0
     timeout = 2000
     tls_skip_verify = false
-
-[[vm]]
-  cpu_kind = "shared"
-  cpus = 2
-  memory_mb = 2048
