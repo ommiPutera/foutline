@@ -37,7 +37,7 @@ model Post {
   status      PostStatus @default(NOT_STARTED)
   user        User?      @relation(fields: [userId], references: [id])
 
-  @@index(fields: [userId, id, isFavorite])
+  @@index([userId, id, isFavorite])
 }
 
 model Session {
