@@ -167,13 +167,13 @@ function More() {
   return (
     <Popover>
       <div className="flex h-full">
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button
             size="icon"
             variant="transparent"
-            className="rounded-sm"
+            className="rounded-full"
           >
-            <MoreHorizontal size={18} />
+            <MoreHorizontal className='h-4 w-4' />
           </Button>
         </PopoverTrigger>
       </div>

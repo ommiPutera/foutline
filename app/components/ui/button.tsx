@@ -58,6 +58,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     />
   )
 })
+Button.displayName = "Button"
 
 /**
  * A button that looks like a link
@@ -65,7 +66,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
 const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithRef<typeof AnchorOrLink> & ButtonProps
->(function ButtonLink({ children, ...props }, ref) {
+>(function ButtonLink({ children, asChild = false, ...props }, ref) {
   const { variant, size, disabled } = props
   return (
     <Button
@@ -81,5 +82,6 @@ const ButtonLink = React.forwardRef<
     </Button>
   )
 })
+ButtonLink.displayName = "ButtonLink"
 
 export { Button, ButtonLink, buttonVariants }

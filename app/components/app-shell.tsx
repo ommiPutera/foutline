@@ -124,7 +124,7 @@ function MobileSidebar() {
       />
       <div className="block md:hidden">
         <Sheet open={isOpen} key="testtt">
-          <SheetTrigger>
+          <SheetTrigger asChild>
             <Button size="icon" variant="ghost" onClick={() => setIsOpen(true)}>
               <PanelLeft />
             </Button>

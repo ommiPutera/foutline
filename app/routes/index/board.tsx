@@ -2,8 +2,6 @@ import { Info, LayoutGrid, List, Plus, WalletCards } from 'lucide-react'
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import { useMediaQuery } from '~/components/hooks/use-media-query.ts'
-import MasonryLayout from '~/components/masonry.tsx'
 import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
 import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip.tsx'
@@ -48,14 +46,21 @@ function Board() {
               </ButtonLink>
               <div className='flex flex-col gap-2'>
                 <CreatePostDialog withoutTooltip>
-                  <Button size="sm" className="flex w-full items-center gap-2">
+                  <Button size="sm" asChild className="flex w-full items-center gap-2">
                     Atur kantong
                   </Button>
                 </CreatePostDialog>
                 <CreatePostDialog withoutTooltip>
-                  <Button variant="ghost" size="sm" className="flex w-full items-center gap-2">
-                    <WalletCards size={16} />
-                    Buat kantong
+                  <Button
+                    variant="ghost"
+                    asChild
+                    size="sm"
+                    className="flex w-full items-center gap-2"
+                  >
+                    <span>
+                      <WalletCards size={16} />
+                      Buat kantong
+                    </span>
                   </Button>
                 </CreatePostDialog>
               </div>
@@ -84,9 +89,11 @@ function Tools() {
           <SortButton />
         </div>
         <CreatePostDialog withoutTooltip>
-          <Button size="sm" className="flex w-full items-center gap-2">
-            <Plus size={16} />
-            Halaman baru
+          <Button size="sm" asChild className="flex w-full items-center gap-2">
+            <span>
+              <Plus size={16} />
+              Halaman baru
+            </span>
           </Button>
         </CreatePostDialog>
       </div>
@@ -95,21 +102,8 @@ function Tools() {
 }
 
 function Cards() {
-  const md = useMediaQuery('(min-width: 425px)')
-  const lg = useMediaQuery('(min-width: 1024px)')
-  const xl = useMediaQuery('(min-width: 1440px)')
-  const xl2 = useMediaQuery('(min-width: 1540px)')
-
-  const getColumns = () => {
-    if (xl2) return 5
-    if (xl) return 4
-    if (lg) return 3
-    if (md) return 3
-    return 2
-  }
-
   return (
-    <MasonryLayout columns={getColumns()}>
+    <div className='grid grid-cols-2 gap-3 lg:grid-cols-4 xl:grid-cols-5'>
       <CardItem
         order={1}
         title="1 Desember 2023"
@@ -184,7 +178,7 @@ function Cards() {
         title="4 September 2023"
         content="asdsdasda ss sdasdasd ascascascsac asddds ascss ssssdca ascsss sascc ascascascs asca ass ss sssssa dsss ascascas as112 asscsmmms"
       />
-    </MasonryLayout>
+    </div>
   )
 }
 

@@ -14,7 +14,6 @@ import {
   Settings,
   Trash2,
 } from 'lucide-react'
-// import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import {
   Accordion,
   AccordionContent,
@@ -86,9 +85,11 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           </ButtonLink>
           <div>
             <CreatePostDialog>
-              <Button variant="ghost" className="w-full justify-start text-xs">
-                <Plus className="mr-3 h-4 w-4" strokeWidth={2.1} />
-                Buat
+              <Button asChild variant="ghost" className="w-full justify-start text-xs">
+                <span>
+                  <Plus className="mr-3 h-4 w-4" strokeWidth={2.1} />
+                  Buat
+                </span>
               </Button>
             </CreatePostDialog>
           </div>
@@ -150,7 +151,7 @@ function Favorite() {
             Halaman Favorit
           </AccordionTrigger>
         </Button>
-        <AccordionContent className="relative w-full pb-3 pl-4 pr-1 pt-1">
+        <AccordionContent className="relative h-fit w-full pl-4 pr-1">
           <div ref={contentRef} className="w-full space-y-2">
             {!isPostEmpty ? (
               data?.map((post, i) => (
@@ -267,20 +268,22 @@ function EmptyState() {
 function More() {
   return (
     <DropdownMenu>
-      <Tooltip>
-        <div className="flex h-full">
-          <TooltipTrigger>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="transparent" className="rounded-sm">
-                <MoreVertical size={18} />
-              </Button>
-            </DropdownMenuTrigger>
-          </TooltipTrigger>
-          <TooltipContent className="mr-2">
-            <p>Pengaturan, kunci, style, dan lainnya..</p>
-          </TooltipContent>
+      <DropdownMenuTrigger asChild>
+        <div>
+          <Tooltip>
+            <div className="flex h-full">
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="transparent" className="rounded-sm">
+                  <MoreVertical className='h-4 w-4' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="mr-2">
+                <p>Pengaturan, kunci, style, dan lainnya..</p>
+              </TooltipContent>
+            </div>
+          </Tooltip>
         </div>
-      </Tooltip>
+      </DropdownMenuTrigger>
       <DropdownMenuContent className="mt-1 w-44" align="end" forceMount>
         <DropdownMenuGroup>
           <Link to="/" prefetch="intent">

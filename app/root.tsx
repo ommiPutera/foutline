@@ -15,15 +15,18 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
-import prosemirrorStyles from '~/styles/prosemirror.css'
+
 import AppShell from './components/app-shell.tsx'
 import Footer from './components/footer.tsx'
 import Navbar from './components/navbar.tsx'
+import { TooltipProvider } from './components/ui/tooltip.tsx'
+
+import prosemirrorStyles from '~/styles/prosemirror.css'
 import globalStyles from './styles/globals.css'
+
 import { getKindeSession, getUser } from './utils/session.server.ts'
 import { ThemeProvider, useTheme } from './utils/theme-provider.tsx'
 import { getThemeSession } from './utils/theme.server.ts'
-import { TooltipProvider } from './components/ui/tooltip.tsx'
 
 export type LoaderData = SerializeFrom<typeof loader>
 export const handle: { id: string } = {
@@ -36,9 +39,6 @@ export async function loader({ request }: DataFunctionArgs) {
     getKindeSession(request),
     getUser(request),
   ])
-
-  // console.log('kindeSession: ', kindeSession)
-  // console.log('userFromSession: ', userFromSession)
 
   const data = {
     user: userFromSession,
@@ -57,11 +57,7 @@ export async function loader({ request }: DataFunctionArgs) {
 export const meta: MetaFunction = () => {
   return [
     { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Outline | Kelola keuangan anda' },
-    {
-      description:
-        'Platform that provide you a simple canva to write your financial',
-    },
+    { title: 'Outline | Catatan keuangan anda' },
   ]
 }
 

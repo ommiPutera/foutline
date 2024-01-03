@@ -7,7 +7,7 @@ import {redirect} from '@remix-run/node'
 
 const logThreshold = 500
 // const sessionExpirationTime = 1000 * 20
-const sessionExpirationTime = 1000 * 60 * 60 * 24 * 365
+const sessionExpirationTime = 1000 * 60 * 60 * 24 * 1
 const prisma =
   process.env.NODE_ENV === 'development'
     ? remember('prisma', getClient)

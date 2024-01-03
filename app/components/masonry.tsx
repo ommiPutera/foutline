@@ -1,23 +1,28 @@
 import type { ReactNode } from 'react'
 import React from 'react'
-
-type ColumnProps = {
-  children: ReactNode
-}
-
-type MasonryLayoutProps = {
-  columns: number
-  children: ReactNode
-}
+import { useMediaQuery } from './hooks/use-media-query.ts'
 
 type ColumnWrapper = {
   id: string
   items: React.ReactNode[]
 }
 
-function MasonryLayout({ columns, children }: MasonryLayoutProps) {
+function MasonryLayout({ children }: { children: ReactNode }) {
+  const md = useMediaQuery('(min-width: 425px)')
+  const lg = useMediaQuery('(min-width: 1024px)')
+  const xl = useMediaQuery('(min-width: 1440px)')
+  const xl2 = useMediaQuery('(min-width: 1540px)')
+
+  const getColumns = () => {
+    if (xl2) return 5
+    if (xl) return 4
+    if (lg) return 3
+    if (md) return 3
+    return 2
+  }
+
   const columnWrappers: ColumnWrapper[] = Array.from(
-    { length: columns },
+    { length: getColumns() },
     (_, i) => ({
       id: `column${i}`,
       items: [],
@@ -25,7 +30,7 @@ function MasonryLayout({ columns, children }: MasonryLayoutProps) {
   )
 
   React.Children.forEach(children, (child, index) => {
-    const columnIndex = index % columns
+    const columnIndex = index % getColumns()
     columnWrappers[columnIndex]!.items.push(
       React.cloneElement(child as React.ReactElement, { key: index }),
     )
@@ -35,15 +40,13 @@ function MasonryLayout({ columns, children }: MasonryLayoutProps) {
     <div className="flex gap-3">
       {columnWrappers.map(({ id, items }, index) => (
         <div key={id} className="flex-1">
-          <Column>{items}</Column>
+          <div className="flex flex-col gap-3">
+            {items}
+          </div>
         </div>
       ))}
     </div>
   )
-}
-
-function Column({ children }: ColumnProps) {
-  return <div className="flex flex-col gap-3">{children}</div>
 }
 
 export default MasonryLayout

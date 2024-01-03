@@ -22,7 +22,9 @@ function Index() {
         <TabsTrigger value="board">Semua</TabsTrigger>
       </TabsList>
       <TabsContent value="board" asChild>
-        <Board />
+        <div className='min-h-screen'>
+          <Board />
+        </div>
       </TabsContent>
     </Tabs>
   )
