@@ -56,13 +56,13 @@ function Index() {
   const dataset = [
     {
       name: 'MANDIRI',
-      nominal: 800000,
+      nominal: 0,
       dataIncomes: [undefined],
       dataExpenses: [undefined]
     },
     {
       name: 'BCA',
-      nominal: 25000,
+      nominal: 0,
       dataIncomes: [undefined],
       dataExpenses: [undefined]
     }
@@ -85,16 +85,17 @@ function Index() {
   const [pocketsValues, setPocketsValues] = React.useState<PocketsValues[]>(dataset);
 
   const getPocket = (value: string) => {
-    if (currentPosition && data) {
+    if (data) {
       data.chain().command(({ tr }) => {
         const currentNode = tr.doc.nodeAt(currentPosition)
-        if (currentNode?.attrs.checked) {
-          tr.setNodeMarkup(currentPosition, undefined, {
-            ...currentNode?.attrs,
-            pocket: value,
-          })
-          setCurrentPosition(0)
-        }
+        tr.setNodeMarkup(currentPosition, undefined, {
+          ...currentNode?.attrs,
+          pocket: value,
+        })
+        console.log({
+          ...currentNode?.attrs,
+          pocket: value
+        })
         return true
       }).run()
     }
@@ -107,19 +108,18 @@ function Index() {
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
+    setCurrentPosition(position)
 
     if (position) {
-      setCurrentPosition(position)
       data.chain().command(({ tr }) => {
         const currentNode = tr.doc.nodeAt(position)
         // @ts-ignore
         const value = getValues(currentNode?.content?.content[0]?.content)
         if (currentNode?.attrs.checked) {
-          console.log(currentNode?.attrs)
           setIsOpen(true)
           setValueToFire(value)
         }
-        if (currentNode?.attrs?.pocket !== 'none') {
+        if (currentNode?.attrs?.pocket !== 'none' && !currentNode?.attrs?.checked) {
           tr.setNodeMarkup(currentPosition, undefined, {
             ...currentNode?.attrs,
             pocket: 'none',
