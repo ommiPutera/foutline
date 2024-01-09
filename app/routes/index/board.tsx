@@ -46,21 +46,22 @@ function Board() {
               </ButtonLink>
               <div className='flex flex-col gap-2'>
                 <CreatePostDialog withoutTooltip>
-                  <Button size="sm" asChild className="flex w-full items-center gap-2">
-                    Atur kantong
+                  <Button size="sm" className="w-full">
+                    <div className="flex items-center gap-2">
+                      Atur Kantong
+                    </div>
                   </Button>
                 </CreatePostDialog>
                 <CreatePostDialog withoutTooltip>
                   <Button
                     variant="ghost"
-                    asChild
                     size="sm"
-                    className="flex w-full items-center gap-2"
+                    className='w-full'
                   >
-                    <span>
+                    <div className="flex items-center gap-2">
                       <WalletCards size={16} />
                       Buat kantong
-                    </span>
+                    </div>
                   </Button>
                 </CreatePostDialog>
               </div>
@@ -89,11 +90,11 @@ function Tools() {
           <SortButton />
         </div>
         <CreatePostDialog withoutTooltip>
-          <Button size="sm" asChild className="flex w-full items-center gap-2">
-            <span>
+          <Button size="sm" className="w-full">
+            <div className="flex items-center gap-2">
               <Plus size={16} />
               Halaman baru
-            </span>
+            </div>
           </Button>
         </CreatePostDialog>
       </div>

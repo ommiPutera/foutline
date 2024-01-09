@@ -135,14 +135,6 @@ export const MonthlyExtensions = [
           } else {
             return this.editor.commands.deleteCurrentNode()
           }
-        },
-        'Shift-Enter': () => {
-          const isTaskItem = this.editor.getAttributes('taskItem')?.for
-          if (isTaskItem) {
-            return this.editor.chain().splitBlock().exitCode().run()
-          } else {
-            return this.editor.commands.splitBlock()
-          }
         }
       }
 
