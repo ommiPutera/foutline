@@ -11,9 +11,9 @@ function Templates() {
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
           <PageIcon />
         </div>
-        <div className="flex max-w-[480px] flex-col gap-2">
-          <h3 className="text-2xl font-bold">Template Keuangan Bulanan</h3>
-          <p className="text-sm text-muted-foreground">Template Outline yang lengkap memudahkan Anda mengendalikan keuangan Anda. Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan penghematan, semuanya di satu tempat yang terorganisir.</p>
+        <div className="flex max-w-[580px] flex-col gap-2">
+          <h3 className="text-3xl font-bold">Template Keuangan Bulanan</h3>
+          <p className="text-sm">Template Outline yang lengkap memudahkan Anda mengendalikan keuangan Anda. Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan penghematan, semuanya di satu tempat yang terorganisir.</p>
         </div>
       </div>
       <ToggleGroup
@@ -40,20 +40,16 @@ function Templates() {
 function Card({ value }: { value: string }) {
   return (
     <div className="group col-span-1 flex h-full cursor-pointer flex-col gap-3">
-      <ToggleGroupItem value={value} className="h-full w-full p-6 hover:border-orange-200 hover:bg-transparent data-[state=on]:border-orange-500 data-[state=on]:bg-orange-100/50">
-        <div className="w-full rounded-md border border-transparent">
+      <ToggleGroupItem value={value} className="h-full w-full p-0 hover:border-orange-200 hover:bg-transparent data-[state=on]:border-orange-500 data-[state=on]:bg-orange-100/50">
+        <div className="w-full border border-transparent">
           <div className="rounded-lg">
-            <img src="/templates/monthly-1.png" alt="" className="w-full object-cover" />
+            <img src="/templates/monthly-1.png" alt="" className="w-full rounded-lg object-cover" />
           </div>
         </div>
       </ToggleGroupItem>
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
-          <PageIcon />
-          <h5 className="text-base font-semibold">Keuangan sederhana dengan pembelian saham rutin</h5>
-        </div>
-        <div>
-          <p className="text-sm text-primary/60 group-hover:text-primary">Tracking your expenses regularly can help you visualize where your money is going and eliminate any wasteful spending habits in your financial life.</p>
+          <h5 className="text-base font-medium">Keuangan sederhana dengan pembelian saham rutin</h5>
         </div>
       </div>
     </div>
