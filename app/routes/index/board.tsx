@@ -1,4 +1,4 @@
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 import {
   Info,
   LayoutGrid,
@@ -10,15 +10,15 @@ import {
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-function Board({posts}: {posts: Post[] | null}) {
+function Board({ posts }: { posts: Post[] | null }) {
   return (
     <div className="flex min-h-screen py-6 md:gap-4">
       <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pr-4">
@@ -27,8 +27,8 @@ function Board({posts}: {posts: Post[] | null}) {
           <Cards posts={posts} />
         ) : (
           <div className="mt-44 flex flex-col items-center justify-center gap-6">
-            <div className="bg-muted-foreground/20 rounded-full p-4">
-              <Lightbulb className="stroke-muted-foreground h-12 w-12" />
+            <div className="bg-muted-foreground/20 rounded-full p-4 border border-muted-foreground/30">
+              <Lightbulb className="stroke-muted-foreground h-10 w-10" />
             </div>
             <p className="text-muted-foreground text-center text-base">
               Catatan yang Anda buat akan muncul di sini..
@@ -126,7 +126,7 @@ function Tools() {
   )
 }
 
-function Cards({posts}: {posts: Post[]}) {
+function Cards({ posts }: { posts: Post[] }) {
   return (
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 xl:grid-cols-5">
       {posts.map(post => (
