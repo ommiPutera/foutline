@@ -1,26 +1,30 @@
-import { type DataFunctionArgs } from '@remix-run/node'
-import { useLoaderData, useLocation } from '@remix-run/react'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import {redirect, type DataFunctionArgs, json} from '@remix-run/node'
+import {useLoaderData, useLocation} from '@remix-run/react'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
-import _ from "lodash"
+import _ from 'lodash'
 import React from 'react'
-import { create } from 'zustand'
+import {create} from 'zustand'
 
-import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
-import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
-import { ErrorPage } from '~/components/errors.tsx'
+import {usePositionStore} from '~/components/editor/extensions/monthly.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
-import { Header } from '~/components/page/header.tsx'
-import { UpdatePocket } from '~/components/templates/dialogs.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {Header} from '~/components/page/header.tsx'
+import {UpdatePocket} from '~/components/templates/dialogs.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import { getNumberFromString } from '~/utils/get-number-from-string.ts'
-import { getKindeSession } from '~/utils/session.server.ts'
-import { Summary, SummaryMobile } from './summary.tsx'
+import {getNumberFromString} from '~/utils/get-number-from-string.ts'
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
+import {Summary, SummaryMobile} from './summary.tsx'
+import type {Post} from '@prisma/client'
 
-const Editor = React.lazy(async () => await import('~/components/editor/index.tsx'))
+const Editor = React.lazy(
+  async () => await import('~/components/editor/index.tsx'),
+)
 
 type LoaderData = {
+  post?: Post
   postId?: string
 }
 
@@ -30,126 +34,145 @@ type MonthlyState = {
 }
 
 export type PocketsValues = {
-  name: string,
-  nominal: number,
-  dataIncomes: (JSONContent | undefined)[],
+  name: string
+  nominal: number
+  dataIncomes: (JSONContent | undefined)[]
   dataExpenses: (JSONContent | undefined)[]
 }
 
-export async function loader({ request, params }: DataFunctionArgs) {
-  const { isAuthenticated } = await getKindeSession(request)
-  if (!isAuthenticated) throw new Response('Not found', { status: 404 })
+export async function loader({request, params}: DataFunctionArgs) {
+  const {isAuthenticated} = await getKindeSession(request)
+  if (!isAuthenticated) throw new Response('Not found', {status: 404})
 
-  const { id } = params
-  const data: LoaderData = { postId: id }
-  return data
+  const {id} = params
+  const user = await getUser(request)
+  const post: Post = await user.posts.filter(
+    (item: {id: string}) => item.id === id,
+  )[0]
+
+  if (!id || !post) return redirect('/')
+  return json({post: post, postId: id})
 }
 
-export const useMonthlyStore = create<MonthlyState>((set) => ({
+export const useMonthlyStore = create<MonthlyState>(set => ({
   valueToFire: 0,
-  setValueToFire: (value) => set(() => ({ valueToFire: value })),
+  setValueToFire: value => set(() => ({valueToFire: value})),
 }))
 
 function Index() {
-  const { postId } = useLoaderData<LoaderData>()
+  const {postId, post} = useLoaderData<LoaderData>()
 
   const dataset = [
     {
       name: 'MANDIRI',
       nominal: 0,
       dataIncomes: [undefined],
-      dataExpenses: [undefined]
+      dataExpenses: [undefined],
     },
     {
       name: 'BCA',
       nominal: 0,
       dataIncomes: [undefined],
-      dataExpenses: [undefined]
-    }
+      dataExpenses: [undefined],
+    },
   ]
 
-  const {
-    valueToFire,
-    setValueToFire,
-  } = useMonthlyStore()
+  const {valueToFire, setValueToFire} = useMonthlyStore()
 
-  const [content, setContent] = React.useState<JSONContent | undefined>(undefined);
-  const [data, setData] = React.useState<EditorType | undefined>(undefined);
+  const [content, setContent] = React.useState<any>(post?.content)
+  const [data, setData] = React.useState<EditorType | undefined>(undefined)
 
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [currentPosition, setCurrentPosition] = React.useState<number>(0);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false)
+  const [currentPosition, setCurrentPosition] = React.useState<number>(0)
 
-  const [incomesValues, setIncomesValues] = React.useState<number[]>([]);
-  const [expensesValues, setExpensesValues] = React.useState<number[]>([]);
+  const [incomesValues, setIncomesValues] = React.useState<number[]>([])
+  const [expensesValues, setExpensesValues] = React.useState<number[]>([])
 
-  const [pocketsValues, setPocketsValues] = React.useState<PocketsValues[]>(dataset);
+  const [pocketsValues, setPocketsValues] =
+    React.useState<PocketsValues[]>(dataset)
 
   const getPocket = (value: string) => {
     if (data) {
-      data.chain().command(({ tr }) => {
-        const currentNode = tr.doc.nodeAt(currentPosition)
-        tr.setNodeMarkup(currentPosition, undefined, {
-          ...currentNode?.attrs,
-          pocket: value,
+      data
+        .chain()
+        .command(({tr}) => {
+          const currentNode = tr.doc.nodeAt(currentPosition)
+          tr.setNodeMarkup(currentPosition, undefined, {
+            ...currentNode?.attrs,
+            pocket: value,
+          })
+          console.log({
+            ...currentNode?.attrs,
+            pocket: value,
+          })
+          return true
         })
-        console.log({
-          ...currentNode?.attrs,
-          pocket: value
-        })
-        return true
-      }).run()
+        .run()
     }
   }
 
   const getData = (data: EditorType) => {
     setData(data)
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: "taskList" })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
     setCurrentPosition(position)
 
     if (position) {
-      data.chain().command(({ tr }) => {
-        const currentNode = tr.doc.nodeAt(position)
-        // @ts-ignore
-        const value = getValues(currentNode?.content?.content[0]?.content)
-        if (currentNode?.attrs.checked) {
-          setIsOpen(true)
-          setValueToFire(value)
-        }
-        if (currentNode?.attrs?.pocket !== 'none' && !currentNode?.attrs?.checked) {
-          tr.setNodeMarkup(currentPosition, undefined, {
-            ...currentNode?.attrs,
-            pocket: 'none',
-          })
-        }
-        setPos(0)
-        return true
-      }).run()
+      data
+        .chain()
+        .command(({tr}) => {
+          const currentNode = tr.doc.nodeAt(position)
+          // @ts-ignore
+          const value = getValues(currentNode?.content?.content[0]?.content)
+          if (currentNode?.attrs.checked) {
+            setIsOpen(true)
+            setValueToFire(value)
+          }
+          if (
+            currentNode?.attrs?.pocket !== 'none' &&
+            !currentNode?.attrs?.checked
+          ) {
+            tr.setNodeMarkup(currentPosition, undefined, {
+              ...currentNode?.attrs,
+              pocket: 'none',
+            })
+          }
+          setPos(0)
+          return true
+        })
+        .run()
     }
 
     let taskItems = []
     for (var taskList of taskLists) {
-      if (!taskList.content) break;
+      if (!taskList.content) break
       if (taskList.content?.length === 1) taskItems.push(taskList.content[0])
-      if (taskList.content?.length > 1) for (var item of taskList.content) { taskItems.push(item) }
+      if (taskList.content?.length > 1)
+        for (var item of taskList.content) {
+          taskItems.push(item)
+        }
     }
 
-    const incomes = _.filter(taskItems, { attrs: { for: 'monthly-income', checked: true } })
-    const expenses = _.filter(taskItems, { attrs: { for: 'monthly-expense', checked: true } })
+    const incomes = _.filter(taskItems, {
+      attrs: {for: 'monthly-income', checked: true},
+    })
+    const expenses = _.filter(taskItems, {
+      attrs: {for: 'monthly-expense', checked: true},
+    })
 
     let incomesValues: number[] = []
     for (var income of incomes) {
-      if (!income?.content) break;
+      if (!income?.content) break
       const values = getValues(income.content[0])
       incomesValues.push(values)
     }
 
     let expensesValues: number[] = []
     for (var expense of expenses) {
-      if (!expense?.content) break;
+      if (!expense?.content) break
       const values = getValues(expense.content[0])
       expensesValues.push(values)
     }
@@ -163,21 +186,28 @@ function Index() {
 
   const getPocketData = (data: EditorType) => {
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: "taskList" })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     let taskItems = []
     for (var taskList of taskLists) {
-      if (!taskList.content) break;
+      if (!taskList.content) break
       if (taskList.content?.length === 1) taskItems.push(taskList.content[0])
-      if (taskList.content?.length > 1) for (var item of taskList.content) { taskItems.push(item) }
+      if (taskList.content?.length > 1)
+        for (var item of taskList.content) {
+          taskItems.push(item)
+        }
     }
 
     const pockets = []
 
     for (var pocket of dataset) {
-      if (!taskItems) break;
-      const itemIncomes = _.filter(taskItems, { attrs: { pocket: pocket.name, for: 'monthly-income', checked: true } })
-      const itemExpenses = _.filter(taskItems, { attrs: { pocket: pocket.name, for: 'monthly-expense', checked: true } })
+      if (!taskItems) break
+      const itemIncomes = _.filter(taskItems, {
+        attrs: {pocket: pocket.name, for: 'monthly-income', checked: true},
+      })
+      const itemExpenses = _.filter(taskItems, {
+        attrs: {pocket: pocket.name, for: 'monthly-expense', checked: true},
+      })
       pockets.push({
         name: pocket.name,
         nominal: pocket.nominal,
@@ -191,7 +221,7 @@ function Index() {
 
   return (
     <div className="flex max-h-[90vh]" stat-data={postId}>
-      <div className='hidden md:block '>
+      <div className="hidden md:block ">
         <Summary
           incomesValues={incomesValues}
           expensesValues={expensesValues}
@@ -200,13 +230,17 @@ function Index() {
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
-          <Button size="sm" onClick={() => console.log(content)}>Save</Button>
+          <Button size="sm" onClick={() => console.log(content)}>
+            Save
+          </Button>
         </Header>
-        <div className='mt-2'>
+        <div className="mt-2">
           <Editor
-            type='MONTHLY'
+            type="MONTHLY"
             getData={getData}
             defaultContent={content}
+            // @ts-ignore
+            post={post}
           />
         </div>
       </div>

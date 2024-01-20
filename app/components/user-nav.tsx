@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
+import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Button } from './ui/button.tsx'
-import type { UserType } from '@kinde-oss/kinde-typescript-sdk'
-import { Link } from '@remix-run/react'
-import { CircleUser, LogOut } from 'lucide-react'
-import { ToggleTheme } from './toggle-theme.tsx'
+import {Button} from './ui/button.tsx'
+import type {UserType} from '@kinde-oss/kinde-typescript-sdk'
+import {Link} from '@remix-run/react'
+import {CircleUser, LogOut} from 'lucide-react'
+import {ToggleTheme} from './toggle-theme.tsx'
 
 export function UserNav({
   family_name,
@@ -34,7 +34,7 @@ export function UserNav({
             </Avatar>
           </Button>
           <div className="flex w-full flex-col space-y-1">
-            <div className="line-clamp-1 overflow-visible text-[10px] leading-none text-muted-foreground">
+            <div className="text-muted-foreground line-clamp-1 overflow-visible text-[10px] leading-none">
               Masuk sebagai
             </div>
             <div className="line-clamp-1 text-xs font-medium leading-none">
@@ -49,7 +49,7 @@ export function UserNav({
             <p className="text-xs font-semibold leading-none">
               {given_name + ' ' + family_name}
             </p>
-            <p className="truncate text-xs leading-none text-muted-foreground">
+            <p className="text-muted-foreground truncate text-xs leading-none">
               {email}
             </p>
           </div>

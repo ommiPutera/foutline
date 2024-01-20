@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu.tsx'
-import { Button } from '../ui/button.tsx'
+import {Button} from '../ui/button.tsx'
 import {
   Select,
   SelectContent,
@@ -13,21 +13,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select.tsx'
-import { Tag } from 'lucide-react'
+import {Tag} from 'lucide-react'
 
 function LabelButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" size="sm" className="relative flex gap-1">
-          <Tag className='mr-1 h-4 w-4' />
+          <Tag className="mr-1 h-4 w-4" />
           Label
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mt-1 w-48" align="center" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-xs font-medium leading-none text-muted-foreground">
+            <p className="text-muted-foreground text-xs font-medium leading-none">
               Filter berdasarkan
             </p>
           </div>

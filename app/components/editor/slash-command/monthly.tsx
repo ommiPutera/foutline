@@ -1,79 +1,84 @@
-import {
-  CommandExtension,
-  type Command,
-  renderItems
-} from "./index.tsx";
+import {CommandExtension, type Command, renderItems} from './index.tsx'
 
-
-const getSuggestionItems = ({ query }: { query: string }) => {
+const getSuggestionItems = ({query}: {query: string}) => {
   return [
     {
       title: 'Pemasukan',
       icon: {
-        iconName: "ArrowDownLeft",
+        iconName: 'ArrowDownLeft',
         color: 'green',
       },
-      command: ({ editor, range }: Command) => {
+      command: ({editor, range}: Command) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
           .insertContent('Rp. ')
           .toggleTaskList()
-          .updateAttributes('taskItem', { for: 'monthly-income' })
-          .run();
+          .updateAttributes('taskItem', {for: 'monthly-income'})
+          .run()
       },
     },
     {
       title: 'Pengeluaran',
       icon: {
-        iconName: "ArrowUpRight",
+        iconName: 'ArrowUpRight',
         color: 'red',
       },
-      command: ({ editor, range }: Command) => {
+      command: ({editor, range}: Command) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
           .insertContent('Rp. ')
           .toggleTaskList()
-          .updateAttributes('taskItem', { for: 'monthly-expense' })
-          .run();
+          .updateAttributes('taskItem', {for: 'monthly-expense'})
+          .run()
       },
     },
     {
-      title: "Text",
+      title: 'Text',
       icon: {
-        iconName: "Text",
+        iconName: 'Text',
         color: 'default',
       },
-      command: ({ editor, range }: Command) => {
-        editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").run();
+      command: ({editor, range}: Command) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .toggleNode('paragraph', 'paragraph')
+          .run()
       },
     },
     {
-      title: "Heading",
+      title: 'Heading',
       icon: {
-        iconName: "Heading",
+        iconName: 'Heading',
         color: 'default',
       },
-      command: ({ editor, range }: Command) => {
-        editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
+      command: ({editor, range}: Command) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode('heading', {level: 3})
+          .run()
       },
     },
-  ].filter((item) => {
-    if (typeof query === "string" && query.length > 0) {
-      return item.title.toLowerCase().includes(query.toLowerCase());
+  ].filter(item => {
+    if (typeof query === 'string' && query.length > 0) {
+      return item.title.toLowerCase().includes(query.toLowerCase())
     }
-    return true;
-  });
-};
+    return true
+  })
+}
 
 const MonthlySlashCommand = CommandExtension.configure({
   suggestion: {
     items: getSuggestionItems,
     render: renderItems,
   },
-});
+})
 
-export default MonthlySlashCommand;
+export default MonthlySlashCommand

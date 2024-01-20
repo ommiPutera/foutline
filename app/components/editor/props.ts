@@ -1,4 +1,4 @@
-import type { EditorProps } from "@tiptap/pm/view";
+import type {EditorProps} from '@tiptap/pm/view'
 
 export const TiptapEditorProps: EditorProps = {
   attributes: {
@@ -7,24 +7,33 @@ export const TiptapEditorProps: EditorProps = {
   handleDOMEvents: {
     keydown: (_view, event) => {
       // prevent default event listeners from firing when slash command is active
-      if (["ArrowUp", "ArrowDown", "Enter"].includes(event.key)) {
-        const slashCommand = document.querySelector("#slash-command");
+      if (['ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
+        const slashCommand = document.querySelector('#slash-command')
         if (slashCommand) {
-          return true;
+          return true
         }
       }
     },
   },
   handlePaste: (view, event, _slice) => {
-    if (event.clipboardData && event.clipboardData.files && event.clipboardData.files[0]) {
-      event.preventDefault();
+    if (
+      event.clipboardData &&
+      event.clipboardData.files &&
+      event.clipboardData.files[0]
+    ) {
+      event.preventDefault()
     }
-    return false;
+    return false
   },
   handleDrop: (view, event, _slice, moved) => {
-    if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
-      event.preventDefault();
+    if (
+      !moved &&
+      event.dataTransfer &&
+      event.dataTransfer.files &&
+      event.dataTransfer.files[0]
+    ) {
+      event.preventDefault()
     }
-    return false;
+    return false
   },
-};
+}

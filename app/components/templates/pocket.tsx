@@ -1,26 +1,26 @@
-import { rupiah } from "~/utils/currency.ts"
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group.tsx"
-import type { PocketsValues } from "~/routes/monthly/$id/route.tsx"
+import {rupiah} from '~/utils/currency.ts'
+import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
+import type {PocketsValues} from '~/routes/monthly/$id/route.tsx'
 
 function PocketGroup({
   onChange,
   onClose,
   dataset,
 }: {
-  onChange: (value: string) => void,
-  onClose: () => void,
+  onChange: (value: string) => void
+  onClose: () => void
   dataset: PocketsValues[]
 }) {
   return (
     <ToggleGroup
       type="single"
-      onValueChange={(v) => {
+      onValueChange={v => {
         onChange(v)
         onClose()
       }}
       className="grid grid-cols-1 gap-3 md:grid-cols-2"
     >
-      {dataset.map((pocket) => (
+      {dataset.map(pocket => (
         <ToggleItem
           key={pocket.name}
           value={pocket.name}
@@ -31,16 +31,13 @@ function PocketGroup({
   )
 }
 
-function ToggleItem({ value, nominal }: { value: string, nominal: number }) {
+function ToggleItem({value, nominal}: {value: string; nominal: number}) {
   return (
-    <ToggleGroupItem
-      value={value}
-      className="w-full px-4 py-8"
-    >
-      <div className='flex w-full items-center gap-4'>
-        <div className='flex w-full flex-col gap-1 text-left'>
-          <h5 className='text-xs text-muted-foreground'>{value}</h5>
-          <p className='text-xs font-medium'>{rupiah(nominal)}</p>
+    <ToggleGroupItem value={value} className="w-full px-4 py-8">
+      <div className="flex w-full items-center gap-4">
+        <div className="flex w-full flex-col gap-1 text-left">
+          <h5 className="text-muted-foreground text-xs">{value}</h5>
+          <p className="text-xs font-medium">{rupiah(nominal)}</p>
         </div>
         <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
       </div>
@@ -48,16 +45,16 @@ function ToggleItem({ value, nominal }: { value: string, nominal: number }) {
   )
 }
 
-function PocketItem({ name, nominal }: { name: string; nominal: number }) {
+function PocketItem({name, nominal}: {name: string; nominal: number}) {
   return (
-    <div className='flex w-full items-center gap-4'>
-      <div className='flex w-full flex-col gap-1 text-left'>
-        <h5 className='text-xs text-muted-foreground'>{name}</h5>
-        <p className='text-xs font-medium'>{rupiah(nominal)}</p>
+    <div className="flex w-full items-center gap-4">
+      <div className="flex w-full flex-col gap-1 text-left">
+        <h5 className="text-muted-foreground text-xs">{name}</h5>
+        <p className="text-xs font-medium">{rupiah(nominal)}</p>
       </div>
       <img src="/logos/bank_mandiri.png" alt="" width="52px" height="auto" />
     </div>
   )
 }
 
-export { PocketGroup, ToggleItem, PocketItem }
+export {PocketGroup, ToggleItem, PocketItem}

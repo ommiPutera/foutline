@@ -1,9 +1,9 @@
-import { Link, useLocation } from '@remix-run/react'
-import { PanelLeft } from 'lucide-react'
+import {Link, useLocation} from '@remix-run/react'
+import {PanelLeft} from 'lucide-react'
 import React from 'react'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { Sidebar } from './sidebar.tsx'
-import { Button } from './ui/button.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {Sidebar} from './sidebar.tsx'
+import {Button} from './ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -11,28 +11,28 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import { getLogo } from './outline-logo.tsx'
+import {getLogo} from './outline-logo.tsx'
 
-function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { isAuthenticated } = useRootLoader()
+function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
+  const {isAuthenticated} = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return <Shell>{children}</Shell>
 }
 
-function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
   const Logo = getLogo('md')
   return (
-    <div className="h-full bg-background">
+    <div className="bg-background h-full">
       <div className="flex">
-        <div className="fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r border-border md:block">
+        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r md:block">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
           <div className="relative h-full w-full">
-            <div className="fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b border-border bg-background px-4 py-3 md:relative md:hidden md:border-0 md:bg-transparent">
+            <div className="border-border bg-background fixed top-0 z-20 mx-auto flex h-[var(--header-height)] w-full max-w-screen-2xl items-center justify-between border-b px-4 py-3 md:relative md:hidden md:border-0 md:bg-transparent">
               <div className="flex w-full items-center justify-between gap-6">
-                <div className='flex items-center gap-6'>
+                <div className="flex items-center gap-6">
                   <Link to="/" className="w-fit">
                     <Logo />
                   </Link>
@@ -43,7 +43,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
             <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-9">
               {children}
               <div className="m-[3rem] mb-[8rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:mb-[2rem] md:justify-end md:gap-6">
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
                   Built by indie developer{' '}
                   <Link
                     to="https://www.linkedin.com/in/ommiputera"
@@ -53,7 +53,7 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                     Ommi Putera
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
                   The source code is available on{' '}
                   <Link
                     to="https://github.com/ommiPutera/outline"
@@ -63,13 +63,13 @@ function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
                     Github
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link to="/terms-condition" className='underline'>
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  <Link to="/terms-condition" className="underline">
                     Syarat & Ketentuan
                   </Link>
                 </p>
-                <p className="text-center text-sm text-muted-foreground md:text-xs">
-                  <Link to="/privacy-policy" className='underline'>
+                <p className="text-muted-foreground text-center text-sm md:text-xs">
+                  <Link to="/privacy-policy" className="underline">
                     Kebijakan privasi
                   </Link>
                 </p>

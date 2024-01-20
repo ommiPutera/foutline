@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { icons } from 'lucide-react'
-import { ToggleGroupItem } from '../ui/toggle-group.tsx'
+import {icons} from 'lucide-react'
+import {ToggleGroupItem} from '../ui/toggle-group.tsx'
 
 function BasicNotes() {
   return (
@@ -79,7 +79,7 @@ function PageSelectItem({
   value: string
   title: string
   color: string
-  iconName: keyof typeof icons,
+  iconName: keyof typeof icons
   disabled: boolean
 }) {
   const LucideIcon = icons[iconName]

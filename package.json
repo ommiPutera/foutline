@@ -1,5 +1,5 @@
 {
-  "name": "outline",
+  "name": "foutline",
   "version": "0.0.0",
   "keywords": [],
   "author": "Ommi Putera (https://ommiputera.com/)",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@epic-web/remember": "^1.0.2",
     "@kinde-oss/kinde-typescript-sdk": "^2.3.1",
-    "@prisma/client": "^5.7.1",
+    "@prisma/client": "^5.8.1",
     "@prisma/extension-accelerate": "^0.6.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -111,12 +111,12 @@
     "eslint-plugin-tailwindcss": "^3.11.0",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.1.13",
-    "prisma": "^5.7.1",
+    "prisma": "^5.8.1",
     "remix-flat-routes": "^0.5.10",
     "tailwindcss": "^3.3.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": "18",

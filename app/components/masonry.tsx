@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type {ReactNode} from 'react'
 import React from 'react'
-import { useMediaQuery } from './hooks/use-media-query.ts'
+import {useMediaQuery} from './hooks/use-media-query.ts'
 
 type ColumnWrapper = {
   id: string
   items: React.ReactNode[]
 }
 
-function MasonryLayout({ children }: { children: ReactNode }) {
+function MasonryLayout({children}: {children: ReactNode}) {
   const md = useMediaQuery('(min-width: 425px)')
   const lg = useMediaQuery('(min-width: 1024px)')
   const xl = useMediaQuery('(min-width: 1440px)')
@@ -22,7 +22,7 @@ function MasonryLayout({ children }: { children: ReactNode }) {
   }
 
   const columnWrappers: ColumnWrapper[] = Array.from(
-    { length: getColumns() },
+    {length: getColumns()},
     (_, i) => ({
       id: `column${i}`,
       items: [],
@@ -32,17 +32,15 @@ function MasonryLayout({ children }: { children: ReactNode }) {
   React.Children.forEach(children, (child, index) => {
     const columnIndex = index % getColumns()
     columnWrappers[columnIndex]!.items.push(
-      React.cloneElement(child as React.ReactElement, { key: index }),
+      React.cloneElement(child as React.ReactElement, {key: index}),
     )
   })
 
   return (
     <div className="flex gap-3">
-      {columnWrappers.map(({ id, items }, index) => (
+      {columnWrappers.map(({id, items}, index) => (
         <div key={id} className="flex-1">
-          <div className="flex flex-col gap-3">
-            {items}
-          </div>
+          <div className="flex flex-col gap-3">{items}</div>
         </div>
       ))}
     </div>

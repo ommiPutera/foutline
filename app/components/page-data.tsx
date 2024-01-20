@@ -1,13 +1,25 @@
-import LabelButton from "./board/label-button.tsx"
-import { Button } from "./ui/button.tsx"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx"
+import LabelButton from './board/label-button.tsx'
+import {Button} from './ui/button.tsx'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select.tsx'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet.tsx'
 
-function PageData({ children }: { children: React.ReactNode }) {
+function PageData({children}: {children: React.ReactNode}) {
   return (
     <div>
-      <div className="fixed inset-x-0 bottom-0 flex w-full justify-between gap-2 border-t bg-background px-3 md:hidden">
-        <div className="flex-1 border-r border-border py-3 pb-12">
+      <div className="bg-background fixed inset-x-0 bottom-0 flex w-full justify-between gap-2 border-t px-3 md:hidden">
+        <div className="border-border flex-1 border-r py-3 pb-12">
           {children}
         </div>
         <div className="flex-1 py-3 pb-12">
@@ -29,10 +41,7 @@ function PageMobile() {
           Informasi halaman
         </Button>
       </SheetTrigger>
-      <SheetContent
-        side="bottom"
-        className="h-3/4"
-      >
+      <SheetContent side="bottom" className="h-3/4">
         <SheetHeader className="mb-8">
           <SheetTitle>Informasi halaman</SheetTitle>
         </SheetHeader>
@@ -50,10 +59,8 @@ function Page() {
           <LabelButton />
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-24 items-center text-xs">
-            Status
-          </span>
-          <Select defaultValue='not-started'>
+          <span className="flex w-24 items-center text-xs">Status</span>
+          <Select defaultValue="not-started">
             <SelectTrigger className="w-full" withoutIcon>
               <SelectValue placeholder="Pilih Status" />
             </SelectTrigger>
@@ -65,18 +72,14 @@ function Page() {
           </Select>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-24 items-center text-xs">
-            Dibuat
-          </span>
-          <div className='w-full px-3 text-xs text-accent-foreground'>
+          <span className="flex w-24 items-center text-xs">Dibuat</span>
+          <div className="text-accent-foreground w-full px-3 text-xs">
             17 Desember 2023 21.42
           </div>
         </div>
         <div className="flex h-9 w-full items-center justify-between gap-1">
-          <span className="flex w-24 items-center text-xs">
-            Diedit
-          </span>
-          <div className='w-full px-3 text-xs text-accent-foreground'>
+          <span className="flex w-24 items-center text-xs">Diedit</span>
+          <div className="text-accent-foreground w-full px-3 text-xs">
             17 Desember 2023 21.42
           </div>
         </div>

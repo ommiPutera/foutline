@@ -10,7 +10,7 @@ module.exports = {
   rules: {
     'react/jsx-key': 'off',
     'tailwindcss/no-custom-classname': 'off',
-    'tailwindcss/classnames-order': 'error',
+    'tailwindcss/classnames-order': 'off',
   },
   settings: {
     tailwindcss: {

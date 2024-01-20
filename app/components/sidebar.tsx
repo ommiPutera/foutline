@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,49 +20,50 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { FavoriteButton } from './board/card-item.tsx'
-import { CreatePostDialog } from './templates/dialogs.tsx'
-import { UserNav } from './user-nav.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { Link } from '@remix-run/react'
-import { Progress } from './ui/progress.tsx'
-import { Badge } from './ui/badge.tsx'
+import {FavoriteButton} from './board/card-item.tsx'
+import {CreatePostDialog} from './templates/dialogs.tsx'
+import {UserNav} from './user-nav.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {Link} from '@remix-run/react'
+import {Progress} from './ui/progress.tsx'
+import {Badge} from './ui/badge.tsx'
 
-let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
 const example2 = [
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
-  { title: 'woi' },
-  { title: 'santai aja bang' },
-  { title: 'sloww bro' },
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
+  {title: 'woi'},
+  {title: 'santai aja bang'},
+  {title: 'sloww bro'},
 ]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+  const {profile} = useRootLoader()
 
   return (
-    <div
-      className={cn(
-        'min-h-screens flex h-full flex-col',
-        className,
-      )}
-    >
+    <div className={cn('min-h-screens flex h-full flex-col', className)}>
       <div className="mb-12 flex flex-col justify-between space-y-4 py-6">
         <div className="flex-1 place-content-start px-3 py-2">
           <ButtonLink
@@ -85,7 +86,11 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           </ButtonLink>
           <div>
             <CreatePostDialog>
-              <Button asChild variant="ghost" className="w-full justify-start text-xs">
+              <Button
+                asChild
+                variant="ghost"
+                className="w-full justify-start text-xs"
+              >
                 <span>
                   <Plus className="mr-3 h-4 w-4" strokeWidth={2.1} />
                   Buat
@@ -109,17 +114,21 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           </Button>
         </div>
       </div>
-      <div className='sticky bottom-0 mt-auto h-fit w-full bg-background'>
-        <div className='mx-4 rounded-md border p-2'>
-          <div className='flex flex-col gap-2'>
-            <div className='flex items-center justify-between'>
-              <p className='text-[11px] font-medium leading-none'>1/12 halaman</p>
-              <Badge variant="outline" className='text-[9px]'>Gratis</Badge>
+      <div className="bg-background sticky bottom-0 mt-auto h-fit w-full">
+        <div className="mx-4 rounded-md border p-2">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <p className="text-[11px] font-medium leading-none">
+                1/12 halaman
+              </p>
+              <Badge variant="outline" className="text-[9px]">
+                Gratis
+              </Badge>
             </div>
             <Progress value={10} />
           </div>
         </div>
-        <div className='flex items-center justify-between p-4'>
+        <div className="flex items-center justify-between p-4">
           <UserNav {...profile} />
           <More />
         </div>
@@ -208,7 +217,7 @@ function Files() {
   }, [])
 
   return (
-    <div className="mx-3 overflow-x-hidden rounded-md border border-border">
+    <div className="border-border mx-3 overflow-x-hidden rounded-md border">
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
           <div className="relative flex items-center px-5">
@@ -221,10 +230,10 @@ function Files() {
       )}
       <ScrollArea className={cn('h-[190px]', isPostEmpty && 'h-[140px]')}>
         {isScroll && !isPostEmpty && (
-          <div className="absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t from-background/30 to-gray-100/80"></div>
+          <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div>
         )}
         {isScroll && !isPostEmpty && (
-          <div className="absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b from-background/30 to-gray-100/80"></div>
+          <div className="from-background/30 absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
         <div className="mx-2 space-y-2 pb-6">
@@ -273,8 +282,12 @@ function More() {
           <Tooltip>
             <div className="flex h-full">
               <TooltipTrigger asChild>
-                <Button size="icon" variant="transparent" className="rounded-sm">
-                  <MoreVertical className='h-4 w-4' />
+                <Button
+                  size="icon"
+                  variant="transparent"
+                  className="rounded-sm"
+                >
+                  <MoreVertical className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="mr-2">

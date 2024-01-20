@@ -1,4 +1,4 @@
-import { useTheme } from '~/utils/theme-provider.tsx'
+import {useTheme} from '~/utils/theme-provider.tsx'
 
 type TVariant = 'sm' | 'md' | 'default'
 
@@ -51,4 +51,4 @@ function getLogo(variant: TVariant = 'default'): () => JSX.Element {
   }
 }
 
-export { getLogo }
+export {getLogo}

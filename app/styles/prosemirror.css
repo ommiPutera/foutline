@@ -8,32 +8,30 @@
   height: 0;
 }
 .tiptap p {
-  @apply text-[13.5px] mb-2.5 text-foreground leading-5;
-  
+  @apply text-foreground mb-2.5 text-[13.5px] leading-5;
+
   &.is-editor-empty:first-child::before {
     @apply text-muted-foreground;
   }
 }
 
-
-
 /* TASK LIST */
-ul[class^="not-prose"] p {
-  @apply mb-0
+ul[class^='not-prose'] p {
+  @apply mb-0;
 }
-ul[class^="not-prose"] {
-  @apply flex flex-col gap-1 pl-0.5 my-1;
+ul[class^='not-prose'] {
+  @apply my-1 flex flex-col gap-1 pl-0.5;
 }
-ul[data-type="taskList"] li > label {
+ul[data-type='taskList'] li > label {
   margin-right: 0.2rem;
   user-select: none;
 }
 @media screen and (max-width: 768px) {
-  ul[data-type="taskList"] li > label {
+  ul[data-type='taskList'] li > label {
     @apply mr-[0.3rem] md:mr-[0.4rem];
   }
 }
-ul[data-type="taskList"] li > label input[type="checkbox"] {
+ul[data-type='taskList'] li > label input[type='checkbox'] {
   -webkit-appearance: none;
   appearance: none;
   margin: 0;
@@ -43,56 +41,58 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
   display: grid;
   place-content: center;
   border-radius: 3px;
-  @apply border border-input w-[1.1em] h-[1.1em] md:w-[0.9em] md:h-[0.9em] mt-[0.085rem] md:mt-[0.2em] rounded-sm bg-transparent checked:bg-primary checked:border-primary;
+  @apply border-input checked:bg-primary checked:border-primary mt-[0.085rem] h-[1.1em] w-[1.1em] rounded-sm border bg-transparent md:mt-[0.2em] md:h-[0.9em] md:w-[0.9em];
 
   &::before {
-    content: "";
+    content: '';
     transform: rotate(45deg);
     border-bottom: 1.5px solid #fff;
     border-right: 1.5px solid #fff;
     visibility: hidden;
-    @apply mb-[1px] w-[4px] h-[7.5px] flex justify-center items-center;
+    @apply mb-[1px] flex h-[7.5px] w-[4px] items-center justify-center;
   }
-  
+
   &:checked::before {
     visibility: visible;
   }
 }
-ul[data-type="taskList"] li[data-for="monthly-income"] > label input[type="checkbox"] {
+ul[data-type='taskList']
+  li[data-for='monthly-income']
+  > label
+  input[type='checkbox'] {
   @apply border border-green-400 checked:bg-green-200;
   &::before {
-    @apply border-primary
+    @apply border-primary;
   }
 }
-ul[data-type="taskList"] li[data-for="monthly-expense"] > label input[type="checkbox"] {
+ul[data-type='taskList']
+  li[data-for='monthly-expense']
+  > label
+  input[type='checkbox'] {
   @apply border border-red-400 checked:bg-red-200;
   &::before {
-    @apply border-primary
+    @apply border-primary;
   }
 }
-ul[data-type="taskList"] li[data-checked="true"] > div > p {
+ul[data-type='taskList'] li[data-checked='true'] > div > p {
   @apply text-foreground/60;
 }
 
-
-
 /* HEADING */
-.tiptap h1:first-child, 
-.tiptap h2:first-child, 
+.tiptap h1:first-child,
+.tiptap h2:first-child,
 .tiptap h3:first-child {
   @apply mt-0;
 }
 .tiptap h1 {
-  @apply text-xl mb-4 mt-10;
+  @apply mb-4 mt-10 text-xl;
 }
 .tiptap h2 {
-  @apply text-lg mb-3 mt-9;
+  @apply mb-3 mt-9 text-lg;
 }
 .tiptap h3 {
-  @apply text-base mb-2 mt-8;
+  @apply mb-2 mt-8 text-base;
 }
-
-
 
 /* BLOCKQUOTE */
 .tiptap blockquote {

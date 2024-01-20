@@ -1,27 +1,27 @@
-import type { KeyboardShortcutCommand } from "@tiptap/core";
-import { InputRule } from "@tiptap/core";
-import { Color } from "@tiptap/extension-color";
-import Highlight from '@tiptap/extension-highlight';
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
-import TiptapLink from "@tiptap/extension-link";
-import TaskItem from '@tiptap/extension-task-item';
-import TaskList from '@tiptap/extension-task-list';
-import TextStyle from "@tiptap/extension-text-style";
-import TiptapUnderline from "@tiptap/extension-underline";
-import StarterKit from "@tiptap/starter-kit";
-import CustomKeymap from './custom-keymap.ts';
-import MonthlySlashCommand from "../slash-command/monthly.tsx";
-import GetSelectedText from "./selected-text.ts";
-import { create } from 'zustand'
+import type {KeyboardShortcutCommand} from '@tiptap/core'
+import {InputRule} from '@tiptap/core'
+import {Color} from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import TiptapLink from '@tiptap/extension-link'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
+import TextStyle from '@tiptap/extension-text-style'
+import TiptapUnderline from '@tiptap/extension-underline'
+import StarterKit from '@tiptap/starter-kit'
+import CustomKeymap from './custom-keymap.ts'
+import MonthlySlashCommand from '../slash-command/monthly.tsx'
+import GetSelectedText from './selected-text.ts'
+import {create} from 'zustand'
 
 interface PositionState {
   postion: number
   setPos: (pos: number) => void
 }
 
-export const usePositionStore = create<PositionState>((set) => ({
+export const usePositionStore = create<PositionState>(set => ({
   postion: 0,
-  setPos: (position) => set((state) => ({ postion: position })),
+  setPos: position => set(state => ({postion: position})),
 }))
 
 export const MonthlyExtensions = [
@@ -29,56 +29,56 @@ export const MonthlyExtensions = [
     heading: {
       HTMLAttributes: {
         class: 'font-medium',
-        autocomplete: "off",
-        autocorrect: "off",
-        autocapitalize: "off",
+        autocomplete: 'off',
+        autocorrect: 'off',
+        autocapitalize: 'off',
         spellcheck: false,
       },
     },
     paragraph: {
       HTMLAttributes: {
-        autocomplete: "off",
-        autocorrect: "off",
-        autocapitalize: "off",
+        autocomplete: 'off',
+        autocorrect: 'off',
+        autocapitalize: 'off',
         spellcheck: false,
-      }
+      },
     },
     horizontalRule: false,
     dropcursor: {
-      color: "#DBEAFE",
+      color: '#DBEAFE',
       width: 4,
     },
-    gapcursor: false
+    gapcursor: false,
   }),
   HorizontalRule.extend({
     addInputRules() {
       return [
         new InputRule({
           find: /^(?:---|—-|___\s|\*\*\*\s)$/,
-          handler: ({ state, range, match }) => {
-            const attributes = {};
+          handler: ({state, range, match}) => {
+            const attributes = {}
 
-            const { tr } = state;
-            const start = range.from;
-            let end = range.to;
+            const {tr} = state
+            const start = range.from
+            let end = range.to
 
             tr.insert(start - 1, this.type.create(attributes)).delete(
               tr.mapping.map(start),
               tr.mapping.map(end),
-            );
+            )
           },
         }),
-      ];
+      ]
     },
   }).configure({
     HTMLAttributes: {
-      class: "mt-4 mb-6 border-t border-stone-300",
+      class: 'mt-4 mb-6 border-t border-stone-300',
     },
   }),
   TiptapLink.configure({
     HTMLAttributes: {
       class:
-        "text-blue-500 underline underline-offset-[3px] hover:text-blue-700 transition-colors cursor-pointer",
+        'text-blue-500 underline underline-offset-[3px] hover:text-blue-700 transition-colors cursor-pointer',
     },
   }),
   Highlight.configure({
@@ -135,7 +135,7 @@ export const MonthlyExtensions = [
           } else {
             return this.editor.commands.deleteCurrentNode()
           }
-        }
+        },
       }
 
       if (!this.options.nested) {
@@ -147,9 +147,7 @@ export const MonthlyExtensions = [
       }
     },
     addNodeView() {
-      return ({
-        node, HTMLAttributes, getPos, editor,
-      }) => {
+      return ({node, HTMLAttributes, getPos, editor}) => {
         const listItem = document.createElement('li')
         const checkboxWrapper = document.createElement('label')
         const checkboxStyler = document.createElement('span')
@@ -167,14 +165,14 @@ export const MonthlyExtensions = [
             return
           }
 
-          const { checked } = event.target as any
+          const {checked} = event.target as any
           const setPos = usePositionStore.getState().setPos
 
           if (editor.isEditable && typeof getPos === 'function') {
             editor
               .chain()
-              .focus(undefined, { scrollIntoView: false })
-              .command(({ tr }) => {
+              .focus(undefined, {scrollIntoView: false})
+              .command(({tr}) => {
                 const position = getPos()
                 setPos(position)
 
@@ -237,7 +235,7 @@ export const MonthlyExtensions = [
     },
   }).configure({
     HTMLAttributes: {
-      class: 'flex items-start'
+      class: 'flex items-start',
     },
     nested: true,
   }),
@@ -246,5 +244,5 @@ export const MonthlyExtensions = [
   TextStyle,
   Color,
   CustomKeymap,
-  GetSelectedText
-];
+  GetSelectedText,
+]

@@ -1,18 +1,18 @@
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
-import { getLogo } from './outline-logo.tsx'
-import { Link } from '@remix-run/react'
-import { AnchorOrLink } from '~/utils/misc.tsx'
-import { ToggleTheme } from './toggle-theme.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {getLogo} from './outline-logo.tsx'
+import {Link} from '@remix-run/react'
+import {AnchorOrLink} from '~/utils/misc.tsx'
+import {ToggleTheme} from './toggle-theme.tsx'
 
 function Footer() {
-  const { isAuthenticated } = useRootLoader()
+  const {isAuthenticated} = useRootLoader()
   const Logo = getLogo()
 
   if (isAuthenticated) return <></>
   return (
-    <footer className="mt-auto bg-background">
+    <footer className="bg-background mt-auto">
       <div className="use-matter mx-auto flex h-16 max-w-screen-2xl flex-wrap items-center md:h-24">
-        <div className="grid-rows-max-content grid w-full grid-cols-4 gap-8 px-5vw py-12 md:grid-cols-8 md:pb-32 md:pt-24 xl:grid-cols-12">
+        <div className="grid-rows-max-content px-5vw grid w-full grid-cols-4 gap-8 py-12 md:grid-cols-8 md:pb-32 md:pt-24 xl:grid-cols-12">
           <div className="col-span-full flex flex-col gap-5 md:col-span-2 xl:row-span-3">
             <Link to="/" className="w-fit">
               <Logo />

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { Grid3X3, HeartHandshake, Sparkles } from 'lucide-react'
+import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
 import React from 'react'
-import { Button, ButtonLink } from '../ui/button.tsx'
+import {Button, ButtonLink} from '../ui/button.tsx'
 import {
   Dialog,
   DialogClose,
@@ -12,14 +12,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import { Toggle } from '../ui/toggle.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
+import {Toggle} from '../ui/toggle.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
 import _ from 'lodash'
-import { ToggleGroup } from '../ui/toggle-group.tsx'
-import { BasicNotes, Debt, EmergencyFund, Investment, MonthlyExpenses, RegularSaving } from './selects.tsx'
-import { PocketGroup } from './pocket.tsx'
-import { rupiah } from '~/utils/currency.ts'
-import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
+import {ToggleGroup} from '../ui/toggle-group.tsx'
+import {
+  BasicNotes,
+  Debt,
+  EmergencyFund,
+  Investment,
+  MonthlyExpenses,
+  RegularSaving,
+} from './selects.tsx'
+import {PocketGroup} from './pocket.tsx'
+import {rupiah} from '~/utils/currency.ts'
+import type {PocketsValues} from '~/routes/monthly/$id/route.tsx'
 
 function CreatePostDialog({
   children,
@@ -49,14 +56,14 @@ function CreatePostDialog({
           </TooltipTrigger>
           <TooltipContent
             side="right"
-            className={clsx('hidden md:block', { 'md:hidden': withoutTooltip })}
+            className={clsx('hidden md:block', {'md:hidden': withoutTooltip})}
           >
             <p>Buat halaman baru</p>
           </TooltipContent>
         </div>
       </Tooltip>
       <DialogPortal>
-        <DialogContent className="h-full max-w-[650px] border border-muted md:h-fit">
+        <DialogContent className="border-muted h-full max-w-[650px] border md:h-fit">
           <DialogHeader>
             <DialogTitle>Buat halaman</DialogTitle>
             <div className="flex flex-col gap-4 py-4">
@@ -69,7 +76,7 @@ function CreatePostDialog({
                     <h4 className="text-sm font-semibold leading-none">
                       Templates
                     </h4>
-                    <p className="text-xs font-normal leading-4 text-muted-foreground">
+                    <p className="text-muted-foreground text-xs font-normal leading-4">
                       Buat halaman dengan template yang telah disediakan
                     </p>
                   </div>
@@ -87,7 +94,7 @@ function CreatePostDialog({
                         <h4 className="text-sm font-semibold leading-none">
                           Komunitas
                         </h4>
-                        <p className="text-xs font-normal leading-4 text-muted-foreground">
+                        <p className="text-muted-foreground text-xs font-normal leading-4">
                           Buat halaman berdasarkan koleksi dari pengguna lain
                         </p>
                       </div>
@@ -104,7 +111,7 @@ function CreatePostDialog({
               <ToggleGroup
                 type="single"
                 className="grid w-full grid-cols-1 gap-2 md:grid-cols-3"
-                onValueChange={(v) => setValue(v)}
+                onValueChange={v => setValue(v)}
               >
                 <BasicNotes />
                 <RegularSaving />
@@ -141,25 +148,26 @@ function UpdatePocket({
   isOpen,
   setIsOpen,
   onChange,
-  dataset
+  dataset,
 }: {
-  value: number,
-  isOpen: boolean,
+  value: number
+  isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  onChange: (value: string) => void,
-  dataset: PocketsValues[],
+  onChange: (value: string) => void
+  dataset: PocketsValues[]
 }) {
   return (
     <Dialog open={isOpen}>
       <DialogTrigger></DialogTrigger>
-      <DialogContent close={() => setIsOpen(false)} className='w-[80vw] md:w-[500px]'>
+      <DialogContent
+        close={() => setIsOpen(false)}
+        className="w-[80vw] md:w-[500px]"
+      >
         <DialogHeader>
           <DialogTitle>Masuk</DialogTitle>
         </DialogHeader>
-        <div className='mt-4 flex flex-col gap-4'>
-          <div className='text-sm font-medium'>
-            {rupiah(value)}
-          </div>
+        <div className="mt-4 flex flex-col gap-4">
+          <div className="text-sm font-medium">{rupiah(value)}</div>
           <PocketGroup
             dataset={dataset}
             onChange={onChange}
@@ -171,4 +179,4 @@ function UpdatePocket({
   )
 }
 
-export { CreatePostDialog, UpdatePocket }
+export {CreatePostDialog, UpdatePocket}

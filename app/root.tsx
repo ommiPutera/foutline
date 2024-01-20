@@ -1,4 +1,4 @@
-import { cssBundleHref } from '@remix-run/css-bundle'
+import {cssBundleHref} from '@remix-run/css-bundle'
 import {
   json,
   type DataFunctionArgs,
@@ -19,21 +19,21 @@ import {
 import AppShell from './components/app-shell.tsx'
 import Footer from './components/footer.tsx'
 import Navbar from './components/navbar.tsx'
-import { TooltipProvider } from './components/ui/tooltip.tsx'
+import {TooltipProvider} from './components/ui/tooltip.tsx'
 
 import prosemirrorStyles from '~/styles/prosemirror.css'
 import globalStyles from './styles/globals.css'
 
-import { getKindeSession, getUser } from './utils/session.server.ts'
-import { ThemeProvider, useTheme } from './utils/theme-provider.tsx'
-import { getThemeSession } from './utils/theme.server.ts'
+import {getKindeSession, getUser} from './utils/session.server.ts'
+import {ThemeProvider, useTheme} from './utils/theme-provider.tsx'
+import {getThemeSession} from './utils/theme.server.ts'
 
 export type LoaderData = SerializeFrom<typeof loader>
-export const handle: { id: string } = {
+export const handle: {id: string} = {
   id: 'root',
 }
 
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({request}: DataFunctionArgs) {
   const [themeSession, kindeSession, userFromSession] = await Promise.all([
     getThemeSession(request),
     getKindeSession(request),
@@ -51,13 +51,13 @@ export async function loader({ request }: DataFunctionArgs) {
     },
   }
   const headers: HeadersInit = new Headers()
-  return json(data, { headers })
+  return json(data, {headers})
 }
 
 export const meta: MetaFunction = () => {
   return [
-    { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Outline | Catatan keuangan anda' },
+    {viewport: 'width=device-width,initial-scale=1,viewport-fit=cover'},
+    {title: 'Outline | Catatan keuangan anda'},
   ]
 }
 
@@ -105,11 +105,11 @@ export const links: LinksFunction = () => [
     color: '#ffffff',
     href: '/safari-pinned-tab.svg',
   },
-  { rel: 'icon', href: '/favicon.ico' },
-  { rel: 'manifest', href: '/site.webmanifest' },
-  { rel: 'stylesheet', href: globalStyles },
-  { rel: 'stylesheet', href: prosemirrorStyles },
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+  {rel: 'icon', href: '/favicon.ico'},
+  {rel: 'manifest', href: '/site.webmanifest'},
+  {rel: 'stylesheet', href: globalStyles},
+  {rel: 'stylesheet', href: prosemirrorStyles},
+  ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
 ]
 
 export default function AppWithProviders() {
@@ -145,10 +145,7 @@ function App() {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#000" />
-        <meta
-          name="theme-color"
-          content={theme === 'dark' ? '#000' : '#FFF'}
-        />
+        <meta name="theme-color" content={theme === 'dark' ? '#000' : '#FFF'} />
         <Links />
       </head>
       <body>
