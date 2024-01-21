@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,10 +20,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { FavoriteButton } from './board/card-item.tsx'
-import { CreatePostDialog } from './templates/dialogs.tsx'
-import { UserNav } from './user-nav.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import {FavoriteButton} from './board/card-item.tsx'
+import {CreatePostDialog} from './templates/dialogs.tsx'
+import {UserNav} from './user-nav.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,17 +31,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { Link } from '@remix-run/react'
-import { Progress } from './ui/progress.tsx'
-import { Badge } from './ui/badge.tsx'
-import type { Post } from '@prisma/client'
-import { getPostType } from '~/utils/get-post-type.ts'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {Link} from '@remix-run/react'
+import {Progress} from './ui/progress.tsx'
+import {Badge} from './ui/badge.tsx'
+import type {Post} from '@prisma/client'
+import {getPostType} from '~/utils/get-post-type.ts'
 
-let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+  const {profile} = useRootLoader()
 
   return (
     <div className={cn('min-h-screens flex h-full flex-col', className)}>
@@ -119,8 +119,10 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const { user } = useRootLoader()
-  const posts: Post[] = user?.posts.filter((post: Post) => post.isFavorite === true)
+  const {user} = useRootLoader()
+  const posts: Post[] = user?.posts.filter(
+    (post: Post) => post.isFavorite === true,
+  )
 
   const contentRef = React.useRef(null)
   const isPostEmpty = !example?.length
@@ -176,12 +178,12 @@ function Favorite() {
 }
 
 function Files() {
-  const { user } = useRootLoader()
+  const {user} = useRootLoader()
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
   const isPostEmpty = !user?.posts?.length
-  const posts: Post[] = user?.posts;
+  const posts: Post[] = user?.posts
 
   React.useEffect(() => {
     if (!topFileRef?.current) return
@@ -218,7 +220,7 @@ function Files() {
           {!isPostEmpty ? (
             posts?.map((post, i) => (
               <ButtonLink
-                prefetch='intent'
+                prefetch="intent"
                 href={`${getPostType(post.type)}/${post.id}`}
                 key={`${post}-${i}`}
                 variant="ghost"
