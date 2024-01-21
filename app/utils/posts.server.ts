@@ -10,7 +10,8 @@ export async function createPost({
   preview,
   isPublished,
   redirectTo,
-}: Pick<Post, 'title' | 'authorId' | 'isPublished'> & {
+  type
+}: Pick<Post, 'title' | 'authorId' | 'isPublished' | 'type'> & {
   content?: JSONContent
   preview?: string
   redirectTo?: string
@@ -22,6 +23,7 @@ export async function createPost({
       userId: authorId,
       authorId,
       preview,
+      type,
       content: content,
     },
   })

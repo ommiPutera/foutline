@@ -1,26 +1,26 @@
-import type {ActionFunction} from '@remix-run/node'
-import {Form} from '@remix-run/react'
+import type { ActionFunction } from '@remix-run/node'
+import { Form } from '@remix-run/react'
 import React from 'react'
 
-import {PageIcon} from '~/components/board/card-item.tsx'
-import {Button} from '~/components/ui/button.tsx'
-import {ToggleGroup, ToggleGroupItem} from '~/components/ui/toggle-group.tsx'
+import { PageIcon } from '~/components/board/card-item.tsx'
+import { Button } from '~/components/ui/button.tsx'
+import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group.tsx'
 
-import {createPost} from '~/utils/posts.server.ts'
-import {getUser} from '~/utils/session.server.ts'
+import { createPost } from '~/utils/posts.server.ts'
+import { getUser } from '~/utils/session.server.ts'
 
-import {previewTemp1, previewTemp2, temp1, temp2} from './resource.tsx'
+import { previewTemp1, previewTemp2, temp1, temp2 } from './resource.tsx'
 
-export const action: ActionFunction = async ({request}) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
 
   const user = await getUser(request)
-  if (!user) return {formError: 'invalid'}
+  if (!user) return { formError: 'invalid' }
 
-  const {templateId} = Object.fromEntries(formData)
+  const { templateId } = Object.fromEntries(formData)
 
   if (typeof templateId !== 'string') {
-    return {formError: `Form not submitted correctly.`}
+    return { formError: `Form not submitted correctly.` }
   }
 
   let content
@@ -43,6 +43,7 @@ export const action: ActionFunction = async ({request}) => {
     isPublished: true,
     content,
     preview,
+    type: 'MONTHLY_PLANNING',
     redirectTo: '/monthly/',
   })
 }
@@ -68,7 +69,7 @@ function Templates() {
       <Form method="POST">
         <ToggleGroup
           type="single"
-          className="grid grid-cols-1 gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-4"
           onValueChange={v => setValue(v)}
           value={value}
         >
@@ -95,7 +96,7 @@ function Templates() {
   )
 }
 
-function Card({value}: {value: string}) {
+function Card({ value }: { value: string }) {
   return (
     <div className="group col-span-1 flex h-full cursor-pointer flex-col gap-3">
       <ToggleGroupItem

@@ -1,6 +1,6 @@
-import {cn} from '~/lib/utils.ts'
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { cn } from '~/lib/utils.ts'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,10 +20,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {FavoriteButton} from './board/card-item.tsx'
-import {CreatePostDialog} from './templates/dialogs.tsx'
-import {UserNav} from './user-nav.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { FavoriteButton } from './board/card-item.tsx'
+import { CreatePostDialog } from './templates/dialogs.tsx'
+import { UserNav } from './user-nav.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,36 +31,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
-import {Link} from '@remix-run/react'
-import {Progress} from './ui/progress.tsx'
-import {Badge} from './ui/badge.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
+import { Link } from '@remix-run/react'
+import { Progress } from './ui/progress.tsx'
+import { Badge } from './ui/badge.tsx'
+import type { Post } from '@prisma/client'
+import { getPostType } from '~/utils/get-post-type.ts'
 
-let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
+let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
 
-const example2 = [
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-  {title: 'woi'},
-  {title: 'santai aja bang'},
-  {title: 'sloww bro'},
-]
-
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
 
   return (
     <div className={cn('min-h-screens flex h-full flex-col', className)}>
@@ -138,15 +119,11 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  // const { posts } = useRootLoader()
+  const { user } = useRootLoader()
+  const posts: Post[] = user?.posts.filter((post: Post) => post.isFavorite === true)
+
   const contentRef = React.useRef(null)
   const isPostEmpty = !example?.length
-  const [data, setData] = React.useState(example ?? [])
-
-  const handleCallback = (title: string) => {
-    const filter = data.filter(el => el.title !== title)
-    setData([...filter])
-  }
 
   return (
     <Accordion type="single" collapsible>
@@ -156,14 +133,14 @@ function Favorite() {
           variant="transparent"
           className="w-fit justify-start p-0 px-4 pl-5 text-xs"
         >
-          <AccordionTrigger data-count={data.length}>
+          <AccordionTrigger data-count={posts.length}>
             Halaman Favorit
           </AccordionTrigger>
         </Button>
         <AccordionContent className="relative h-fit w-full pl-4 pr-1">
           <div ref={contentRef} className="w-full space-y-2">
             {!isPostEmpty ? (
-              data?.map((post, i) => (
+              posts?.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
                     href="/aneh"
@@ -176,7 +153,7 @@ function Favorite() {
                   </ButtonLink>
                   <div className="absolute right-1.5 top-0 flex h-full items-center">
                     <FavoriteButton
-                      callBack={() => handleCallback(post.title)}
+                      callBack={() => console.log('heii')}
                       tooltipText={{
                         active: 'Hapus dari favorit',
                         notActive: '',
@@ -199,11 +176,12 @@ function Favorite() {
 }
 
 function Files() {
-  // const { posts } = useRootLoader()
+  const { user } = useRootLoader()
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
-  const isPostEmpty = !example2?.length
+  const isPostEmpty = !user?.posts?.length
+  const posts: Post[] = user?.posts;
 
   React.useEffect(() => {
     if (!topFileRef?.current) return
@@ -238,8 +216,10 @@ function Files() {
         <div ref={topFileRef}></div>
         <div className="mx-2 space-y-2 pb-6">
           {!isPostEmpty ? (
-            example2?.map((post, i) => (
-              <Button
+            posts?.map((post, i) => (
+              <ButtonLink
+                prefetch='intent'
+                href={`${getPostType(post.type)}/${post.id}`}
                 key={`${post}-${i}`}
                 variant="ghost"
                 size="sm"
@@ -247,7 +227,7 @@ function Files() {
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
                 {post.title}
-              </Button>
+              </ButtonLink>
             ))
           ) : (
             <EmptyState />
@@ -262,14 +242,13 @@ function EmptyState() {
   return (
     <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
       <div className="flex flex-col gap-2">
-        <h4 className="relative px-5 text-sm font-medium leading-none">
+        <h4 className="relative px-5 text-xs font-medium leading-none">
           Koleksi Halaman
         </h4>
-        <p className="max-w-[150px] text-xs">
+        <p className="max-w-[150px] text-[11px]">
           Semua daftar halamanmu akan tampil disini.
         </p>
       </div>
-      <Button>Buat halaman</Button>
     </div>
   )
 }
