@@ -29,3 +29,8 @@ export async function createPost({
   })
   return redirect(redirectTo + post.id ?? '')
 }
+
+
+export async function deletePost({id}: {id: string}) {
+  return await prisma.post.delete({where: {id: id}})
+}
