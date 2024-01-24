@@ -51,7 +51,8 @@ export async function loader({request, params}: DataFunctionArgs) {
   )[0]
 
   if (!id || !post) return redirect('/')
-  return json({post: post, postId: id})
+  const data: LoaderData = {post: post, postId: id}
+  return json(data, {headers: {'Cache-Control': 'max-age=3600, public'}})
 }
 
 export const useMonthlyStore = create<MonthlyState>(set => ({

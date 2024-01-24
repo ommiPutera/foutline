@@ -1,5 +1,5 @@
-import { ShoppingBag, MoreHorizontal, Star, Trash } from 'lucide-react'
-import { Button } from '../ui/button.tsx'
+import {ShoppingBag, MoreHorizontal, Star, Trash} from 'lucide-react'
+import {Button} from '../ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -7,13 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
 import React from 'react'
 import clsx from 'clsx'
-import type { TooltipContentProps } from '@radix-ui/react-tooltip'
+import type {TooltipContentProps} from '@radix-ui/react-tooltip'
 import _ from 'lodash'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover.tsx'
-import { Link } from '@remix-run/react'
+import {Popover, PopoverContent, PopoverTrigger} from '../ui/popover.tsx'
+import {Link} from '@remix-run/react'
 
 function CardItem({
   id,
@@ -104,7 +104,7 @@ function Favorite({
   callBack,
   size = 'default',
 }: {
-  tooltipText?: { active: string; notActive: string }
+  tooltipText?: {active: string; notActive: string}
   defaultValue?: boolean
   side?: TooltipContentProps['side']
   callBack?: () => void
@@ -138,7 +138,7 @@ function Favorite({
         >
           <Star
             size={size === 'sm' ? 12 : 14}
-            className={clsx({ 'fill-[#FFA500]': isFavorited })}
+            className={clsx({'fill-[#FFA500]': isFavorited})}
           />
         </Button>
       </TooltipTrigger>
@@ -149,7 +149,7 @@ function Favorite({
   )
 }
 
-function ContentPreview({ content }: { content: string | JSX.Element }) {
+function ContentPreview({content}: {content: string | JSX.Element}) {
   if (typeof content === 'string')
     return (
       <div className="line-clamp-6 text-[11px] leading-4 md:text-xs md:leading-snug">
@@ -179,7 +179,11 @@ function More() {
         side="right"
         forceMount
       >
-        <Button variant="ghost" size="sm" className="w-full justify-start rounded-sm">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start rounded-sm"
+        >
           <Trash size="16" className="mr-3" />
           <span>Hapus</span>
         </Button>
@@ -189,4 +193,4 @@ function More() {
 }
 
 export default CardItem
-export { Favorite as FavoriteButton, PageIcon }
+export {Favorite as FavoriteButton, PageIcon}
