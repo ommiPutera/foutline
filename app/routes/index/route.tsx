@@ -35,7 +35,8 @@ function Index() {
         <TabsTrigger value="board">Semua</TabsTrigger>
       </TabsList>
       <TabsContent value="board" asChild>
-        <Board posts={posts as any} />
+        test
+        {/* <Board posts={posts as any} /> */}
       </TabsContent>
     </Tabs>
   )
