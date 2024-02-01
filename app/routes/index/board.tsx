@@ -1,4 +1,4 @@
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 import {
   Info,
   LayoutGrid,
@@ -10,15 +10,15 @@ import {
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
-import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-function Board({posts}: {posts: Post[] | null}) {
+function Board({ posts }: { posts: Post[] | null }) {
   return (
     <div className="flex min-h-screen py-6 md:gap-4">
       <div className="flex w-full flex-col gap-4 md:gap-3 md:border-r md:pr-4">
@@ -126,11 +126,12 @@ function Tools() {
   )
 }
 
-function Cards({posts}: {posts: Post[]}) {
+function Cards({ posts }: { posts: Post[] }) {
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {posts.map(post => (
         <CardItem
+          key={post.id}
           id={post.id}
           title={post.title}
           content={post.preview ?? ''}
