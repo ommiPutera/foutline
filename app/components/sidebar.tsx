@@ -32,11 +32,12 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
 import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
-import {Link} from '@remix-run/react'
+import {Link, useLocation} from '@remix-run/react'
 import {Progress} from './ui/progress.tsx'
 import {Badge} from './ui/badge.tsx'
 import type {Post} from '@prisma/client'
 import {getPostType} from '~/utils/get-post-type.ts'
+import clsx from 'clsx'
 
 let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
@@ -142,7 +143,7 @@ function Favorite() {
         <AccordionContent className="relative h-fit w-full pl-4 pr-1">
           <div ref={contentRef} className="w-full space-y-2">
             {!isPostEmpty ? (
-              posts?.map((post, i) => (
+              posts.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
                     href="/aneh"
@@ -180,6 +181,7 @@ function Favorite() {
 function Files() {
   const {user} = useRootLoader()
   const [isScroll, setIsScroll] = React.useState(false)
+  const location = useLocation()
   const topFileRef = React.useRef(null)
 
   const isPostEmpty = !user?.posts?.length
@@ -216,16 +218,21 @@ function Files() {
           <div className="from-background/30 absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
-        <div className="mx-2 space-y-2 pb-6">
+        <div className="mx-2 space-y-1 pb-6">
           {!isPostEmpty ? (
             posts?.map((post, i) => (
               <ButtonLink
-                prefetch="intent"
                 href={`${getPostType(post.type)}/${post.id}`}
                 key={`${post}-${i}`}
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start rounded-sm text-xs font-normal"
+                prefetch="intent"
+                className={clsx(
+                  'w-full justify-start rounded-sm text-xs font-normal',
+                  location.pathname ===
+                    `/${getPostType(post.type)}/${post.id}` &&
+                    'bg-gray-100 hover:bg-gray-100',
+                )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
                 {post.title}

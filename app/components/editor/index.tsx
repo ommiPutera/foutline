@@ -56,6 +56,13 @@ function Editor({
     }
   }, [editor, defaultContent, hydrated])
 
+  React.useEffect(() => {
+    if (editor && post?.content) {
+      // @ts-ignore
+      editor.commands.setContent(post?.content)
+    }
+  }, [editor, post?.content])
+
   return (
     <div className="relative">
       <div className="bg-background top-0 z-20 w-full pr-4 md:sticky">
