@@ -3,7 +3,7 @@ import {useLoaderData, useLocation} from '@remix-run/react'
 
 import type {Post} from '@prisma/client'
 
-import Board from '~/components/board.tsx'
+import Board from '~/components/board/index.tsx'
 import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
 

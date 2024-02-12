@@ -216,7 +216,12 @@ function Files() {
   }, [])
 
   return (
-    <div className="border-border mx-3 overflow-x-hidden rounded-md border">
+    <div
+      className={cn(
+        'border-border mx-3 overflow-x-hidden rounded-md border-[1.5px]',
+        location.pathname.startsWith('/monthly') && 'border-black',
+      )}
+    >
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
           <div className="relative flex items-center px-5">

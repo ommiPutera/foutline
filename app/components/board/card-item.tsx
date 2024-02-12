@@ -1,5 +1,19 @@
-import {ShoppingBag, MoreHorizontal, Star, Trash} from 'lucide-react'
-import {Button} from '../ui/button.tsx'
+import {
+  ArrowUpRight,
+  MoreHorizontal,
+  ShoppingBag,
+  Star,
+  Trash,
+} from 'lucide-react'
+
+import type {TooltipContentProps} from '@radix-ui/react-tooltip'
+
+import clsx from 'clsx'
+import _ from 'lodash'
+import React from 'react'
+import {create} from 'zustand'
+
+import {Button, ButtonLink} from '../ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -7,31 +21,46 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
-import React from 'react'
-import clsx from 'clsx'
-import type {TooltipContentProps} from '@radix-ui/react-tooltip'
-import _ from 'lodash'
 import {Popover, PopoverContent, PopoverTrigger} from '../ui/popover.tsx'
-import {Link} from '@remix-run/react'
+import {SelectSeparator} from '../ui/select.tsx'
+import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
 
-function CardItem({
-  id,
-  content,
-  title,
-}: {
-  id: string
-  content: string
-  title: string
-}) {
-  const [isHover, setIsHover] = React.useState(false)
+import type {Post} from '@prisma/client'
+import {Link, useLocation} from '@remix-run/react'
+
+import {cn} from '~/lib/utils.ts'
+import {getPostType} from '~/utils/get-post-type.ts'
+
+interface CardState {
+  idCardFocus: string
+  setIdCardFocus: (id: string) => void
+}
+
+const useCardStore = create<CardState>(set => ({
+  idCardFocus: '',
+  setIdCardFocus: id => set(() => ({idCardFocus: id})),
+}))
+
+function CardItem(post: Post) {
+  const {id, preview, title} = post
+  const {idCardFocus, setIdCardFocus} = useCardStore()
+  const location = useLocation()
+
+  React.useEffect(() => {
+    // Close when route changed
+    if (location.pathname) {
+      setIdCardFocus('')
+    }
+  }, [location.pathname, setIdCardFocus])
+
   return (
     <Link to={`/monthly/${id}`} prefetch="intent">
       <Card
         key={id}
-        onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
-        onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
-        className="hover:border-ring col-span-1 h-full cursor-pointer overflow-hidden md:h-fit"
+        className={cn(
+          'hover:border-ring col-span-1 h-full cursor-pointer overflow-hidden border-[1.5px] md:h-fit',
+          idCardFocus === id && 'border-ring',
+        )}
       >
         <CardHeader className="bg-monthly-background pb-3">
           <CardTitle className="items-first flex gap-2">
@@ -44,7 +73,7 @@ function CardItem({
           </CardTitle>
         </CardHeader>
         <CardContent className="from-monthly-background to-background/20 relative bg-gradient-to-b pb-4">
-          <ContentPreview content={content} />
+          <ContentPreview content={preview ?? ''} />
           <div className="from-background to-monthly-background/20 absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
         </CardContent>
         <CardFooter className="justify-between gap-2 py-2.5">
@@ -66,12 +95,7 @@ function CardItem({
           <div className="-mr-2 flex justify-end" id="test">
             <div
               onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
-              className={clsx(
-                'visible relative flex w-fit items-center gap-1',
-                {
-                  invisible: !isHover,
-                },
-              )}
+              className={clsx('visible relative flex w-fit items-center gap-1')}
             >
               <Favorite
                 side="bottom"
@@ -80,7 +104,7 @@ function CardItem({
                   notActive: 'Tambahkan ke favorit',
                 }}
               />
-              <More />
+              <More {...post} />
             </div>
           </div>
         </CardFooter>
@@ -163,9 +187,10 @@ function ContentPreview({content}: {content: string | JSX.Element}) {
   )
 }
 
-function More() {
+function More({id, type}: Post) {
+  const {setIdCardFocus} = useCardStore()
   return (
-    <Popover>
+    <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
         <PopoverTrigger asChild>
           <Button size="icon" variant="transparent" className="rounded-full">
@@ -174,19 +199,34 @@ function More() {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-44 p-1"
+        className="h-fit w-52 p-0"
         align="end"
         side="right"
         forceMount
       >
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start rounded-sm"
-        >
-          <Trash size="16" className="mr-3" />
-          <span>Hapus</span>
-        </Button>
+        <div className="my-2">
+          <ButtonLink
+            to={`/${getPostType(type)}/${id}`}
+            prefetch="intent"
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start rounded-none"
+          >
+            <ArrowUpRight size="16" className="mr-3" />
+            <span>Buka halaman</span>
+          </ButtonLink>
+        </div>
+        <SelectSeparator />
+        <div className="my-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start rounded-none"
+          >
+            <Trash size="16" className="mr-3" />
+            <span>Pindahkan ke sampah</span>
+          </Button>
+        </div>
       </PopoverContent>
     </Popover>
   )

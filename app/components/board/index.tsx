@@ -1,15 +1,12 @@
 import type {Post} from '@prisma/client'
+
 import {LayoutGrid, Lightbulb, List, Plus} from 'lucide-react'
+
 import CardItem from '~/components/board/card-item.tsx'
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
 import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
 import {Button} from '~/components/ui/button.tsx'
-// import {
-//   Tooltip,
-//   TooltipContent,
-//   TooltipTrigger,
-// } from '~/components/ui/tooltip.tsx'
 
 function Board({posts}: {posts: Post[] | null}) {
   return (
@@ -66,12 +63,7 @@ function Cards({posts}: {posts: Post[]}) {
   return (
     <div className="grid grid-cols-2 gap-3 py-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {posts.map(post => (
-        <CardItem
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          content={post.preview ?? ''}
-        />
+        <CardItem key={post.id} {...post} />
       ))}
     </div>
   )
