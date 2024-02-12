@@ -1,14 +1,15 @@
-import { EditorContent, useEditor } from '@tiptap/react'
+import {EditorContent, useEditor} from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { ScrollArea } from '../ui/scroll-area.tsx'
-import { BasicExtensions } from './extensions/index.tsx'
+import {ScrollArea} from '../ui/scroll-area.tsx'
+import {BasicExtensions} from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import { TiptapEditorProps } from './props.ts'
-import { EditorBubbleMenu } from './bubble-menu/index.tsx'
-import { MonthlyExtensions } from './extensions/monthly.tsx'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
-import type { Post } from '@prisma/client'
+import {TiptapEditorProps} from './props.ts'
+import {EditorBubbleMenu} from './bubble-menu/index.tsx'
+import {MonthlyExtensions} from './extensions/monthly.tsx'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
+import type {Post} from '@prisma/client'
+import {useLocation} from '@remix-run/react'
 
 function Editor({
   type,
@@ -21,10 +22,12 @@ function Editor({
   defaultContent: JSONContent | undefined
   post?: Post
 }) {
+  const location = useLocation()
+
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
 
-  // const [hydrated, setHydrated] = React.useState(false)
+  const [hydrated, setHydrated] = React.useState(false)
 
   const getExtensions = () => {
     switch (type) {
@@ -42,26 +45,26 @@ function Editor({
   const editor = useEditor({
     editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
-    onUpdate({ editor }) {
+    onUpdate({editor}) {
       if (editor) {
         getData(editor)
       }
     },
   })
 
-  // React.useEffect(() => {
-  //   if (editor && defaultContent && !hydrated) {
-  //     editor.commands.setContent(defaultContent)
-  //     setHydrated(true)
-  //   }
-  // }, [editor, defaultContent, hydrated])
+  React.useEffect(() => {
+    if (editor && defaultContent && !hydrated) {
+      editor.commands.setContent(defaultContent)
+      setHydrated(true)
+    }
+  }, [editor, defaultContent, hydrated])
 
   React.useEffect(() => {
-    if (editor && post?.content) {
+    if (location.pathname && editor) {
       // @ts-ignore
       editor.commands.setContent(post?.content)
     }
-  }, [editor, post?.content])
+  }, [editor, location.pathname, post?.content])
 
   return (
     <div className="relative">
@@ -81,36 +84,34 @@ function Editor({
           className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-normal focus:outline-none"
         />
       </div>
-      <React.Suspense fallback={<div>Loading woi...</div>}>
-        <ScrollArea className="h-[70vh]">
-          <div
-            onClick={() => {
-              editor?.chain().focus().run()
-            }}
-            className="max-w-screen-l relative mt-4 min-h-[200px] w-full pr-6 sm:mb-[calc(20vh)]"
-          >
-            {editor ? (
-              <>
-                <EditorBubbleMenu editor={editor} />
-                <EditorContent
-                  ref={editorRef}
-                  editor={editor}
-                  onKeyUp={e => {
-                    if (e.key === 'ArrowUp') {
-                      e.preventDefault()
-                      if (editor?.state.selection.$anchor.pos === 1) {
-                        titletRef.current?.focus()
-                      }
+      <ScrollArea className="h-[70vh]">
+        <div
+          onClick={() => {
+            editor?.chain().focus().run()
+          }}
+          className="max-w-screen-l relative mt-4 min-h-[200px] w-full pr-6 sm:mb-[calc(20vh)]"
+        >
+          {editor ? (
+            <>
+              <EditorBubbleMenu editor={editor} />
+              <EditorContent
+                ref={editorRef}
+                editor={editor}
+                onKeyUp={e => {
+                  if (e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    if (editor?.state.selection.$anchor.pos === 1) {
+                      titletRef.current?.focus()
                     }
-                  }}
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        </ScrollArea>
-      </React.Suspense>
+                  }
+                }}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+      </ScrollArea>
     </div>
   )
 }

@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,10 +20,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { FavoriteButton } from './board/card-item.tsx'
-import { CreatePostDialog } from './templates/dialogs.tsx'
-import { UserNav } from './user-nav.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import {FavoriteButton} from './board/card-item.tsx'
+import {CreatePostDialog} from './templates/dialogs.tsx'
+import {UserNav} from './user-nav.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,18 +31,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { Link, useLocation } from '@remix-run/react'
-import { Progress } from './ui/progress.tsx'
-import { Badge } from './ui/badge.tsx'
-import type { Post } from '@prisma/client'
-import { getPostType } from '~/utils/get-post-type.ts'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {Link, useLocation} from '@remix-run/react'
+import {Progress} from './ui/progress.tsx'
+import {Badge} from './ui/badge.tsx'
+import type {Post} from '@prisma/client'
+import {getPostType} from '~/utils/get-post-type.ts'
 import clsx from 'clsx'
 
-let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+  const {profile} = useRootLoader()
   const location = useLocation()
 
   return (
@@ -54,8 +54,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             prefetch="intent"
             variant="ghost"
             className={cn(
-              'w-full justify-start border-[1.5px] border-transparent text-xs',
-              location.pathname === '/home' && 'border-black font-semibold',
+              'w-full justify-start text-xs',
+              location.pathname === '/home' && 'bg-black/5 font-semibold',
             )}
           >
             <HomeIcon
@@ -71,8 +71,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             variant="ghost"
             prefetch="intent"
             className={cn(
-              'w-full justify-start border-[1.5px] border-transparent text-xs',
-              location.pathname === '/template' && 'border-black font-semibold',
+              'w-full justify-start text-xs',
+              location.pathname === '/template' && 'bg-black/5 font-semibold',
             )}
           >
             <LayoutTemplate
@@ -137,7 +137,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const { user } = useRootLoader()
+  const {user} = useRootLoader()
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
@@ -196,10 +196,11 @@ function Favorite() {
 }
 
 function Files() {
-  const { user } = useRootLoader()
   const [isScroll, setIsScroll] = React.useState(false)
-  const location = useLocation()
   const topFileRef = React.useRef(null)
+
+  const {user} = useRootLoader()
+  const location = useLocation()
 
   const isPostEmpty = !user?.posts?.length
   const posts: Post[] = user?.posts
@@ -219,7 +220,6 @@ function Files() {
     <div
       className={cn(
         'border-border mx-3 overflow-x-hidden rounded-md border-[1.5px]',
-        location.pathname.startsWith('/monthly') && 'border-black',
       )}
     >
       {!isPostEmpty && (
@@ -250,9 +250,10 @@ function Files() {
                 size="sm"
                 prefetch="intent"
                 className={clsx(
-                  'w-full justify-start rounded-sm !py-5 text-xs font-normal',
+                  'w-full justify-start rounded-md !py-5 text-xs font-normal',
                   location.pathname ===
-                  `/${getPostType(post.type)}/${post.id}` && 'bg-accent',
+                    `/${getPostType(post.type)}/${post.id}` &&
+                    'bg-accent font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />

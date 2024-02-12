@@ -199,7 +199,7 @@ function More({id, type}: Post) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-52 p-0"
+        className="h-fit w-48 p-0"
         align="end"
         side="right"
         forceMount
@@ -210,20 +210,20 @@ function More({id, type}: Post) {
             prefetch="intent"
             variant="ghost"
             size="sm"
-            className="w-full justify-start rounded-none"
+            className="w-full justify-start rounded-none px-3"
           >
-            <ArrowUpRight size="16" className="mr-3" />
+            <ArrowUpRight size="16" className="mr-2" />
             <span>Buka halaman</span>
           </ButtonLink>
         </div>
-        <SelectSeparator />
+        <SelectSeparator className="z-0" />
         <div className="my-2">
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start rounded-none"
+            className="w-full justify-start rounded-none px-3"
           >
-            <Trash size="16" className="mr-3" />
+            <Trash size="16" className="mr-2" />
             <span>Pindahkan ke sampah</span>
           </Button>
         </div>
