@@ -1,14 +1,14 @@
-import {EditorContent, useEditor} from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import {ScrollArea} from '../ui/scroll-area.tsx'
-import {BasicExtensions} from './extensions/index.tsx'
+import { ScrollArea } from '../ui/scroll-area.tsx'
+import { BasicExtensions } from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import {TiptapEditorProps} from './props.ts'
-import {EditorBubbleMenu} from './bubble-menu/index.tsx'
-import {MonthlyExtensions} from './extensions/monthly.tsx'
-import type {Editor as EditorType, JSONContent} from '@tiptap/core'
-import type {Post} from '@prisma/client'
+import { TiptapEditorProps } from './props.ts'
+import { EditorBubbleMenu } from './bubble-menu/index.tsx'
+import { MonthlyExtensions } from './extensions/monthly.tsx'
+import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import type { Post } from '@prisma/client'
 
 function Editor({
   type,
@@ -24,7 +24,7 @@ function Editor({
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
 
-  const [hydrated, setHydrated] = React.useState(false)
+  // const [hydrated, setHydrated] = React.useState(false)
 
   const getExtensions = () => {
     switch (type) {
@@ -42,19 +42,19 @@ function Editor({
   const editor = useEditor({
     editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
-    onUpdate({editor}) {
+    onUpdate({ editor }) {
       if (editor) {
         getData(editor)
       }
     },
   })
 
-  React.useEffect(() => {
-    if (editor && defaultContent && !hydrated) {
-      editor.commands.setContent(defaultContent)
-      setHydrated(true)
-    }
-  }, [editor, defaultContent, hydrated])
+  // React.useEffect(() => {
+  //   if (editor && defaultContent && !hydrated) {
+  //     editor.commands.setContent(defaultContent)
+  //     setHydrated(true)
+  //   }
+  // }, [editor, defaultContent, hydrated])
 
   React.useEffect(() => {
     if (editor && post?.content) {

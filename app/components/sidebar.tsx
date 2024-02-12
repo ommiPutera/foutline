@@ -1,6 +1,6 @@
-import {cn} from '~/lib/utils.ts'
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { cn } from '~/lib/utils.ts'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,10 +20,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {FavoriteButton} from './board/card-item.tsx'
-import {CreatePostDialog} from './templates/dialogs.tsx'
-import {UserNav} from './user-nav.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { FavoriteButton } from './board/card-item.tsx'
+import { CreatePostDialog } from './templates/dialogs.tsx'
+import { UserNav } from './user-nav.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,18 +31,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
-import {Link, useLocation} from '@remix-run/react'
-import {Progress} from './ui/progress.tsx'
-import {Badge} from './ui/badge.tsx'
-import type {Post} from '@prisma/client'
-import {getPostType} from '~/utils/get-post-type.ts'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
+import { Link, useLocation } from '@remix-run/react'
+import { Progress } from './ui/progress.tsx'
+import { Badge } from './ui/badge.tsx'
+import type { Post } from '@prisma/client'
+import { getPostType } from '~/utils/get-post-type.ts'
 import clsx from 'clsx'
 
-let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
+let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
   const location = useLocation()
 
   return (
@@ -50,7 +50,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
       <div className="mb-12 flex flex-col justify-between space-y-4 py-6">
         <div className="flex-1 place-content-start px-3 py-2">
           <ButtonLink
-            href="/"
+            href="/home"
             prefetch="intent"
             variant="ghost"
             className={cn(
@@ -137,7 +137,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
@@ -196,7 +196,7 @@ function Favorite() {
 }
 
 function Files() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const [isScroll, setIsScroll] = React.useState(false)
   const location = useLocation()
   const topFileRef = React.useRef(null)
@@ -232,7 +232,7 @@ function Files() {
           </div>
         </div>
       )}
-      <ScrollArea className={cn('h-[190px]', isPostEmpty && 'h-[140px]')}>
+      <ScrollArea className={cn('h-[240px]', isPostEmpty && 'h-[140px]')}>
         {isScroll && !isPostEmpty && (
           <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div>
         )}
@@ -252,7 +252,7 @@ function Files() {
                 className={clsx(
                   'w-full justify-start rounded-sm !py-5 text-xs font-normal',
                   location.pathname ===
-                    `/${getPostType(post.type)}/${post.id}` && 'bg-accent',
+                  `/${getPostType(post.type)}/${post.id}` && 'bg-accent',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
