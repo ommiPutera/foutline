@@ -10,6 +10,7 @@
     "dev": "remix dev --manual",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\" --ignore-path .gitignore .",
+    "postinstall": "prisma generate",
     "pscale-dev-server": "pscale connect ommiputera development --port 3306",
     "pscale-prod-server": "pscale connect ommiputera main --port 3306",
     "start": "remix-serve ./build/index.js",

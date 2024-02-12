@@ -9,3 +9,4 @@ Dockerfile
 .npmrc
 /sessions
 .vscode
+.vercel
