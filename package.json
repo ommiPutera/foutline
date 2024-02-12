@@ -94,6 +94,7 @@
     "tiptap-markdown": "^0.8.8",
     "tsx": "^3.12.2",
     "use-debounce": "^9.0.4",
+    "vercel": "^33.5.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
