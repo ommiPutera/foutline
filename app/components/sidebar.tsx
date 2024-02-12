@@ -43,6 +43,7 @@ let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
+  const location = useLocation()
 
   return (
     <div className={cn('min-h-screens flex h-full flex-col', className)}>
@@ -52,18 +53,34 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
             href="/"
             prefetch="intent"
             variant="ghost"
-            className="w-full justify-start text-xs"
+            className={cn(
+              'w-full justify-start border-[1.5px] border-transparent text-xs',
+              location.pathname === '/home' && 'border-black font-semibold',
+            )}
           >
-            <HomeIcon className="mr-3 h-4 w-4" strokeWidth={2.1} />
+            <HomeIcon
+              className={cn(
+                'mr-3 h-4 w-4 stroke-[2.1px]',
+                location.pathname === '/home' && 'stroke-[2.5px]',
+              )}
+            />
             Beranda
           </ButtonLink>
           <ButtonLink
             href="/template"
             variant="ghost"
             prefetch="intent"
-            className="w-full justify-start text-xs"
+            className={cn(
+              'w-full justify-start border-[1.5px] border-transparent text-xs',
+              location.pathname === '/template' && 'border-black font-semibold',
+            )}
           >
-            <LayoutTemplate className="mr-3 h-4 w-4" strokeWidth={2.1} />
+            <LayoutTemplate
+              className={cn(
+                'mr-3 h-4 w-4 stroke-[2.1px]',
+                location.pathname === '/template' && 'stroke-[2.5px]',
+              )}
+            />
             Template
           </ButtonLink>
           <div>
@@ -218,7 +235,7 @@ function Files() {
           <div className="from-background/30 absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80"></div>
         )}
         <div ref={topFileRef}></div>
-        <div className="mx-2 space-y-1 pb-6">
+        <div className="mx-2 pb-6">
           {!isPostEmpty ? (
             posts?.map((post, i) => (
               <ButtonLink
@@ -228,10 +245,9 @@ function Files() {
                 size="sm"
                 prefetch="intent"
                 className={clsx(
-                  'w-full justify-start rounded-sm text-xs font-normal',
+                  'w-full justify-start rounded-sm !py-5 text-xs font-normal',
                   location.pathname ===
-                    `/${getPostType(post.type)}/${post.id}` &&
-                    'bg-gray-100 hover:bg-gray-100',
+                    `/${getPostType(post.type)}/${post.id}` && 'bg-accent',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />

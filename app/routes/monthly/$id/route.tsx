@@ -19,6 +19,7 @@ import {getKindeSession, getUser} from '~/utils/session.server.ts'
 import {Summary, SummaryMobile} from './summary.tsx'
 import type {Post} from '@prisma/client'
 import Editor from '~/components/editor/index.tsx'
+import {Save} from 'lucide-react'
 
 type LoaderData = {
   post?: Post
@@ -228,8 +229,11 @@ function Index() {
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
-          <Button size="sm" onClick={() => console.log(content)}>
-            Save
+          <Button size="sm" className="w-full">
+            <div className="flex items-center gap-2">
+              <Save size={16} />
+              Save
+            </div>
           </Button>
         </Header>
         <div className="mt-2">
