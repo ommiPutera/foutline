@@ -1,7 +1,8 @@
-import {PageIcon} from '../board/card-item.tsx'
-import {Button} from '../ui/button.tsx'
 
-function Header({children}: {children: React.ReactNode}) {
+import { PageIcon } from '~/routes/home/card-item.tsx'
+import { Button } from '../ui/button.tsx'
+
+function Header({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex max-h-9 items-center justify-between">
       <div className="flex items-center gap-2">
@@ -20,4 +21,4 @@ function Header({children}: {children: React.ReactNode}) {
   )
 }
 
-export {Header}
+export { Header }
