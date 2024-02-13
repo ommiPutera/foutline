@@ -1,7 +1,7 @@
 import {cssBundleHref} from '@remix-run/css-bundle'
 import {
   json,
-  type DataFunctionArgs,
+  type LoaderFunctionArgs,
   type LinksFunction,
   type MetaFunction,
   type SerializeFrom,
@@ -33,7 +33,7 @@ export const handle: {id: string} = {
   id: 'root',
 }
 
-export async function loader({request}: DataFunctionArgs) {
+export async function loader({request}: LoaderFunctionArgs) {
   const [themeSession, kindeSession, userFromSession] = await Promise.all([
     getThemeSession(request),
     getKindeSession(request),

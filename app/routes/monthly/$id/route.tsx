@@ -1,4 +1,4 @@
-import {json, redirect, type DataFunctionArgs} from '@remix-run/node'
+import {json, redirect, type LoaderFunctionArgs} from '@remix-run/node'
 import {useLoaderData, useLocation} from '@remix-run/react'
 import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
@@ -16,9 +16,10 @@ import {UpdatePocket} from '~/components/templates/dialogs.tsx'
 import {Button} from '~/components/ui/button.tsx'
 
 import type {Post} from '@prisma/client'
-import {Save} from 'lucide-react'
+
 import {getNumberFromString} from '~/utils/get-number-from-string.ts'
 import {getKindeSession, getUser} from '~/utils/session.server.ts'
+
 import {Summary, SummaryMobile} from './summary.tsx'
 
 type LoaderData = {
@@ -38,7 +39,7 @@ export type PocketsValues = {
   dataExpenses: (JSONContent | undefined)[]
 }
 
-export async function loader({request, params}: DataFunctionArgs) {
+export async function loader({request, params}: LoaderFunctionArgs) {
   const {isAuthenticated} = await getKindeSession(request)
   if (!isAuthenticated) throw new Response('Not found', {status: 404})
 
@@ -236,7 +237,7 @@ function Index() {
   }, [location.pathname, reset])
 
   return (
-    <div className="flex max-h-[90vh]" stat-data={postId}>
+    <div className="mb-44 flex max-h-[90vh] lg:mb-0" stat-data={postId}>
       <div className="hidden md:block ">
         <Summary
           incomesValues={incomesValues}
@@ -244,27 +245,27 @@ function Index() {
           pocketsValues={pocketsValues}
         />
       </div>
-      <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
-        <Header>
-          <Button
-            size="sm"
-            className="w-full"
-            onClick={() => console.log(content)}
-          >
-            <div className="flex items-center gap-2">
-              <Save size={16} />
-              Save
-            </div>
-          </Button>
-        </Header>
-        <div className="mt-2">
-          <Editor
-            type="MONTHLY"
-            getData={getData}
-            defaultContent={content}
-            // @ts-ignore
-            post={post}
-          />
+      <div className="flex w-full justify-center">
+        <div className="border-border flex w-full max-w-lg flex-col gap-4 overflow-hidden rounded-2xl border shadow-xl md:gap-3">
+          <div>
+            <Editor
+              type="MONTHLY"
+              getData={getData}
+              defaultContent={content}
+              // @ts-ignore
+              post={post}
+            />
+          </div>
+          <Header>
+            <Button
+              size="sm"
+              className="w-full"
+              variant="secondary"
+              onClick={() => console.log(content)}
+            >
+              <div className="flex items-center gap-2">Selesai</div>
+            </Button>
+          </Header>
         </div>
       </div>
       <PageData>

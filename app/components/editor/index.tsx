@@ -26,7 +26,9 @@ function Editor({
 
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
   const editorRef = React.useRef<HTMLDivElement>(null)
+  const topFileRef = React.useRef(null)
 
+  const [isScroll, setIsScroll] = React.useState(false)
   const [hydrated, setHydrated] = React.useState(false)
 
   const getExtensions = () => {
@@ -66,9 +68,20 @@ function Editor({
     }
   }, [editor, location.pathname, post?.content])
 
+  React.useEffect(() => {
+    if (!topFileRef?.current) return
+    const observer = new IntersectionObserver(function (entries) {
+      for (let entry of entries) {
+        if (entry.isIntersecting) setIsScroll(false)
+        else setIsScroll(true)
+      }
+    })
+    observer.observe(topFileRef.current)
+  }, [])
+
   return (
     <div className="relative">
-      <div className="bg-background top-0 z-20 w-full pr-4 md:sticky">
+      <div className="bg-background top-0 w-full px-5 py-4 md:sticky">
         <TextareaAutosize
           ref={titletRef}
           onKeyDown={e => {
@@ -81,15 +94,23 @@ function Editor({
           maxLength={512}
           autoComplete="off"
           placeholder="Judul"
-          className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-semibold leading-tight placeholder:font-normal focus:outline-none"
+          className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
         />
       </div>
-      <ScrollArea className="h-[70vh]">
+      <ScrollArea className="h-[50vh] lg:h-[70vh]">
+        {/* <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div> */}
+        {isScroll && (
+          <div className="from-background/30 absolute top-0 -mt-1 h-6 w-full bg-gradient-to-t to-gray-100/80"></div>
+        )}
+        {isScroll && (
+          <div className="from-background/30 absolute bottom-0 -mt-1 h-6 w-full bg-gradient-to-b to-gray-100/80"></div>
+        )}
+        <div ref={topFileRef}></div>
         <div
           onClick={() => {
             editor?.chain().focus().run()
           }}
-          className="max-w-screen-l relative mt-4 min-h-[200px] w-full pr-6 sm:mb-[calc(20vh)]"
+          className="max-w-screen-l relative w-full px-5 pr-6 sm:mb-[calc(20vh)]"
         >
           {editor ? (
             <>

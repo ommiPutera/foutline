@@ -24,10 +24,12 @@ function Board() {
   return (
     <div className="flex md:gap-4">
       <div className="flex w-full flex-col gap-4 md:gap-3 lg:pr-4">
-        {posts?.length ? <Tools /> : <></>}
         {posts?.length ? (
-          // @ts-ignore
-          <Cards posts={posts} />
+          <>
+            <Tools />
+            {/* @ts-ignore */}
+            <Cards posts={posts} />
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center gap-6 py-14">
             <div className="bg-muted-foreground/20 border-muted-foreground/30 rounded-full border p-4">

@@ -121,9 +121,14 @@ function CardItem(post: Post) {
   )
 }
 
-function PageIcon() {
+function PageIcon({className}: {className?: string}) {
   return (
-    <div className="flex h-5 w-5 items-center justify-center rounded-sm border border-orange-400 bg-gradient-to-tr from-orange-500 to-orange-300">
+    <div
+      className={cn(
+        'flex h-5 w-5 items-center justify-center rounded-sm border border-orange-400 bg-gradient-to-tr from-orange-500 to-orange-300',
+        className,
+      )}
+    >
       <ShoppingBag className="h-3.5 w-3.5" color="#fff" />
     </div>
   )

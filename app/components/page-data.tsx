@@ -19,14 +19,12 @@ function PageData({children}: {children: React.ReactNode}) {
   return (
     <div>
       <div className="bg-background fixed inset-x-0 bottom-0 flex w-full justify-between gap-2 border-t px-3 md:hidden">
-        <div className="border-border flex-1 border-r py-3 pb-12">
-          {children}
-        </div>
+        <div className="flex-1 py-3 pb-12">{children}</div>
         <div className="flex-1 py-3 pb-12">
           <PageMobile />
         </div>
       </div>
-      <div className="hidden h-full xl:block xl:border-l xl:pl-4">
+      <div className="hidden h-full xl:block xl:pl-4">
         <Page />
       </div>
     </div>

@@ -1,8 +1,7 @@
 import {
-  json,
   redirect,
   type ActionFunctionArgs,
-  type DataFunctionArgs,
+  type LoaderFunctionArgs,
 } from '@remix-run/node'
 import {useLocation} from '@remix-run/react'
 
@@ -39,16 +38,15 @@ export async function action({request}: ActionFunctionArgs) {
   }
 }
 
-export {Board as default}
-
-export async function loader({request}: DataFunctionArgs) {
+export async function loader({request}: LoaderFunctionArgs) {
   const user = await getUser(request)
   if (!user) throw new Response('Not found', {status: 404})
   const posts: Post[] = await user?.posts
 
-  const data: LoaderData = {posts}
-  return json(data)
+  return {posts}
 }
+
+export {Board as default}
 
 export function ErrorBoundary() {
   const location = useLocation()
