@@ -246,7 +246,11 @@ function Index() {
       </div>
       <div className="flex w-full flex-col gap-4 md:gap-3 md:px-4">
         <Header>
-          <Button size="sm" className="w-full">
+          <Button
+            size="sm"
+            className="w-full"
+            onClick={() => console.log(content)}
+          >
             <div className="flex items-center gap-2">
               <Save size={16} />
               Save

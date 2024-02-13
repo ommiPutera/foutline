@@ -222,17 +222,15 @@ function Files() {
         'border-border mx-3 overflow-x-hidden rounded-md border-[1px]',
       )}
     >
-      {!isPostEmpty && (
-        <div className="flex flex-col gap-2 py-5">
-          <div className="relative flex items-center px-5">
-            <GalleryHorizontalEnd className="mr-3 h-4 w-4" />
-            <h4 className="text-xs font-semibold leading-none">
-              Koleksi Halaman
-            </h4>
-          </div>
+      <div className="flex flex-col gap-2 py-5">
+        <div className="relative flex items-center px-5">
+          <GalleryHorizontalEnd className="mr-3 h-4 w-4" />
+          <h4 className="text-xs font-semibold leading-none">
+            Koleksi Halaman
+          </h4>
         </div>
-      )}
-      <ScrollArea className={cn('h-[240px]', isPostEmpty && 'h-[140px]')}>
+      </div>
+      <ScrollArea className="h-[240px]">
         {isScroll && !isPostEmpty && (
           <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div>
         )}
@@ -273,9 +271,6 @@ function EmptyState() {
   return (
     <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
       <div className="flex flex-col justify-center gap-4">
-        <h4 className="relative px-5 text-xs font-semibold leading-none">
-          Koleksi Halaman
-        </h4>
         <p className="text-muted-foreground max-w-[180px] text-xs">
           Semua daftar halaman akan mudah di akeses disini
         </p>

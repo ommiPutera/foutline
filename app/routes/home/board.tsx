@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {useLoaderData} from '@remix-run/react'
 
 import type {Post} from '@prisma/client'
@@ -14,7 +16,6 @@ import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import CardItem from './card-item.tsx'
 import type {LoaderData} from './route.tsx'
-import React from 'react'
 
 function Board() {
   const {posts} = useLoaderData<LoaderData>()
@@ -41,7 +42,7 @@ function Board() {
               disabled={!value}
               to={`/${value}/templates`}
               prefetch="intent"
-              variant="outline"
+              variant="secondary"
               className="w-full lg:w-[684px]"
             >
               Lanjutkan

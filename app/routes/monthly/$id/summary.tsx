@@ -49,9 +49,9 @@ function Summary({
   const freeCash = totalIncome - totalExpense
 
   return (
-    <div className="mt-[1px] h-full md:ml-2 md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
+    <div className="mt-[1px] h-full md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
       <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 md:ml-2">
           <div>
             <div className="flex items-center text-xs font-semibold">
               Data halaman anda
@@ -95,7 +95,7 @@ function Summary({
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex items-center text-xs font-semibold">
-            Kantong
+            <p className="md:ml-2">Kantong</p>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="transparent" size="icon">

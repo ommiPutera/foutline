@@ -1,6 +1,9 @@
 import clsx from 'clsx'
-import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
 import React from 'react'
+import _ from 'lodash'
+
+import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
+
 import {Button, ButtonLink} from '../ui/button.tsx'
 import {
   Dialog,
@@ -12,10 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import {Toggle} from '../ui/toggle.tsx'
 import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
-import _ from 'lodash'
-import {ToggleGroup} from '../ui/toggle-group.tsx'
+import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
+
 import {
   BasicNotes,
   Debt,
@@ -25,7 +27,9 @@ import {
   RegularSaving,
 } from './selects.tsx'
 import {PocketGroup} from './pocket.tsx'
+
 import {rupiah} from '~/utils/currency.ts'
+
 import type {PocketsValues} from '~/routes/monthly/$id/route.tsx'
 
 function CreatePostDialog({
@@ -97,8 +101,14 @@ function Content({
 }) {
   return (
     <div className="flex flex-col gap-4 py-4">
-      <div className="flex w-full items-center gap-4">
-        <Toggle className="flex h-full w-1/2 flex-1 flex-col items-start gap-4 rounded-md p-4 text-left data-[state=on]:border-slate-500">
+      <ToggleGroup
+        type="single"
+        className="grid w-full grid-cols-1 gap-2 md:grid-cols-2"
+      >
+        <ToggleGroupItem
+          value="template"
+          className="flex h-full w-full flex-1 flex-col items-start gap-4 rounded-md p-4 text-left data-[state=on]:border-slate-500"
+        >
           <div className="flex h-7 w-7 items-center justify-center rounded-sm border border-slate-400 bg-gradient-to-br from-slate-500 to-slate-300">
             <Grid3X3 className="h-5 w-5" color="#fff" />
           </div>
@@ -108,10 +118,11 @@ function Content({
               Buat halaman dengan template yang telah disediakan
             </p>
           </div>
-        </Toggle>
+        </ToggleGroupItem>
         <Tooltip>
-          <TooltipTrigger className="h-full w-1/2">
-            <Toggle
+          <TooltipTrigger asChild className="h-full w-full">
+            <ToggleGroupItem
+              value="comunity"
               disabled
               className="flex h-full flex-1 flex-col items-start gap-4 rounded-md p-4 text-left data-[state=on]:border-teal-500"
             >
@@ -126,7 +137,7 @@ function Content({
                   Buat halaman berdasarkan koleksi dari pengguna lain
                 </p>
               </div>
-            </Toggle>
+            </ToggleGroupItem>
           </TooltipTrigger>
           <TooltipContent side="top">
             <div className="flex items-center gap-1">
@@ -135,7 +146,7 @@ function Content({
             </div>
           </TooltipContent>
         </Tooltip>
-      </div>
+      </ToggleGroup>
       <ToggleGroup
         type="single"
         className="grid w-full grid-cols-1 gap-2 md:grid-cols-3"
