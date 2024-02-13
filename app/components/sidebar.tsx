@@ -1,6 +1,6 @@
-import { cn } from '~/lib/utils.ts'
-import { Button, ButtonLink } from './ui/button.tsx'
-import { ScrollArea } from './ui/scroll-area.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Button, ButtonLink} from './ui/button.tsx'
+import {ScrollArea} from './ui/scroll-area.tsx'
 import React from 'react'
 import {
   FileClock,
@@ -20,9 +20,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import { CreatePostDialog } from './templates/dialogs.tsx'
-import { UserNav } from './user-nav.tsx'
-import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import {CreatePostDialog} from './templates/dialogs.tsx'
+import {UserNav} from './user-nav.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,19 +30,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.tsx'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip.tsx'
-import { Link, useLocation } from '@remix-run/react'
-import { Progress } from './ui/progress.tsx'
-import { Badge } from './ui/badge.tsx'
-import type { Post } from '@prisma/client'
-import { getPostType } from '~/utils/get-post-type.ts'
+import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
+import {Link, useLocation} from '@remix-run/react'
+import {Progress} from './ui/progress.tsx'
+import {Badge} from './ui/badge.tsx'
+import type {Post} from '@prisma/client'
+import {getPostType} from '~/utils/get-post-type.ts'
 import clsx from 'clsx'
-import { FavoriteButton } from '~/routes/home/card-item.tsx'
+import {FavoriteButton} from '~/routes/home/card-item.tsx'
 
-let example = [{ title: 'woi' }, { title: 'santai aja bang' }, { title: 'sloww bro' }]
+let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const { profile } = useRootLoader()
+export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
+  const {profile} = useRootLoader()
   const location = useLocation()
 
   return (
@@ -137,7 +137,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const { user } = useRootLoader()
+  const {user} = useRootLoader()
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
@@ -199,7 +199,7 @@ function Files() {
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
-  const { user } = useRootLoader()
+  const {user} = useRootLoader()
   const location = useLocation()
 
   const isPostEmpty = !user?.posts?.length
@@ -219,14 +219,14 @@ function Files() {
   return (
     <div
       className={cn(
-        'border-border mx-3 overflow-x-hidden rounded-md border-[1.5px]',
+        'border-border mx-3 overflow-x-hidden rounded-md border-[1px]',
       )}
     >
       {!isPostEmpty && (
         <div className="flex flex-col gap-2 py-5">
           <div className="relative flex items-center px-5">
             <GalleryHorizontalEnd className="mr-3 h-4 w-4" />
-            <h4 className="text-xs font-medium leading-none">
+            <h4 className="text-xs font-semibold leading-none">
               Koleksi Halaman
             </h4>
           </div>
@@ -252,8 +252,8 @@ function Files() {
                 className={clsx(
                   'w-full justify-start rounded-md !py-5 text-xs font-normal',
                   location.pathname ===
-                  `/${getPostType(post.type)}/${post.id}` &&
-                  'bg-accent font-semibold',
+                    `/${getPostType(post.type)}/${post.id}` &&
+                    'bg-accent font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
@@ -272,12 +272,12 @@ function Files() {
 function EmptyState() {
   return (
     <div className="mt-6 flex flex-col items-center gap-4 px-5 text-center">
-      <div className="flex flex-col gap-2">
-        <h4 className="relative px-5 text-xs font-medium leading-none">
+      <div className="flex flex-col justify-center gap-4">
+        <h4 className="relative px-5 text-xs font-semibold leading-none">
           Koleksi Halaman
         </h4>
-        <p className="max-w-[150px] text-[11px]">
-          Semua daftar halamanmu akan tampil disini.
+        <p className="text-muted-foreground max-w-[180px] text-xs">
+          Semua daftar halaman akan mudah di akeses disini
         </p>
       </div>
     </div>

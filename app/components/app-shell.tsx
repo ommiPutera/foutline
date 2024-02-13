@@ -42,38 +42,6 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
             </div>
             <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-4 py-6 md:mt-0 md:py-9">
               {children}
-              <div className="m-[3rem] mb-[8rem] mt-[5rem] flex flex-wrap items-center justify-center gap-3 md:mb-[2rem] md:justify-end md:gap-6">
-                <p className="text-muted-foreground text-center text-sm md:text-xs">
-                  Built by indie developer{' '}
-                  <Link
-                    to="https://www.linkedin.com/in/ommiputera"
-                    target="_blank"
-                    className="underline"
-                  >
-                    Ommi Putera
-                  </Link>
-                </p>
-                <p className="text-muted-foreground text-center text-sm md:text-xs">
-                  The source code is available on{' '}
-                  <Link
-                    to="https://github.com/ommiPutera/outline"
-                    target="_blank"
-                    className="underline"
-                  >
-                    Github
-                  </Link>
-                </p>
-                <p className="text-muted-foreground text-center text-sm md:text-xs">
-                  <Link to="/terms-condition" className="underline">
-                    Syarat & Ketentuan
-                  </Link>
-                </p>
-                <p className="text-muted-foreground text-center text-sm md:text-xs">
-                  <Link to="/privacy-policy" className="underline">
-                    Kebijakan privasi
-                  </Link>
-                </p>
-              </div>
             </div>
           </div>
         </div>
