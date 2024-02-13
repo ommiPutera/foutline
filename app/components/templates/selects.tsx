@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import {icons} from 'lucide-react'
 import {ToggleGroupItem} from '../ui/toggle-group.tsx'
 
-function BasicNotes() {
+function BasicNotes({disabled = true}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled
+      disabled={disabled}
       title="Catatan biasa"
       color="blue"
       value="basic-notes"
@@ -13,10 +13,10 @@ function BasicNotes() {
     />
   )
 }
-function RegularSaving() {
+function RegularSaving({disabled = true}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled
+      disabled={disabled}
       title="Tabungan rutin"
       color="green"
       value="regular-saving"
@@ -24,10 +24,10 @@ function RegularSaving() {
     />
   )
 }
-function Investment() {
+function Investment({disabled = true}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled
+      disabled={disabled}
       title="Investasi"
       color="teal"
       value="investment"
@@ -35,10 +35,10 @@ function Investment() {
     />
   )
 }
-function MonthlyExpenses() {
+function MonthlyExpenses({disabled = false}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled={false}
+      disabled={disabled}
       title="Keuangan bulanan"
       color="orange"
       value="monthly"
@@ -46,10 +46,10 @@ function MonthlyExpenses() {
     />
   )
 }
-function Debt() {
+function Debt({disabled = true}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled
+      disabled={disabled}
       title="Hutang"
       color="red"
       value="debt"
@@ -57,10 +57,10 @@ function Debt() {
     />
   )
 }
-function EmergencyFund() {
+function EmergencyFund({disabled = true}: {disabled?: boolean}) {
   return (
     <PageSelectItem
-      disabled
+      disabled={disabled}
       title="Dana darurat"
       color="cyan"
       value="emergency-fund"

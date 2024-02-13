@@ -17,7 +17,7 @@ import {
 } from '@remix-run/react'
 
 import AppShell from '~/components/app-shell.tsx'
-import Footer from '~/components/footer.tsx'
+// import Footer from '~/components/footer.tsx'
 import Navbar from '~/components/navbar.tsx'
 import {TooltipProvider} from '~/components/ui/tooltip.tsx'
 
@@ -151,7 +151,7 @@ function App() {
       <body>
         <Navbar />
         <OutletWithShell />
-        <Footer />
+        {/* <Footer /> */}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

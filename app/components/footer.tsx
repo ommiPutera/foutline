@@ -10,25 +10,13 @@ function Footer() {
 
   if (isAuthenticated) return <></>
   return (
-    <footer className="bg-background mt-auto">
-      <div className="use-matter mx-auto flex h-16 max-w-screen-2xl flex-wrap items-center md:h-24">
+    <footer className="bg-muted/50">
+      <div className="use-matter mx-auto flex max-w-screen-xl flex-wrap items-center">
         <div className="grid-rows-max-content px-5vw grid w-full grid-cols-4 gap-8 py-12 md:grid-cols-8 md:pb-32 md:pt-24 xl:grid-cols-12">
           <div className="col-span-full flex flex-col gap-5 md:col-span-2 xl:row-span-3">
             <Link to="/" className="w-fit">
               <Logo />
             </Link>
-            <div className="mt-1 text-sm">
-              Built by{' '}
-              <span>
-                <Link
-                  to="https://github.com/ommiPutera"
-                  target="_blank"
-                  className="underline"
-                >
-                  Ommi Putera
-                </Link>
-              </span>
-            </div>
           </div>
           <div className="col-span-2 mt-2 md:col-start-3 md:row-start-1 md:pb-32">
             <SitemapSection />

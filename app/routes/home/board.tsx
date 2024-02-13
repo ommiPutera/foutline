@@ -23,7 +23,7 @@ function Board() {
   return (
     <div className="flex md:gap-4">
       <div className="flex w-full flex-col gap-4 md:gap-3 lg:pr-4">
-        <Tools />
+        {posts?.length ? <Tools /> : <></>}
         {posts?.length ? (
           // @ts-ignore
           <Cards posts={posts} />

@@ -8,7 +8,12 @@ function ToggleTheme({className}: React.HTMLAttributes<HTMLDivElement>) {
   const systemTheme = getSystemTheme()
 
   return (
-    <div className={cn('flex w-fit gap-4 rounded-md border p-2', className)}>
+    <div
+      className={cn(
+        'flex w-fit gap-4 rounded-md border px-3 py-1.5',
+        className,
+      )}
+    >
       <Button
         size="icon-sm"
         variant="ghost"
