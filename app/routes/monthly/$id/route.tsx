@@ -1,5 +1,10 @@
-import {json, redirect, type LoaderFunctionArgs} from '@remix-run/node'
-import {useLoaderData, useLocation} from '@remix-run/react'
+import {
+  json,
+  redirect,
+  type LoaderFunctionArgs,
+  type ActionFunctionArgs,
+} from '@remix-run/node'
+import {Form, useLoaderData, useLocation} from '@remix-run/react'
 import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
 import _ from 'lodash'
@@ -21,6 +26,8 @@ import {getNumberFromString} from '~/utils/get-number-from-string.ts'
 import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
 import {Summary, SummaryMobile} from './summary.tsx'
+import {cn} from '~/lib/utils.ts'
+import {updateContent, updateTitle} from '~/utils/posts.server.ts'
 
 type LoaderData = {
   post?: Post
@@ -37,6 +44,37 @@ export type PocketsValues = {
   nominal: number
   dataIncomes: (JSONContent | undefined)[]
   dataExpenses: (JSONContent | undefined)[]
+}
+
+export enum FormType {
+  UPDATE_CONTENT = 'UPDATE_CONTENT',
+}
+
+export async function action({request}: ActionFunctionArgs) {
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+
+  console.log('formPayload: ', formPayload)
+
+  switch (formPayload._action) {
+    case FormType.UPDATE_CONTENT: {
+      if (
+        typeof formPayload.title !== 'string' ||
+        typeof formPayload.postId !== 'string' ||
+        typeof formPayload.postJSON !== 'string'
+      ) {
+        return {formError: `Form not submitted correctly.`}
+      }
+      await updateTitle({
+        id: formPayload.postId,
+        title: formPayload.title,
+      })
+      return await updateContent({
+        id: formPayload.postId,
+        content: JSON.parse(formPayload.postJSON),
+      })
+    }
+  }
 }
 
 export async function loader({request, params}: LoaderFunctionArgs) {
@@ -80,6 +118,8 @@ function Index() {
 
   const {valueToFire, setValueToFire} = useMonthlyStore()
 
+  const [pageTitle, setPageTitle] = React.useState<string>(post?.title ?? '')
+  const [isFocus, setIsFocus] = React.useState<Boolean>(false)
   const [content, setContent] = React.useState<any>(post?.content)
   const [data, setData] = React.useState<EditorType | undefined>(undefined)
 
@@ -94,13 +134,7 @@ function Index() {
 
   const reset = React.useCallback(() => {
     setData(undefined)
-    setCurrentPosition(0)
-    setIncomesValues([])
-    setExpensesValues([])
-    setContent(post?.content)
-    setValueToFire(0)
-    setPocketsValues(dataset)
-  }, [post?.content, setValueToFire])
+  }, [])
 
   const getPocket = (value: string) => {
     if (data) {
@@ -123,6 +157,7 @@ function Index() {
   }
 
   const getData = (data: EditorType) => {
+    console.log('geettt data')
     setData(data)
     const json = data.getJSON()
     const taskLists = _.filter(json.content, {type: 'taskList'})
@@ -188,6 +223,11 @@ function Index() {
       expensesValues.push(values)
     }
 
+    console.log('incomes: ', incomes)
+    console.log('expenses: ', expenses)
+    console.log('incomesValues: ', incomesValues)
+    console.log('expensesValues: ', expensesValues)
+
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
     setContent(json.content)
@@ -232,6 +272,7 @@ function Index() {
 
   React.useEffect(() => {
     if (location.pathname) {
+      console.log('resett')
       reset()
     }
   }, [location.pathname, reset])
@@ -246,25 +287,52 @@ function Index() {
         />
       </div>
       <div className="flex w-full justify-center">
-        <div className="border-border flex w-full max-w-lg flex-col gap-4 overflow-hidden rounded-2xl border shadow-xl md:gap-3">
+        <div
+          className={cn(
+            'border-border flex w-full max-w-lg flex-col gap-4 overflow-hidden rounded-2xl border bg-white md:gap-3',
+            isFocus && 'shadow-border border-muted-foreground/30 shadow-2xl',
+          )}
+        >
           <div>
             <Editor
               type="MONTHLY"
               getData={getData}
               defaultContent={content}
+              setPageTitle={setPageTitle}
+              cbFocus={() => {
+                setIsFocus(true)
+              }}
+              cbBlur={() => {
+                setIsFocus(false)
+              }}
               // @ts-ignore
               post={post}
             />
           </div>
           <Header>
-            <Button
-              size="sm"
-              className="w-full"
-              variant="secondary"
-              onClick={() => console.log(content)}
-            >
-              <div className="flex items-center gap-2">Selesai</div>
-            </Button>
+            <Form method="POST" className="w-full" action=".">
+              <Button
+                size="sm"
+                className="w-full"
+                variant="secondary"
+                type="submit"
+                onClick={() => console.log(content)}
+              >
+                <div className="flex items-center gap-2">Selesai</div>
+              </Button>
+              <input
+                type="hidden"
+                name="_action"
+                value={FormType.UPDATE_CONTENT}
+              />
+              <input
+                defaultValue={JSON.stringify(content)}
+                type="hidden"
+                name="postJSON"
+              />
+              <input type="hidden" name="postId" value={postId} />
+              <input type="hidden" name="title" value={pageTitle} />
+            </Form>
           </Header>
         </div>
       </div>

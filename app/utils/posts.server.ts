@@ -30,6 +30,36 @@ export async function createPost({
   return redirect(redirectTo + post.id ?? '')
 }
 
+export async function updateTitle({id, title}: {id: string; title: string}) {
+  return await prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      title,
+      updatedAt: new Date(),
+    },
+  })
+}
+
+export async function updateContent({
+  id,
+  content,
+}: {
+  id: string
+  content: string
+}) {
+  return await prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      content,
+      updatedAt: new Date(),
+    },
+  })
+}
+
 export async function deletePost({id}: {id: string}) {
   return await prisma.post.delete({where: {id: id}})
 }

@@ -16,11 +16,17 @@ function Editor({
   getData,
   defaultContent,
   post,
+  setPageTitle,
+  cbFocus = () => null,
+  cbBlur = () => null,
 }: {
   type?: 'MONTHLY' | 'BASIC'
   getData: (data: EditorType) => null
   defaultContent: JSONContent | undefined
   post?: Post
+  setPageTitle: React.Dispatch<React.SetStateAction<string>>
+  cbFocus: () => void
+  cbBlur: () => void
 }) {
   const location = useLocation()
 
@@ -56,13 +62,15 @@ function Editor({
 
   React.useEffect(() => {
     if (editor && defaultContent && !hydrated) {
+      console.log('GASSSS')
       editor.commands.setContent(defaultContent)
       setHydrated(true)
     }
-  }, [editor, defaultContent, hydrated])
+  }, [editor, defaultContent, hydrated, getData])
 
   React.useEffect(() => {
     if (location.pathname && editor) {
+      getData(editor)
       // @ts-ignore
       editor.commands.setContent(post?.content)
     }
@@ -81,7 +89,7 @@ function Editor({
 
   return (
     <div className="relative">
-      <div className="bg-background top-0 w-full px-5 py-4 md:sticky">
+      <div className="top-0 w-full bg-white px-5 py-3 md:sticky">
         <TextareaAutosize
           ref={titletRef}
           onKeyDown={e => {
@@ -90,25 +98,37 @@ function Editor({
               editor?.chain().focus().run()
             }
           }}
+          onChange={e => {
+            setPageTitle(e.target.value)
+          }}
           defaultValue={post?.title}
           maxLength={512}
+          onFocus={() => {
+            cbFocus()
+          }}
+          onBlur={() => {
+            cbBlur()
+          }}
           autoComplete="off"
           placeholder="Judul"
           className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
         />
       </div>
       <ScrollArea className="h-[50vh] lg:h-[70vh]">
-        {/* <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div> */}
         {isScroll && (
-          <div className="from-background/30 absolute top-0 -mt-1 h-6 w-full bg-gradient-to-t to-gray-100/80"></div>
+          <div className="from-background/30 absolute top-0 z-20 -mt-1 h-8 w-full bg-gradient-to-t to-gray-200/60"></div>
         )}
         {isScroll && (
-          <div className="from-background/30 absolute bottom-0 -mt-1 h-6 w-full bg-gradient-to-b to-gray-100/80"></div>
+          <div className="from-background/30 absolute bottom-0 z-20 -mt-1 h-8 w-full bg-gradient-to-b to-gray-200/60"></div>
         )}
         <div ref={topFileRef}></div>
         <div
           onClick={() => {
             editor?.chain().focus().run()
+            cbFocus()
+          }}
+          onBlur={() => {
+            cbBlur()
           }}
           className="max-w-screen-l relative w-full px-5 pr-6 sm:mb-[calc(20vh)]"
         >

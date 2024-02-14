@@ -4,7 +4,7 @@ import {useLoaderData} from '@remix-run/react'
 
 import type {Post} from '@prisma/client'
 
-import {LayoutGrid, Lightbulb, List, Plus} from 'lucide-react'
+import {LayoutGrid, List, Plus} from 'lucide-react'
 
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -31,24 +31,27 @@ function Board() {
             <Cards posts={posts} />
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-6 py-14">
-            <div className="bg-muted-foreground/20 border-muted-foreground/30 rounded-full border p-4">
-              <Lightbulb className="stroke-muted-foreground h-7 w-7" />
-            </div>
-            <p className="text-muted-foreground text-left text-sm">
-              Daftar halaman yang Anda buat akan muncul di sini..
-            </p>
-            <div className="bg-muted h-[1px] w-full lg:w-[684px]"></div>
+          <div className="flex flex-col items-center justify-center gap-6 py-20">
             <CreatePostContent value={value} setValue={setValue} />
             <ButtonLink
               disabled={!value}
               to={`/${value}/templates`}
               prefetch="intent"
-              variant="secondary"
+              variant="outline"
               className="w-full lg:w-[684px]"
             >
               Lanjutkan
             </ButtonLink>
+            <div className="bg-muted h-[1px] w-full lg:w-[684px]"></div>
+            <div className="flex max-w-sm flex-col gap-3 text-center">
+              <h4 className="text-base font-medium">
+                Halaman yang Anda buat akan muncul di sini..
+              </h4>
+              <p className="text-muted-foreground text-sm">
+                Semua perhitungan keuangan anda telah di enkripsi, semua
+                informasi keuangan anda aman dan terproteksi.
+              </p>
+            </div>
           </div>
         )}
       </div>
