@@ -4,7 +4,7 @@ import {
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
 } from '@remix-run/node'
-import {Form, useLoaderData, useLocation} from '@remix-run/react'
+import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
 import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
 import _ from 'lodash'
@@ -53,8 +53,6 @@ export enum FormType {
 export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
-
-  console.log('formPayload: ', formPayload)
 
   switch (formPayload._action) {
     case FormType.UPDATE_CONTENT: {
@@ -116,10 +114,12 @@ function Index() {
   const location = useLocation()
   const {postId, post} = useLoaderData<LoaderData>()
 
+  const fetcher = useFetcher()
+
   const {valueToFire, setValueToFire} = useMonthlyStore()
 
   const [pageTitle, setPageTitle] = React.useState<string>(post?.title ?? '')
-  const [isFocus, setIsFocus] = React.useState<Boolean>(false)
+  const [isFocus, setIsFocus] = React.useState<boolean>(false)
   const [content, setContent] = React.useState<any>(post?.content)
   const [data, setData] = React.useState<EditorType | undefined>(undefined)
 
@@ -131,10 +131,6 @@ function Index() {
 
   const [pocketsValues, setPocketsValues] =
     React.useState<PocketsValues[]>(dataset)
-
-  const reset = React.useCallback(() => {
-    setData(undefined)
-  }, [])
 
   const getPocket = (value: string) => {
     if (data) {
@@ -157,7 +153,6 @@ function Index() {
   }
 
   const getData = (data: EditorType) => {
-    console.log('geettt data')
     setData(data)
     const json = data.getJSON()
     const taskLists = _.filter(json.content, {type: 'taskList'})
@@ -223,11 +218,6 @@ function Index() {
       expensesValues.push(values)
     }
 
-    console.log('incomes: ', incomes)
-    console.log('expenses: ', expenses)
-    console.log('incomesValues: ', incomesValues)
-    console.log('expensesValues: ', expensesValues)
-
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
     setContent(json.content)
@@ -272,13 +262,12 @@ function Index() {
 
   React.useEffect(() => {
     if (location.pathname) {
-      console.log('resett')
-      reset()
+      setIsFocus(false)
     }
-  }, [location.pathname, reset])
+  }, [location.pathname])
 
   return (
-    <div className="mb-44 flex max-h-[90vh] lg:mb-0" stat-data={postId}>
+    <div className="flex h-full lg:mb-0" stat-data={postId}>
       <div className="hidden md:block ">
         <Summary
           incomesValues={incomesValues}
@@ -286,10 +275,10 @@ function Index() {
           pocketsValues={pocketsValues}
         />
       </div>
-      <div className="flex w-full justify-center">
+      <div className="mb-44 flex w-full justify-center">
         <div
           className={cn(
-            'border-border flex w-full max-w-lg flex-col gap-4 overflow-hidden rounded-2xl border bg-white md:gap-3',
+            'border-border flex h-fit w-full max-w-lg flex-col gap-4 overflow-hidden rounded-xl border bg-white md:gap-3',
             isFocus && 'shadow-border border-muted-foreground/30 shadow-2xl',
           )}
         >
@@ -302,21 +291,28 @@ function Index() {
               cbFocus={() => {
                 setIsFocus(true)
               }}
-              cbBlur={() => {
-                setIsFocus(false)
-              }}
               // @ts-ignore
               post={post}
             />
           </div>
-          <Header>
-            <Form method="POST" className="w-full" action=".">
+          <div
+            className={cn(
+              'bg-muted-foreground/20 h-[0.5px] w-full',
+              !isFocus && 'hidden',
+            )}
+          ></div>
+          <Header className={cn(!isFocus && 'hidden')}>
+            <fetcher.Form method="POST" className="w-full">
               <Button
                 size="sm"
                 className="w-full"
                 variant="secondary"
                 type="submit"
-                onClick={() => console.log(content)}
+                onFocus={() => {
+                  setTimeout(() => {
+                    setIsFocus(false)
+                  }, 1000)
+                }}
               >
                 <div className="flex items-center gap-2">Selesai</div>
               </Button>
@@ -332,7 +328,7 @@ function Index() {
               />
               <input type="hidden" name="postId" value={postId} />
               <input type="hidden" name="title" value={pageTitle} />
-            </Form>
+            </fetcher.Form>
           </Header>
         </div>
       </div>

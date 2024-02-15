@@ -1,8 +1,19 @@
+import {cn} from '~/lib/utils.ts'
 import {Button} from '../ui/button.tsx'
 
-function Header({children}: {children: React.ReactNode}) {
+function Header({
+  children,
+  className,
+  ...props
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <div className="mx-5 my-3 flex max-h-9 items-center justify-between">
+    <div
+      className={cn('mx-5 mb-3 flex items-center justify-between', className)}
+      {...props}
+    >
       <Button size="sm" variant="secondary">
         Cancel
       </Button>

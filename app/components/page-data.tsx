@@ -34,7 +34,7 @@ function PageData({children}: {children: React.ReactNode}) {
 function PageMobile() {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant="transparent" size="default">
           Informasi halaman
         </Button>

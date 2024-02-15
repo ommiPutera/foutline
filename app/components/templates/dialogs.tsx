@@ -191,7 +191,9 @@ function UpdatePocket({
           <PocketGroup
             dataset={dataset}
             onChange={onChange}
-            onClose={() => setIsOpen(false)}
+            onClose={() => {
+              setIsOpen(false)
+            }}
           />
         </div>
       </DialogContent>
