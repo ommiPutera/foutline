@@ -47,7 +47,6 @@ function Summary({
   const totalIncome = _.sum(incomesValues)
   const totalExpense = _.sum(expensesValues)
   const freeCash = totalIncome - totalExpense
-
   return (
     <div className="mt-[1px] h-full md:pr-4 lg:min-w-[210px] lg:max-w-[210px]">
       <div className="flex flex-col gap-12">

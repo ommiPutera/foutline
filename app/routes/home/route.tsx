@@ -41,6 +41,7 @@ export async function action({request}: ActionFunctionArgs) {
 export async function loader({request}: LoaderFunctionArgs) {
   const user = await getUser(request)
   if (!user) throw new Response('Not found', {status: 404})
+
   const posts: Post[] = await user?.posts
 
   return {posts}

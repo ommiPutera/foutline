@@ -136,7 +136,7 @@ function MobileMenuList({isOpen}: {isOpen: boolean}) {
 
   return (
     <PopoverPortal>
-      <PopoverContent className="mt-5 h-screen w-screen overflow-y-scroll rounded-none border-x-0 border-b-0 border-t pb-32">
+      <PopoverContent className="mt-5 h-screen w-screen rounded-none border-x-0 border-b-0 border-t pb-32">
         <div className="mt-4 flex flex-col gap-8">
           <div className="flex flex-col gap-3">
             <ButtonLink to="/login" variant="outline">

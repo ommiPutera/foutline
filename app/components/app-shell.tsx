@@ -25,7 +25,7 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className="bg-background h-full">
       <div className="flex">
-        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] overflow-scroll border-r md:block">
+        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] border-r md:block">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">

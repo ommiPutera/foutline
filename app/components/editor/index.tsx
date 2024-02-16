@@ -81,7 +81,7 @@ function Editor({
 
   return (
     <div className="relative">
-      <div className="top-0 w-full bg-white px-5 py-3 md:sticky">
+      <div className="top-0 w-full bg-white px-5 py-3 dark:bg-zinc-950 md:sticky">
         <TextareaAutosize
           ref={titletRef}
           onKeyDown={e => {

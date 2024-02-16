@@ -59,6 +59,8 @@ export function UserNav({
           <ToggleTheme className="w-full" />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+
+        <ToggleTheme className="w-full" />
         <DropdownMenuGroup>
           <Link to="/user/account" prefetch="intent">
             <DropdownMenuItem>

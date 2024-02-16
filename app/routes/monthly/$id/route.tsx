@@ -16,7 +16,6 @@ import Editor from '~/components/editor/index.tsx'
 import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
-import {Header} from '~/components/page/header.tsx'
 import {UpdatePocket} from '~/components/templates/dialogs.tsx'
 import {Button} from '~/components/ui/button.tsx'
 
@@ -268,7 +267,7 @@ function Index() {
 
   return (
     <div className="flex h-full lg:mb-0" stat-data={postId}>
-      <div className="hidden md:block ">
+      <div className="hidden md:fixed md:top-9 md:block">
         <Summary
           incomesValues={incomesValues}
           expensesValues={expensesValues}
@@ -278,7 +277,7 @@ function Index() {
       <div className="mb-44 flex w-full justify-center">
         <div
           className={cn(
-            'border-border flex h-fit w-full max-w-lg flex-col gap-4 overflow-hidden rounded-xl border bg-white md:gap-3',
+            'border-border flex h-fit w-full max-w-lg flex-col gap-4 overflow-hidden rounded-xl border bg-white dark:bg-zinc-950 md:gap-3',
             isFocus && 'shadow-border border-muted-foreground/30 shadow-2xl',
           )}
         >
@@ -301,11 +300,22 @@ function Index() {
               !isFocus && 'hidden',
             )}
           ></div>
-          <Header className={cn(!isFocus && 'hidden')}>
-            <fetcher.Form method="POST" className="w-full">
+          <div className={cn('w-full px-4 pb-3', !isFocus && 'hidden')}>
+            <fetcher.Form
+              method="POST"
+              className="flex w-full items-center justify-between"
+            >
+              <Button
+                onClick={() => setIsFocus(false)}
+                size="sm"
+                variant="secondary"
+                className="w-fit"
+              >
+                Batalkan
+              </Button>
               <Button
                 size="sm"
-                className="w-full"
+                className="w-fit"
                 variant="secondary"
                 type="submit"
                 onFocus={() => {
@@ -329,18 +339,20 @@ function Index() {
               <input type="hidden" name="postId" value={postId} />
               <input type="hidden" name="title" value={pageTitle} />
             </fetcher.Form>
-          </Header>
+          </div>
         </div>
       </div>
-      <PageData>
-        <SummaryMobile>
-          <Summary
-            incomesValues={incomesValues}
-            expensesValues={expensesValues}
-            pocketsValues={pocketsValues}
-          />
-        </SummaryMobile>
-      </PageData>
+      <div className="md:fixed md:right-0 md:top-9">
+        <PageData>
+          <SummaryMobile>
+            <Summary
+              incomesValues={incomesValues}
+              expensesValues={expensesValues}
+              pocketsValues={pocketsValues}
+            />
+          </SummaryMobile>
+        </PageData>
+      </div>
       <UpdatePocket
         value={valueToFire}
         isOpen={isOpen}

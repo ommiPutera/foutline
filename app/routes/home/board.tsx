@@ -31,7 +31,7 @@ function Board() {
             <Cards posts={posts} />
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-6 py-20">
+          <div className="flex flex-col items-center justify-center gap-6 md:py-20">
             <CreatePostContent value={value} setValue={setValue} />
             <ButtonLink
               disabled={!value}
@@ -42,12 +42,12 @@ function Board() {
             >
               Lanjutkan
             </ButtonLink>
-            <div className="bg-muted h-[1px] w-full lg:w-[684px]"></div>
-            <div className="flex max-w-sm flex-col gap-3 text-center">
-              <h4 className="text-base font-medium">
+            <div className="bg-muted hidden h-[1px] w-full md:block lg:w-[684px]"></div>
+            <div className="hidden max-w-sm flex-col gap-2 text-center md:flex">
+              <h4 className="text-sm font-medium">
                 Halaman yang Anda buat akan muncul di sini..
               </h4>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-sm font-light">
                 Semua perhitungan keuangan anda telah di enkripsi, semua
                 informasi keuangan anda aman dan terproteksi.
               </p>

@@ -1,18 +1,18 @@
-import {cn} from '~/lib/utils.ts'
+import React from 'react'
+
+import {Link, useLocation} from '@remix-run/react'
+import type {Post} from '@prisma/client'
+
 import {Button, ButtonLink} from './ui/button.tsx'
 import {ScrollArea} from './ui/scroll-area.tsx'
-import React from 'react'
 import {
-  FileClock,
   FileKey2,
   FileText,
   GalleryHorizontalEnd,
-  HomeIcon,
-  LayoutTemplate,
   MoreVertical,
   Plus,
   Settings,
-  Trash2,
+  icons,
 } from 'lucide-react'
 import {
   Accordion,
@@ -20,69 +20,46 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {CreatePostDialog} from './templates/dialogs.tsx'
 import {UserNav} from './user-nav.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+
+import {CreatePostDialog} from './templates/dialogs.tsx'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from './ui/tooltip.tsx'
-import {Link, useLocation} from '@remix-run/react'
-import {Progress} from './ui/progress.tsx'
-import {Badge} from './ui/badge.tsx'
-import type {Post} from '@prisma/client'
-import {getPostType} from '~/utils/get-post-type.ts'
-import clsx from 'clsx'
+} from '~/components/ui/dropdown-menu.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/ui/tooltip.tsx'
+import {Progress} from '~/components/ui/progress.tsx'
+import {Badge} from '~/components/ui/badge.tsx'
+
 import {FavoriteButton} from '~/routes/home/card-item.tsx'
 
-let example = [{title: 'woi'}, {title: 'santai aja bang'}, {title: 'sloww bro'}]
+import {cn} from '~/lib/utils.ts'
+import {getPostType} from '~/utils/get-post-type.ts'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+
+import clsx from 'clsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
-  const location = useLocation()
 
   return (
     <div className={cn('min-h-screens flex h-full flex-col', className)}>
       <div className="mb-12 flex flex-col justify-between space-y-4 py-6">
         <div className="flex-1 place-content-start px-3 py-2">
-          <ButtonLink
-            href="/home"
-            prefetch="intent"
-            variant="ghost"
-            className={cn(
-              'w-full justify-start text-xs',
-              location.pathname === '/home' && 'bg-black/5 font-semibold',
-            )}
-          >
-            <HomeIcon
-              className={cn(
-                'mr-3 h-4 w-4 stroke-[2.1px]',
-                location.pathname === '/home' && 'stroke-[2.5px]',
-              )}
-            />
-            Beranda
-          </ButtonLink>
-          <ButtonLink
+          <NavItem href="/home" iconName="Home" title="Beranda" />
+          <NavItem
             href="/template"
-            variant="ghost"
-            prefetch="intent"
-            className={cn(
-              'w-full justify-start text-xs',
-              location.pathname === '/template' && 'bg-black/5 font-semibold',
-            )}
-          >
-            <LayoutTemplate
-              className={cn(
-                'mr-3 h-4 w-4 stroke-[2.1px]',
-                location.pathname === '/template' && 'stroke-[2.5px]',
-              )}
-            />
-            Template
-          </ButtonLink>
+            iconName="LayoutTemplate"
+            title="Template"
+          />
           <div>
             <CreatePostDialog>
               <Button
@@ -103,14 +80,9 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="flex-1 place-content-end px-3 py-2">
           <Favorite />
-          <Button variant="ghost" className="w-full justify-start text-xs">
-            <FileClock className="mr-3 h-4 w-4" />
-            Draf
-          </Button>
-          <Button variant="ghost" className="w-full justify-start text-xs">
-            <Trash2 className="mr-3 h-4 w-4" />
-            Sampah
-          </Button>
+          <NavItem href="/drafs" iconName="FileClock" title="Draf" />
+          <NavItem href="/settings" iconName="Settings2" title="Pengaturan" />
+          <NavItem href="/trash" iconName="Trash2" title="Sampah" />
         </div>
       </div>
       <div className="bg-background sticky bottom-0 mt-auto h-fit w-full">
@@ -143,7 +115,7 @@ function Favorite() {
   )
 
   const contentRef = React.useRef(null)
-  const isPostEmpty = !example?.length
+  const isPostEmpty = !posts?.length
 
   return (
     <Accordion type="single" collapsible>
@@ -219,7 +191,7 @@ function Files() {
   return (
     <div
       className={cn(
-        'border-border mx-3 overflow-x-hidden rounded-md border-[1px]',
+        'border-border mx-3 overflow-hidden rounded-md border-[1px]',
       )}
     >
       <div className="flex flex-col gap-2 py-5">
@@ -319,5 +291,38 @@ function More() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+function NavItem({
+  href,
+  iconName,
+  title,
+}: {
+  href: string
+  iconName: keyof typeof icons
+  title: string
+}) {
+  const location = useLocation()
+  const Icon = icons[iconName]
+
+  return (
+    <ButtonLink
+      href={href}
+      prefetch="intent"
+      variant="ghost"
+      className={cn(
+        'w-full justify-start text-xs',
+        location.pathname === href && 'bg-black/5 font-semibold',
+      )}
+    >
+      <Icon
+        className={cn(
+          'mr-3 h-4 w-4 stroke-[2.1px]',
+          location.pathname === href && 'stroke-[2.5px]',
+        )}
+      />
+      {title}
+    </ButtonLink>
   )
 }

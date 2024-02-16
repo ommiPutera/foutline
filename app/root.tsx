@@ -113,9 +113,9 @@ export const links: LinksFunction = () => [
 ]
 
 export default function AppWithProviders() {
-  const data = useLoaderData<LoaderData>()
+  const {requestInfo} = useLoaderData<LoaderData>()
   return (
-    <ThemeProvider specifiedTheme={data?.requestInfo?.session.theme}>
+    <ThemeProvider specifiedTheme={requestInfo?.session.theme}>
       <TooltipProvider delayDuration={100}>
         <App />
       </TooltipProvider>
