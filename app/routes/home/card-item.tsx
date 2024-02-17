@@ -1,19 +1,9 @@
-import {
-  ArrowUpRight,
-  MoreHorizontal,
-  ShoppingBag,
-  Star,
-  Trash,
-} from 'lucide-react'
-
-import type { TooltipContentProps } from '@radix-ui/react-tooltip'
+import {ShoppingBag} from 'lucide-react'
 
 import clsx from 'clsx'
-import _ from 'lodash'
 import React from 'react'
-import { create } from 'zustand'
+import {create} from 'zustand'
 
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -21,24 +11,19 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card.tsx'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '~/components/ui/popover.tsx'
-import { SelectSeparator } from '~/components/ui/select.tsx'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-import type { Post } from '@prisma/client'
-import { Link, useLocation, useSubmit } from '@remix-run/react'
+import type {Post} from '@prisma/client'
+import {Link, useLocation} from '@remix-run/react'
 
-import { cn } from '~/lib/utils.ts'
-import { getPostType } from '~/utils/get-post-type.ts'
-import { FormType } from './route.tsx'
+import {cn} from '~/lib/utils.ts'
+import More from './more.tsx'
+import Favorite from './favorite.tsx'
 
 interface CardState {
   idCardFocus: string
@@ -47,12 +32,12 @@ interface CardState {
 
 const useCardStore = create<CardState>(set => ({
   idCardFocus: '',
-  setIdCardFocus: id => set(() => ({ idCardFocus: id })),
+  setIdCardFocus: id => set(() => ({idCardFocus: id})),
 }))
 
 function CardItem(post: Post) {
-  const { id, preview, title } = post
-  const { idCardFocus, setIdCardFocus } = useCardStore()
+  const {id, preview, title} = post
+  const {idCardFocus, setIdCardFocus} = useCardStore()
   const location = useLocation()
 
   React.useEffect(() => {
@@ -75,16 +60,16 @@ function CardItem(post: Post) {
             <div>
               <PageIcon />
             </div>
-            <div className="mt-[1px] line-clamp-2 w-full text-xs text-black font-semibold">
+            <div className="mt-[1px] line-clamp-2 w-full text-xs font-semibold text-black">
               {title}
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="relative bg-monthly-background py-4">
+        <CardContent className="bg-monthly-background relative py-4">
           <ContentPreview content={preview ?? ''} />
           <div className="from-monthly-background to-monthly-background/30 absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
         </CardContent>
-        <CardFooter className="justify-between gap-2 py-2.5 bg-monthly-background">
+        <CardFooter className="bg-monthly-background justify-between gap-2 py-2.5">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -121,7 +106,7 @@ function CardItem(post: Post) {
   )
 }
 
-function PageIcon({ className }: { className?: string }) {
+function PageIcon({className}: {className?: string}) {
   return (
     <div
       className={cn(
@@ -134,62 +119,10 @@ function PageIcon({ className }: { className?: string }) {
   )
 }
 
-function Favorite({
-  tooltipText,
-  defaultValue = false,
-  side,
-  callBack,
-  size = 'default',
-}: {
-  tooltipText?: { active: string; notActive: string }
-  defaultValue?: boolean
-  side?: TooltipContentProps['side']
-  callBack?: () => void
-  size?: 'sm' | 'default'
-}) {
-  const [isFavorited, setIsFavorited] = React.useState(defaultValue)
-  const [isHover, setIsHover] = React.useState(false)
-
-  const handleClick = () => {
-    setIsFavorited(!isFavorited)
-    if (typeof callBack === 'function') {
-      callBack()
-    }
-  }
-
-  return (
-    <Tooltip disableHoverableContent open={isHover}>
-      <TooltipTrigger asChild>
-        <Button
-          size="icon"
-          onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
-          onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
-          onClick={handleClick}
-          variant="transparent"
-          className={clsx(
-            'h-5 w-5 hover:[&:has(svg)]:before:bg-[#FFA500]/10 [&:hover>svg]:text-[#FFA500]',
-            {
-              'h-5 w-5 [&:has(svg)]:text-[#FFA500]': isFavorited,
-            },
-          )}
-        >
-          <Star
-            size={size === 'sm' ? 12 : 14}
-            className={cn("", isFavorited ? 'stroke-[#FFA500] fill-[#FFA500]' : 'stroke-black fill-transparent')}
-          />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent side={side}>
-        <p>{isFavorited ? tooltipText?.active : tooltipText?.notActive}</p>
-      </TooltipContent>
-    </Tooltip>
-  )
-}
-
-function ContentPreview({ content }: { content: string | JSX.Element }) {
+function ContentPreview({content}: {content: string | JSX.Element}) {
   if (typeof content === 'string')
     return (
-      <div className="line-clamp-6 text-[11px] leading-4 md:text-xs text-black md:leading-snug">
+      <div className="line-clamp-6 text-[11px] leading-4 text-black md:text-xs md:leading-snug">
         {content}
       </div>
     )
@@ -200,58 +133,5 @@ function ContentPreview({ content }: { content: string | JSX.Element }) {
   )
 }
 
-function More({ id, type }: Post) {
-  const { setIdCardFocus } = useCardStore()
-  return (
-    <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
-      <div className="flex h-full">
-        <PopoverTrigger asChild>
-          <Button size="icon" variant="transparent" className="rounded-full">
-            <MoreHorizontal className="h-4 w-4 stroke-black" />
-          </Button>
-        </PopoverTrigger>
-      </div>
-      <PopoverContent
-        className="h-fit w-48 p-0"
-        align="end"
-        side="right"
-        forceMount
-      >
-        <div className="my-2">
-          <ButtonLink
-            to={`/${getPostType(type)}/${id}`}
-            prefetch="intent"
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start rounded-none px-3"
-          >
-            <ArrowUpRight size="16" className="mr-2" />
-            <span>Buka halaman</span>
-          </ButtonLink>
-        </div>
-        <SelectSeparator className="z-0" />
-        <div className="my-2">
-          <Remove id={id} />
-        </div>
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-function Remove({ id }: { id: Post['id'] }) {
-  const submit = useSubmit()
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => submit({ id, _action: FormType.DELETE }, { method: 'POST' })}
-      className="w-full justify-start rounded-none px-3"
-    >
-      <Trash size="16" className="mr-2" />
-      <span>Pindahkan ke sampah</span>
-    </Button>
-  )
-}
-
 export default CardItem
-export { Favorite as FavoriteButton, PageIcon }
+export {PageIcon, useCardStore}

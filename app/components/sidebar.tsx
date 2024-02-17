@@ -39,7 +39,7 @@ import {
 import {Progress} from '~/components/ui/progress.tsx'
 import {Badge} from '~/components/ui/badge.tsx'
 
-import {FavoriteButton} from '~/routes/home/card-item.tsx'
+import FavoriteButton from '~/routes/home/favorite.tsx'
 
 import {cn} from '~/lib/utils.ts'
 import {getPostType} from '~/utils/get-post-type.ts'
@@ -80,7 +80,6 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="flex-1 place-content-end px-3 py-2">
           <Favorite />
-          <NavItem href="/drafs" iconName="FileClock" title="Draf" />
           <NavItem href="/settings" iconName="Settings2" title="Pengaturan" />
           <NavItem href="/trash" iconName="Trash2" title="Sampah" />
         </div>

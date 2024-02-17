@@ -1,26 +1,26 @@
-import type { ActionFunction } from '@remix-run/node'
-import { Form } from '@remix-run/react'
+import type {ActionFunction} from '@remix-run/node'
+import {Form} from '@remix-run/react'
 import React from 'react'
 
-import { Button } from '~/components/ui/button.tsx'
-import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group.tsx'
+import {Button} from '~/components/ui/button.tsx'
+import {ToggleGroup, ToggleGroupItem} from '~/components/ui/toggle-group.tsx'
 
-import { createPost } from '~/utils/posts.server.ts'
-import { getUser } from '~/utils/session.server.ts'
+import {createPost} from '~/utils/posts.server.ts'
+import {getUser} from '~/utils/session.server.ts'
 
-import { previewTemp1, previewTemp2, temp1, temp2 } from './resource.tsx'
-import { PageIcon } from '~/routes/home/card-item.tsx'
+import {previewTemp1, previewTemp2, temp1, temp2} from './resource.tsx'
+import {PageIcon} from '~/routes/home/card-item.tsx'
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({request}) => {
   const formData = await request.formData()
 
   const user = await getUser(request)
-  if (!user) return { formError: 'invalid' }
+  if (!user) return {formError: 'invalid'}
 
-  const { templateId } = Object.fromEntries(formData)
+  const {templateId} = Object.fromEntries(formData)
 
   if (typeof templateId !== 'string') {
-    return { formError: `Form not submitted correctly.` }
+    return {formError: `Form not submitted correctly.`}
   }
 
   let content
@@ -73,10 +73,18 @@ function Templates() {
           onValueChange={v => setValue(v)}
           value={value}
         >
-          <Card value="temp1" title="Kosong" description="Catat keuangan Anda mulai dari halaman kosong" />
-          <Card value="temp2" title="Freelance dan Gaji Pokok" description="Anda adalah Freelancer sekaligus Pegawai tetap?" />
+          <Card
+            value="temp1"
+            title="Kosong"
+            description="Catat keuangan Anda mulai dari halaman kosong"
+          />
+          <Card
+            value="temp2"
+            title="Freelance dan Gaji Pokok"
+            description="Anda adalah Freelancer sekaligus Pegawai tetap?"
+          />
         </ToggleGroup>
-        <div className="sticky bottom-0 mt-12 border-t bg-background py-8">
+        <div className="bg-background sticky bottom-0 mt-12 border-t py-8">
           <div className="flex w-full items-center justify-between gap-3 md:justify-end">
             <Button
               type="button"
@@ -96,7 +104,15 @@ function Templates() {
   )
 }
 
-function Card({ value, title, description }: { value: string, title: string, description: string }) {
+function Card({
+  value,
+  title,
+  description,
+}: {
+  value: string
+  title: string
+  description: string
+}) {
   return (
     <div className="group col-span-1 flex h-full cursor-pointer flex-col gap-3">
       <ToggleGroupItem
@@ -112,12 +128,8 @@ function Card({ value, title, description }: { value: string, title: string, des
         </div>
       </ToggleGroupItem>
       <div className="flex flex-col gap-1 md:px-4">
-        <h5 className="text-sm font-medium">
-          {title}
-        </h5>
-        <p className="text-xs">
-          {description}
-        </p>
+        <h5 className="text-sm font-medium">{title}</h5>
+        <p className="text-xs">{description}</p>
       </div>
     </div>
   )

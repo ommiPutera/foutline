@@ -4,29 +4,29 @@ import {
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
 } from '@remix-run/node'
-import { useFetcher, useLoaderData, useLocation } from '@remix-run/react'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
 import _ from 'lodash'
 import React from 'react'
-import { create } from 'zustand'
+import {create} from 'zustand'
 
-import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
+import {usePositionStore} from '~/components/editor/extensions/monthly.tsx'
 import Editor from '~/components/editor/index.tsx'
-import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
-import { ErrorPage } from '~/components/errors.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
-import { UpdatePocket } from '~/components/templates/dialogs.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {UpdatePocket} from '~/components/templates/dialogs.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { getNumberFromString } from '~/utils/get-number-from-string.ts'
-import { getKindeSession, getUser } from '~/utils/session.server.ts'
+import {getNumberFromString} from '~/utils/get-number-from-string.ts'
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
-import { Summary, SummaryMobile } from './summary.tsx'
-import { cn } from '~/lib/utils.ts'
-import { updateContent, updateTitle } from '~/utils/posts.server.ts'
+import {Summary, SummaryMobile} from './summary.tsx'
+import {cn} from '~/lib/utils.ts'
+import {updateContent, updateTitle} from '~/utils/posts.server.ts'
 
 type LoaderData = {
   post?: Post
@@ -49,7 +49,7 @@ export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
@@ -60,7 +60,7 @@ export async function action({ request }: ActionFunctionArgs) {
         typeof formPayload.postId !== 'string' ||
         typeof formPayload.postJSON !== 'string'
       ) {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
       await updateTitle({
         id: formPayload.postId,
@@ -74,24 +74,24 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 }
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { isAuthenticated } = await getKindeSession(request)
-  if (!isAuthenticated) throw new Response('Not found', { status: 404 })
+export async function loader({request, params}: LoaderFunctionArgs) {
+  const {isAuthenticated} = await getKindeSession(request)
+  if (!isAuthenticated) throw new Response('Not found', {status: 404})
 
-  const { id } = params
+  const {id} = params
   const user = await getUser(request)
   const post: Post = await user.posts.filter(
-    (item: { id: string }) => item.id === id,
+    (item: {id: string}) => item.id === id,
   )[0]
 
   if (!id || !post) return redirect('/')
-  const data: LoaderData = { post: post, postId: id }
+  const data: LoaderData = {post: post, postId: id}
   return json(data)
 }
 
 export const useMonthlyStore = create<MonthlyState>(set => ({
   valueToFire: 0,
-  setValueToFire: value => set(() => ({ valueToFire: value })),
+  setValueToFire: value => set(() => ({valueToFire: value})),
 }))
 
 const dataset = [
@@ -111,11 +111,11 @@ const dataset = [
 
 function Index() {
   const location = useLocation()
-  const { postId, post } = useLoaderData<LoaderData>()
+  const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
-  const { valueToFire, setValueToFire } = useMonthlyStore()
+  const {valueToFire, setValueToFire} = useMonthlyStore()
 
   const [pageTitle, setPageTitle] = React.useState<string>(post?.title ?? '')
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
@@ -135,7 +135,7 @@ function Index() {
     if (data) {
       data
         .chain()
-        .command(({ tr }) => {
+        .command(({tr}) => {
           const currentNode = tr.doc.nodeAt(currentPosition)
           tr.setNodeMarkup(currentPosition, undefined, {
             ...currentNode?.attrs,
@@ -154,7 +154,7 @@ function Index() {
   const getData = (data: EditorType) => {
     setData(data)
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: 'taskList' })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
@@ -163,7 +163,7 @@ function Index() {
     if (position) {
       data
         .chain()
-        .command(({ tr }) => {
+        .command(({tr}) => {
           const currentNode = tr.doc.nodeAt(position)
           // @ts-ignore
           const value = getValues(currentNode?.content?.content[0]?.content)
@@ -197,10 +197,10 @@ function Index() {
     }
 
     const incomes = _.filter(taskItems, {
-      attrs: { for: 'monthly-income', checked: true },
+      attrs: {for: 'monthly-income', checked: true},
     })
     const expenses = _.filter(taskItems, {
-      attrs: { for: 'monthly-expense', checked: true },
+      attrs: {for: 'monthly-expense', checked: true},
     })
 
     let incomesValues: number[] = []
@@ -226,7 +226,7 @@ function Index() {
 
   const getPocketData = (data: EditorType) => {
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: 'taskList' })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     let taskItems = []
     for (var taskList of taskLists) {
@@ -243,10 +243,10 @@ function Index() {
     for (var pocket of dataset) {
       if (!taskItems) break
       const itemIncomes = _.filter(taskItems, {
-        attrs: { pocket: pocket.name, for: 'monthly-income', checked: true },
+        attrs: {pocket: pocket.name, for: 'monthly-income', checked: true},
       })
       const itemExpenses = _.filter(taskItems, {
-        attrs: { pocket: pocket.name, for: 'monthly-expense', checked: true },
+        attrs: {pocket: pocket.name, for: 'monthly-expense', checked: true},
       })
       pockets.push({
         name: pocket.name,
@@ -261,13 +261,12 @@ function Index() {
 
   React.useEffect(() => {
     if (location.pathname) {
-
       if (postId) {
         fetcher.submit({
           _action: FormType.UPDATE_CONTENT,
           postId: postId,
           title: pageTitle,
-          postJSON: JSON.stringify(content)
+          postJSON: JSON.stringify(content),
         })
         console.log('heree')
       }
@@ -320,7 +319,7 @@ function Index() {
                 size="sm"
                 variant="secondary"
                 className="w-fit"
-                type='button'
+                type="button"
               >
                 Batalkan
               </Button>
