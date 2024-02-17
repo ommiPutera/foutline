@@ -6,14 +6,14 @@ import {
   Trash,
 } from 'lucide-react'
 
-import type {TooltipContentProps} from '@radix-ui/react-tooltip'
+import type { TooltipContentProps } from '@radix-ui/react-tooltip'
 
 import clsx from 'clsx'
 import _ from 'lodash'
 import React from 'react'
-import {create} from 'zustand'
+import { create } from 'zustand'
 
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -26,19 +26,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import {SelectSeparator} from '~/components/ui/select.tsx'
+import { SelectSeparator } from '~/components/ui/select.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-import type {Post} from '@prisma/client'
-import {Link, useLocation, useSubmit} from '@remix-run/react'
+import type { Post } from '@prisma/client'
+import { Link, useLocation, useSubmit } from '@remix-run/react'
 
-import {cn} from '~/lib/utils.ts'
-import {getPostType} from '~/utils/get-post-type.ts'
-import {FormType} from './route.tsx'
+import { cn } from '~/lib/utils.ts'
+import { getPostType } from '~/utils/get-post-type.ts'
+import { FormType } from './route.tsx'
 
 interface CardState {
   idCardFocus: string
@@ -47,12 +47,12 @@ interface CardState {
 
 const useCardStore = create<CardState>(set => ({
   idCardFocus: '',
-  setIdCardFocus: id => set(() => ({idCardFocus: id})),
+  setIdCardFocus: id => set(() => ({ idCardFocus: id })),
 }))
 
 function CardItem(post: Post) {
-  const {id, preview, title} = post
-  const {idCardFocus, setIdCardFocus} = useCardStore()
+  const { id, preview, title } = post
+  const { idCardFocus, setIdCardFocus } = useCardStore()
   const location = useLocation()
 
   React.useEffect(() => {
@@ -75,16 +75,16 @@ function CardItem(post: Post) {
             <div>
               <PageIcon />
             </div>
-            <div className="mt-[1px] line-clamp-2 w-full text-xs font-semibold">
+            <div className="mt-[1px] line-clamp-2 w-full text-xs text-black font-semibold">
               {title}
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="from-monthly-background to-background/20 relative bg-gradient-to-b pb-4">
+        <CardContent className="relative bg-monthly-background py-4">
           <ContentPreview content={preview ?? ''} />
-          <div className="from-background to-monthly-background/20 absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
+          <div className="from-monthly-background to-monthly-background/30 absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
         </CardContent>
-        <CardFooter className="justify-between gap-2 py-2.5">
+        <CardFooter className="justify-between gap-2 py-2.5 bg-monthly-background">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -121,7 +121,7 @@ function CardItem(post: Post) {
   )
 }
 
-function PageIcon({className}: {className?: string}) {
+function PageIcon({ className }: { className?: string }) {
   return (
     <div
       className={cn(
@@ -141,7 +141,7 @@ function Favorite({
   callBack,
   size = 'default',
 }: {
-  tooltipText?: {active: string; notActive: string}
+  tooltipText?: { active: string; notActive: string }
   defaultValue?: boolean
   side?: TooltipContentProps['side']
   callBack?: () => void
@@ -175,7 +175,7 @@ function Favorite({
         >
           <Star
             size={size === 'sm' ? 12 : 14}
-            className={clsx({'fill-[#FFA500]': isFavorited})}
+            className={cn("", isFavorited ? 'stroke-[#FFA500] fill-[#FFA500]' : 'stroke-black fill-transparent')}
           />
         </Button>
       </TooltipTrigger>
@@ -186,10 +186,10 @@ function Favorite({
   )
 }
 
-function ContentPreview({content}: {content: string | JSX.Element}) {
+function ContentPreview({ content }: { content: string | JSX.Element }) {
   if (typeof content === 'string')
     return (
-      <div className="line-clamp-6 text-[11px] leading-4 md:text-xs md:leading-snug">
+      <div className="line-clamp-6 text-[11px] leading-4 md:text-xs text-black md:leading-snug">
         {content}
       </div>
     )
@@ -200,14 +200,14 @@ function ContentPreview({content}: {content: string | JSX.Element}) {
   )
 }
 
-function More({id, type}: Post) {
-  const {setIdCardFocus} = useCardStore()
+function More({ id, type }: Post) {
+  const { setIdCardFocus } = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
         <PopoverTrigger asChild>
           <Button size="icon" variant="transparent" className="rounded-full">
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="h-4 w-4 stroke-black" />
           </Button>
         </PopoverTrigger>
       </div>
@@ -238,13 +238,13 @@ function More({id, type}: Post) {
   )
 }
 
-function Remove({id}: {id: Post['id']}) {
+function Remove({ id }: { id: Post['id'] }) {
   const submit = useSubmit()
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
+      onClick={() => submit({ id, _action: FormType.DELETE }, { method: 'POST' })}
       className="w-full justify-start rounded-none px-3"
     >
       <Trash size="16" className="mr-2" />
@@ -254,4 +254,4 @@ function Remove({id}: {id: Post['id']}) {
 }
 
 export default CardItem
-export {Favorite as FavoriteButton, PageIcon}
+export { Favorite as FavoriteButton, PageIcon }
