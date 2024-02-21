@@ -190,7 +190,7 @@ function Files() {
   return (
     <div
       className={cn(
-        'border-border mx-3 overflow-hidden rounded-md border-[1px]',
+        'border-border mx-3 overflow-hidden rounded-xl border-[1px]',
       )}
     >
       <div className="flex flex-col gap-2 py-5">

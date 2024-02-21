@@ -25,7 +25,7 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className="bg-background h-full">
       <div className="flex">
-        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] border-r md:block">
+        <div className="border-border fixed z-50 hidden h-full w-fit max-w-[var(--sidebar-width)] border-r shadow-sm md:block">
           <Sidebar />
         </div>
         <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
@@ -40,7 +40,7 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
               </div>
               <MobileSidebar />
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-3 py-6 md:mt-0 md:py-9">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-3.5 py-6 md:mt-0 md:py-9">
               {children}
             </div>
           </div>

@@ -4,29 +4,29 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@remix-run/node'
-import { useFetcher, useLoaderData, useLocation } from '@remix-run/react'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
 import _ from 'lodash'
 import React from 'react'
-import { create } from 'zustand'
+import {create} from 'zustand'
 
-import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
+import {usePositionStore} from '~/components/editor/extensions/monthly.tsx'
 import Editor from '~/components/editor/index.tsx'
-import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
-import { ErrorPage } from '~/components/errors.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
 import PageData from '~/components/page-data.tsx'
-import { UpdatePocket } from '~/components/templates/dialogs.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {UpdatePocket} from '~/components/templates/dialogs.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { getNumberFromString } from '~/utils/get-number-from-string.ts'
-import { updateContent, updateTitle } from '~/utils/posts.server.ts'
-import { getKindeSession, getUser } from '~/utils/session.server.ts'
+import {getNumberFromString} from '~/utils/get-number-from-string.ts'
+import {updateContent, updateTitle} from '~/utils/posts.server.ts'
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
-import { cn } from '~/lib/utils.ts'
-import { Summary, SummaryMobile } from './summary.tsx'
+import {cn} from '~/lib/utils.ts'
+import {Summary, SummaryMobile} from './summary.tsx'
 
 type LoaderData = {
   post?: Post
@@ -49,7 +49,7 @@ export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
@@ -60,7 +60,7 @@ export async function action({ request }: ActionFunctionArgs) {
         typeof formPayload.postId !== 'string' ||
         typeof formPayload.postJSON !== 'string'
       ) {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
       await updateTitle({
         id: formPayload.postId,
@@ -75,24 +75,24 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 }
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { isAuthenticated } = await getKindeSession(request)
-  if (!isAuthenticated) throw new Response('Not found', { status: 404 })
+export async function loader({request, params}: LoaderFunctionArgs) {
+  const {isAuthenticated} = await getKindeSession(request)
+  if (!isAuthenticated) throw new Response('Not found', {status: 404})
 
-  const { id } = params
+  const {id} = params
   const user = await getUser(request)
   const post: Post = await user.posts.filter(
-    (item: { id: string }) => item.id === id,
+    (item: {id: string}) => item.id === id,
   )[0]
 
   if (!id || !post) return redirect('/')
-  const data: LoaderData = { post: post, postId: id }
+  const data: LoaderData = {post: post, postId: id}
   return json(data)
 }
 
 export const useMonthlyStore = create<MonthlyState>(set => ({
   valueToFire: 0,
-  setValueToFire: value => set(() => ({ valueToFire: value })),
+  setValueToFire: value => set(() => ({valueToFire: value})),
 }))
 
 const dataset = [
@@ -111,13 +111,13 @@ const dataset = [
 ]
 
 function Index() {
-  const { postId, post } = useLoaderData<LoaderData>()
+  const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
   const formRef = React.useRef(null)
 
-  const { valueToFire, setValueToFire } = useMonthlyStore()
+  const {valueToFire, setValueToFire} = useMonthlyStore()
 
   const [pageTitle, setPageTitle] = React.useState<string>(post?.title ?? '')
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
@@ -137,7 +137,7 @@ function Index() {
     if (data) {
       data
         .chain()
-        .command(({ tr }) => {
+        .command(({tr}) => {
           const currentNode = tr.doc.nodeAt(currentPosition)
           tr.setNodeMarkup(currentPosition, undefined, {
             ...currentNode?.attrs,
@@ -156,7 +156,7 @@ function Index() {
   const getData = (data: EditorType) => {
     setData(data)
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: 'taskList' })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
@@ -165,7 +165,7 @@ function Index() {
     if (position) {
       data
         .chain()
-        .command(({ tr }) => {
+        .command(({tr}) => {
           const currentNode = tr.doc.nodeAt(position)
           // @ts-ignore
           const value = getValues(currentNode?.content?.content[0]?.content)
@@ -199,10 +199,10 @@ function Index() {
     }
 
     const incomes = _.filter(taskItems, {
-      attrs: { for: 'monthly-income', checked: true },
+      attrs: {for: 'monthly-income', checked: true},
     })
     const expenses = _.filter(taskItems, {
-      attrs: { for: 'monthly-expense', checked: true },
+      attrs: {for: 'monthly-expense', checked: true},
     })
 
     let incomesValues: number[] = []
@@ -228,7 +228,7 @@ function Index() {
 
   const getPocketData = (data: EditorType) => {
     const json = data.getJSON()
-    const taskLists = _.filter(json.content, { type: 'taskList' })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     let taskItems = []
     for (var taskList of taskLists) {
@@ -245,10 +245,10 @@ function Index() {
     for (var pocket of dataset) {
       if (!taskItems) break
       const itemIncomes = _.filter(taskItems, {
-        attrs: { pocket: pocket.name, for: 'monthly-income', checked: true },
+        attrs: {pocket: pocket.name, for: 'monthly-income', checked: true},
       })
       const itemExpenses = _.filter(taskItems, {
-        attrs: { pocket: pocket.name, for: 'monthly-expense', checked: true },
+        attrs: {pocket: pocket.name, for: 'monthly-expense', checked: true},
       })
       pockets.push({
         name: pocket.name,
@@ -262,18 +262,23 @@ function Index() {
   }
 
   return (
-    <div className="flex h-full lg:mb-0" stat-data={postId}>
-      <div className="hidden md:fixed md:top-9 md:block">
-        <Summary
-          incomesValues={incomesValues}
-          expensesValues={expensesValues}
-          pocketsValues={pocketsValues}
-        />
+    <div
+      className="mx-auto flex h-screen max-w-screen-lg lg:mb-0"
+      state-data={postId}
+    >
+      <div className="hidden w-full max-w-[280px] overflow-hidden md:block">
+        <div className="sticky top-0">
+          <Summary
+            incomesValues={incomesValues}
+            expensesValues={expensesValues}
+            pocketsValues={pocketsValues}
+          />
+        </div>
       </div>
       <div className="mb-44 flex w-full justify-center">
         <div
           className={cn(
-            'border-border flex h-fit w-full max-w-lg flex-col gap-4 rounded-xl border bg-white dark:bg-zinc-950 md:gap-3',
+            'border-border flex h-fit w-full max-w-lg flex-col gap-4 rounded-xl border bg-white dark:bg-zinc-900 md:gap-3',
             isFocus && 'shadow-border border-muted-foreground/30 shadow-3xl',
           )}
         >
@@ -305,7 +310,7 @@ function Index() {
               post={post}
             />
           </div>
-          <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-950">
+          <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-900">
             <div
               className={cn(
                 'bg-muted-foreground/30 h-[0.5px] w-full',
@@ -379,16 +384,18 @@ function Index() {
           </div>
         </div>
       </div>
-      <div className="hidden md:fixed md:right-0 md:top-9 md:mr-3 md:block">
-        <PageData>
-          <SummaryMobile>
-            <Summary
-              incomesValues={incomesValues}
-              expensesValues={expensesValues}
-              pocketsValues={pocketsValues}
-            />
-          </SummaryMobile>
-        </PageData>
+      <div className="hidden w-full max-w-[280px] overflow-hidden pl-4 md:block">
+        <div className="sticky top-0">
+          <PageData>
+            <SummaryMobile>
+              <Summary
+                incomesValues={incomesValues}
+                expensesValues={expensesValues}
+                pocketsValues={pocketsValues}
+              />
+            </SummaryMobile>
+          </PageData>
+        </div>
       </div>
       <UpdatePocket
         value={valueToFire}

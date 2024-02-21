@@ -84,79 +84,81 @@ function Editor({
 
   return (
     <div className="relative">
-      <div className="top-0 z-10 w-full rounded-t-xl bg-white px-5 py-3 dark:bg-zinc-950 md:sticky">
-        <TextareaAutosize
-          ref={titletRef}
-          onKeyDown={e => {
-            if (editor) {
-              if (e.key === 'Escape') {
-                e.preventDefault()
-                cbOnCancel(editor)
-              }
-              if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault()
-                cbOnSave(editor)
-              }
-              if (e.key === 'Enter' || e.key === 'ArrowDown') {
-                e.preventDefault()
-                editor?.chain().focus().run()
-              }
-            }
-          }}
-          onChange={e => {
-            setPageTitle(e.target.value)
-          }}
-          defaultValue={post?.title}
-          maxLength={512}
-          onFocus={() => {
-            cbFocus()
-          }}
-          autoComplete="off"
-          placeholder="Judul"
-          className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
-        />
-      </div>
-      <div ref={topFileRef}></div>
-      <div
-        onClick={() => {
-          editor?.chain().focus().run()
-          cbFocus()
-        }}
-        className="max-w-screen-l relative w-full px-5 pr-6 sm:pb-4"
-      >
-        {editor ? (
-          <>
-            <EditorBubbleMenu editor={editor} />
-            <EditorContent
-              ref={editorRef}
-              editor={editor}
-              onKeyUp={e => {
-                if (e.key === 'ArrowUp') {
-                  e.preventDefault()
-                  if (editor?.state.selection.$anchor.pos === 1) {
-                    titletRef.current?.focus()
+      {editor ? (
+        <div>
+          <div className="top-0 z-10 w-full rounded-t-xl bg-white px-5 py-3 dark:bg-zinc-900 md:sticky">
+            <TextareaAutosize
+              ref={titletRef}
+              onKeyDown={e => {
+                if (editor) {
+                  if (e.key === 'Escape') {
+                    e.preventDefault()
+                    cbOnCancel(editor)
+                  }
+                  if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+                    e.preventDefault()
+                    cbOnSave(editor)
+                  }
+                  if (e.key === 'Enter' || e.key === 'ArrowDown') {
+                    e.preventDefault()
+                    editor?.chain().focus().run()
                   }
                 }
               }}
-              onKeyDown={e => {
-                if (e.key === 'Escape') {
-                  e.preventDefault()
-                  cbOnCancel(editor)
-                }
-                if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-                  e.preventDefault()
-                  cbOnSave(editor)
-                }
+              onChange={e => {
+                setPageTitle(e.target.value)
               }}
+              defaultValue={post?.title}
+              maxLength={512}
               onFocus={() => {
                 cbFocus()
               }}
+              autoComplete="off"
+              placeholder="Judul"
+              className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
             />
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+          </div>
+          <div ref={topFileRef}></div>
+          <div
+            onClick={() => {
+              editor?.chain().focus().run()
+              cbFocus()
+            }}
+            className="max-w-screen-l relative w-full px-5 pr-6 sm:pb-4"
+          >
+            <div>
+              <EditorBubbleMenu editor={editor} />
+              <EditorContent
+                ref={editorRef}
+                editor={editor}
+                onKeyUp={e => {
+                  if (e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    if (editor?.state.selection.$anchor.pos === 1) {
+                      titletRef.current?.focus()
+                    }
+                  }
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Escape') {
+                    e.preventDefault()
+                    cbOnCancel(editor)
+                  }
+                  if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+                    e.preventDefault()
+                    cbOnSave(editor)
+                  }
+                }}
+                onFocus={() => {
+                  cbFocus()
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>loading..</div>
+      )}
     </div>
   )
 }

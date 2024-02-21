@@ -1,4 +1,4 @@
-import {ShoppingBag} from 'lucide-react'
+import {ArrowRightLeft} from 'lucide-react'
 
 import clsx from 'clsx'
 import React from 'react'
@@ -55,22 +55,22 @@ function CardItem(post: Post) {
         key={id}
         className={cn(
           'hover:border-muted-foreground/60 col-span-1 h-full cursor-pointer overflow-hidden border-[1px] md:h-fit',
-          idCardFocus === id && 'border-ring',
+          idCardFocus === id && 'border-muted-foreground/60',
         )}
       >
         <CardHeader className="bg-monthly-background pb-3">
-          <CardTitle className="items-first flex gap-2">
+          <CardTitle className="items-first flex gap-2.5">
             <div>
               <PageIcon />
             </div>
-            <div className="mt-[1px] line-clamp-2 w-full text-xs font-semibold text-black">
+            <div className="text-monthly mt-[-2.5px] line-clamp-2 w-full text-[13px] font-semibold leading-5">
               {title}
             </div>
           </CardTitle>
         </CardHeader>
         <CardContent className="bg-monthly-background relative py-4">
           <ContentPreview content={preview ?? ''} />
-          <div className="from-monthly-background to-monthly-background/30 absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
+          <div className="from-monthly-background to-monthly-background/30 text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
         </CardContent>
         <CardFooter className="bg-monthly-background justify-between gap-2 py-2.5">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
@@ -115,11 +115,11 @@ function PageIcon({className}: {className?: string}) {
   return (
     <div
       className={cn(
-        'flex h-5 w-5 items-center justify-center rounded-sm border border-orange-400 bg-gradient-to-tr from-orange-500 to-orange-300',
+        'flex h-4 w-4 items-center justify-center rounded-sm border border-orange-400 bg-gradient-to-tr from-orange-500 to-orange-300',
         className,
       )}
     >
-      <ShoppingBag className="h-3.5 w-3.5" color="#fff" />
+      <ArrowRightLeft className="h-2.5 w-2.5" color="#fff" />
     </div>
   )
 }
@@ -127,7 +127,7 @@ function PageIcon({className}: {className?: string}) {
 function ContentPreview({content}: {content: string | JSX.Element}) {
   if (typeof content === 'string')
     return (
-      <div className="line-clamp-6 text-[11px] leading-4 text-black md:text-xs md:leading-snug">
+      <div className="line-clamp-6 text-[11px] leading-4 text-black dark:text-white md:text-xs md:leading-snug">
         {content}
       </div>
     )

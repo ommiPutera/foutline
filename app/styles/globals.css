@@ -38,12 +38,12 @@
     --sidebar-width: 250px;
     --header-height: 59px;
 
-    --monthly: 36 100% 97%;
+    --monthly: 38 64% 37%;
     --monthly-background: 36 100% 97%;
   }
 
   .dark {
-    --background: 0 0% 0%;
+    --background: 240 10% 4%;
     --foreground: 60 9.1% 97.8%;
 
     --card: 20 14.3% 4.1%;
@@ -67,11 +67,13 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 60 9.1% 97.8%;
 
-    --border: 240 5% 7%;
+    --border: 240 4% 16%;
     --input: 216 8% 24%;
     --ring: 151 92% 30%;
 
     --header-height: 59px;
+    --monthly: 38 64% 37%;
+    --monthly-background: 30 13% 12%;
   }
 }
 

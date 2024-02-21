@@ -11,7 +11,7 @@ import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
 function Settings() {
   return (
-    <div className="border-border mx-auto max-w-screen-md rounded-xl border bg-white p-4 dark:bg-black/90">
+    <div className="border-border mx-auto max-w-screen-md rounded-xl border bg-white p-4 dark:bg-zinc-900">
       <h2 className="text-lg font-medium">Pengaturan</h2>
       <Separator className="my-4" />
       <ThemeSetting />
