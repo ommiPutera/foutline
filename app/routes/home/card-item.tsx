@@ -82,7 +82,7 @@ function CardItem(post: Post) {
                 <p>Status halaman</p>
               </TooltipContent>
             </Tooltip>
-            <div className="text-muted-foreground line-clamp-1 text-[10px] leading-none">
+            <div className="text-muted-foreground line-clamp-2 text-[10px]">
               {formatDistance(new Date(updatedAt), new Date(), {
                 addSuffix: true,
                 includeSeconds: true,
@@ -149,7 +149,6 @@ function CardBadge({status}: Pick<Post, 'status'>) {
         return 'Sedang berjalan'
     }
   }
-
   return (
     <div
       className={cn(

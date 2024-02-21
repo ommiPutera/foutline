@@ -169,15 +169,17 @@ function UpdatePocket({
   setIsOpen,
   onChange,
   dataset,
+  onOpenChange = () => null,
 }: {
   value: number
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   onChange: (value: string) => void
   dataset: PocketsValues[]
+  onOpenChange: () => void
 }) {
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={() => onOpenChange()}>
       <DialogTrigger></DialogTrigger>
       <DialogContent
         close={() => setIsOpen(false)}

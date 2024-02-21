@@ -219,14 +219,18 @@ function Files() {
                 size="sm"
                 prefetch="intent"
                 className={clsx(
-                  'w-full justify-start rounded-md !py-5 text-xs font-normal',
+                  'w-full justify-start rounded-md !py-5',
                   location.pathname ===
                     `/${getPostType(post.type)}/${post.id}` &&
                     'bg-accent font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
-                {post.title}
+                <p className="whitespace-nowrap text-xs font-normal">
+                  {post.title.length > 23
+                    ? `${post.title.substring(0, 23)}..`
+                    : post.title}
+                </p>
               </ButtonLink>
             ))
           ) : (
