@@ -17,6 +17,8 @@ function Editor({
   post,
   setPageTitle,
   cbFocus = () => null,
+  cbOnSave = () => null,
+  cbOnCancel = () => null,
 }: {
   type?: 'MONTHLY' | 'BASIC'
   getData: (data: EditorType) => null
@@ -24,6 +26,8 @@ function Editor({
   post?: Post
   setPageTitle: React.Dispatch<React.SetStateAction<string>>
   cbFocus: () => void
+  cbOnSave: (editor: EditorType) => void
+  cbOnCancel: (editor: EditorType) => void
 }) {
   const location = useLocation()
 
@@ -58,7 +62,6 @@ function Editor({
 
   React.useEffect(() => {
     if (editor && defaultContent && !hydrated) {
-      console.log('GASSSS')
       editor.commands.setContent(defaultContent)
       setHydrated(true)
     }
@@ -81,13 +84,23 @@ function Editor({
 
   return (
     <div className="relative">
-      <div className="top-0 w-full bg-white px-5 py-3 dark:bg-zinc-950 md:sticky">
+      <div className="top-0 z-10 w-full rounded-t-xl bg-white px-5 py-3 dark:bg-zinc-950 md:sticky">
         <TextareaAutosize
           ref={titletRef}
           onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === 'ArrowDown') {
-              e.preventDefault()
-              editor?.chain().focus().run()
+            if (editor) {
+              if (e.key === 'Escape') {
+                e.preventDefault()
+                cbOnCancel(editor)
+              }
+              if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault()
+                cbOnSave(editor)
+              }
+              if (e.key === 'Enter' || e.key === 'ArrowDown') {
+                e.preventDefault()
+                editor?.chain().focus().run()
+              }
             }
           }}
           onChange={e => {
@@ -123,6 +136,16 @@ function Editor({
                   if (editor?.state.selection.$anchor.pos === 1) {
                     titletRef.current?.focus()
                   }
+                }
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Escape') {
+                  e.preventDefault()
+                  cbOnCancel(editor)
+                }
+                if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+                  e.preventDefault()
+                  cbOnSave(editor)
                 }
               }}
               onFocus={() => {

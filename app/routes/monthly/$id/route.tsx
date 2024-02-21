@@ -110,10 +110,11 @@ const dataset = [
 ]
 
 function Index() {
-  const location = useLocation()
   const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
+
+  const formRef = React.useRef(null)
 
   const {valueToFire, setValueToFire} = useMonthlyStore()
 
@@ -259,21 +260,6 @@ function Index() {
     return null
   }
 
-  React.useEffect(() => {
-    if (location.pathname) {
-      if (postId) {
-        fetcher.submit({
-          _action: FormType.UPDATE_CONTENT,
-          postId: postId,
-          title: pageTitle,
-          postJSON: JSON.stringify(content),
-        })
-        console.log('heree')
-      }
-      setIsFocus(false)
-    }
-  }, [location.pathname])
-
   return (
     <div className="flex h-full lg:mb-0" stat-data={postId}>
       <div className="hidden md:fixed md:top-9 md:block">
@@ -286,8 +272,8 @@ function Index() {
       <div className="mb-44 flex w-full justify-center">
         <div
           className={cn(
-            'border-border flex h-fit w-full max-w-lg flex-col gap-4 overflow-hidden rounded-xl border bg-white dark:bg-zinc-950 md:gap-3',
-            isFocus && 'shadow-border border-muted-foreground/30 shadow-2xl',
+            'border-border flex h-fit w-full max-w-lg flex-col gap-4 rounded-xl border bg-white dark:bg-zinc-950 md:gap-3',
+            isFocus && 'shadow-border border-muted-foreground/30 shadow-3xl',
           )}
         >
           <div>
@@ -299,60 +285,100 @@ function Index() {
               cbFocus={() => {
                 setIsFocus(true)
               }}
+              cbOnCancel={editor => {
+                editor.chain().blur().run()
+                // @ts-ignore
+                editor.commands.setContent(post?.content)
+                setTimeout(() => {
+                  setIsFocus(false)
+                }, 100)
+              }}
+              cbOnSave={editor => {
+                fetcher.submit(formRef.current)
+                editor.chain().blur().run()
+                setTimeout(() => {
+                  setIsFocus(false)
+                }, 100)
+              }}
               // @ts-ignore
               post={post}
             />
           </div>
-          <div
-            className={cn(
-              'bg-muted-foreground/20 h-[0.5px] w-full',
-              !isFocus && 'hidden',
-            )}
-          ></div>
-          <div className={cn('w-full px-4 pb-3', !isFocus && 'hidden')}>
-            <fetcher.Form
-              method="POST"
-              className="flex w-full items-center justify-between"
-            >
-              <Button
-                onClick={() => setIsFocus(false)}
-                size="sm"
-                variant="secondary"
-                className="w-fit"
-                type="button"
+          <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-950">
+            <div
+              className={cn(
+                'bg-muted-foreground/30 h-[1px] w-full',
+                !isFocus && 'hidden',
+              )}
+            ></div>
+            <div className={cn('w-full px-4 pb-3', !isFocus && 'hidden')}>
+              <fetcher.Form
+                ref={formRef}
+                method="POST"
+                className="flex w-full items-center justify-between"
               >
-                Batalkan
-              </Button>
-              <Button
-                size="sm"
-                className="w-fit"
-                variant="secondary"
-                type="submit"
-                onFocus={() => {
-                  setTimeout(() => {
+                <Button
+                  onClick={event => {
+                    event.stopPropagation()
+                    if (data) {
+                      // @ts-ignore
+                      data?.commands.setContent(post?.content)
+                    }
                     setIsFocus(false)
-                  }, 1000)
-                }}
-              >
-                <div className="flex items-center gap-2">Selesai</div>
-              </Button>
-              <input
-                type="hidden"
-                name="_action"
-                value={FormType.UPDATE_CONTENT}
-              />
-              <input
-                defaultValue={JSON.stringify(content)}
-                type="hidden"
-                name="postJSON"
-              />
-              <input type="hidden" name="postId" value={postId} />
-              <input type="hidden" name="title" value={pageTitle} />
-            </fetcher.Form>
+                  }}
+                  size="sm"
+                  variant="ghost"
+                  className="w-fit"
+                  type="button"
+                >
+                  <div className="flex items-center gap-2">
+                    <p className="text-muted-foreground text-xs">Batalkan</p>
+                    <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
+                      <span className="text-xs">Esc</span>
+                    </kbd>
+                  </div>
+                </Button>
+                <Button
+                  size="sm"
+                  className="w-fit"
+                  variant="ghost"
+                  type="submit"
+                  onClick={event => {
+                    event.stopPropagation()
+                    setIsFocus(false)
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <p className="text-muted-foreground text-xs">Selesai</p>
+                    <div className="flex gap-1">
+                      <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
+                        <span className="text-base">⌘</span>
+                      </kbd>
+                      <p className="text-muted-foreground text-xs">+</p>
+                      <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
+                        <span className="text-xs">S</span>
+                      </kbd>
+                    </div>
+                  </div>
+                </Button>
+                <input
+                  type="hidden"
+                  name="_action"
+                  value={FormType.UPDATE_CONTENT}
+                />
+                <input
+                  defaultValue={JSON.stringify(content)}
+                  type="hidden"
+                  name="postJSON"
+                />
+                <input type="hidden" name="postId" value={postId} />
+                <input type="hidden" name="title" value={pageTitle} />
+              </fetcher.Form>
+            </div>
           </div>
         </div>
       </div>
-      <div className="md:fixed md:right-0 md:top-9">
+      <div className="hidden md:fixed md:right-0 md:top-9 md:mr-3 md:block">
         <PageData>
           <SummaryMobile>
             <Summary

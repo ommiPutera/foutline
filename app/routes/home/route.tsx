@@ -26,8 +26,9 @@ export enum FormType {
 export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
+  const _action = String(formData.get('_action'))
 
-  switch (formPayload._action) {
+  switch (_action) {
     case FormType.DELETE: {
       if (typeof formPayload.id !== 'string') {
         return {formError: `Form not submitted correctly.`}

@@ -4,6 +4,9 @@ import clsx from 'clsx'
 import React from 'react'
 import {create} from 'zustand'
 
+import {formatDistance} from 'date-fns'
+import {id as IDNLocale} from 'date-fns/locale'
+
 import {
   Card,
   CardContent,
@@ -18,7 +21,7 @@ import {
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-import type {Post} from '@prisma/client'
+import {PostStatus, type Post} from '@prisma/client'
 import {Link, useLocation} from '@remix-run/react'
 
 import {cn} from '~/lib/utils.ts'
@@ -36,7 +39,7 @@ const useCardStore = create<CardState>(set => ({
 }))
 
 function CardItem(post: Post) {
-  const {id, preview, title} = post
+  const {id, preview, title, updatedAt, status} = post
   const {idCardFocus, setIdCardFocus} = useCardStore()
   const location = useLocation()
 
@@ -51,7 +54,7 @@ function CardItem(post: Post) {
       <Card
         key={id}
         className={cn(
-          'hover:border-ring col-span-1 h-full cursor-pointer overflow-hidden border-[1px] md:h-fit',
+          'hover:border-muted-foreground/60 col-span-1 h-full cursor-pointer overflow-hidden border-[1px] md:h-fit',
           idCardFocus === id && 'border-ring',
         )}
       >
@@ -73,16 +76,18 @@ function CardItem(post: Post) {
           <div className="flex flex-1 flex-col justify-end gap-1.5">
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="bg-ring line-clamp-1 w-fit rounded-sm px-1 py-[3px] text-[9px] leading-none text-white">
-                  Selesai
-                </div>
+                <CardBadge status={status} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Status halaman</p>
               </TooltipContent>
             </Tooltip>
             <div className="text-muted-foreground line-clamp-1 text-[10px] leading-none">
-              10 menit yang lalu
+              {formatDistance(new Date(updatedAt), new Date(), {
+                addSuffix: true,
+                includeSeconds: true,
+                locale: IDNLocale,
+              })}
             </div>
           </div>
           <div className="-mr-2 flex justify-end" id="test">
@@ -129,6 +134,32 @@ function ContentPreview({content}: {content: string | JSX.Element}) {
   return (
     <div>
       <p className="text-xs">{content}</p>
+    </div>
+  )
+}
+
+function CardBadge({status}: Pick<Post, 'status'>) {
+  const getStatusStr = () => {
+    switch (status) {
+      case 'NOT_STARTED':
+        return 'Belum berjalan'
+      case 'COMPLETED':
+        return 'Selesai'
+      case 'UNDERWAY':
+        return 'Sedang berjalan'
+    }
+  }
+
+  return (
+    <div
+      className={cn(
+        'line-clamp-1 w-fit rounded-sm px-1 py-[3px] text-[9px] leading-none text-white',
+        status === PostStatus.COMPLETED && 'bg-ring/90',
+        status === PostStatus.NOT_STARTED && 'bg-muted-foreground',
+        status === PostStatus.UNDERWAY && 'bg-blue-500',
+      )}
+    >
+      {getStatusStr()}
     </div>
   )
 }
