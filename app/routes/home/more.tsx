@@ -29,7 +29,7 @@ function More({ id, type }: Post) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-48 p-0"
+        className="h-fit w-48 p-0 border-muted-foreground/60"
         align="end"
         side="right"
         forceMount

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {Link, useLocation} from '@remix-run/react'
-import type {Post} from '@prisma/client'
+import { Link, useLocation } from '@remix-run/react'
+import type { Post } from '@prisma/client'
 
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
 import {
   FileKey2,
   FileText,
@@ -20,9 +20,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {UserNav} from './user-nav.tsx'
+import { UserNav } from './user-nav.tsx'
 
-import {CreatePostDialog} from './templates/dialogs.tsx'
+import { CreatePostDialog } from './templates/dialogs.tsx'
 
 import {
   DropdownMenu,
@@ -36,19 +36,19 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import {Progress} from '~/components/ui/progress.tsx'
-import {Badge} from '~/components/ui/badge.tsx'
+import { Progress } from '~/components/ui/progress.tsx'
+import { Badge } from '~/components/ui/badge.tsx'
 
 import FavoriteButton from '~/routes/home/favorite.tsx'
 
-import {cn} from '~/lib/utils.ts'
-import {getPostType} from '~/utils/get-post-type.ts'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { cn } from '~/lib/utils.ts'
+import { getPostType } from '~/utils/get-post-type.ts'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 
 import clsx from 'clsx'
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
 
   return (
     <div className={cn('min-h-screens flex h-full flex-col', className)}>
@@ -108,7 +108,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
@@ -170,7 +170,7 @@ function Files() {
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const location = useLocation()
 
   const isPostEmpty = !user?.posts?.length
@@ -190,7 +190,7 @@ function Files() {
   return (
     <div
       className={cn(
-        'border-border mx-3 overflow-hidden rounded-xl border-[1px]',
+        'border-border mx-3 overflow-hidden rounded-xl border-[1px] bg-white dark:bg-zinc-900',
       )}
     >
       <div className="flex flex-col gap-2 py-5">
@@ -203,10 +203,10 @@ function Files() {
       </div>
       <ScrollArea className="h-[240px]">
         {isScroll && !isPostEmpty && (
-          <div className="from-background/30 absolute top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80"></div>
+          <div className="from-white/30 dark:from-zinc-900/30 absolute z-20 top-0 -mt-1 h-4 w-full bg-gradient-to-t to-gray-100/80 dark:to-zinc-950/50"></div>
         )}
         {isScroll && !isPostEmpty && (
-          <div className="from-background/30 absolute bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80"></div>
+          <div className="from-white/30 dark:from-zinc-900/30 absolute z-20 bottom-0 -mt-1 h-4 w-full bg-gradient-to-b to-gray-100/80 dark:to-zinc-950/50"></div>
         )}
         <div ref={topFileRef}></div>
         <div className="mx-2 pb-6">
@@ -219,14 +219,14 @@ function Files() {
                 size="sm"
                 prefetch="intent"
                 className={clsx(
-                  'w-full justify-start rounded-md !py-5',
+                  'w-full justify-start rounded-md !py-5 font-light',
                   location.pathname ===
-                    `/${getPostType(post.type)}/${post.id}` &&
-                    'bg-accent font-semibold',
+                  `/${getPostType(post.type)}/${post.id}` &&
+                  'bg-accent font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
-                <p className="whitespace-nowrap text-xs font-normal">
+                <p className="whitespace-nowrap text-xs">
                   {post.title.length > 23
                     ? `${post.title.substring(0, 23)}..`
                     : post.title}

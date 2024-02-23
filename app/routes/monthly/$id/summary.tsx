@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import { Info } from 'lucide-react'
-import { PocketItem as PocketToggle } from '~/components/templates/pocket.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {Info} from 'lucide-react'
+import {PocketItem as PocketToggle} from '~/components/templates/pocket.tsx'
+import {Button} from '~/components/ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -14,10 +14,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import { rupiah } from '~/utils/currency.ts'
-import { getValues, type PocketsValues } from './route.tsx'
+import {rupiah} from '~/utils/currency.ts'
+import {getValues, type PocketsValues} from './route.tsx'
 
-function SummaryMobile({ children }: { children: React.ReactNode }) {
+function SummaryMobile({children}: {children: React.ReactNode}) {
   return (
     <Sheet>
       <SheetTrigger>
@@ -113,7 +113,7 @@ function Summary({
   )
 }
 
-function Pockets({ pocketsValues }: { pocketsValues: PocketsValues[] }) {
+function Pockets({pocketsValues}: {pocketsValues: PocketsValues[]}) {
   return (
     <div className="flex flex-col gap-3">
       {pocketsValues.map(pocket => (
@@ -123,7 +123,7 @@ function Pockets({ pocketsValues }: { pocketsValues: PocketsValues[] }) {
   )
 }
 
-function PocketItem({ nominal, name, dataIncomes, dataExpenses }: PocketsValues) {
+function PocketItem({nominal, name, dataIncomes, dataExpenses}: PocketsValues) {
   const incomes = dataIncomes
   const expenses = dataExpenses
 
@@ -152,4 +152,4 @@ function PocketItem({ nominal, name, dataIncomes, dataExpenses }: PocketsValues)
   )
 }
 
-export { Summary, SummaryMobile }
+export {Summary, SummaryMobile}

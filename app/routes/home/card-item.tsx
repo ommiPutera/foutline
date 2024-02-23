@@ -38,7 +38,7 @@ const useCardStore = create<CardState>(set => ({
   setIdCardFocus: id => set(() => ({idCardFocus: id})),
 }))
 
-function CardItem(post: Post) {
+function CardItem(post: any) {
   const {id, preview, title, updatedAt, status} = post
   const {idCardFocus, setIdCardFocus} = useCardStore()
   const location = useLocation()
@@ -75,7 +75,7 @@ function CardItem(post: Post) {
         <CardFooter className="bg-monthly-background justify-between gap-2 py-2.5">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
             <Tooltip>
-              <TooltipTrigger asChild>
+              <TooltipTrigger>
                 <CardBadge status={status} />
               </TooltipTrigger>
               <TooltipContent>
