@@ -1,4 +1,4 @@
-import {Star} from 'lucide-react'
+import { Star } from 'lucide-react'
 
 import React from 'react'
 import _ from 'lodash'
@@ -8,11 +8,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 
-import type {TooltipContentProps} from '@radix-ui/react-tooltip'
+import type { TooltipContentProps } from '@radix-ui/react-tooltip'
 
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
 function Favorite({
   tooltipText,
@@ -21,7 +21,7 @@ function Favorite({
   callBack,
   size = 'default',
 }: {
-  tooltipText?: {active: string; notActive: string}
+  tooltipText?: { active: string; notActive: string }
   defaultValue?: boolean
   side?: TooltipContentProps['side']
   callBack?: () => void
@@ -57,7 +57,7 @@ function Favorite({
               '',
               isFavorited
                 ? 'fill-[#FFA500] stroke-[#FFA500]'
-                : 'fill-transparent stroke-black',
+                : 'fill-transparent stroke-black dark:stroke-white',
             )}
           />
         </Button>
