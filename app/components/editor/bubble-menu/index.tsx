@@ -8,6 +8,7 @@ import {getNumberFromString} from '~/utils/get-number-from-string.ts'
 import {rupiah} from '~/utils/currency.ts'
 
 export interface BubbleMenuItem {
+  [x: string]: any
   name: string
   isActive: () => boolean
   command: () => void

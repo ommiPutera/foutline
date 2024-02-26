@@ -1,24 +1,24 @@
-import { ArrowUpRight, MoreHorizontal, Trash } from 'lucide-react'
+import {ArrowUpRight, MoreHorizontal, Trash} from 'lucide-react'
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import { SelectSeparator } from '~/components/ui/select.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import {SelectSeparator} from '~/components/ui/select.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { useSubmit } from '@remix-run/react'
+import {useSubmit} from '@remix-run/react'
 
-import { getPostType } from '~/utils/get-post-type.ts'
+import {getPostType} from '~/utils/get-post-type.ts'
 
-import { FormType } from './route.tsx'
-import { useCardStore } from './card-item.tsx'
+import {FormType} from './route.tsx'
+import {useCardStore} from './card-item.tsx'
 
-function More({ id, type }: Post) {
-  const { setIdCardFocus } = useCardStore()
+function More({id, type}: Post) {
+  const {setIdCardFocus} = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
@@ -29,7 +29,7 @@ function More({ id, type }: Post) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-48 p-0 border-muted-foreground/60"
+        className="border-muted-foreground/60 h-fit w-48 p-0"
         align="end"
         side="right"
         forceMount
@@ -42,7 +42,7 @@ function More({ id, type }: Post) {
   )
 }
 
-function Open({ id, type }: Pick<Post, 'id' | 'type'>) {
+function Open({id, type}: Pick<Post, 'id' | 'type'>) {
   return (
     <div className="my-2">
       <ButtonLink
@@ -59,14 +59,14 @@ function Open({ id, type }: Pick<Post, 'id' | 'type'>) {
   )
 }
 
-function Remove({ id }: Pick<Post, 'id'>) {
+function Remove({id}: Pick<Post, 'id'>) {
   const submit = useSubmit()
   return (
     <div className="my-2">
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => submit({ id, _action: FormType.DELETE }, { method: 'POST' })}
+        onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
         className="w-full justify-start rounded-none px-3"
       >
         <Trash size="16" className="mr-2" />

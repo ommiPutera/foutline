@@ -23,7 +23,7 @@ export function UserNav({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex cursor-pointer items-center gap-2">
+        <div className="my-2 flex cursor-pointer items-center gap-4">
           <Button variant="ghost" size="icon" className="relative rounded-full">
             <Avatar className="h-8 w-8">
               <AvatarImage src={picture ?? ''} alt="@shadcn" />
@@ -34,10 +34,10 @@ export function UserNav({
             </Avatar>
           </Button>
           <div className="flex w-full flex-col space-y-1">
-            <div className="text-muted-foreground line-clamp-1 overflow-visible text-[10px] leading-none">
+            <div className="text-muted-foreground line-clamp-1 overflow-visible text-xs leading-none">
               Masuk sebagai
             </div>
-            <div className="line-clamp-1 text-xs font-medium leading-none">
+            <div className="line-clamp-1 text-sm font-semibold leading-none">
               {given_name}
             </div>
           </div>
