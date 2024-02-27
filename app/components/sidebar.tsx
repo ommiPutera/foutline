@@ -19,8 +19,6 @@ import {CreatePostDialog} from './templates/dialogs.tsx'
 import {Progress} from '~/components/ui/progress.tsx'
 import {Badge} from '~/components/ui/badge.tsx'
 
-import FavoriteButton from '~/routes/home/favorite.tsx'
-
 import {cn} from '~/lib/utils.ts'
 import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
@@ -31,12 +29,11 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
 
   return (
-    <div className={cn('min-h-screens flex h-full flex-col', className)}>
-      <div className="mb-12 flex flex-col justify-between space-y-4 pb-6 pt-4">
+    <div className={cn('flex h-full min-h-screen flex-col', className)}>
+      <div className="mb-4 flex flex-col justify-between space-y-4 overflow-y-scroll pb-6 pt-4">
         <div className="flex flex-1 flex-col place-content-start gap-1.5 px-3 py-2">
           <NavItem href="/home" iconName="Home" title="Beranda" />
           <NavItem href="/template" iconName="Search" title="Jelajahi" />
-          <Favorite />
           <div>
             <CreatePostDialog>
               <Button
@@ -46,7 +43,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
               >
                 <span>
                   <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
-                  Buat
+                  Buat Halaman
                 </span>
               </Button>
             </CreatePostDialog>
@@ -57,6 +54,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         </div>
         <div className="flex flex-1 flex-col place-content-end gap-1.5 px-3 py-2">
           <NavItem href="/settings" iconName="Settings2" title="Pengaturan" />
+          <Favorite />
           <NavItem href="/trash" iconName="Trash2" title="Sampah" />
         </div>
       </div>
@@ -102,31 +100,20 @@ function Favorite() {
           </AccordionTrigger>
         </Button>
         <AccordionContent className="relative h-fit w-full pl-4 pr-1">
-          <div ref={contentRef} className="w-full space-y-2">
+          <div ref={contentRef} className="w-full">
             {!isPostEmpty ? (
               posts.map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
-                    href="/aneh"
+                    href={`${getPostType(post.type)}/${post.id}`}
                     prefetch="intent"
                     variant="ghost"
                     size="sm"
-                    className="ml-6 flex justify-between rounded-md text-xs font-normal"
+                    type="button"
+                    className="ml-6 flex justify-between rounded-md text-xs font-medium"
                   >
                     <span>{post.title}</span>
                   </ButtonLink>
-                  <div className="absolute right-1.5 top-0 flex h-full items-center">
-                    <FavoriteButton
-                      callBack={() => console.log('heii')}
-                      tooltipText={{
-                        active: 'Hapus dari favorit',
-                        notActive: '',
-                      }}
-                      defaultValue={true}
-                      side="right"
-                      size="sm"
-                    />
-                  </div>
                 </div>
               ))
             ) : (

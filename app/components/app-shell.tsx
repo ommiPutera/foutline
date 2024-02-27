@@ -40,7 +40,7 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
               </div>
               <MobileSidebar />
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-3.5 py-6 md:mt-0 md:py-9">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-3.5 py-6 md:mt-0">
               {children}
             </div>
           </div>

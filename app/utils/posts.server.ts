@@ -59,7 +59,3 @@ export async function updateContent({
     },
   })
 }
-
-export async function deletePost({id}: {id: string}) {
-  return await prisma.post.delete({where: {id: id}})
-}

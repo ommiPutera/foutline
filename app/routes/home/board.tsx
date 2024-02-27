@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { useLoaderData } from '@remix-run/react'
+import {useLoaderData} from '@remix-run/react'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { LayoutGrid, List, Plus } from 'lucide-react'
+import {LayoutGrid, List, Plus} from 'lucide-react'
 
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -12,10 +12,10 @@ import {
   CreatePostContent,
   CreatePostDialog,
 } from '~/components/templates/dialogs.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import CardItem from './card-item.tsx'
-import type { LoaderData } from './route.tsx'
+import type {LoaderData} from './route.tsx'
 
 function Board() {
   return (
@@ -28,7 +28,7 @@ function Board() {
 }
 
 function Tools() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
@@ -60,18 +60,20 @@ function Tools() {
 }
 
 function Cards() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
     <div className="grid grid-cols-2 gap-3 py-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      {posts.map(post => <CardItem key={post.id} {...post as any as Post} />)}
+      {posts.map(post => (
+        <CardItem key={post.id} {...(post as any as Post)} />
+      ))}
     </div>
   )
 }
 
 function NewCard() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   if (posts?.length) return <></>
@@ -102,4 +104,4 @@ function NewCard() {
   )
 }
 
-export { Board }
+export {Board}

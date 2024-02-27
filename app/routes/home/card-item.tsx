@@ -12,12 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card.tsx'
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/ui/tooltip.tsx'
+import PageIcon from '~/components/page-icon.tsx'
 
 import {PostStatus, type Post} from '@prisma/client'
 import {Link, useLocation} from '@remix-run/react'
@@ -26,9 +21,8 @@ import {cn} from '~/lib/utils.ts'
 
 import {getPostType} from '~/utils/get-post-type.ts'
 
-import More from './more.tsx'
 import Favorite from './favorite.tsx'
-import PageIcon from '~/components/page-icon.tsx'
+import More from './more.tsx'
 
 interface CardState {
   idCardFocus: string
@@ -40,7 +34,8 @@ const useCardStore = create<CardState>(set => ({
   setIdCardFocus: id => set(() => ({idCardFocus: id})),
 }))
 
-function CardItem({id, preview, title, updatedAt, type, status}: Post) {
+function CardItem(post: Post) {
+  const {id, preview, title, updatedAt, type, status} = post
   const {idCardFocus, setIdCardFocus} = useCardStore()
 
   const location = useLocation()
@@ -52,7 +47,7 @@ function CardItem({id, preview, title, updatedAt, type, status}: Post) {
   }, [location.pathname, setIdCardFocus])
 
   return (
-    <Link to={`/${getPostType(type)}/${id}`}>
+    <Link to={`/${getPostType(type)}/${id}`} prefetch="intent">
       <Card
         key={id}
         className={cn(
@@ -76,20 +71,15 @@ function CardItem({id, preview, title, updatedAt, type, status}: Post) {
         </CardContent>
         <CardFooter className="bg-monthly-background justify-between gap-2 py-2.5">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
-            <Tooltip>
-              <TooltipTrigger>
-                <CardBadge status={status} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Status halaman</p>
-              </TooltipContent>
-            </Tooltip>
-            <div className="text-muted-foreground line-clamp-2 text-[10px]">
-              {formatDistance(new Date(updatedAt), new Date(), {
-                addSuffix: true,
-                includeSeconds: true,
-                locale: IDNLocale,
-              })}
+            <CardBadge status={status} />
+            <div className="text-muted-foreground line-clamp-2 text-[11px]">
+              {capitalizeFirstLetter(
+                formatDistance(new Date(updatedAt), new Date(), {
+                  addSuffix: true,
+                  includeSeconds: true,
+                  locale: IDNLocale,
+                }),
+              )}
             </div>
           </div>
           <div className="-mr-2 flex justify-end" id="test">
@@ -97,8 +87,8 @@ function CardItem({id, preview, title, updatedAt, type, status}: Post) {
               onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
               className="visible relative flex w-fit items-center gap-1"
             >
-              <Favorite />
-              <More id={id} type={type} />
+              <Favorite {...(post as any as Post)} />
+              <More {...(post as any as Post)} />
             </div>
           </div>
         </CardFooter>
@@ -135,7 +125,7 @@ function CardBadge({status}: Pick<Post, 'status'>) {
   return (
     <div
       className={cn(
-        'line-clamp-1 w-fit rounded-sm px-1 py-[3px] text-[9px] leading-none text-white',
+        'line-clamp-1 w-fit rounded-sm px-1.5 py-[3.5px] text-[10px] leading-none text-white',
         status === PostStatus.COMPLETED && 'bg-ring/90',
         status === PostStatus.NOT_STARTED && 'bg-muted-foreground',
         status === PostStatus.UNDERWAY && 'bg-blue-500',
@@ -144,6 +134,10 @@ function CardBadge({status}: Pick<Post, 'status'>) {
       {getStatusStr()}
     </div>
   )
+}
+
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 export default CardItem

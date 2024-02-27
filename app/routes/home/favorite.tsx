@@ -1,6 +1,11 @@
 import {Star} from 'lucide-react'
 
+import {useSubmit} from '@remix-run/react'
+
+import type {Post} from '@prisma/client'
+
 import React from 'react'
+
 import _ from 'lodash'
 
 import {
@@ -14,30 +19,39 @@ import type {TooltipContentProps} from '@radix-ui/react-tooltip'
 
 import {cn} from '~/lib/utils.ts'
 
+import {FormType} from './route.tsx'
+
+type Props = {
+  tooltipText?: {active: string; notActive: string}
+  side?: TooltipContentProps['side']
+  size?: 'sm' | 'default'
+}
+
 function Favorite({
   tooltipText = {
     active: 'Batalkan favorit',
     notActive: 'Tambahkan ke favorit',
   },
-  defaultValue = false,
   side = 'bottom',
-  callBack,
   size = 'default',
-}: {
-  tooltipText?: {active: string; notActive: string}
-  defaultValue?: boolean
-  side?: TooltipContentProps['side']
-  callBack?: () => void
-  size?: 'sm' | 'default'
-}) {
-  const [isFavorited, setIsFavorited] = React.useState(defaultValue)
+  id,
+  isFavorite: defaultValue,
+}: Props & Pick<Post, 'id' | 'isFavorite'>) {
+  const submit = useSubmit()
+
+  const [isFavorited, setIsFavorited] = React.useState<boolean>(defaultValue)
   const [isHover, setIsHover] = React.useState(false)
 
   const handleClick = () => {
     setIsFavorited(!isFavorited)
-    if (typeof callBack === 'function') {
-      callBack()
-    }
+    submit(
+      {
+        id,
+        isFavorite: !isFavorited,
+        _action: FormType.FAVORITE,
+      },
+      {method: 'POST', action: '/home'},
+    )
   }
 
   return (

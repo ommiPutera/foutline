@@ -10,11 +10,10 @@ import type {Post, User} from '@prisma/client'
 import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
 
-import {deletePost} from '~/utils/posts.server.ts'
 import {getUser} from '~/utils/session.server.ts'
 
 import {Board} from './board.tsx'
-import {getHomeData} from './queries.ts'
+import {deletePost, favoritePost, getHomeData} from './queries.ts'
 
 export type LoaderData = {
   posts: Post[] | null
@@ -22,6 +21,7 @@ export type LoaderData = {
 
 export enum FormType {
   DELETE = 'DELETE',
+  FAVORITE = 'FAVORITE',
 }
 
 export async function action({request}: ActionFunctionArgs) {
@@ -36,6 +36,18 @@ export async function action({request}: ActionFunctionArgs) {
       }
       await deletePost({id: formPayload.id})
       return redirect('/', {})
+    }
+    case FormType.FAVORITE: {
+      if (
+        typeof formPayload.id !== 'string' ||
+        typeof formPayload.isFavorite !== 'string'
+      ) {
+        return {formError: `Form not submitted correctly.`}
+      }
+      return await favoritePost({
+        id: formPayload.id,
+        isFavorite: formPayload.isFavorite === 'true' ? true : false,
+      })
     }
   }
 }
