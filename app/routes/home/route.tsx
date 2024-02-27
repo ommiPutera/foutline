@@ -27,7 +27,7 @@ export enum FormType {
 export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
-  const _action = String(formData.get('_action'))
+  const _action = String(formPayload['_action'])
 
   switch (_action) {
     case FormType.DELETE: {
@@ -57,8 +57,8 @@ export function ErrorBoundary() {
       statusHandlers={{
         404: () => (
           <ErrorPage
-            title="404 - Oh no, you found a page that's missing stuff."
-            subtitle={`"${location.pathname}" is not a page on outline.com. So sorry.`}
+            title="404 - Terjadi kesalahan"
+            subtitle={`"${location.pathname}" bukanlah sebuah halaman di outline.com`}
           />
         ),
       }}

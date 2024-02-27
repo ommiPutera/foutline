@@ -1,8 +1,10 @@
 import React from 'react'
 
-import {useFetchers, useLoaderData} from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
-import {LayoutGrid, List, Plus} from 'lucide-react'
+import type { Post } from '@prisma/client'
+
+import { LayoutGrid, List, Plus } from 'lucide-react'
 
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -10,18 +12,12 @@ import {
   CreatePostContent,
   CreatePostDialog,
 } from '~/components/templates/dialogs.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 
 import CardItem from './card-item.tsx'
-import type {LoaderData} from './route.tsx'
+import type { LoaderData } from './route.tsx'
 
 function Board() {
-  let pendingItems = usePendingItems()
-
-  React.useEffect(() => {
-    console.log('pendingItems: ', pendingItems)
-  }, [pendingItems])
-
   return (
     <section className="flex w-full flex-col gap-4 md:gap-3 lg:pr-4">
       <Tools />
@@ -32,7 +28,7 @@ function Board() {
 }
 
 function Tools() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
@@ -64,35 +60,34 @@ function Tools() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
     <div className="grid grid-cols-2 gap-3 py-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      {posts.map(post => (
-        <CardItem key={post.id} {...post} />
-      ))}
+      {posts.map(post => <CardItem key={post.id} {...post as any as Post} />)}
     </div>
   )
 }
 
 function NewCard() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   if (posts?.length) return <></>
   return (
     <div className="flex flex-col items-center justify-center gap-6 md:py-20">
       <CreatePostContent value={value} setValue={setValue} />
-      <ButtonLink
-        disabled={!value}
-        to={`/${value}/templates`}
-        prefetch="intent"
-        variant="outline"
-        className="w-full lg:w-[684px]"
-      >
-        Lanjutkan
-      </ButtonLink>
+      {value && (
+        <ButtonLink
+          to={`/${value}/templates`}
+          prefetch="intent"
+          variant="outline"
+          className="w-full lg:w-[684px]"
+        >
+          Lanjutkan
+        </ButtonLink>
+      )}
       <div className="bg-muted hidden h-[1px] w-full md:block lg:w-[684px]"></div>
       <div className="hidden max-w-sm flex-col gap-2 text-center md:flex">
         <h4 className="text-sm font-medium">
@@ -107,8 +102,4 @@ function NewCard() {
   )
 }
 
-function usePendingItems() {
-  return useFetchers()
-}
-
-export {Board}
+export { Board }

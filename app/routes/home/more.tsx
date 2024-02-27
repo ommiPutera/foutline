@@ -17,7 +17,7 @@ import {getPostType} from '~/utils/get-post-type.ts'
 import {FormType} from './route.tsx'
 import {useCardStore} from './card-item.tsx'
 
-function More({id, type}: Post) {
+function More({id, type}: Pick<Post, 'id' | 'type'>) {
   const {setIdCardFocus} = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>

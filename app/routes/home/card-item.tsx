@@ -1,7 +1,5 @@
-import {ArrowRightLeft} from 'lucide-react'
-
-import clsx from 'clsx'
 import React from 'react'
+
 import {create} from 'zustand'
 
 import {formatDistance} from 'date-fns'
@@ -25,8 +23,12 @@ import {PostStatus, type Post} from '@prisma/client'
 import {Link, useLocation} from '@remix-run/react'
 
 import {cn} from '~/lib/utils.ts'
+
+import {getPostType} from '~/utils/get-post-type.ts'
+
 import More from './more.tsx'
 import Favorite from './favorite.tsx'
+import PageIcon from '~/components/page-icon.tsx'
 
 interface CardState {
   idCardFocus: string
@@ -38,9 +40,9 @@ const useCardStore = create<CardState>(set => ({
   setIdCardFocus: id => set(() => ({idCardFocus: id})),
 }))
 
-function CardItem(post: any) {
-  const {id, preview, title, updatedAt, status} = post
+function CardItem({id, preview, title, updatedAt, type, status}: Post) {
   const {idCardFocus, setIdCardFocus} = useCardStore()
+
   const location = useLocation()
 
   React.useEffect(() => {
@@ -50,7 +52,7 @@ function CardItem(post: any) {
   }, [location.pathname, setIdCardFocus])
 
   return (
-    <Link to={`/monthly/${id}`} prefetch="intent">
+    <Link to={`/${getPostType(type)}/${id}`}>
       <Card
         key={id}
         className={cn(
@@ -93,34 +95,15 @@ function CardItem(post: any) {
           <div className="-mr-2 flex justify-end" id="test">
             <div
               onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
-              className={clsx('visible relative flex w-fit items-center gap-1')}
+              className="visible relative flex w-fit items-center gap-1"
             >
-              <Favorite
-                side="bottom"
-                tooltipText={{
-                  active: 'Batalkan favorit',
-                  notActive: 'Tambahkan ke favorit',
-                }}
-              />
-              <More {...post} />
+              <Favorite />
+              <More id={id} type={type} />
             </div>
           </div>
         </CardFooter>
       </Card>
     </Link>
-  )
-}
-
-function PageIcon({className}: {className?: string}) {
-  return (
-    <div
-      className={cn(
-        'flex h-4 w-4 items-center justify-center rounded-sm border border-orange-400 bg-gradient-to-tr from-orange-500 to-orange-300',
-        className,
-      )}
-    >
-      <ArrowRightLeft className="h-2.5 w-2.5" color="#fff" />
-    </div>
   )
 }
 

@@ -15,9 +15,12 @@ import type {TooltipContentProps} from '@radix-ui/react-tooltip'
 import {cn} from '~/lib/utils.ts'
 
 function Favorite({
-  tooltipText,
+  tooltipText = {
+    active: 'Batalkan favorit',
+    notActive: 'Tambahkan ke favorit',
+  },
   defaultValue = false,
-  side,
+  side = 'bottom',
   callBack,
   size = 'default',
 }: {
