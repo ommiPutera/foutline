@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {useLoaderData} from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 
-import {LayoutGrid, List, Plus} from 'lucide-react'
+import { LayoutGrid, List, Plus } from 'lucide-react'
 
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -12,14 +12,14 @@ import {
   CreatePostContent,
   CreatePostDialog,
 } from '~/components/templates/dialogs.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 
 import CardItem from './card-item.tsx'
-import type {LoaderData} from './route.tsx'
+import type { LoaderData } from './route.tsx'
 
 function Board() {
   return (
-    <section className="flex w-full flex-col gap-4 md:gap-3 lg:pr-4">
+    <section className="flex w-full flex-col gap-4 md:gap-3 lg:pr-4 py-6 px-3.5">
       <Tools />
       <Cards />
       <NewCard />
@@ -28,7 +28,7 @@ function Board() {
 }
 
 function Tools() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
@@ -60,7 +60,7 @@ function Tools() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <></>
   return (
@@ -73,7 +73,7 @@ function Cards() {
 }
 
 function NewCard() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   if (posts?.length) return <></>
@@ -104,4 +104,4 @@ function NewCard() {
   )
 }
 
-export {Board}
+export { Board }

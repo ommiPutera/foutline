@@ -1,6 +1,6 @@
-import {rupiah} from '~/utils/currency.ts'
-import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
-import type {PocketsValues} from '~/routes/monthly/$id/route.tsx'
+import { rupiah } from '~/utils/currency.ts'
+import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group.tsx'
+import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
 
 function PocketGroup({
   onChange,
@@ -31,7 +31,7 @@ function PocketGroup({
   )
 }
 
-function ToggleItem({value, nominal}: {value: string; nominal: number}) {
+function ToggleItem({ value, nominal }: { value: string; nominal: number }) {
   return (
     <ToggleGroupItem value={value} className="w-full px-4 py-8">
       <div className="flex w-full items-center gap-4">
@@ -45,7 +45,7 @@ function ToggleItem({value, nominal}: {value: string; nominal: number}) {
   )
 }
 
-function PocketItem({name, nominal}: {name: string; nominal: number}) {
+function PocketItem({ name, nominal }: { name: string; nominal: number }) {
   return (
     <div className="flex w-full items-center gap-4">
       <div className="flex w-full flex-col gap-1 text-left">
@@ -57,4 +57,4 @@ function PocketItem({name, nominal}: {name: string; nominal: number}) {
   )
 }
 
-export {PocketGroup, ToggleItem, PocketItem}
+export { PocketGroup, ToggleItem, PocketItem }

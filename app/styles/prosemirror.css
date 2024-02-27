@@ -8,7 +8,7 @@
   height: 0;
 }
 .tiptap p {
-  @apply text-foreground mb-2.5 text-[13.5px] leading-5;
+  @apply text-foreground mb-2.5 text-sm leading-5;
 
   &.is-editor-empty:first-child::before {
     @apply text-muted-foreground;
@@ -85,13 +85,13 @@ ul[data-type='taskList'] li[data-checked='true'] > div > p {
   @apply mt-0;
 }
 .tiptap h1 {
-  @apply mb-4 mt-10 text-xl;
+  @apply mb-4 mt-10 text-3xl;
 }
 .tiptap h2 {
-  @apply mb-3 mt-9 text-lg;
+  @apply mb-3 mt-9 text-2xl;
 }
 .tiptap h3 {
-  @apply mb-2 mt-8 text-base;
+  @apply mb-2 mt-8 text-xl;
 }
 
 /* BLOCKQUOTE */

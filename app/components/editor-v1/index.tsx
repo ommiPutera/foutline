@@ -10,36 +10,21 @@ import type { Editor as EditorType, JSONContent } from '@tiptap/core'
 import type { Post } from '@prisma/client'
 import { useLocation } from '@remix-run/react'
 
-import { Skeleton } from '~/components/ui/skeleton.tsx'
-
 function Editor({
   type,
-  title,
-  setTitle,
-  setContent,
-
-
-
-
   getData,
   defaultContent,
   post,
+  setPageTitle,
   cbFocus = () => null,
   cbOnSave = () => null,
   cbOnCancel = () => null,
 }: {
   type?: 'MONTHLY' | 'BASIC'
-  title: string
-  setTitle: React.Dispatch<React.SetStateAction<string>>
-  setContent: React.Dispatch<React.SetStateAction<any>>
-
-
-
-
-
   getData: (data: EditorType) => null
   defaultContent: JSONContent | undefined
   post?: Post
+  setPageTitle: React.Dispatch<React.SetStateAction<string>>
   cbFocus: () => void
   cbOnSave: (editor: EditorType) => void
   cbOnCancel: (editor: EditorType) => void
@@ -47,6 +32,7 @@ function Editor({
   const location = useLocation()
 
   const titletRef = React.useRef<HTMLTextAreaElement>(null)
+  const editorRef = React.useRef<HTMLDivElement>(null)
   const topFileRef = React.useRef(null)
 
   const [hydrated, setHydrated] = React.useState(false)
@@ -69,9 +55,6 @@ function Editor({
     extensions: [CustomPlaceholder, ...getExtensions()],
     onUpdate({ editor }) {
       if (editor) {
-        const json = editor.getJSON();
-
-        setContent(json.content)
         getData(editor)
       }
     },
@@ -103,13 +86,9 @@ function Editor({
     <div className="relative">
       {editor ? (
         <div>
-          <div className="w-full px-5 py-3">
+          <div className="top-0 z-10 w-full rounded-t-xl bg-white px-5 py-3 dark:bg-zinc-900 md:sticky">
             <TextareaAutosize
               ref={titletRef}
-              value={title}
-              onChange={e => {
-                setTitle(e.target.value)
-              }}
               onKeyDown={e => {
                 if (editor) {
                   if (e.key === 'Escape') {
@@ -126,13 +105,17 @@ function Editor({
                   }
                 }
               }}
+              onChange={e => {
+                setPageTitle(e.target.value)
+              }}
+              defaultValue={post?.title}
               maxLength={512}
               onFocus={() => {
                 cbFocus()
               }}
               autoComplete="off"
               placeholder="Judul"
-              className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
+              className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
             />
           </div>
           <div ref={topFileRef}></div>
@@ -146,6 +129,7 @@ function Editor({
             <div>
               <EditorBubbleMenu editor={editor} />
               <EditorContent
+                ref={editorRef}
                 editor={editor}
                 onKeyUp={e => {
                   if (e.key === 'ArrowUp') {
@@ -173,23 +157,8 @@ function Editor({
           </div>
         </div>
       ) : (
-        <SkeletonCard />
+        <div>loading..</div>
       )}
-    </div>
-  )
-}
-
-export function SkeletonCard() {
-  return (
-    <div className="flex flex-col space-y-4 p-4">
-      <Skeleton className="h-[70px] w-full rounded-xl" />
-      <div className="space-y-4">
-        <Skeleton className="h-6 rounded-lg w-[250px]" />
-        <Skeleton className="h-6 rounded-lg w-[200px]" />
-        <Skeleton className="h-6 rounded-lg w-[320px]" />
-        <Skeleton className="h-6 rounded-lg w-full" />
-        <Skeleton className="h-6 rounded-lg w-[280px]" />
-      </div>
     </div>
   )
 }

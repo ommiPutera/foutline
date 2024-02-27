@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {create} from 'zustand'
+import { create } from 'zustand'
 
-import {formatDistance} from 'date-fns'
-import {id as IDNLocale} from 'date-fns/locale'
+import { formatDistance } from 'date-fns'
+import { id as IDNLocale } from 'date-fns/locale'
 
 import {
   Card,
@@ -14,12 +14,12 @@ import {
 } from '~/components/ui/card.tsx'
 import PageIcon from '~/components/page-icon.tsx'
 
-import {PostStatus, type Post} from '@prisma/client'
-import {Link, useLocation} from '@remix-run/react'
+import { PostStatus, type Post } from '@prisma/client'
+import { Link, useLocation } from '@remix-run/react'
 
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
-import {getPostType} from '~/utils/get-post-type.ts'
+import { getPostType } from '~/utils/get-post-type.ts'
 
 import Favorite from './favorite.tsx'
 import More from './more.tsx'
@@ -31,12 +31,12 @@ interface CardState {
 
 const useCardStore = create<CardState>(set => ({
   idCardFocus: '',
-  setIdCardFocus: id => set(() => ({idCardFocus: id})),
+  setIdCardFocus: id => set(() => ({ idCardFocus: id })),
 }))
 
 function CardItem(post: Post) {
-  const {id, preview, title, updatedAt, type, status} = post
-  const {idCardFocus, setIdCardFocus} = useCardStore()
+  const { id, preview, title, updatedAt, type, status } = post
+  const { idCardFocus, setIdCardFocus } = useCardStore()
 
   const location = useLocation()
 
@@ -60,7 +60,7 @@ function CardItem(post: Post) {
             <div>
               <PageIcon />
             </div>
-            <div className="text-monthly mt-[-2.5px] line-clamp-2 w-full text-[13px] font-semibold leading-5">
+            <div className="text-monthly mt-[-2.5px] line-clamp-3 w-full text-[12px] font-semibold leading-4">
               {title}
             </div>
           </CardTitle>
@@ -97,7 +97,7 @@ function CardItem(post: Post) {
   )
 }
 
-function ContentPreview({content}: {content: string | JSX.Element}) {
+function ContentPreview({ content }: { content: string | JSX.Element }) {
   if (typeof content === 'string')
     return (
       <div className="line-clamp-6 text-[11px] leading-4 text-black dark:text-white md:text-xs md:leading-snug">
@@ -111,7 +111,7 @@ function ContentPreview({content}: {content: string | JSX.Element}) {
   )
 }
 
-function CardBadge({status}: Pick<Post, 'status'>) {
+function CardBadge({ status }: Pick<Post, 'status'>) {
   const getStatusStr = () => {
     switch (status) {
       case 'NOT_STARTED':
@@ -141,4 +141,4 @@ function capitalizeFirstLetter(string: string) {
 }
 
 export default CardItem
-export {PageIcon, useCardStore}
+export { PageIcon, useCardStore }

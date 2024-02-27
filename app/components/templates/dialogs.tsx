@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import React from 'react'
 import _ from 'lodash'
 
-import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
+import { Grid3X3, HeartHandshake, Sparkles } from 'lucide-react'
 
-import {Button, ButtonLink} from '../ui/button.tsx'
+import { Button, ButtonLink } from '../ui/button.tsx'
 import {
   Dialog,
   DialogClose,
@@ -15,8 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
-import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
+import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group.tsx'
 
 import {
   BasicNotes,
@@ -26,11 +26,11 @@ import {
   MonthlyExpenses,
   RegularSaving,
 } from './selects.tsx'
-import {PocketGroup} from './pocket.tsx'
+import { PocketGroup } from './pocket.tsx'
 
-import {rupiah} from '~/utils/currency.ts'
+import { rupiah } from '~/utils/currency.ts'
 
-import type {PocketsValues} from '~/routes/monthly/$id/route.tsx'
+import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
 
 function CreatePostDialog({
   children,
@@ -60,7 +60,7 @@ function CreatePostDialog({
           </TooltipTrigger>
           <TooltipContent
             side="right"
-            className={clsx('hidden md:block', {'md:hidden': withoutTooltip})}
+            className={clsx('hidden md:block', { 'md:hidden': withoutTooltip })}
           >
             <p>Buat halaman baru</p>
           </TooltipContent>
@@ -203,4 +203,4 @@ function UpdatePocket({
   )
 }
 
-export {CreatePostDialog, UpdatePocket, Content as CreatePostContent}
+export { CreatePostDialog, UpdatePocket, Content as CreatePostContent }

@@ -1,9 +1,9 @@
-import {Link, useLocation} from '@remix-run/react'
-import {PanelLeft} from 'lucide-react'
+import { Link, useLocation } from '@remix-run/react'
+import { PanelLeft } from 'lucide-react'
 import React from 'react'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {Sidebar} from './sidebar.tsx'
-import {Button} from './ui/button.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { Sidebar } from './sidebar.tsx'
+import { Button } from './ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -11,16 +11,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import {getLogo} from './outline-logo.tsx'
+import { getLogo } from './outline-logo.tsx'
 
-function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
-  const {isAuthenticated} = useRootLoader()
+function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return <Shell>{children}</Shell>
 }
 
-function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
+function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const Logo = getLogo('md')
   return (
     <div className="bg-background h-full">
@@ -40,7 +40,7 @@ function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
               </div>
               <MobileSidebar />
             </div>
-            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-3.5 py-6 md:mt-0">
+            <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl md:mt-0">
               {children}
             </div>
           </div>
