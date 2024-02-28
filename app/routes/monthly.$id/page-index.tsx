@@ -1,13 +1,13 @@
-import { useLoaderData } from '@remix-run/react'
+import {useLoaderData} from '@remix-run/react'
 
 import Content from './content.tsx'
 import Header from './header.tsx'
 import Sum from './sum.tsx'
 
-import type { LoaderData } from './route.tsx'
+import type {LoaderData} from './route.tsx'
 
 function PageIndex() {
-  const { postId } = useLoaderData<LoaderData>()
+  const {postId} = useLoaderData<LoaderData>()
 
   return (
     <main
@@ -29,5 +29,4 @@ function Wrapper() {
   )
 }
 
-export { PageIndex }
-
+export {PageIndex}

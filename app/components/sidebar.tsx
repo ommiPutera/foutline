@@ -26,7 +26,7 @@ import {useRootLoader} from '~/utils/use-root-loader.tsx'
 import clsx from 'clsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+  const {profile, user} = useRootLoader()
 
   return (
     <div className={cn('flex h-full min-h-screen flex-col', className)}>
@@ -62,12 +62,15 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium leading-none">1/12 halaman</p>
+              <p className="text-xs font-medium leading-none">
+                {user.posts.length}/12 halaman
+              </p>
               <Badge variant="outline" className="text-[9px]">
                 Gratis
               </Badge>
             </div>
-            <Progress value={10} />
+            {/* 8.3 = 100 / 12 */}
+            <Progress value={user.posts.length * 8.3} />
           </div>
         </div>
         <div className="flex items-center justify-between p-4">

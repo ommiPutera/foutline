@@ -1,18 +1,18 @@
 import React from 'react'
 
-import { useFetcher, useLoaderData, useLocation } from '@remix-run/react'
+import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
 
-import { formatDistance } from 'date-fns'
-import { id as IDNLocale } from 'date-fns/locale'
+import {formatDistance} from 'date-fns'
+import {id as IDNLocale} from 'date-fns/locale'
 
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
+import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
-import { FormType, type TFocus, type LoaderData } from './route.tsx'
+import {FormType, type TFocus, type LoaderData} from './route.tsx'
 import PageEditor from './editor.tsx'
 
-import { ArrowRightLeft, PencilLine } from 'lucide-react'
+import {ArrowRightLeft, PencilLine} from 'lucide-react'
 
 function Wrapper() {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
@@ -26,7 +26,7 @@ function Wrapper() {
   }, [location.pathname])
 
   return (
-    <div className="flex w-full flex-col gap-8 pt-24 pl-3.5">
+    <div className="flex w-full flex-col gap-8 px-3.5 pt-24 lg:pr-0">
       <Topper />
       <div className="flex flex-col gap-4">
         <StartWriting isFocus={isFocus} setIsFocus={setIsFocus} />
@@ -55,7 +55,7 @@ function Topper() {
   )
 }
 
-function StartWriting({ isFocus, setIsFocus }: TFocus) {
+function StartWriting({isFocus, setIsFocus}: TFocus) {
   if (isFocus) return <></>
   return (
     <div className="mx-auto w-full max-w-lg">
@@ -67,13 +67,15 @@ function StartWriting({ isFocus, setIsFocus }: TFocus) {
         <span>
           <PencilLine className="mr-2 h-3.5 w-3.5" />
         </span>
-        <span>Mulai mencatat atau perbarui catatan keuangan bulanan..</span>
+        <span className="line-clamp-1">
+          Mulai mencatat atau perbarui catatan keuangan bulanan..
+        </span>
       </Button>
     </div>
   )
 }
 
-function Content({ isFocus, setIsFocus }: TFocus) {
+function Content({isFocus, setIsFocus}: TFocus) {
   return (
     <div className="mx-auto mb-52 flex w-full max-w-lg justify-center">
       <div
@@ -89,8 +91,8 @@ function Content({ isFocus, setIsFocus }: TFocus) {
   )
 }
 
-function Footer({ isFocus, setIsFocus }: TFocus) {
-  const { postId, post } = useLoaderData<LoaderData>()
+function Footer({isFocus, setIsFocus}: TFocus) {
+  const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
