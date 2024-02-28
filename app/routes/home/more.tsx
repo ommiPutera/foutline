@@ -1,11 +1,10 @@
-import {ArrowUpRight, MoreHorizontal, Trash} from 'lucide-react'
+import {ArrowUpRight, Copy, MoreHorizontal, Trash2} from 'lucide-react'
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import {SelectSeparator} from '~/components/ui/select.tsx'
 import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import type {Post} from '@prisma/client'
@@ -32,13 +31,13 @@ function More({id, type}: Pick<Post, 'id' | 'type'>) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="border-muted-foreground/60 h-fit w-48 p-0"
+        className="border-muted-foreground/60 h-fit w-48 px-2 py-1"
         align="end"
         side="right"
         forceMount
       >
         <Open id={id} type={type} />
-        <SelectSeparator className="z-0" />
+        <Duplicate id={id} />
         <Remove id={id} />
       </PopoverContent>
     </Popover>
@@ -47,12 +46,12 @@ function More({id, type}: Pick<Post, 'id' | 'type'>) {
 
 function Open({id, type}: Pick<Post, 'id' | 'type'>) {
   return (
-    <div className="my-2">
+    <div className="my-1">
       <ButtonLink
         to={`/${getPostType(type)}/${id}`}
         variant="ghost"
         size="sm"
-        className="w-full justify-start rounded-none px-3"
+        className="w-full justify-start rounded-md px-3"
       >
         <ArrowUpRight size="16" className="mr-2" />
         <span>Buka halaman</span>
@@ -64,15 +63,32 @@ function Open({id, type}: Pick<Post, 'id' | 'type'>) {
 function Remove({id}: Pick<Post, 'id'>) {
   const submit = useSubmit()
   return (
-    <div className="my-2">
+    <div className="my-1">
       <Button
         variant="ghost"
         size="sm"
         onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
-        className="w-full justify-start rounded-none px-3"
+        className="w-full justify-start rounded-md px-3"
       >
-        <Trash size="16" className="mr-2" />
+        <Trash2 size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
+      </Button>
+    </div>
+  )
+}
+
+function Duplicate({id}: Pick<Post, 'id'>) {
+  const submit = useSubmit()
+  return (
+    <div className="my-1">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
+        className="w-full justify-start rounded-md px-3"
+      >
+        <Copy size="16" className="mr-2" />
+        <span>Duplikat</span>
       </Button>
     </div>
   )

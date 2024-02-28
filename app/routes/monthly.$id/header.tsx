@@ -4,7 +4,7 @@ import {useLoaderData, useSubmit} from '@remix-run/react'
 
 import {FormType, type LoaderData} from './route.tsx'
 
-import {ChevronRight, Menu, Star, Tag, Trash2} from 'lucide-react'
+import {ChevronRight, Copy, Menu, Star, Tag, Trash2} from 'lucide-react'
 
 import {Button} from '~/components/ui/button.tsx'
 import {
@@ -113,6 +113,7 @@ function More() {
         forceMount
       >
         <Favorite />
+        <Duplicate />
         <Remove />
       </PopoverContent>
     </Popover>
@@ -190,6 +191,35 @@ function Remove() {
       >
         <Trash2 size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
+      </Button>
+    </div>
+  )
+}
+
+function Duplicate() {
+  const {post} = useLoaderData<LoaderData>()
+
+  // const submit = useSubmit()
+
+  if (!post) return <></>
+  return (
+    <div className="my-1">
+      <Button
+        variant="ghost"
+        size="sm"
+        // onClick={() =>
+        //   submit(
+        //     {
+        //       id: post.id,
+        //       _action: FormType.DELETE_POST,
+        //     },
+        //     { method: 'POST' },
+        //   )
+        // }
+        className="w-full justify-start rounded-md px-3"
+      >
+        <Copy size="16" className="mr-2" />
+        <span>Duplikat</span>
       </Button>
     </div>
   )

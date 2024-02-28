@@ -50,13 +50,13 @@ function Wrapper({
     <>
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:w-0 data-[state=open]:w-[300px] data-[state=closed]:duration-300 data-[state=open]:duration-500"
+        className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:w-0 data-[state=open]:w-[340px] data-[state=closed]:duration-300 data-[state=open]:duration-500"
       ></div>
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="data-[state=open]:animate-in data-[state=closed]:animate-out fixed right-0 h-screen border-l bg-white transition-all ease-in-out data-[state=closed]:w-0 data-[state=open]:w-[300px] data-[state=closed]:duration-300 data-[state=open]:duration-500 dark:bg-zinc-900"
+        className="data-[state=open]:animate-in data-[state=closed]:animate-out fixed right-0 h-screen border-l bg-white transition-all ease-in-out data-[state=closed]:w-0 data-[state=open]:w-[340px]  data-[state=closed]:opacity-0 data-[state=closed]:duration-300 data-[state=open]:duration-500 dark:bg-zinc-900"
       >
-        <div className="sticky top-20 flex w-[300px] flex-col gap-8 px-4">
+        <div className="sticky top-20 flex w-[340px] flex-col gap-8 px-6">
           <Button
             variant="secondary"
             size="sm"

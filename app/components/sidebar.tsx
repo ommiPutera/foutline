@@ -113,7 +113,7 @@ function Favorite() {
                     prefetch="intent"
                     size="sm"
                     type="button"
-                    className="ml-6 flex justify-between rounded-md text-xs font-medium"
+                    className="ml-6 flex justify-between rounded-md text-xs font-normal"
                   >
                     {post.title.length > 23
                       ? `${post.title.substring(0, 23)}..`
