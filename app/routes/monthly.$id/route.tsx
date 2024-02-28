@@ -1,15 +1,20 @@
-import type { Post } from "@prisma/client"
+import type {Post} from '@prisma/client'
 
-import { json, redirect, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node"
-import { useLocation } from "@remix-run/react"
+import {
+  json,
+  redirect,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+} from '@remix-run/node'
+import {useLocation} from '@remix-run/react'
 
-import { GeneralErrorBoundary } from "~/components/error-boundry.tsx"
-import { ErrorPage } from "~/components/errors.tsx"
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
 
-import { getKindeSession, getUser } from "~/utils/session.server.ts"
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
-import { PageIndex } from './page-index.tsx'
-import { updateContent } from "./queries.ts"
+import {PageIndex} from './page-index.tsx'
+import {updateContent} from './queries.ts'
 
 export type LoaderData = {
   post?: Post
@@ -17,7 +22,7 @@ export type LoaderData = {
 }
 
 export type TFocus = {
-  isFocus: boolean,
+  isFocus: boolean
   setIsFocus: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -25,22 +30,22 @@ export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
 }
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { isAuthenticated } = await getKindeSession(request)
-  if (!isAuthenticated) throw new Response('Not found', { status: 404 })
+export async function loader({request, params}: LoaderFunctionArgs) {
+  const {isAuthenticated} = await getKindeSession(request)
+  if (!isAuthenticated) throw new Response('Not found', {status: 404})
 
-  const { id } = params
+  const {id} = params
   const user = await getUser(request)
   const post: Post = await user.posts.filter(
-    (item: { id: string }) => item.id === id,
+    (item: {id: string}) => item.id === id,
   )[0]
 
   if (!id || !post) return redirect('/')
-  const data: LoaderData = { post: post, postId: id }
+  const data: LoaderData = {post: post, postId: id}
   return json(data)
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
@@ -51,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
         typeof formPayload.id !== 'string' ||
         typeof formPayload.postJSON !== 'string'
       ) {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
 
       return await updateContent({
@@ -64,7 +69,7 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 }
 
-export { PageIndex as default }
+export {PageIndex as default}
 
 export function ErrorBoundary() {
   const location = useLocation()

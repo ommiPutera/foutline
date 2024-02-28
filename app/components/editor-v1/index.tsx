@@ -1,14 +1,14 @@
-import { EditorContent, useEditor } from '@tiptap/react'
+import {EditorContent, useEditor} from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { BasicExtensions } from './extensions/index.tsx'
+import {BasicExtensions} from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import { TiptapEditorProps } from './props.ts'
-import { EditorBubbleMenu } from './bubble-menu/index.tsx'
-import { MonthlyExtensions } from './extensions/monthly.tsx'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
-import type { Post } from '@prisma/client'
-import { useLocation } from '@remix-run/react'
+import {TiptapEditorProps} from './props.ts'
+import {EditorBubbleMenu} from './bubble-menu/index.tsx'
+import {MonthlyExtensions} from './extensions/monthly.tsx'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
+import type {Post} from '@prisma/client'
+import {useLocation} from '@remix-run/react'
 
 function Editor({
   type,
@@ -53,7 +53,7 @@ function Editor({
   const editor = useEditor({
     editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
-    onUpdate({ editor }) {
+    onUpdate({editor}) {
       if (editor) {
         getData(editor)
       }

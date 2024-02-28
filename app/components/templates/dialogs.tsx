@@ -30,7 +30,7 @@ import { PocketGroup } from './pocket.tsx'
 
 import { rupiah } from '~/utils/currency.ts'
 
-import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
+import type { PocketsValues } from '~/routes/monthly.$id/route.tsx'
 
 function CreatePostDialog({
   children,
@@ -79,7 +79,6 @@ function CreatePostDialog({
                 <ButtonLink
                   disabled={!value}
                   to={`/${value}/templates`}
-                  prefetch="intent"
                   className="w-full md:w-fit"
                 >
                   Lanjutkan

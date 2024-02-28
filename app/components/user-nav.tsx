@@ -62,7 +62,7 @@ export function UserNav({
 
         <ToggleTheme className="w-full" />
         <DropdownMenuGroup>
-          <Link to="/user/account" prefetch="intent">
+          <Link to="/user/account">
             <DropdownMenuItem>
               <CircleUser className="mr-3 h-4 w-4" />
               <span>Akun anda</span>

@@ -1,6 +1,6 @@
 import { rupiah } from '~/utils/currency.ts'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group.tsx'
-import type { PocketsValues } from '~/routes/monthly/$id/route.tsx'
+import type { PocketsValues } from '~/routes/monthly.$id/route.tsx'
 
 function PocketGroup({
   onChange,

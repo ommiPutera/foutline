@@ -1,8 +1,8 @@
-import { Star } from 'lucide-react'
+import {Star} from 'lucide-react'
 
-import { useSubmit } from '@remix-run/react'
+import {useSubmit} from '@remix-run/react'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
 import React from 'react'
 
@@ -13,16 +13,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import type { TooltipContentProps } from '@radix-ui/react-tooltip'
+import type {TooltipContentProps} from '@radix-ui/react-tooltip'
 
-import { cn } from '~/lib/utils.ts'
+import {cn} from '~/lib/utils.ts'
 
-import { FormType } from './route.tsx'
+import {FormType} from './route.tsx'
 
 type Props = {
-  tooltipText?: { active: string; notActive: string }
+  tooltipText?: {active: string; notActive: string}
   side?: TooltipContentProps['side']
   size?: 'sm' | 'default'
 }
@@ -50,7 +50,7 @@ function Favorite({
         isFavorite: !isFavorited,
         _action: FormType.FAVORITE,
       },
-      { method: 'POST', action: '/home' },
+      {method: 'POST', action: '/home'},
     )
   }
 
@@ -75,7 +75,7 @@ function Favorite({
               '',
               isFavorited
                 ? 'fill-[#FFA500] stroke-[#FFA500]'
-                : 'fill-transparent stroke-foreground/80',
+                : 'stroke-foreground/80 fill-transparent',
             )}
           />
         </Button>

@@ -1,16 +1,16 @@
 import React from 'react'
 
-import type { Content, Editor as EditorType } from '@tiptap/core'
+import type {Content, Editor as EditorType} from '@tiptap/core'
 
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import {useFetcher, useLoaderData} from '@remix-run/react'
 
 import Editor from '~/components/editor/index.tsx'
 
-import { FormType, type LoaderData, type TFocus } from './route.tsx'
-import { type Post } from '@prisma/client'
+import {FormType, type LoaderData, type TFocus} from './route.tsx'
+import {type Post} from '@prisma/client'
 
-function PageEditor({ isFocus, setIsFocus }: TFocus) {
-  const { post } = useLoaderData<LoaderData>()
+function PageEditor({isFocus, setIsFocus}: TFocus) {
+  const {post} = useLoaderData<LoaderData>()
 
   const [content, setContent] = React.useState<any>(post?.content)
   // const [data, setData] = React.useState<EditorType | undefined>(undefined)
@@ -33,13 +33,6 @@ function PageEditor({ isFocus, setIsFocus }: TFocus) {
         title={title}
         setTitle={setTitle}
         setContent={setContent}
-
-
-
-
-
-
-
         getData={() => null}
         defaultContent={content}
         cbFocus={() => {
@@ -55,12 +48,15 @@ function PageEditor({ isFocus, setIsFocus }: TFocus) {
         cbOnSave={editor => {
           console.log('content: ', content)
 
-          fetcher.submit({
-            _action: FormType.UPDATE_CONTENT,
-            id: post?.id as string,
-            title: title,
-            postJSON: JSON.stringify(content)
-          }, { method: "POST" })
+          fetcher.submit(
+            {
+              _action: FormType.UPDATE_CONTENT,
+              id: post?.id as string,
+              title: title,
+              postJSON: JSON.stringify(content),
+            },
+            {method: 'POST'},
+          )
           editor.chain().blur().run()
           setTimeout(() => {
             setIsFocus(false)

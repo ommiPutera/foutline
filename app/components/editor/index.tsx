@@ -1,25 +1,22 @@
-import { EditorContent, useEditor } from '@tiptap/react'
+import {EditorContent, useEditor} from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { BasicExtensions } from './extensions/index.tsx'
+import {BasicExtensions} from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import { TiptapEditorProps } from './props.ts'
-import { EditorBubbleMenu } from './bubble-menu/index.tsx'
-import { MonthlyExtensions } from './extensions/monthly.tsx'
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
-import type { Post } from '@prisma/client'
-import { useLocation } from '@remix-run/react'
+import {TiptapEditorProps} from './props.ts'
+import {EditorBubbleMenu} from './bubble-menu/index.tsx'
+import {MonthlyExtensions} from './extensions/monthly.tsx'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
+import type {Post} from '@prisma/client'
+import {useLocation} from '@remix-run/react'
 
-import { Skeleton } from '~/components/ui/skeleton.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 function Editor({
   type,
   title,
   setTitle,
   setContent,
-
-
-
 
   getData,
   defaultContent,
@@ -32,10 +29,6 @@ function Editor({
   title: string
   setTitle: React.Dispatch<React.SetStateAction<string>>
   setContent: React.Dispatch<React.SetStateAction<any>>
-
-
-
-
 
   getData: (data: EditorType) => null
   defaultContent: JSONContent | undefined
@@ -61,15 +54,15 @@ function Editor({
   }
 
   const CustomPlaceholder = Placeholder.configure({
-    placeholder: "Buat catatan.., '/' untuk perintah..",
+    placeholder: "Tekan '/' untuk perintah..",
   })
 
   const editor = useEditor({
     editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
-    onUpdate({ editor }) {
+    onUpdate({editor}) {
       if (editor) {
-        const json = editor.getJSON();
+        const json = editor.getJSON()
 
         setContent(json.content)
         getData(editor)
@@ -132,7 +125,7 @@ function Editor({
               }}
               autoComplete="off"
               placeholder="Judul"
-              className="placeholder:text-muted-foreground w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
+              className="placeholder:text-muted-foreground h-fit w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
             />
           </div>
           <div ref={topFileRef}></div>
@@ -141,7 +134,7 @@ function Editor({
               editor?.chain().focus().run()
               cbFocus()
             }}
-            className="max-w-screen-l relative w-full px-5 pr-6 sm:pb-4"
+            className="max-w-screen-l relative w-full px-5 pb-2 pr-6"
           >
             <div>
               <EditorBubbleMenu editor={editor} />
@@ -184,11 +177,11 @@ export function SkeletonCard() {
     <div className="flex flex-col space-y-4 p-4">
       <Skeleton className="h-[70px] w-full rounded-xl" />
       <div className="space-y-4">
-        <Skeleton className="h-6 rounded-lg w-[250px]" />
-        <Skeleton className="h-6 rounded-lg w-[200px]" />
-        <Skeleton className="h-6 rounded-lg w-[320px]" />
-        <Skeleton className="h-6 rounded-lg w-full" />
-        <Skeleton className="h-6 rounded-lg w-[280px]" />
+        <Skeleton className="h-6 w-[250px] rounded-lg" />
+        <Skeleton className="h-6 w-[200px] rounded-lg" />
+        <Skeleton className="h-6 w-[320px] rounded-lg" />
+        <Skeleton className="h-6 w-full rounded-lg" />
+        <Skeleton className="h-6 w-[280px] rounded-lg" />
       </div>
     </div>
   )
