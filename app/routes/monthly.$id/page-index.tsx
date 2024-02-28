@@ -22,7 +22,7 @@ function PageIndex() {
 
 function Wrapper() {
   return (
-    <div className="flex w-full gap-6 py-6">
+    <div className="flex w-full gap-2 py-6">
       <Content />
       <Sum />
     </div>

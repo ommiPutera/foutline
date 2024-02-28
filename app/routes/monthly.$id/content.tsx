@@ -26,7 +26,7 @@ function Wrapper() {
   }, [location.pathname])
 
   return (
-    <div className="flex w-full flex-col gap-8 pt-24 px-3.5">
+    <div className="flex w-full flex-col gap-8 pt-24 pl-3.5">
       <Topper />
       <div className="flex flex-col gap-4">
         <StartWriting isFocus={isFocus} setIsFocus={setIsFocus} />

@@ -1,16 +1,16 @@
-import {EditorContent, useEditor} from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import {BasicExtensions} from './extensions/index.tsx'
+import { BasicExtensions } from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import {TiptapEditorProps} from './props.ts'
-import {EditorBubbleMenu} from './bubble-menu/index.tsx'
-import {MonthlyExtensions} from './extensions/monthly.tsx'
-import type {Editor as EditorType, JSONContent} from '@tiptap/core'
-import type {Post} from '@prisma/client'
-import {useLocation} from '@remix-run/react'
+import { TiptapEditorProps } from './props.ts'
+import { EditorBubbleMenu } from './bubble-menu/index.tsx'
+import { MonthlyExtensions } from './extensions/monthly.tsx'
+import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import type { Post } from '@prisma/client'
+import { useLocation } from '@remix-run/react'
 
-import {Skeleton} from '~/components/ui/skeleton.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
 
 function Editor({
   type,
@@ -60,7 +60,7 @@ function Editor({
   const editor = useEditor({
     editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
-    onUpdate({editor}) {
+    onUpdate({ editor }) {
       if (editor) {
         const json = editor.getJSON()
 
@@ -175,13 +175,16 @@ function Editor({
 export function SkeletonCard() {
   return (
     <div className="flex flex-col space-y-4 p-4">
-      <Skeleton className="h-[70px] w-full rounded-xl" />
-      <div className="space-y-4">
+      <Skeleton className="h-[90px] w-full rounded-xl" />
+      <div className="space-y-6">
         <Skeleton className="h-6 w-[250px] rounded-lg" />
+        <Skeleton className="h-6 w-full rounded-lg" />
         <Skeleton className="h-6 w-[200px] rounded-lg" />
         <Skeleton className="h-6 w-[320px] rounded-lg" />
         <Skeleton className="h-6 w-full rounded-lg" />
         <Skeleton className="h-6 w-[280px] rounded-lg" />
+        <Skeleton className="h-6 w-[320px] rounded-lg" />
+        <Skeleton className="h-6 w-full rounded-lg" />
       </div>
     </div>
   )

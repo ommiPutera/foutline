@@ -1,21 +1,21 @@
 import React from 'react'
 
-import {useLoaderData, useSubmit} from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 
-import {FormType, type LoaderData} from './route.tsx'
+import { FormType, type LoaderData } from './route.tsx'
 
-import {ChevronRight, Menu, Star, Tag, Trash2} from 'lucide-react'
+import { ChevronRight, Menu, Star, Tag, Trash2 } from 'lucide-react'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
 function Header() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   if (!post) return <></>
   return (
@@ -41,8 +41,20 @@ function Header() {
 
 function Label() {
   const [isFocus, setIsFocus] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsOpen(false)
+  }, [])
+
   return (
-    <Popover onOpenChange={v => setIsFocus(v)}>
+    <Popover
+      onOpenChange={v => {
+        setIsFocus(v)
+        setIsOpen(!isOpen)
+      }}
+      open={isOpen}
+    >
       <div className="flex h-full">
         <PopoverTrigger asChild>
           <Button
@@ -68,9 +80,20 @@ function Label() {
 
 function More() {
   const [isFocus, setIsFocus] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsOpen(false)
+  }, [])
 
   return (
-    <Popover onOpenChange={v => setIsFocus(v)}>
+    <Popover
+      onOpenChange={v => {
+        setIsFocus(v)
+        setIsOpen(!isOpen)
+      }}
+      open={isOpen}
+    >
       <div className="flex h-full">
         <PopoverTrigger asChild>
           <Button
@@ -97,7 +120,7 @@ function More() {
 }
 
 function Favorite() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean | undefined>(
     post?.isFavorite,
@@ -123,7 +146,7 @@ function Favorite() {
               isFavorite: !isFavorited,
               _action: FormType.FAVORITE_POST,
             },
-            {method: 'POST'},
+            { method: 'POST' },
           )
         }}
         className="w-full justify-start rounded-md px-3"
@@ -144,7 +167,7 @@ function Favorite() {
 }
 
 function Remove() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const submit = useSubmit()
 
@@ -160,7 +183,7 @@ function Remove() {
               id: post.id,
               _action: FormType.DELETE_POST,
             },
-            {method: 'POST'},
+            { method: 'POST' },
           )
         }
         className="w-full justify-start rounded-md px-3"
