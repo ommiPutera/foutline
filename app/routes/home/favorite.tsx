@@ -30,7 +30,7 @@ type Props = {
 function Favorite({
   tooltipText = {
     active: 'Batalkan favorit',
-    notActive: 'Tambahkan ke favorit',
+    notActive: 'Tambah ke favorit',
   },
   side = 'bottom',
   size = 'default',

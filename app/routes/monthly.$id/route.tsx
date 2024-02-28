@@ -14,7 +14,7 @@ import {ErrorPage} from '~/components/errors.tsx'
 import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
 import {PageIndex} from './page-index.tsx'
-import {updateContent} from './queries.ts'
+import {deletePost, favoritePost, updateContent} from './queries.ts'
 
 export type LoaderData = {
   post?: Post
@@ -28,6 +28,8 @@ export type TFocus = {
 
 export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
+  DELETE_POST = 'DELETE_POST',
+  FAVORITE_POST = 'FAVORITE_POST',
 }
 
 export async function loader({request, params}: LoaderFunctionArgs) {
@@ -50,6 +52,25 @@ export async function action({request}: ActionFunctionArgs) {
   const formPayload = Object.fromEntries(formData)
 
   switch (formPayload._action) {
+    case FormType.DELETE_POST: {
+      if (typeof formPayload.id !== 'string') {
+        return {formError: `Form not submitted correctly.`}
+      }
+      await deletePost({id: formPayload.id})
+      return redirect('/', {})
+    }
+    case FormType.FAVORITE_POST: {
+      if (
+        typeof formPayload.id !== 'string' ||
+        typeof formPayload.isFavorite !== 'string'
+      ) {
+        return {formError: `Form not submitted correctly.`}
+      }
+      return await favoritePost({
+        id: formPayload.id,
+        isFavorite: formPayload.isFavorite === 'true' ? true : false,
+      })
+    }
     case FormType.UPDATE_CONTENT: {
       if (
         typeof formPayload.title !== 'string' ||

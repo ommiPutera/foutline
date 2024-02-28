@@ -46,8 +46,6 @@ function PageEditor({isFocus, setIsFocus}: TFocus) {
           }, 100)
         }}
         cbOnSave={editor => {
-          console.log('content: ', content)
-
           fetcher.submit(
             {
               _action: FormType.UPDATE_CONTENT,

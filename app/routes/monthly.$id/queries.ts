@@ -17,3 +17,25 @@ export async function updateContent({
     },
   })
 }
+
+export async function favoritePost({
+  id,
+  isFavorite,
+}: Pick<Post, 'id' | 'isFavorite'>) {
+  return await prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      isFavorite,
+    },
+  })
+}
+
+export async function deletePost({id}: Pick<Post, 'id'>) {
+  return await prisma.post.delete({
+    where: {
+      id: id,
+    },
+  })
+}
