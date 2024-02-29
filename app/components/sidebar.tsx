@@ -30,10 +30,15 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 
   return (
     <div className={cn('flex h-full min-h-screen flex-col', className)}>
-      <div className="mb-4 flex flex-col justify-between space-y-4 overflow-y-scroll pb-6 pt-1">
+      <div className="mb-4 flex flex-col justify-between space-y-1 overflow-y-scroll pb-6 pt-3">
         <div className="flex flex-1 flex-col place-content-start px-3 py-2">
           <NavItem href="/home" iconName="Home" title="Beranda" />
-          <NavItem href="/explore" iconName="Search" title="Jelajahi" />
+          <NavItem
+            href="/explore"
+            iconName="Search"
+            title="Jelajahi"
+            isMatch={false}
+          />
           <div>
             <CreatePostDialog>
               <Button
@@ -53,9 +58,14 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
           <Files />
         </div>
         <div className="flex flex-1 flex-col place-content-end px-3 py-2">
-          <NavItem href="/settings" iconName="Settings" title="Pengaturan" />
-          <Favorite />
+          <NavItem
+            href="/settings"
+            iconName="Settings"
+            title="Pengaturan"
+            isMatch={false}
+          />
           <NavItem href="/trash" iconName="Trash2" title="Sampah" />
+          <Favorite />
         </div>
       </div>
       <div className="bg-background sticky bottom-0 mt-auto h-fit w-full">
@@ -113,7 +123,7 @@ function Favorite() {
                     prefetch="intent"
                     size="sm"
                     type="button"
-                    className="ml-6 flex justify-between rounded-md text-xs font-normal"
+                    className="text-muted-foreground hover:text-foreground ml-6 flex justify-between rounded-md text-xs font-normal"
                   >
                     {post.title.length > 23
                       ? `${post.title.substring(0, 23)}..`
@@ -184,10 +194,10 @@ function Files() {
                 size="sm"
                 prefetch="intent"
                 className={clsx(
-                  'w-full justify-start rounded-md !py-5 font-light',
+                  'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
                   location.pathname ===
                     `/${getPostType(post.type)}/${post.id}` &&
-                    'bg-accent font-semibold',
+                    'bg-accent !text-foreground font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
@@ -223,10 +233,12 @@ function NavItem({
   href,
   iconName,
   title,
+  isMatch = true,
 }: {
   href: string
   iconName: keyof typeof icons
   title: string
+  isMatch?: boolean
 }) {
   const location = useLocation()
   const Icon = icons[iconName]
@@ -237,16 +249,18 @@ function NavItem({
       variant="ghost"
       className={cn(
         'w-full justify-start text-[13.5px] font-semibold tracking-tight',
-        location.pathname === href && 'bg-black/5 font-bold',
+        location.pathname === href && isMatch && 'bg-secondary/80 font-bold',
       )}
     >
       <Icon
         className={cn(
           'mr-4 h-5 w-5 stroke-[2.1px]',
-          location.pathname === href && 'stroke-[2.4px]',
+          location.pathname === href && isMatch && 'stroke-[2.4px]',
         )}
       />
       {title}
     </ButtonLink>
   )
 }
+
+export {NavItem}

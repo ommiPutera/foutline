@@ -37,10 +37,10 @@ function PageIndex() {
   const fetcher = useFetcher()
 
   return (
-    <div className="px-3.5 py-4">
-      <div className="mx-auto max-w-screen-lg">
-        <h2 className="text-base font-semibold">Keuangan Bulanan</h2>
-        <Separator className="my-8" />
+    <div className="px-3.5 py-6">
+      <div className="mx-auto max-w-screen-md">
+        <h2 className="text-lg font-bold">Keuangan Bulanan</h2>
+        <Separator className="my-6" />
         <div className="flex flex-col gap-8">
           <div className="flex max-w-xs flex-col gap-2">
             <h3 className="text-2xl font-bold leading-tight tracking-wide">
@@ -89,7 +89,7 @@ function Card(props: CardProps) {
           <img
             src={imgSrc}
             alt=""
-            className="w-full cursor-pointer rounded-xl border object-cover p-0 hover:opacity-70 dark:hover:opacity-90"
+            className="w-full cursor-pointer rounded-lg border object-cover p-0 hover:opacity-70 dark:hover:opacity-90"
           />
           <div className="flex w-full items-start justify-between px-3">
             <div className="w-full text-left">

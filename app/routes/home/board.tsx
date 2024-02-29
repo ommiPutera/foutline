@@ -19,7 +19,7 @@ import type {LoaderData} from './route.tsx'
 
 function Board() {
   return (
-    <section className="flex w-full flex-col gap-4 px-3.5 py-4 md:gap-3 lg:pr-4">
+    <section className="flex w-full flex-col gap-4 px-3.5 py-6 md:gap-3 lg:pr-4">
       <Tools />
       <Cards />
       <NewCard />

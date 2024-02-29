@@ -35,7 +35,8 @@
 
     --radius: 0.5rem;
 
-    --sidebar-width: 270px;
+    --sidebar-width: 260px;
+    --sidebar-width-xl: 320px;
     --header-height: 59px;
 
     --monthly: 38 64% 37%;

@@ -1,87 +1,28 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select.tsx'
-import {Separator} from '~/components/ui/separator.tsx'
-
-import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {Outlet} from '@remix-run/react'
+import {NavItem} from '~/components/sidebar.tsx'
 
 function Settings() {
   return (
-    <div className="px-3.5 py-4">
-      <div className=" max-w-screen-sm rounded-xl border bg-white px-3.5 py-4 dark:bg-zinc-900">
-        <h2 className="text-lg font-semibold">Pengaturan</h2>
-        <Separator className="my-4" />
-        <ThemeSetting />
+    <div className="">
+      <div className="border-border fixed z-50 hidden h-full w-full max-w-[var(--sidebar-width)] border-r px-3.5 py-6 md:block">
+        <div className="flex flex-col gap-4">
+          <div className="ml-5">
+            <h4 className="text-xl font-bold">Pengaturan</h4>
+          </div>
+          <div className="flex flex-1 flex-col place-content-end py-2">
+            <NavItem
+              href="/settings"
+              iconName="Settings2"
+              title="Preferensi Pengguna"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  )
-}
-
-function ThemeSetting() {
-  const {requestInfo} = useRootLoader()
-
-  const [theme, setTheme] = useTheme()
-
-  const systemTheme = getSystemTheme()
-
-  return (
-    <Item
-      title="Mode Tampilan"
-      description="Sesuaikan tampilan warna Foutline di perangkat Anda"
-    >
-      <>
-        <Select
-          value={theme ?? requestInfo.session.theme}
-          defaultValue={requestInfo.session.theme}
-          onValueChange={value => {
-            switch (value) {
-              case Theme.LIGHT:
-                setTheme(Theme.LIGHT)
-                break
-              case Theme.DARK:
-                setTheme(Theme.DARK)
-                break
-              default:
-                setTheme(systemTheme)
-                break
-            }
-          }}
-        >
-          <SelectTrigger className="w-full font-medium" withoutIcon>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent side="right" align="center">
-            <SelectItem value={Theme.LIGHT}>Light Mode</SelectItem>
-            <SelectItem value={Theme.DARK}>Dark Mode</SelectItem>
-            <SelectItem value="System">System Mode</SelectItem>
-          </SelectContent>
-        </Select>
-      </>
-    </Item>
-  )
-}
-
-function Item({
-  title,
-  description,
-  children,
-}: {
-  title: string
-  description: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div className="flex flex-col gap-0.5">
-        <h3 className="text-sm font-medium">{title}</h3>
-        <p className="text-muted-foreground text-xs">{description}</p>
+      <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
+        <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl md:mt-0">
+          <Outlet />
+        </div>
       </div>
-      <div className="w-fit">{children}</div>
     </div>
   )
 }
