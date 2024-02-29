@@ -18,7 +18,7 @@ function Editor({
   setTitle,
   setContent,
 
-  getData,
+  getEditor,
   defaultContent,
   post,
   cbFocus = () => null,
@@ -30,7 +30,7 @@ function Editor({
   setTitle: React.Dispatch<React.SetStateAction<string>>
   setContent: React.Dispatch<React.SetStateAction<any>>
 
-  getData: (data: EditorType) => null
+  getEditor: (editor: EditorType) => void
   defaultContent: Pick<Post, 'content'>
   post?: Post
   cbFocus: () => void
@@ -58,14 +58,14 @@ function Editor({
   })
 
   const editor = useEditor({
-    editorProps: TiptapEditorProps,
     extensions: [CustomPlaceholder, ...getExtensions()],
+    editorProps: TiptapEditorProps,
     onUpdate({editor}) {
       if (editor) {
         const json = editor.getJSON()
 
         setContent(json.content)
-        getData(editor)
+        getEditor(editor)
       }
     },
   })
@@ -75,11 +75,11 @@ function Editor({
       editor.commands.setContent(defaultContent as any)
       setHydrated(true)
     }
-  }, [editor, defaultContent, hydrated, getData])
+  }, [editor, defaultContent, hydrated, getEditor])
 
   React.useEffect(() => {
     if (location.pathname && editor) {
-      getData(editor)
+      getEditor(editor)
       // @ts-ignore
       editor.commands.setContent(post?.content)
     }

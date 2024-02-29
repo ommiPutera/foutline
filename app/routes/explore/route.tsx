@@ -1,5 +1,5 @@
 import {icons} from 'lucide-react'
-import {ButtonLink} from '~/components/ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {Separator} from '~/components/ui/separator.tsx'
 import {cn} from '~/lib/utils.ts'
 
@@ -23,8 +23,29 @@ function Explore() {
               href="/monthly/templates"
               iconName="ArrowRightLeft"
               title="Keuangan Bulanan"
-              description="Rencanakan dan kontrol pengeluaran - pemasukan anda rutin setiap bulan"
+              description="Catat pengeluaran dan pemasukan Anda setiap bulan agar lebih teratur dan terkendali."
               className="bg-monthly-background [&>svg]:stroke-orange-500"
+            />
+            <Card
+              disabled
+              iconName="PencilLine"
+              title="Catatan"
+              description="Lacak kebiasaan, dan rutinitas harian Anda, sambil membuat jurnal, mengatur pengingat."
+              className="bg-blue-100/80 [&>svg]:stroke-blue-500"
+            />
+            <Card
+              disabled
+              iconName="CalendarCheck2"
+              title="Tabungan Rutin"
+              description="Untuk mencapai keuangan yang sehat, penting untuk membentuk kebiasaan menabung secara rutin."
+              className="bg-green-100 [&>svg]:stroke-green-600"
+            />
+            <Card
+              disabled
+              iconName="ScrollText"
+              title="Hutang"
+              description="Merencanakan secara cermat dan membuat catatan hutang dapat mencapai kebebasan finansial"
+              className="bg-red-100 [&>svg]:stroke-red-600"
             />
           </div>
         </div>
@@ -39,16 +60,22 @@ function Card({
   title,
   description,
   className,
+  disabled,
 }: {
-  href: string
+  href?: string
   iconName: keyof typeof icons
   title: string
   description: string
   className: React.HTMLProps<HTMLElement>['className']
+  disabled?: boolean
 }) {
   const Icon = icons[iconName]
+
+  const Comp = href ? ButtonLink : Button
+
   return (
-    <ButtonLink
+    <Comp
+      disabled={disabled}
       href={href}
       variant="outline"
       className="border-border !h-full flex-col items-start gap-4 rounded-lg bg-white py-6 dark:bg-zinc-900"
@@ -67,7 +94,7 @@ function Card({
           {description}
         </p>
       </div>
-    </ButtonLink>
+    </Comp>
   )
 }
 

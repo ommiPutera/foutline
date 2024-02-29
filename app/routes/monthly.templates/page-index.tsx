@@ -31,6 +31,14 @@ const templates: CardProps[] = [
     description:
       'Kelola uang Anda dengan bijak, terutama jika Anda memiliki pekerjaan full-time. Tentukan anggaran pengeluaran Anda dengan cermat, dan catat setiap transfer pendapatan-biaya. Dengan langkah-langkah ini, Anda akan memiliki pemahaman yang lebih baik tentang setiap sen uang Anda.',
   },
+  {
+    title: 'Keuangan Freelancer',
+    author: 'Foutline',
+    imgSrc: '/templates/monthly-1.png',
+    templateId: 'full_time_job',
+    description:
+      'Manajemen finansial yang cerdas sangat krusial, terutama bagi para freelancer. Tetapkan anggaran pengeluaran secara detail, dan catat setiap transaksi pemasukan dan biaya. Dengan pendekatan ini, Anda akan mendapatkan pemahaman yang lebih mendalam tentang setiap aspek keuangan Anda.',
+  },
 ]
 
 function PageIndex() {

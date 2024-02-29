@@ -12,14 +12,20 @@ import {type Post} from '@prisma/client'
 function PageEditor({
   isFocus,
   setIsFocus,
+
   content,
   setContent,
+
   title,
   setTitle,
+
+  getEditor,
 }: TFocus &
   Pick<Post, 'title' | 'content'> & {
     setContent: React.Dispatch<React.SetStateAction<any>>
     setTitle: React.Dispatch<React.SetStateAction<string>>
+
+    getEditor: (editor: EditorType) => void
   }) {
   const {post} = useLoaderData<LoaderData>()
 
@@ -40,8 +46,8 @@ function PageEditor({
         title={title}
         setTitle={setTitle}
         setContent={setContent}
-        getData={() => null}
-        defaultContent={content}
+        getEditor={getEditor}
+        defaultContent={content as any}
         cbFocus={() => {
           setIsFocus(true)
         }}

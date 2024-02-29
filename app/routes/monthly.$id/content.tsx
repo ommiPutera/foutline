@@ -5,6 +5,8 @@ import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
 import {formatDistance} from 'date-fns'
 import {id as IDNLocale} from 'date-fns/locale'
 
+import type {Editor as EditorType} from '@tiptap/core'
+
 import {Button} from '~/components/ui/button.tsx'
 
 import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
@@ -17,7 +19,13 @@ import {type Post} from '@prisma/client'
 
 function Wrapper() {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
+  const [editor, setEditor] = React.useState<EditorType | undefined>(undefined)
+
   const location = useLocation()
+
+  const getEditor = (tiptapEditor: EditorType) => {
+    setEditor(tiptapEditor)
+  }
 
   React.useEffect(() => {
     if (location.pathname) {
@@ -30,8 +38,16 @@ function Wrapper() {
     <div className="flex w-full flex-col gap-8 px-3.5 pt-24 lg:pr-0">
       <Topper />
       <div className="flex flex-col gap-4">
-        <StartWriting isFocus={isFocus} setIsFocus={setIsFocus} />
-        <Content isFocus={isFocus} setIsFocus={setIsFocus} />
+        <StartWriting
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          editor={editor}
+        />
+        <Content
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          getEditor={getEditor}
+        />
       </div>
     </div>
   )
@@ -56,13 +72,21 @@ function Topper() {
   )
 }
 
-function StartWriting({isFocus, setIsFocus}: TFocus) {
+function StartWriting({
+  isFocus,
+  setIsFocus,
+  editor,
+}: TFocus & {editor: EditorType | undefined}) {
   if (isFocus) return <></>
   return (
     <div className="mx-auto w-full max-w-lg">
       <Button
         variant="secondary"
-        onClick={() => setIsFocus(true)}
+        onClick={() => {
+          editor?.chain().focus().run()
+          setIsFocus(true)
+        }}
+        type="button"
         className="text-muted-foreground w-full justify-start rounded-xl py-6 font-normal dark:bg-zinc-900 dark:hover:bg-zinc-800"
       >
         <span>
@@ -76,7 +100,11 @@ function StartWriting({isFocus, setIsFocus}: TFocus) {
   )
 }
 
-function Content({isFocus, setIsFocus}: TFocus) {
+function Content({
+  isFocus,
+  setIsFocus,
+  getEditor,
+}: TFocus & {getEditor: (data: EditorType) => void}) {
   const {post} = useLoaderData<LoaderData>()
 
   const [content, setContent] = React.useState<any>(post?.content)
@@ -97,6 +125,7 @@ function Content({isFocus, setIsFocus}: TFocus) {
           setContent={setContent}
           title={title}
           setTitle={setTitle}
+          getEditor={getEditor}
         />
         <Footer
           isFocus={isFocus}
