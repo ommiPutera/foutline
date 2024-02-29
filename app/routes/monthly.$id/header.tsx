@@ -205,6 +205,7 @@ function Duplicate() {
   return (
     <div className="my-1">
       <Button
+        disabled
         variant="ghost"
         size="sm"
         // onClick={() =>

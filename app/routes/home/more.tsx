@@ -82,6 +82,7 @@ function Duplicate({id}: Pick<Post, 'id'>) {
   return (
     <div className="my-1">
       <Button
+        disabled
         variant="ghost"
         size="sm"
         onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}

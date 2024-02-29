@@ -31,9 +31,9 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={cn('flex h-full min-h-screen flex-col', className)}>
       <div className="mb-4 flex flex-col justify-between space-y-4 overflow-y-scroll pb-6 pt-1">
-        <div className="flex flex-1 flex-col place-content-start gap-1.5 px-3 py-2">
+        <div className="flex flex-1 flex-col place-content-start px-3 py-2">
           <NavItem href="/home" iconName="Home" title="Beranda" />
-          <NavItem href="/template" iconName="Search" title="Jelajahi" />
+          <NavItem href="/explore" iconName="Search" title="Jelajahi" />
           <div>
             <CreatePostDialog>
               <Button
@@ -52,8 +52,8 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         <div className="flex-2 place-content-center">
           <Files />
         </div>
-        <div className="flex flex-1 flex-col place-content-end gap-1.5 px-3 py-2">
-          <NavItem href="/settings" iconName="Settings2" title="Pengaturan" />
+        <div className="flex flex-1 flex-col place-content-end px-3 py-2">
+          <NavItem href="/settings" iconName="Settings" title="Pengaturan" />
           <Favorite />
           <NavItem href="/trash" iconName="Trash2" title="Sampah" />
         </div>

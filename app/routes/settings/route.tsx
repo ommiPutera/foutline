@@ -12,17 +12,21 @@ import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
 function Settings() {
   return (
-    <div className="border-border mx-auto max-w-screen-md rounded-xl border bg-white p-4 dark:bg-zinc-900">
-      <h2 className="text-lg font-medium">Pengaturan</h2>
-      <Separator className="my-4" />
-      <ThemeSetting />
+    <div className="px-3.5 py-4">
+      <div className=" max-w-screen-sm rounded-xl border bg-white px-3.5 py-4 dark:bg-zinc-900">
+        <h2 className="text-lg font-semibold">Pengaturan</h2>
+        <Separator className="my-4" />
+        <ThemeSetting />
+      </div>
     </div>
   )
 }
 
 function ThemeSetting() {
   const {requestInfo} = useRootLoader()
+
   const [theme, setTheme] = useTheme()
+
   const systemTheme = getSystemTheme()
 
   return (

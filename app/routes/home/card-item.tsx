@@ -72,7 +72,7 @@ function CardItem(post: Post) {
         <CardFooter className="bg-monthly-background justify-between gap-2 py-2.5">
           <div className="flex flex-1 flex-col justify-end gap-1.5">
             <CardBadge status={status} />
-            <div className="text-muted-foreground line-clamp-2 text-[11px]">
+            <div className="text-muted-foreground line-clamp-2 text-[9px]">
               {capitalizeFirstLetter(
                 formatDistance(new Date(updatedAt), new Date(), {
                   addSuffix: true,
