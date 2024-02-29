@@ -6,7 +6,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import {TiptapEditorProps} from './props.ts'
 import {EditorBubbleMenu} from './bubble-menu/index.tsx'
 import {MonthlyExtensions} from './extensions/monthly.tsx'
-import type {Editor as EditorType, JSONContent} from '@tiptap/core'
+import type {Editor as EditorType} from '@tiptap/core'
 import type {Post} from '@prisma/client'
 import {useLocation} from '@remix-run/react'
 
@@ -31,7 +31,7 @@ function Editor({
   setContent: React.Dispatch<React.SetStateAction<any>>
 
   getData: (data: EditorType) => null
-  defaultContent: JSONContent | undefined
+  defaultContent: Pick<Post, 'content'>
   post?: Post
   cbFocus: () => void
   cbOnSave: (editor: EditorType) => void
@@ -72,7 +72,7 @@ function Editor({
 
   React.useEffect(() => {
     if (editor && defaultContent && !hydrated) {
-      editor.commands.setContent(defaultContent)
+      editor.commands.setContent(defaultContent as any)
       setHydrated(true)
     }
   }, [editor, defaultContent, hydrated, getData])

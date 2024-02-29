@@ -10,11 +10,18 @@ function Settings() {
             <h4 className="text-xl font-bold">Pengaturan</h4>
           </div>
           <div className="flex flex-1 flex-col place-content-end py-2">
+            <NavItem iconName="CircleUser" title="Pusat Akun" disabled />
+            <NavItem
+              iconName="Infinity"
+              title="Tagihan - Go Unlimited"
+              disabled
+            />
             <NavItem
               href="/settings"
               iconName="Settings2"
               title="Preferensi Pengguna"
             />
+            <NavItem iconName="Trash2" title="Hapus Akun" disabled />
           </div>
         </div>
       </div>

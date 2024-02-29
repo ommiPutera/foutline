@@ -9,22 +9,29 @@ import Editor from '~/components/editor/index.tsx'
 import {FormType, type LoaderData, type TFocus} from './route.tsx'
 import {type Post} from '@prisma/client'
 
-function PageEditor({isFocus, setIsFocus}: TFocus) {
+function PageEditor({
+  isFocus,
+  setIsFocus,
+  content,
+  setContent,
+  title,
+  setTitle,
+}: TFocus &
+  Pick<Post, 'title' | 'content'> & {
+    setContent: React.Dispatch<React.SetStateAction<any>>
+    setTitle: React.Dispatch<React.SetStateAction<string>>
+  }) {
   const {post} = useLoaderData<LoaderData>()
-
-  const [content, setContent] = React.useState<any>(post?.content)
-  // const [data, setData] = React.useState<EditorType | undefined>(undefined)
-  const [title, setTitle] = React.useState<any>(post?.content)
 
   const fetcher = useFetcher()
 
   React.useEffect(() => {
-    setTitle(post?.title)
-  }, [post?.title])
+    setTitle(post?.title ?? '')
+  }, [post?.title, setTitle])
 
   React.useEffect(() => {
     setContent(post?.content)
-  }, [post?.content])
+  }, [post?.content, setContent])
 
   return (
     <div>

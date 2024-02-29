@@ -47,7 +47,7 @@ function Tools() {
           <SortButton />
         </div>
         <CreatePostDialog withoutTooltip>
-          <Button asChild size="sm" className="w-full">
+          <Button asChild size="sm" className="w-fit cursor-pointer">
             <div className="flex items-center gap-2">
               <Plus size={16} />
               Halaman baru

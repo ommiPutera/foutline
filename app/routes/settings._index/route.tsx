@@ -12,7 +12,7 @@ import {useRootLoader} from '~/utils/use-root-loader.tsx'
 function Settings() {
   return (
     <div className="px-3.5 py-6">
-      <div className="mx-auto flex max-w-screen-sm flex-col gap-6">
+      <div className="mx-auto flex max-w-screen-sm flex-col gap-10">
         <h2 className="text-lg font-bold">Preferensi Pengguna</h2>
         <div>
           <ThemeSetting />
@@ -77,8 +77,8 @@ function Item({
 }) {
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div className="flex flex-col gap-0.5">
-        <h3 className="text-sm font-medium">{title}</h3>
+      <div className="flex flex-col gap-1">
+        <h3 className="text-base font-medium">{title}</h3>
         <p className="text-muted-foreground text-xs">{description}</p>
       </div>
       <div className="w-fit">{children}</div>

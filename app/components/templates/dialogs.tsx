@@ -1,6 +1,4 @@
-import clsx from 'clsx'
 import React from 'react'
-import _ from 'lodash'
 
 import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
 
@@ -26,11 +24,9 @@ import {
   MonthlyExpenses,
   RegularSaving,
 } from './selects.tsx'
-import {PocketGroup} from './pocket.tsx'
+// import { PocketGroup } from './pocket.tsx'
 
 import {rupiah} from '~/utils/currency.ts'
-
-import type {PocketsValues} from '~/routes/monthly.$id/route.tsx'
 
 function CreatePostDialog({
   children,
@@ -42,30 +38,13 @@ function CreatePostDialog({
   onTrigger?: () => void
   withoutTooltip?: boolean
 }) {
-  const [isHover, setIsHover] = React.useState(false)
   const [value, setValue] = React.useState('')
 
   return (
     <Dialog modal>
-      <Tooltip open={isHover}>
-        <div className="flex h-full">
-          <TooltipTrigger
-            className="w-full"
-            onMouseEnter={() => _.delay(() => setIsHover(true), 30)}
-            onMouseLeave={() => _.delay(() => setIsHover(false), 60)}
-          >
-            <DialogTrigger asChild onClick={onTrigger}>
-              {children}
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent
-            side="right"
-            className={clsx('hidden md:block', {'md:hidden': withoutTooltip})}
-          >
-            <p>Buat halaman baru</p>
-          </TooltipContent>
-        </div>
-      </Tooltip>
+      <DialogTrigger asChild onClick={onTrigger}>
+        {children}
+      </DialogTrigger>
       <DialogPortal>
         <DialogContent className="border-muted h-full max-w-[650px] border md:h-fit">
           <DialogHeader>
@@ -167,14 +146,14 @@ function UpdatePocket({
   isOpen,
   setIsOpen,
   onChange,
-  dataset,
+  // dataset,
   onOpenChange = () => null,
 }: {
   value: number
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   onChange: (value: string) => void
-  dataset: PocketsValues[]
+  // dataset: PocketsValues[]
   onOpenChange: () => void
 }) {
   return (
@@ -189,13 +168,13 @@ function UpdatePocket({
         </DialogHeader>
         <div className="mt-4 flex flex-col gap-4">
           <div className="text-sm font-medium">{rupiah(value)}</div>
-          <PocketGroup
+          {/* <PocketGroup
             dataset={dataset}
             onChange={onChange}
             onClose={() => {
               setIsOpen(false)
             }}
-          />
+          /> */}
         </div>
       </DialogContent>
     </Dialog>

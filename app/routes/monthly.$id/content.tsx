@@ -13,6 +13,7 @@ import {FormType, type TFocus, type LoaderData} from './route.tsx'
 import PageEditor from './editor.tsx'
 
 import {ArrowRightLeft, PencilLine} from 'lucide-react'
+import {type Post} from '@prisma/client'
 
 function Wrapper() {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
@@ -76,6 +77,11 @@ function StartWriting({isFocus, setIsFocus}: TFocus) {
 }
 
 function Content({isFocus, setIsFocus}: TFocus) {
+  const {post} = useLoaderData<LoaderData>()
+
+  const [content, setContent] = React.useState<any>(post?.content)
+  const [title, setTitle] = React.useState<any>(post?.content)
+
   return (
     <div className="mx-auto mb-52 flex w-full max-w-lg justify-center">
       <div
@@ -84,14 +90,31 @@ function Content({isFocus, setIsFocus}: TFocus) {
           isFocus && 'shadow-border border-muted-foreground/30 shadow-3xl',
         )}
       >
-        <PageEditor isFocus={isFocus} setIsFocus={setIsFocus} />
-        <Footer isFocus={isFocus} setIsFocus={setIsFocus} />
+        <PageEditor
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          content={content}
+          setContent={setContent}
+          title={title}
+          setTitle={setTitle}
+        />
+        <Footer
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          content={content}
+          title={title}
+        />
       </div>
     </div>
   )
 }
 
-function Footer({isFocus, setIsFocus}: TFocus) {
+function Footer({
+  isFocus,
+  setIsFocus,
+  title,
+  content,
+}: TFocus & Pick<Post, 'title' | 'content'>) {
   const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
@@ -115,10 +138,7 @@ function Footer({isFocus, setIsFocus}: TFocus) {
     <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-900">
       <div className="bg-muted-foreground/30 h-[0.5px] w-full" />
       <div className="w-full px-4 pb-2">
-        <fetcher.Form
-          method="POST"
-          className="flex w-full items-center justify-between"
-        >
+        <div className="flex w-full items-center justify-between">
           <Button
             onClick={event => {
               event.stopPropagation()
@@ -142,9 +162,18 @@ function Footer({isFocus, setIsFocus}: TFocus) {
             size="sm"
             className="w-fit"
             variant="ghost"
-            type="submit"
+            type="button"
             onClick={event => {
               event.stopPropagation()
+              fetcher.submit(
+                {
+                  _action: FormType.UPDATE_CONTENT,
+                  id: post?.id as string,
+                  title: title,
+                  postJSON: JSON.stringify(content),
+                },
+                {method: 'POST'},
+              )
               setIsFocus(false)
             }}
           >
@@ -167,7 +196,7 @@ function Footer({isFocus, setIsFocus}: TFocus) {
           </Button>
           <input type="hidden" name="_action" value={FormType.UPDATE_CONTENT} />
           <input type="hidden" name="postId" value={postId} />
-        </fetcher.Form>
+        </div>
       </div>
     </div>
   )

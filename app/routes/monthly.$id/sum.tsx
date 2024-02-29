@@ -1,15 +1,15 @@
 import React from 'react'
 
-import {Info, PanelLeftClose, PanelRightClose} from 'lucide-react'
+import { Info, PanelLeftClose, PanelRightClose } from 'lucide-react'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
 
-import {rupiah} from '~/utils/currency.ts'
+import { rupiah } from '~/utils/currency.ts'
 
 function Sum() {
   const [isOpen, setIsOpen] = React.useState(true)
@@ -67,7 +67,7 @@ function Wrapper({
             <p className="text-[13px]">Tutup</p>
           </Button>
           <div>
-            <div className="flex items-center text-base font-semibold">
+            <div className="flex items-center text-base font-bold">
               Perhitungan
               <Tooltip>
                 <TooltipTrigger asChild>
