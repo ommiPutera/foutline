@@ -4,7 +4,12 @@ import {getUser} from '~/utils/session.server.ts'
 
 import {PageIndex} from './page-index.tsx'
 import {createPost} from './queries.ts'
-import {previewTemp1, previewTemp2, temp1, temp2} from './resource.tsx'
+import {
+  previewTemp1,
+  previewTemp2,
+  t_empty,
+  full_time_job,
+} from './resource.tsx'
 
 export const action: ActionFunction = async ({request}) => {
   const formData = await request.formData()
@@ -22,12 +27,12 @@ export const action: ActionFunction = async ({request}) => {
   let preview
 
   switch (templateId) {
-    case 'temp1':
-      content = temp1
+    case 't_empty':
+      content = t_empty
       preview = previewTemp1
       break
-    case 'temp2':
-      content = temp2
+    case 'full_time_job':
+      content = full_time_job
       preview = previewTemp2
       break
   }

@@ -27,7 +27,7 @@ export const action: ActionFunction = async ({request}) => {
   let preview
 
   switch (templateId) {
-    case 'temp1':
+    case 't_empty':
       content = temp1
       preview = previewTemp1
       break

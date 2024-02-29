@@ -1,4 +1,4 @@
-export const temp1 = {
+export const t_empty = {
   type: 'doc',
   content: [],
 }
@@ -11,7 +11,7 @@ Rp. 90,000
 Rp. 10,000
 `
 
-export const temp2 = {
+export const full_time_job = {
   type: 'doc',
   content: [
     {

@@ -42,8 +42,10 @@ function DetailTemplate({
       <DialogPortal>
         <DialogContent className="inset-y-auto mt-12 h-fit max-h-[75vh] max-w-[980px] overflow-y-scroll !rounded-2xl py-8">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
-            <DialogTitle className="text-2xl">{title}</DialogTitle>
-            <p className="text-muted-foreground text-sm">Kreator: {author}</p>
+            <DialogTitle className="ml-4 text-2xl">{title}</DialogTitle>
+            <p className="text-muted-foreground ml-4 text-sm">
+              Kreator: {author}
+            </p>
           </DialogHeader>
           <div className="mx-auto flex w-full max-w-screen-lg items-start justify-between gap-10">
             <div className="w-full max-w-xl">

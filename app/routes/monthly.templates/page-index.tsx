@@ -19,9 +19,17 @@ const templates: CardProps[] = [
     title: 'Halaman Kosong',
     author: 'Foutline',
     imgSrc: '/templates/monthly-1.png',
-    templateId: 'temp1',
+    templateId: 't_empty',
     description:
       'Mulailah mencatat keuangan bulanan Anda dari halaman kosong dan perkirakan semua pemasukan dan pengeluaran. Dengan begitu, Anda akan memiliki gambaran yang lebih jelas untuk mengelola transaksi bulanan Anda.',
+  },
+  {
+    title: 'Keuangan Pegawai',
+    author: 'Foutline',
+    imgSrc: '/templates/monthly-1.png',
+    templateId: 'full_time_job',
+    description:
+      'Kelola uang Anda dengan bijak, terutama jika Anda memiliki pekerjaan full-time. Tentukan anggaran pengeluaran Anda dengan cermat, dan catat setiap transfer pendapatan-biaya. Dengan langkah-langkah ini, Anda akan memiliki pemahaman yang lebih baik tentang setiap sen uang Anda.',
   },
 ]
 
