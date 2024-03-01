@@ -2,8 +2,12 @@ import React from 'react'
 
 import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
 
+import {type Post} from '@prisma/client'
+
 import {formatDistance} from 'date-fns'
 import {id as IDNLocale} from 'date-fns/locale'
+
+import {ArrowRightLeft, PencilLine} from 'lucide-react'
 
 import type {Editor as EditorType} from '@tiptap/core'
 
@@ -11,15 +15,17 @@ import {Button} from '~/components/ui/button.tsx'
 
 import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
-import {FormType, type TFocus, type LoaderData} from './route.tsx'
-import PageEditor from './editor.tsx'
+import PageEditor from './page-editor.tsx'
+import {FormType, type LoaderData, type TFocus} from './route.tsx'
 
-import {ArrowRightLeft, PencilLine} from 'lucide-react'
-import {type Post} from '@prisma/client'
+export type Props = {
+  editor: EditorType | undefined
+  setEditor: React.Dispatch<React.SetStateAction<EditorType | undefined>>
+  getEditor: (data: EditorType) => void
+}
 
-function Wrapper() {
+function Wrapper({editor, setEditor}: Pick<Props, 'editor' | 'setEditor'>) {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
-  const [editor, setEditor] = React.useState<EditorType | undefined>(undefined)
 
   const location = useLocation()
 
@@ -28,10 +34,8 @@ function Wrapper() {
   }
 
   React.useEffect(() => {
-    if (location.pathname) {
-      // Close editor when navigate to another page
-      setIsFocus(false)
-    }
+    // Close editor when navigate to another page
+    if (location.pathname) setIsFocus(false)
   }, [location.pathname])
 
   return (
@@ -76,7 +80,7 @@ function StartWriting({
   isFocus,
   setIsFocus,
   editor,
-}: TFocus & {editor: EditorType | undefined}) {
+}: TFocus & Pick<Props, 'editor'>) {
   if (isFocus) return <></>
   return (
     <div className="mx-auto w-full max-w-lg">
@@ -104,7 +108,7 @@ function Content({
   isFocus,
   setIsFocus,
   getEditor,
-}: TFocus & {getEditor: (data: EditorType) => void}) {
+}: TFocus & Pick<Props, 'getEditor'>) {
   const {post} = useLoaderData<LoaderData>()
 
   const [content, setContent] = React.useState<any>(post?.content)

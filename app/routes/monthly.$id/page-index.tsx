@@ -1,9 +1,12 @@
+import React from 'react'
+
 import {useLoaderData} from '@remix-run/react'
+
+import type {Editor as EditorType} from '@tiptap/core'
 
 import Content from './content.tsx'
 import Header from './header.tsx'
-import Sum from './sum.tsx'
-
+import RightSheet from './right-sheet.tsx'
 import type {LoaderData} from './route.tsx'
 
 function PageIndex() {
@@ -21,10 +24,12 @@ function PageIndex() {
 }
 
 function Wrapper() {
+  const [editor, setEditor] = React.useState<EditorType | undefined>(undefined)
+
   return (
     <div className="flex w-full gap-2 py-6">
-      <Content />
-      <Sum />
+      <Content editor={editor} setEditor={setEditor} />
+      <RightSheet editor={editor} setEditor={setEditor} />
     </div>
   )
 }
