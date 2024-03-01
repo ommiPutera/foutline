@@ -40,7 +40,7 @@ function DetailTemplate({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="inset-y-auto mt-12 h-fit max-h-[75vh] max-w-[980px] overflow-y-scroll !rounded-2xl px-10 py-8">
+        <DialogContent className="inset-y-auto h-fit overflow-y-scroll !rounded-2xl px-10 py-8 md:mt-12 md:max-h-[75vh] md:max-w-[980px]">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
             <DialogTitle className="ml-4 text-2xl">{title}</DialogTitle>
             <p className="text-muted-foreground ml-4 text-sm">

@@ -51,7 +51,7 @@ function CardItem(post: Post) {
       <Card
         key={id}
         className={cn(
-          'hover:border-muted-foreground/60 col-span-1 h-full cursor-pointer overflow-hidden border-[1px] md:h-fit',
+          'hover:border-muted-foreground/60 col-span-1 h-fit cursor-pointer overflow-hidden border-[1px]',
           idCardFocus === id && 'border-muted-foreground/60',
         )}
       >

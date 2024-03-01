@@ -60,7 +60,7 @@ function PageIndex() {
             </p>
           </div>
           <fetcher.Form method="POST">
-            <div className="mb-32 grid grid-cols-2 gap-6">
+            <div className="mb-32 grid grid-cols-1 gap-6 md:grid-cols-2">
               {templates.map(props => (
                 <Card key={props.title} {...props} />
               ))}

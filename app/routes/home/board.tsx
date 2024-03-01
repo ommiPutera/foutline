@@ -30,6 +30,7 @@ function Board() {
 function Tools() {
   const {posts} = useLoaderData<LoaderData>()
 
+  return <></>
   if (!posts?.length) return <></>
   return (
     <div className="bg-background flex items-center justify-between">
@@ -64,7 +65,7 @@ function Cards() {
 
   if (!posts?.length) return <></>
   return (
-    <div className="grid grid-cols-2 gap-3 py-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+    <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {posts.map(post => (
         <CardItem key={post.id} {...(post as any as Post)} />
       ))}

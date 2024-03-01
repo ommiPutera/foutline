@@ -245,7 +245,7 @@ const CommandList = ({
     <div
       id="slash-command"
       ref={commandListContainer}
-      className="border-input z-50 h-auto max-h-[420px] w-56 overflow-y-auto scroll-smooth rounded-md border bg-white p-1 shadow-md transition-all"
+      className="border-input z-50 h-auto max-h-[420px] w-56 overflow-y-auto scroll-smooth rounded-md border bg-white p-1 shadow-md transition-all dark:bg-zinc-900"
     >
       {items.map(
         ({title, icon: {iconName, color}}: CommandItemProps, index: number) => {
@@ -253,9 +253,9 @@ const CommandList = ({
           return (
             <button
               className={clsx(
-                'flex w-full items-center space-x-2 rounded-md p-1 text-left text-sm text-gray-900',
+                'flex w-full items-center space-x-2 rounded-md p-1 text-left text-sm text-zinc-900 dark:text-white',
                 {
-                  'bg-gray-100/50 dark:bg-gray-700': selectedIndex === index,
+                  'bg-gray-100/50 dark:bg-zinc-800': selectedIndex === index,
                 },
               )}
               key={index}
@@ -273,7 +273,7 @@ const CommandList = ({
                   },
                 )}
               >
-                <Icon className="h-3 w-3" />
+                <Icon className="stroke-background h-3 w-3" />
               </div>
               <p className="text-xs font-medium">{title}</p>
             </button>

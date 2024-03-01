@@ -117,7 +117,7 @@ function Content({
       <div
         className={cn(
           'border-border flex h-fit w-full flex-col gap-4 rounded-xl border bg-white dark:bg-zinc-900 md:gap-3',
-          isFocus && 'shadow-border border-muted-foreground/30 shadow-3xl',
+          isFocus && 'shadow-border border-muted-foreground/30 shadow-xl',
         )}
       >
         <PageEditor
