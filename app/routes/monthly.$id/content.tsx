@@ -24,18 +24,16 @@ export type Props = {
   getEditor: (data: EditorType) => void
 }
 
-function Wrapper({editor, setEditor}: Pick<Props, 'editor' | 'setEditor'>) {
+function Wrapper({editor, getEditor}: Props) {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
 
   const location = useLocation()
 
-  const getEditor = (tiptapEditor: EditorType) => {
-    setEditor(tiptapEditor)
-  }
-
   React.useEffect(() => {
     // Close editor when navigate to another page
-    if (location.pathname) setIsFocus(false)
+    if (location.pathname) {
+      setIsFocus(false)
+    }
   }, [location.pathname])
 
   return (

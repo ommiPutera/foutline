@@ -78,13 +78,13 @@ function Editor({
   }, [editor, defaultContent, hydrated, getEditor])
 
   React.useEffect(() => {
-    if (location.pathname && editor) {
+    if (location.pathname && editor && title) {
       getEditor(editor)
       // @ts-ignore
       editor.commands.setContent(post?.content)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor, location.pathname, post?.content])
+  }, [editor, location.pathname, post?.content, title])
 
   React.useEffect(() => {
     if (editor?.isFocused) {
