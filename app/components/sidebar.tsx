@@ -1,32 +1,32 @@
 import React from 'react'
 
-import {useLocation} from '@remix-run/react'
-import type {Post} from '@prisma/client'
+import { useLocation } from '@remix-run/react'
+import type { Post } from '@prisma/client'
 
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
-import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
+import { Button, ButtonLink } from './ui/button.tsx'
+import { ScrollArea } from './ui/scroll-area.tsx'
+import { FileText, GalleryHorizontalEnd, Plus, icons } from 'lucide-react'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from './ui/accordion.tsx'
-import {UserNav} from './user-nav.tsx'
+import { UserNav } from './user-nav.tsx'
 
-import {CreatePostDialog} from './templates/dialogs.tsx'
+import { CreatePostDialog } from './templates/dialogs.tsx'
 
-import {Progress} from '~/components/ui/progress.tsx'
-import {Badge} from '~/components/ui/badge.tsx'
+import { Progress } from '~/components/ui/progress.tsx'
+import { Badge } from '~/components/ui/badge.tsx'
 
-import {cn} from '~/lib/utils.ts'
-import {getPostType} from '~/utils/get-post-type.ts'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { cn } from '~/lib/utils.ts'
+import { getPostType } from '~/utils/get-post-type.ts'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 
 import clsx from 'clsx'
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile, user} = useRootLoader()
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile, user } = useRootLoader()
 
   return (
     <div className={cn('flex h-full min-h-screen flex-col', className)}>
@@ -73,14 +73,14 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <p className="text-xs font-medium leading-none">
-                {user.posts.length}/12 halaman
+                {user?.posts.length}/12 halaman
               </p>
               <Badge variant="outline" className="text-[9px]">
                 Gratis
               </Badge>
             </div>
             {/* 8.3 = 100 / 12 */}
-            <Progress value={user.posts.length * 8.3} />
+            <Progress value={user?.posts.length * 8.3} />
           </div>
         </div>
         <div className="flex items-center justify-between p-4">
@@ -92,7 +92,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 }
 
 function Favorite() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
@@ -145,7 +145,7 @@ function Files() {
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const location = useLocation()
 
   const isPostEmpty = !user?.posts?.length
@@ -196,8 +196,8 @@ function Files() {
                 className={clsx(
                   'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
                   location.pathname ===
-                    `/${getPostType(post.type)}/${post.id}` &&
-                    'bg-accent !text-foreground font-semibold',
+                  `/${getPostType(post.type)}/${post.id}` &&
+                  'bg-accent !text-foreground font-semibold',
                 )}
               >
                 <FileText className="mr-2 h-3.5 w-3.5" />
@@ -268,4 +268,4 @@ function NavItem({
   )
 }
 
-export {NavItem}
+export { NavItem }

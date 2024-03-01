@@ -1,21 +1,21 @@
 import React from 'react'
 
-import {useLoaderData, useSubmit} from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 
-import {FormType, type LoaderData} from './route.tsx'
+import { FormType, type LoaderData } from './route.tsx'
 
-import {ChevronRight, Copy, Menu, Star, Tag, Trash2} from 'lucide-react'
+import { CheckCircle, ChevronRight, Copy, Menu, Star, Tag, Trash2 } from 'lucide-react'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
 function Header() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   if (!post) return <></>
   return (
@@ -32,6 +32,7 @@ function Header() {
         </div>
         <div className="flex items-center gap-1.5">
           <Label />
+          <Status />
           <More />
         </div>
       </div>
@@ -74,6 +75,75 @@ function Label() {
         side="bottom"
         forceMount
       ></PopoverContent>
+    </Popover>
+  )
+}
+
+function Status() {
+  const [isFocus, setIsFocus] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsOpen(false)
+  }, [])
+
+  return (
+    <Popover
+      onOpenChange={v => {
+        setIsFocus(v)
+        setIsOpen(!isOpen)
+      }}
+      open={isOpen}
+    >
+      <div className="flex h-full">
+        <PopoverTrigger asChild>
+          <Button
+            variant={isFocus ? 'secondary' : 'ghost'}
+            size="sm"
+            className="flex items-center gap-2 rounded-lg"
+          >
+            <CheckCircle className="h-4 w-4" strokeWidth={2.5} />
+            <p className="text-[13px]">Status</p>
+          </Button>
+        </PopoverTrigger>
+      </div>
+      <PopoverContent
+        className="h-fit w-48 px-2 py-1"
+        align="end"
+        side="bottom"
+        forceMount
+      >
+        <div className="my-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start rounded-md px-3"
+          >
+            <CheckCircle size="16" className="mr-2" />
+            <span>Belum Berjalan</span>
+          </Button>
+        </div>
+        <div className="my-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start rounded-md px-3"
+          >
+            <CheckCircle size="16" className="mr-2" />
+            <span>Sedang Berjalan</span>
+          </Button>
+        </div>
+        <div className="my-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start rounded-md px-3"
+          >
+            <CheckCircle size="16" className="mr-2" />
+            <span>Selesai</span>
+          </Button>
+        </div>
+      </PopoverContent>
     </Popover>
   )
 }
@@ -121,7 +191,7 @@ function More() {
 }
 
 function Favorite() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean | undefined>(
     post?.isFavorite,
@@ -147,7 +217,7 @@ function Favorite() {
               isFavorite: !isFavorited,
               _action: FormType.FAVORITE_POST,
             },
-            {method: 'POST'},
+            { method: 'POST' },
           )
         }}
         className="w-full justify-start rounded-md px-3"
@@ -168,7 +238,7 @@ function Favorite() {
 }
 
 function Remove() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const submit = useSubmit()
 
@@ -184,7 +254,7 @@ function Remove() {
               id: post.id,
               _action: FormType.DELETE_POST,
             },
-            {method: 'POST'},
+            { method: 'POST' },
           )
         }
         className="w-full justify-start rounded-md px-3"
@@ -197,7 +267,7 @@ function Remove() {
 }
 
 function Duplicate() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   // const submit = useSubmit()
 

@@ -1,6 +1,6 @@
-import {type LoaderFunctionArgs} from '@remix-run/node'
-import {redirect} from 'react-router'
-import {emitter} from '~/utils/emitter.server.ts'
+import { type LoaderFunctionArgs } from '@remix-run/node'
+import { redirect } from 'react-router'
+import { emitter } from '~/utils/emitter.server.ts'
 import {
   commitSession,
   destroySession,
@@ -9,10 +9,10 @@ import {
   kindeClient,
   sessionIdKey,
 } from '~/utils/session.server.ts'
-import {createSession} from '~/utils/prisma.server.ts'
+import { createSession } from '~/utils/prisma.server.ts'
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
-  const {sessionManager, session} = await getSessionManager(request)
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { sessionManager, session, signUp } = await getSessionManager(request)
   try {
     await kindeClient.handleRedirectToApp(sessionManager, new URL(request.url))
     const kindeUser = await kindeClient.getUser(sessionManager)
@@ -26,6 +26,28 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
     }
 
     const user = await findUser(kindeUser.email)
+
+    if (kindeUser.id !== user?.kindeId) {
+      const user = await signUp({
+        fullName: kindeUser.given_name + ' ' + kindeUser.family_name,
+        email: kindeUser.email,
+        username: kindeUser.given_name,
+        kindeId: kindeUser.id,
+        request: request
+      })
+      console.log('USER: ', user)
+
+      const userSession = await createSession({ userId: user?.id })
+
+      console.log('USER session: ', userSession)
+      session.set(sessionIdKey, userSession.id)
+      return redirect('/', {
+        headers: {
+          'Set-Cookie': await commitSession(session),
+        },
+      })
+    }
+
     if (!user) {
       return redirect('/', {
         headers: {
@@ -34,7 +56,7 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
       })
     }
 
-    const userSession = await createSession({userId: user.id})
+    const userSession = await createSession({ userId: user.id })
     session.set(sessionIdKey, userSession.id)
     emitter.emit('kinde-callback')
     return redirect('/', {

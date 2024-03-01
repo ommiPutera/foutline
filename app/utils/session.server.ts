@@ -8,6 +8,7 @@ import {
   createCookie,
   createCookieSessionStorage,
   createFileSessionStorage,
+  redirect,
 } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 import {
@@ -119,12 +120,6 @@ async function signUp({
     where: {email: email},
   })
 
-  // if (existingUser?.id) {
-  //   console.log('HERE ---->')
-  //   console.log("id: ", existingUser?.id)
-  //   console.log('kindeId: ', kindeId)
-  // }
-
   if (existingUser?.id && kindeId) {
     let user = await updateExistingUser(email, kindeId)
     if (!user) return null
@@ -133,7 +128,7 @@ async function signUp({
   } else {
     if (!process.env.PASSWORD) throw new Error('need a password')
     const passwordHash = await bcrypt.hash(kindeId + process.env.PASSWORD, 10)
-    let user = await prisma.user.create({
+    return await prisma.user.create({
       data: {
         kindeId: kindeId,
         fullName,
@@ -142,8 +137,6 @@ async function signUp({
         email,
       },
     })
-    const userSession = await createSession({userId: user.id})
-    session.set(sessionIdKey, userSession.id)
   }
 }
 
