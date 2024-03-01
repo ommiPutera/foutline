@@ -118,6 +118,13 @@ async function signUp({
   const existingUser = await prisma.user.findUnique({
     where: {email: email},
   })
+
+  // if (existingUser?.id) {
+  //   console.log('HERE ---->')
+  //   console.log("id: ", existingUser?.id)
+  //   console.log('kindeId: ', kindeId)
+  // }
+
   if (existingUser?.id && kindeId) {
     let user = await updateExistingUser(email, kindeId)
     if (!user) return null

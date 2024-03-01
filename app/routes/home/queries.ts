@@ -1,11 +1,12 @@
 import type {Post} from '@prisma/client'
 import {prisma} from '~/utils/prisma.server.ts'
 
-export async function getHomeData(userId: string) {
+export async function getHomeData({userId, order, orderField}: {userId: string, order: string, orderField: string}) {
   return prisma.post.findMany({
     where: {
-      userId,
+      authorId: userId,
     },
+    orderBy: {[orderField]: order},
   })
 }
 
