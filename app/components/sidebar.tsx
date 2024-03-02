@@ -1,8 +1,8 @@
 import React from 'react'
 
-import type {Post} from '@prisma/client'
+import type {Post, PostType} from '@prisma/client'
 
-import {useLocation} from '@remix-run/react'
+import {useFetchers, useLocation} from '@remix-run/react'
 
 import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
 
@@ -20,11 +20,14 @@ import {ScrollArea} from '~/components/ui/scroll-area.tsx'
 import {UserNav} from '~/components/user-nav.tsx'
 
 import {cn} from '~/lib/utils.ts'
+
 import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
+import {FormType} from '~/routes/home/route.tsx'
+
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile, user} = useRootLoader()
+  const {profile} = useRootLoader()
 
   return (
     <div className={cn('flex h-full min-h-screen flex-col', className)}>
@@ -37,20 +40,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
             title="Jelajahi"
             isMatch={false}
           />
-          <div>
-            <CreatePostDialog>
-              <Button
-                asChild
-                variant="ghost"
-                className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
-              >
-                <span>
-                  <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
-                  Buat Halaman
-                </span>
-              </Button>
-            </CreatePostDialog>
-          </div>
+          <Create />
         </div>
         <div className="flex-2 place-content-center">
           <Files />
@@ -67,20 +57,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         </div>
       </div>
       <div className="bg-background sticky bottom-0 mt-auto h-fit w-full">
-        <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium leading-none">
-                {user?.posts.length}/12 halaman
-              </p>
-              <Badge variant="outline" className="text-[9px]">
-                Gratis
-              </Badge>
-            </div>
-            {/* 8.3 = 100 / 12 */}
-            <Progress value={user?.posts.length * 8.3} />
-          </div>
-        </div>
+        <Billing />
         <div className="flex items-center justify-between p-4">
           <UserNav {...profile} />
         </div>
@@ -89,8 +66,49 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   )
 }
 
+function Create() {
+  return (
+    <div>
+      <CreatePostDialog>
+        <Button
+          asChild
+          variant="ghost"
+          className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
+        >
+          <span>
+            <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
+            Buat Halaman
+          </span>
+        </Button>
+      </CreatePostDialog>
+    </div>
+  )
+}
+
+function Billing() {
+  const {user} = useRootLoader()
+  return (
+    <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-medium leading-none">
+            {user?.posts.length}/12 halaman
+          </p>
+          <Badge variant="outline" className="text-[9px]">
+            Gratis
+          </Badge>
+        </div>
+        {/* 8.3 = 100 / 12 */}
+        <Progress value={user?.posts.length * 8.3} />
+      </div>
+    </div>
+  )
+}
+
 function Favorite() {
   const {user} = useRootLoader()
+
+  let pendingItems = usePendingFavorite()
 
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
@@ -98,9 +116,25 @@ function Favorite() {
 
   const contentRef = React.useRef(null)
 
-  const isPostEmpty = !posts?.length
+  type Column = (typeof posts)[number] | (typeof pendingItems)[number]
+  type ColumnWithItems = Column
+  let columns = new Map<string, ColumnWithItems>()
+  for (let column of [...posts, ...pendingItems]) {
+    if (column.isFavorite === 'false') {
+      columns.delete(column.id)
+    } else {
+      columns.set(column.id, {...column})
+    }
+  }
 
+  const [isPostEmpty, setIsPostEmpty] = React.useState<boolean>(
+    ![...columns.values()].length ?? !posts.length,
+  )
   const [value, setValue] = React.useState<string>(!isPostEmpty ? 'item-1' : '')
+
+  React.useEffect(() => {
+    setIsPostEmpty(!posts.length)
+  }, [posts.length])
 
   return (
     <Accordion type="single" collapsible value={value}>
@@ -118,7 +152,7 @@ function Favorite() {
         <AccordionContent className="relative h-fit w-full pl-4 pr-1">
           <div ref={contentRef} className="w-full">
             {!isPostEmpty ? (
-              posts.map((post, i) => (
+              [...columns.values()].map((post, i) => (
                 <div key={`${post}-${i}`} className="relative">
                   <ButtonLink
                     href={`${getPostType(post.type)}/${post.id}`}
@@ -151,8 +185,25 @@ function Files() {
   const {user} = useRootLoader()
   const location = useLocation()
 
-  const isPostEmpty = !user?.posts?.length
   const posts: Post[] = user?.posts
+
+  let pendingItems = usePendingDelete()
+
+  type Column = (typeof posts)[number] | (typeof pendingItems)[number]
+  type ColumnWithItems = Column
+  let columns = new Map<string, ColumnWithItems>()
+  for (let column of [...posts]) {
+    if (pendingItems[0]) columns.delete(pendingItems[0].id)
+    columns.set(column.id, {...column})
+  }
+
+  const [isPostEmpty, setIsPostEmpty] = React.useState<boolean>(
+    ![...columns.values()].length ?? !posts.length,
+  )
+
+  React.useEffect(() => {
+    setIsPostEmpty(!posts.length)
+  }, [posts.length])
 
   React.useEffect(() => {
     if (!topFileRef?.current) return
@@ -189,7 +240,7 @@ function Files() {
         <div ref={topFileRef}></div>
         <div className="mx-2 py-1 pb-6">
           {!isPostEmpty ? (
-            posts?.map((post, i) => (
+            [...columns.values()]?.map((post, i) => (
               <ButtonLink
                 href={`${getPostType(post.type)}/${post.id}`}
                 key={`${post}-${i}`}
@@ -269,6 +320,46 @@ function NavItem({
       {title}
     </Comp>
   )
+}
+
+function usePendingFavorite() {
+  type PendingItem = ReturnType<typeof useFetchers>[number] & {
+    formData: FormData
+  }
+  return useFetchers()
+    .filter((fetcher): fetcher is PendingItem => {
+      if (!fetcher.formData) return false
+      let _action = fetcher.formData.get('_action')
+      return _action === FormType.FAVORITE
+    })
+    .map(fetcher => {
+      let id = String(fetcher.formData.get('id'))
+      let type: PostType = fetcher.formData.get('type') as PostType
+      let title = String(fetcher.formData.get('title'))
+      let isFavorite = String(fetcher.formData.get('isFavorite'))
+
+      return {id, type, title, isFavorite}
+    })
+}
+
+function usePendingDelete() {
+  type PendingItem = ReturnType<typeof useFetchers>[number] & {
+    formData: FormData
+  }
+  console.log('CALL: ', useFetchers())
+  return useFetchers()
+    .filter((fetcher): fetcher is PendingItem => {
+      if (!fetcher.formData) return false
+      let _action = fetcher.formData.get('_action')
+      return _action === FormType.DELETE
+    })
+    .map(fetcher => {
+      let id = String(fetcher.formData.get('id'))
+      let type: PostType = fetcher.formData.get('type') as PostType
+      let title = String(fetcher.formData.get('title'))
+
+      return {id, title, type}
+    })
 }
 
 export {NavItem}

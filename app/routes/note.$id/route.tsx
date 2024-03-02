@@ -35,7 +35,7 @@ export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
   UPDATE_STATUS = 'UPDATE_STATUS',
   DELETE_POST = 'DELETE_POST',
-  FAVORITE_POST = 'FAVORITE_POST',
+  FAVORITE = 'FAVORITE',
 }
 
 export async function loader({request, params}: LoaderFunctionArgs) {
@@ -65,7 +65,7 @@ export async function action({request}: ActionFunctionArgs) {
       await deletePost({id: formPayload.id})
       return redirect('/', {})
     }
-    case FormType.FAVORITE_POST: {
+    case FormType.FAVORITE: {
       if (
         typeof formPayload.id !== 'string' ||
         typeof formPayload.isFavorite !== 'string'

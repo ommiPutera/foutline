@@ -20,13 +20,14 @@ import {type FetcherWithComponents} from '@remix-run/react'
 import {getPostType} from '~/utils/get-post-type.ts'
 
 import {FormType} from './route.tsx'
-import {useCardStore} from './card-item.tsx'
+import {useCardStore} from './card.tsx'
 
 function More({
   id,
+  title,
   type,
   deleteFetcher,
-}: Pick<Post, 'id' | 'type'> & {
+}: Pick<Post, 'id' | 'type' | 'title'> & {
   deleteFetcher: FetcherWithComponents<unknown>
 }) {
   const {setIdCardFocus} = useCardStore()
@@ -51,7 +52,12 @@ function More({
         <Open id={id} type={type} />
         <SaveAsTemplate id={id} />
         <Duplicate id={id} />
-        <Remove id={id} deleteFetcher={deleteFetcher} />
+        <Remove
+          id={id}
+          title={title}
+          type={type}
+          deleteFetcher={deleteFetcher}
+        />
       </PopoverContent>
     </Popover>
   )
@@ -75,8 +81,12 @@ function Open({id, type}: Pick<Post, 'id' | 'type'>) {
 
 function Remove({
   id,
+  title,
+  type,
   deleteFetcher,
-}: Pick<Post, 'id'> & {deleteFetcher: FetcherWithComponents<unknown>}) {
+}: Pick<Post, 'id' | 'title' | 'type'> & {
+  deleteFetcher: FetcherWithComponents<unknown>
+}) {
   return (
     <div className="my-1">
       <deleteFetcher.Form>
@@ -88,10 +98,13 @@ function Remove({
             deleteFetcher.submit(
               {
                 id,
+                title: title,
+                type: type,
                 _action: FormType.DELETE,
               },
               {
                 method: 'POST',
+                action: '/home',
                 navigate: false,
                 fetcherKey: `card:${id}`,
               },

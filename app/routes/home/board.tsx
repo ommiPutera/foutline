@@ -14,7 +14,7 @@ import {
 } from '~/components/templates/dialogs.tsx'
 import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
-import CardItem from './card-item.tsx'
+import CardItem from './card.tsx'
 import {type LoaderData} from './route.tsx'
 
 function Board() {

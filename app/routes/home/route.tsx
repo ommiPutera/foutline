@@ -3,7 +3,7 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@remix-run/node'
-import {json, useLocation} from '@remix-run/react'
+import {defer, useLocation} from '@remix-run/react'
 
 import type {Post, User} from '@prisma/client'
 
@@ -64,7 +64,7 @@ export async function loader({request}: LoaderFunctionArgs) {
     order: order,
     orderField: orderField,
   })
-  return json({posts})
+  return defer({posts})
 }
 
 export {Board as default}

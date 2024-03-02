@@ -308,10 +308,17 @@ function Favorite() {
           submit(
             {
               id: post.id,
+              title: post.title,
+              type: post.type,
               isFavorite: !isFavorited,
-              _action: FormType.FAVORITE_POST,
+              _action: FormType.FAVORITE,
             },
-            {method: 'POST'},
+            {
+              method: 'POST',
+              action: '.',
+              navigate: false,
+              fetcherKey: `card:${post.id}`,
+            },
           )
         }}
         className="w-full justify-start rounded-md px-3"

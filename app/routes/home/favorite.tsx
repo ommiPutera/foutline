@@ -35,8 +35,10 @@ function Favorite({
   side = 'bottom',
   size = 'default',
   id,
+  title,
+  type,
   isFavorite: defaultValue,
-}: Props & Pick<Post, 'id' | 'isFavorite'>) {
+}: Props & Pick<Post, 'id' | 'isFavorite' | 'title' | 'type'>) {
   const submit = useSubmit()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean>(defaultValue)
@@ -47,10 +49,17 @@ function Favorite({
     submit(
       {
         id,
+        title,
+        type,
         isFavorite: !isFavorited,
         _action: FormType.FAVORITE,
       },
-      {method: 'POST', action: '/home'},
+      {
+        method: 'POST',
+        action: '/home',
+        navigate: false,
+        fetcherKey: `card:${id}`,
+      },
     )
   }
 
