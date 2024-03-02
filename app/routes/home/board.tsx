@@ -97,8 +97,8 @@ function NewCard() {
           Halaman yang Anda buat akan muncul di sini..
         </h4>
         <p className="text-muted-foreground text-sm font-light">
-          Semua perhitungan keuangan anda telah di enkripsi, semua informasi
-          keuangan anda aman dan terproteksi.
+          Semua perhitungan keuangan Anda telah di enkripsi, semua informasi
+          keuangan Anda aman dan terproteksi.
         </p>
       </div>
     </div>

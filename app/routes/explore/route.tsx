@@ -15,7 +15,7 @@ function Explore() {
               Foutline Templates
             </h3>
             <p className="text-muted-foreground text-sm">
-              Buat halaman keuangan anda dengan template yang telah disediakan
+              Buat halaman keuangan Anda dengan template yang telah disediakan
             </p>
           </div>
           <div className="grid grid-cols-3 gap-4">

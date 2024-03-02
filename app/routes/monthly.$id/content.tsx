@@ -67,7 +67,7 @@ function Topper() {
       <div className="flex max-w-sm flex-col gap-2">
         <h3 className="text-2xl font-bold leading-tight">Keuangan Bulanan</h3>
         <p className="text-muted-foreground text-sm">
-          Rencanakan dan kontrol pengeluaran - pemasukan anda rutin setiap bulan
+          Rencanakan dan kontrol pengeluaran - pemasukan Anda rutin setiap bulan
         </p>
       </div>
     </div>

@@ -98,7 +98,7 @@ function Title() {
         </Tooltip>
       </div>
       <div className="text-muted-foreground max-w-[200px] text-xs">
-        Selalu pastikan pengeluaran tidak melampaui pemasukan anda
+        Selalu pastikan pengeluaran tidak melampaui pemasukan Anda
       </div>
     </div>
   )

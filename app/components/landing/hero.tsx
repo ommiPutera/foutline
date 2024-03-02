@@ -24,7 +24,7 @@ function Hero() {
           <p className="text-lg font-normal text-black/70 dark:text-white/70 md:max-w-xl md:font-light">
             Solusi keuangan yang berbasis pada{' '}
             <b className="font-semibold">Note-Taking</b> yang memudahkan dalam
-            mempelajari dan merekem data keuangan anda
+            mempelajari dan merekem data keuangan Anda
           </p>
         </div>
         {value ? (

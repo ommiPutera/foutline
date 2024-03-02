@@ -57,7 +57,7 @@ export async function loader({request}: LoaderFunctionArgs) {
 export const meta: MetaFunction = () => {
   return [
     {viewport: 'width=device-width,initial-scale=1,viewport-fit=cover'},
-    {title: 'Outline | Catatan keuangan anda'},
+    {title: 'Outline | Catatan keuangan Anda'},
   ]
 }
 

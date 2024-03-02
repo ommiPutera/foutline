@@ -104,6 +104,10 @@ function Status() {
     post?.status ?? 'NOT_STARTED',
   )
 
+  React.useEffect(() => {
+    setValue(post?.status ?? 'NOT_STARTED')
+  }, [post?.status])
+
   const status = value
 
   const getStatusStr = () => {
