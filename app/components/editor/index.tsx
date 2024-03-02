@@ -1,16 +1,16 @@
-import {EditorContent, useEditor} from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import {BasicExtensions} from './extensions/index.tsx'
+import { BasicExtensions } from './extensions/index.tsx'
 import Placeholder from '@tiptap/extension-placeholder'
-import {TiptapEditorProps} from './props.ts'
-import {EditorBubbleMenu} from './bubble-menu/index.tsx'
-import {MonthlyExtensions} from './extensions/monthly.tsx'
-import type {Editor as EditorType} from '@tiptap/core'
-import type {Post} from '@prisma/client'
-import {useLocation} from '@remix-run/react'
+import { TiptapEditorProps } from './props.ts'
+import { EditorBubbleMenu } from './bubble-menu/index.tsx'
+import { MonthlyExtensions } from './extensions/monthly.tsx'
+import type { Editor as EditorType } from '@tiptap/core'
+import type { Post } from '@prisma/client'
+import { useLocation } from '@remix-run/react'
 
-import {Skeleton} from '~/components/ui/skeleton.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
 
 function Editor({
   type,
@@ -62,12 +62,10 @@ function Editor({
   const editor = useEditor({
     extensions: [CustomPlaceholder, ...getExtensions()],
     editorProps: TiptapEditorProps,
-    onUpdate({editor}) {
+    onUpdate({ editor }) {
       if (editor) {
         const json = editor.getJSON()
         const text = editor.getText()
-
-        console.log('preview: ', editor.getText())
 
         setContent(json.content)
         setPreview(text)
