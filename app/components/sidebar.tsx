@@ -1,29 +1,27 @@
 import React from 'react'
 
-import {useLocation} from '@remix-run/react'
 import type {Post} from '@prisma/client'
 
-import {Button, ButtonLink} from './ui/button.tsx'
-import {ScrollArea} from './ui/scroll-area.tsx'
+import {useLocation} from '@remix-run/react'
+
 import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
+
+import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from './ui/accordion.tsx'
-import {UserNav} from './user-nav.tsx'
-
-import {CreatePostDialog} from './templates/dialogs.tsx'
-
-import {Progress} from '~/components/ui/progress.tsx'
+} from '~/components/ui/accordion.tsx'
 import {Badge} from '~/components/ui/badge.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import {Progress} from '~/components/ui/progress.tsx'
+import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import {UserNav} from '~/components/user-nav.tsx'
 
 import {cn} from '~/lib/utils.ts'
 import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
-
-import clsx from 'clsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile, user} = useRootLoader()
@@ -44,7 +42,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
               <Button
                 asChild
                 variant="ghost"
-                className="w-full justify-start text-[13.5px] font-semibold tracking-tight"
+                className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
               >
                 <span>
                   <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
@@ -193,7 +191,7 @@ function Files() {
                 variant="ghost"
                 size="sm"
                 prefetch="intent"
-                className={clsx(
+                className={cn(
                   'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
                   location.pathname ===
                     `/${getPostType(post.type)}/${post.id}` &&

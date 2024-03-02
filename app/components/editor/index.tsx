@@ -17,6 +17,7 @@ function Editor({
   title,
   setTitle,
   setContent,
+  setPreview,
 
   getEditor,
   defaultContent,
@@ -29,6 +30,7 @@ function Editor({
   title: string
   setTitle: React.Dispatch<React.SetStateAction<string>>
   setContent: React.Dispatch<React.SetStateAction<any>>
+  setPreview: React.Dispatch<React.SetStateAction<any>>
 
   getEditor: (editor: EditorType) => void
   defaultContent: Pick<Post, 'content'>
@@ -63,8 +65,12 @@ function Editor({
     onUpdate({editor}) {
       if (editor) {
         const json = editor.getJSON()
+        const text = editor.getText()
+
+        console.log('preview: ', editor.getText())
 
         setContent(json.content)
+        setPreview(text)
         getEditor(editor)
       }
     },

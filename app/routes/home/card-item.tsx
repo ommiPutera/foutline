@@ -60,12 +60,12 @@ function CardItem(post: Post) {
             <div>
               <PageIcon />
             </div>
-            <div className="text-monthly mt-[-2.5px] line-clamp-3 w-full text-[12px] font-semibold leading-4">
+            <div className="text-monthly mt-[-2px] line-clamp-2 w-full text-[13px] font-semibold leading-5">
               {title}
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="bg-monthly-background relative py-4">
+        <CardContent className="bg-monthly-background relative pb-2">
           <ContentPreview content={preview ?? ''} />
           <div className="from-monthly-background to-monthly-background/30 text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t"></div>
         </CardContent>
@@ -98,15 +98,9 @@ function CardItem(post: Post) {
 }
 
 function ContentPreview({content}: {content: string | JSX.Element}) {
-  if (typeof content === 'string')
-    return (
-      <div className="line-clamp-6 text-[11px] leading-4 text-black dark:text-white md:text-xs md:leading-snug">
-        {content}
-      </div>
-    )
   return (
-    <div>
-      <p className="text-xs">{content}</p>
+    <div className="text-[11.5px] leading-4 text-black dark:text-white md:text-xs md:leading-snug">
+      {content}
     </div>
   )
 }
@@ -115,20 +109,22 @@ function CardBadge({status}: Pick<Post, 'status'>) {
   const getStatusStr = () => {
     switch (status) {
       case 'NOT_STARTED':
-        return 'Belum berjalan'
+        return 'Belum Berjalan'
       case 'COMPLETED':
         return 'Selesai'
       case 'UNDERWAY':
-        return 'Sedang berjalan'
+        return 'Sedang Berjalan'
     }
   }
   return (
     <div
       className={cn(
-        'line-clamp-1 w-fit rounded-sm px-1.5 py-[3.5px] text-[10px] leading-none text-white',
-        status === PostStatus.COMPLETED && 'bg-ring/90',
-        status === PostStatus.NOT_STARTED && 'bg-muted-foreground',
-        status === PostStatus.UNDERWAY && 'bg-blue-500',
+        'text-foreground line-clamp-1 w-fit rounded-sm px-1.5 py-[3.5px] text-[10px] leading-none',
+        status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
+        status === PostStatus.NOT_STARTED &&
+          'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
+        status === PostStatus.UNDERWAY &&
+          'bg-blue-500/30 hover:!bg-blue-500/20',
       )}
     >
       {getStatusStr()}

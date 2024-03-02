@@ -1,17 +1,21 @@
 import React from 'react'
 
-import {useLoaderData, useSubmit} from '@remix-run/react'
+import {useFetcher, useLoaderData, useSubmit} from '@remix-run/react'
+import {PostStatus} from '@prisma/client'
 
 import {FormType, type LoaderData} from './route.tsx'
 
 import {
-  CheckCircle,
+  CheckCheck,
   ChevronRight,
+  ChevronsRight,
   Copy,
   Menu,
+  Pause,
   Star,
   Tag,
   Trash2,
+  icons,
 } from 'lucide-react'
 
 import {Button} from '~/components/ui/button.tsx'
@@ -20,6 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
+
 import {cn} from '~/lib/utils.ts'
 
 function Header() {
@@ -88,8 +93,42 @@ function Label() {
 }
 
 function Status() {
+  const {post} = useLoaderData<LoaderData>()
+
+  const fetcher = useFetcher()
+
   const [isFocus, setIsFocus] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
+
+  const [value, setValue] = React.useState<PostStatus>(
+    post?.status ?? 'NOT_STARTED',
+  )
+
+  const status = value
+
+  const getStatusStr = () => {
+    switch (status) {
+      case 'NOT_STARTED':
+        return 'Belum Berjalan'
+      case 'COMPLETED':
+        return 'Selesai'
+      case 'UNDERWAY':
+        return 'Sedang Berjalan'
+    }
+  }
+
+  const getIconName = (): keyof typeof icons => {
+    switch (status) {
+      case 'NOT_STARTED':
+        return 'Pause'
+      case 'COMPLETED':
+        return 'CheckCheck'
+      case 'UNDERWAY':
+        return 'ChevronsRight'
+    }
+  }
+
+  const Icon = icons[getIconName()]
 
   React.useEffect(() => {
     setIsOpen(false)
@@ -108,16 +147,23 @@ function Status() {
           <Button
             variant={isFocus ? 'secondary' : 'ghost'}
             size="sm"
-            className="flex items-center gap-2 rounded-lg"
+            className={cn(
+              'flex items-center gap-2 rounded-lg',
+              status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
+              status === PostStatus.NOT_STARTED &&
+                'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
+              status === PostStatus.UNDERWAY &&
+                'bg-blue-500/30 hover:!bg-blue-500/20',
+            )}
           >
-            <CheckCircle className="h-4 w-4" strokeWidth={2.5} />
-            <p className="text-[13px]">Status</p>
+            <Icon className="h-4 w-4" strokeWidth={2.5} />
+            <p className="text-[13px]">{getStatusStr()}</p>
           </Button>
         </PopoverTrigger>
       </div>
       <PopoverContent
         className="h-fit w-48 px-2 py-1"
-        align="end"
+        align="center"
         side="bottom"
         forceMount
       >
@@ -125,9 +171,21 @@ function Status() {
           <Button
             variant="ghost"
             size="sm"
+            onClick={() => {
+              setValue('NOT_STARTED')
+              setIsOpen(false)
+              fetcher.submit(
+                {
+                  _action: FormType.UPDATE_STATUS,
+                  id: post?.id as string,
+                  status: 'NOT_STARTED',
+                },
+                {method: 'POST'},
+              )
+            }}
             className="w-full justify-start rounded-md px-3"
           >
-            <CheckCircle size="16" className="mr-2" />
+            <Pause size="16" className="mr-2" />
             <span>Belum Berjalan</span>
           </Button>
         </div>
@@ -136,8 +194,20 @@ function Status() {
             variant="ghost"
             size="sm"
             className="w-full justify-start rounded-md px-3"
+            onClick={() => {
+              setValue('UNDERWAY')
+              setIsOpen(false)
+              fetcher.submit(
+                {
+                  _action: FormType.UPDATE_STATUS,
+                  id: post?.id as string,
+                  status: 'UNDERWAY',
+                },
+                {method: 'POST'},
+              )
+            }}
           >
-            <CheckCircle size="16" className="mr-2" />
+            <ChevronsRight size="16" className="mr-2" />
             <span>Sedang Berjalan</span>
           </Button>
         </div>
@@ -146,8 +216,20 @@ function Status() {
             variant="ghost"
             size="sm"
             className="w-full justify-start rounded-md px-3"
+            onClick={() => {
+              setValue('COMPLETED')
+              setIsOpen(false)
+              fetcher.submit(
+                {
+                  _action: FormType.UPDATE_STATUS,
+                  id: post?.id as string,
+                  status: 'COMPLETED',
+                },
+                {method: 'POST'},
+              )
+            }}
           >
-            <CheckCircle size="16" className="mr-2" />
+            <CheckCheck size="16" className="mr-2" />
             <span>Selesai</span>
           </Button>
         </div>

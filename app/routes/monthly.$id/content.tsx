@@ -110,6 +110,7 @@ function Content({
   const {post} = useLoaderData<LoaderData>()
 
   const [content, setContent] = React.useState<any>(post?.content)
+  const [preview, setPreview] = React.useState<any>(post?.preview)
   const [title, setTitle] = React.useState<any>(post?.content)
 
   return (
@@ -125,6 +126,8 @@ function Content({
           setIsFocus={setIsFocus}
           content={content}
           setContent={setContent}
+          preview={preview}
+          setPreview={setPreview}
           title={title}
           setTitle={setTitle}
           getEditor={getEditor}
@@ -133,6 +136,7 @@ function Content({
           isFocus={isFocus}
           setIsFocus={setIsFocus}
           content={content}
+          preview={preview}
           title={title}
         />
       </div>
@@ -145,7 +149,8 @@ function Footer({
   setIsFocus,
   title,
   content,
-}: TFocus & Pick<Post, 'title' | 'content'>) {
+  preview,
+}: TFocus & Pick<Post, 'title' | 'content' | 'preview'>) {
   const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
@@ -201,6 +206,7 @@ function Footer({
                   _action: FormType.UPDATE_CONTENT,
                   id: post?.id as string,
                   title: title,
+                  preview: preview,
                   postJSON: JSON.stringify(content),
                 },
                 {method: 'POST'},

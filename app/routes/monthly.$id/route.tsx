@@ -1,4 +1,4 @@
-import type {Post} from '@prisma/client'
+import {PostStatus, type Post} from '@prisma/client'
 
 import {
   json,
@@ -14,7 +14,12 @@ import {ErrorPage} from '~/components/errors.tsx'
 import {getKindeSession, getUser} from '~/utils/session.server.ts'
 
 import {PageIndex} from './page-index.tsx'
-import {deletePost, favoritePost, updateContent} from './queries.ts'
+import {
+  deletePost,
+  favoritePost,
+  updateContent,
+  updateStatusPost,
+} from './queries.ts'
 
 export type LoaderData = {
   post?: Post
@@ -28,6 +33,7 @@ export type TFocus = {
 
 export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
+  UPDATE_STATUS = 'UPDATE_STATUS',
   DELETE_POST = 'DELETE_POST',
   FAVORITE_POST = 'FAVORITE_POST',
 }
@@ -75,17 +81,45 @@ export async function action({request}: ActionFunctionArgs) {
       if (
         typeof formPayload.title !== 'string' ||
         typeof formPayload.id !== 'string' ||
-        typeof formPayload.postJSON !== 'string'
+        typeof formPayload.postJSON !== 'string' ||
+        typeof formPayload.preview !== 'string'
       ) {
         return {formError: `Form not submitted correctly.`}
       }
 
+      const title =
+        formPayload.title.length === 0 ? 'tanpa judul' : formPayload.title
+      const id = formPayload.id
+      const preview =
+        formPayload.preview.length > 160
+          ? `${formPayload.preview.substring(0, 160)}..`
+          : formPayload.preview
+      const content = JSON.parse(formPayload.postJSON)
+
       return await updateContent({
-        id: formPayload.id,
-        content: JSON.parse(formPayload.postJSON),
-        title:
-          formPayload.title.length === 0 ? 'tanpa judul' : formPayload.title,
+        id,
+        preview,
+        content,
+        title,
       })
+    }
+    case FormType.UPDATE_STATUS: {
+      if (typeof formPayload.id !== 'string') {
+        return {formError: `Form not submitted correctly.`}
+      }
+      if (
+        formPayload.status === PostStatus.COMPLETED ||
+        formPayload.status === PostStatus.NOT_STARTED ||
+        formPayload.status === PostStatus.UNDERWAY
+      ) {
+        const post = await updateStatusPost({
+          id: formPayload.id,
+          status: formPayload.status,
+        })
+        return {post}
+      } else {
+        return {formError: `Form not submitted correctly.`}
+      }
     }
   }
 }
