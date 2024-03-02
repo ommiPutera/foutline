@@ -1,22 +1,22 @@
 import React from 'react'
 
-import { useFetcher, useLoaderData, useLocation } from '@remix-run/react'
+import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
 
-import { type Post } from '@prisma/client'
+import {type Post} from '@prisma/client'
 
-import { formatDistance } from 'date-fns'
-import { id as IDNLocale } from 'date-fns/locale'
+import {formatDistance} from 'date-fns'
+import {id as IDNLocale} from 'date-fns/locale'
 
-import { PencilLine } from 'lucide-react'
+import {PencilLine} from 'lucide-react'
 
-import type { Editor as EditorType } from '@tiptap/core'
+import type {Editor as EditorType} from '@tiptap/core'
 
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
+import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
 import PageEditor from './page-editor.tsx'
-import { FormType, type LoaderData, type TFocus } from './route.tsx'
+import {FormType, type LoaderData, type TFocus} from './route.tsx'
 
 export type Props = {
   editor: EditorType | undefined
@@ -24,7 +24,7 @@ export type Props = {
   getEditor: (data: EditorType) => void
 }
 
-function Wrapper({ editor, getEditor }: Props) {
+function Wrapper({editor, getEditor}: Props) {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
 
   const location = useLocation()
@@ -106,7 +106,7 @@ function Content({
   setIsFocus,
   getEditor,
 }: TFocus & Pick<Props, 'getEditor'>) {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   const [content, setContent] = React.useState<any>(post?.content)
   const [preview, setPreview] = React.useState<any>(post?.preview)
@@ -150,7 +150,7 @@ function Footer({
   content,
   preview,
 }: TFocus & Pick<Post, 'title' | 'content' | 'preview'>) {
-  const { postId, post } = useLoaderData<LoaderData>()
+  const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
@@ -171,7 +171,7 @@ function Footer({
 
   return (
     <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-900">
-      <div className="bg-muted-foreground/30 h-[1px] w-[93%] mx-auto" />
+      <div className="bg-muted-foreground/30 mx-auto h-[1px] w-[93%]" />
       <div className="w-full px-4 pb-2">
         <div className="flex w-full items-center justify-between">
           <Button
@@ -208,7 +208,7 @@ function Footer({
                   preview: preview,
                   postJSON: JSON.stringify(content),
                 },
-                { method: 'POST' },
+                {method: 'POST'},
               )
               setIsFocus(false)
             }}
