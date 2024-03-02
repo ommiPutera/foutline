@@ -15,14 +15,20 @@ import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import type {Post} from '@prisma/client'
 
-import {useSubmit} from '@remix-run/react'
+import {type FetcherWithComponents} from '@remix-run/react'
 
 import {getPostType} from '~/utils/get-post-type.ts'
 
 import {FormType} from './route.tsx'
 import {useCardStore} from './card-item.tsx'
 
-function More({id, type}: Pick<Post, 'id' | 'type'>) {
+function More({
+  id,
+  type,
+  deleteFetcher,
+}: Pick<Post, 'id' | 'type'> & {
+  deleteFetcher: FetcherWithComponents<unknown>
+}) {
   const {setIdCardFocus} = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
@@ -45,7 +51,7 @@ function More({id, type}: Pick<Post, 'id' | 'type'>) {
         <Open id={id} type={type} />
         <SaveAsTemplate id={id} />
         <Duplicate id={id} />
-        <Remove id={id} />
+        <Remove id={id} deleteFetcher={deleteFetcher} />
       </PopoverContent>
     </Popover>
   )
@@ -67,19 +73,36 @@ function Open({id, type}: Pick<Post, 'id' | 'type'>) {
   )
 }
 
-function Remove({id}: Pick<Post, 'id'>) {
-  const submit = useSubmit()
+function Remove({
+  id,
+  deleteFetcher,
+}: Pick<Post, 'id'> & {deleteFetcher: FetcherWithComponents<unknown>}) {
   return (
     <div className="my-1">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
-        className="w-full justify-start rounded-md px-3"
-      >
-        <Trash2 size="16" className="mr-2" />
-        <span>Pindahkan ke sampah</span>
-      </Button>
+      <deleteFetcher.Form>
+        <Button
+          aria-label="Delete Card"
+          variant="ghost"
+          size="sm"
+          onClick={() =>
+            deleteFetcher.submit(
+              {
+                id,
+                _action: FormType.DELETE,
+              },
+              {
+                method: 'POST',
+                navigate: false,
+                fetcherKey: `card:${id}`,
+              },
+            )
+          }
+          className="w-full justify-start rounded-md px-3"
+        >
+          <Trash2 size="16" className="mr-2" />
+          <span>Pindahkan ke sampah</span>
+        </Button>
+      </deleteFetcher.Form>
     </div>
   )
 }

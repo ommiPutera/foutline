@@ -15,7 +15,7 @@ import {
 import PageIcon from '~/components/page-icon.tsx'
 
 import {PostStatus, type Post, PostType} from '@prisma/client'
-import {Link, useLocation} from '@remix-run/react'
+import {Link, useFetcher, useLocation} from '@remix-run/react'
 
 import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
@@ -39,6 +39,7 @@ function CardItem(post: Post) {
   const {idCardFocus, setIdCardFocus} = useCardStore()
 
   const location = useLocation()
+  const deleteFetcher = useFetcher()
 
   React.useEffect(() => {
     if (location.pathname) {
@@ -46,7 +47,7 @@ function CardItem(post: Post) {
     }
   }, [location.pathname, setIdCardFocus])
 
-  return (
+  return deleteFetcher.state !== 'idle' ? null : (
     <Link to={`/${getPostType(type)}/${id}`} prefetch="intent">
       <Card
         key={id}
@@ -120,7 +121,7 @@ function CardItem(post: Post) {
               className="visible relative flex w-fit items-center gap-1"
             >
               <Favorite {...(post as any as Post)} />
-              <More {...(post as any as Post)} />
+              <More {...(post as any as Post)} deleteFetcher={deleteFetcher} />
             </div>
           </div>
         </CardFooter>

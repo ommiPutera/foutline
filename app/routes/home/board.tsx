@@ -15,7 +15,7 @@ import {
 import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import CardItem from './card-item.tsx'
-import type {LoaderData} from './route.tsx'
+import {type LoaderData} from './route.tsx'
 
 function Board() {
   return (
@@ -62,6 +62,8 @@ function Tools() {
 
 function Cards() {
   const {posts} = useLoaderData<LoaderData>()
+
+  // let pendingItems = usePendingItems();
 
   if (!posts?.length) return <></>
   return (
