@@ -68,20 +68,18 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 
 function Create() {
   return (
-    <div>
-      <CreatePostDialog>
-        <Button
-          asChild
-          variant="ghost"
-          className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
-        >
-          <span>
-            <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
-            Buat Halaman
-          </span>
-        </Button>
-      </CreatePostDialog>
-    </div>
+    <CreatePostDialog>
+      <Button
+        asChild
+        variant="ghost"
+        className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
+      >
+        <span>
+          <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
+          Buat Halaman
+        </span>
+      </Button>
+    </CreatePostDialog>
   )
 }
 

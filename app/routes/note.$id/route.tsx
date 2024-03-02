@@ -34,7 +34,7 @@ export type TFocus = {
 export enum FormType {
   UPDATE_CONTENT = 'UPDATE_CONTENT',
   UPDATE_STATUS = 'UPDATE_STATUS',
-  DELETE_POST = 'DELETE_POST',
+  DELETE = 'DELETE',
   FAVORITE = 'FAVORITE',
 }
 
@@ -58,7 +58,7 @@ export async function action({request}: ActionFunctionArgs) {
   const formPayload = Object.fromEntries(formData)
 
   switch (formPayload._action) {
-    case FormType.DELETE_POST: {
+    case FormType.DELETE: {
       if (typeof formPayload.id !== 'string') {
         return {formError: `Form not submitted correctly.`}
       }

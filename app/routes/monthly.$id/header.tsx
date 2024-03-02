@@ -341,7 +341,7 @@ function Favorite() {
 function Remove() {
   const {post} = useLoaderData<LoaderData>()
 
-  const submit = useSubmit()
+  const deleteFetcher = useFetcher()
 
   if (!post) return <></>
   return (
@@ -350,12 +350,19 @@ function Remove() {
         variant="ghost"
         size="sm"
         onClick={() =>
-          submit(
+          deleteFetcher.submit(
             {
               id: post.id,
-              _action: FormType.DELETE_POST,
+              title: post.title,
+              type: post.type,
+              _action: FormType.DELETE,
             },
-            {method: 'POST'},
+            {
+              method: 'POST',
+              action: '.',
+              navigate: true,
+              fetcherKey: `card:${post.id}`,
+            },
           )
         }
         className="w-full justify-start rounded-md px-3"
@@ -383,7 +390,7 @@ function Duplicate() {
         //   submit(
         //     {
         //       id: post.id,
-        //       _action: FormType.DELETE_POST,
+        //       _action: FormType.DELETE,
         //     },
         //     { method: 'POST' },
         //   )
