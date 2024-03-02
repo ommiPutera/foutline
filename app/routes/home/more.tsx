@@ -1,4 +1,10 @@
-import {ArrowUpRight, Copy, MoreHorizontal, Trash2} from 'lucide-react'
+import {
+  ArrowUpRight,
+  Copy,
+  MoreHorizontal,
+  Trash2,
+  NotebookText,
+} from 'lucide-react'
 
 import {
   Popover,
@@ -31,12 +37,13 @@ function More({id, type}: Pick<Post, 'id' | 'type'>) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="border-muted-foreground/60 mb-2 h-fit w-48 px-2 py-1"
+        className="h-fit w-56 px-2 py-1"
         align="start"
         side="top"
         forceMount
       >
         <Open id={id} type={type} />
+        <SaveAsTemplate id={id} />
         <Duplicate id={id} />
         <Remove id={id} />
       </PopoverContent>
@@ -77,15 +84,29 @@ function Remove({id}: Pick<Post, 'id'>) {
   )
 }
 
-function Duplicate({id}: Pick<Post, 'id'>) {
-  const submit = useSubmit()
+function SaveAsTemplate({id}: Pick<Post, 'id'>) {
   return (
     <div className="my-1">
       <Button
         disabled
         variant="ghost"
         size="sm"
-        onClick={() => submit({id, _action: FormType.DELETE}, {method: 'POST'})}
+        className="w-full justify-start rounded-md px-3"
+      >
+        <NotebookText size="16" className="mr-2" />
+        <span>Simpan sebagai template</span>
+      </Button>
+    </div>
+  )
+}
+
+function Duplicate({id}: Pick<Post, 'id'>) {
+  return (
+    <div className="my-1">
+      <Button
+        disabled
+        variant="ghost"
+        size="sm"
         className="w-full justify-start rounded-md px-3"
       >
         <Copy size="16" className="mr-2" />

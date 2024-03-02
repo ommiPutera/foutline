@@ -66,7 +66,14 @@ async function getUserFormSessionId(sessionId: string) {
   }
   return await prisma.user.findFirst({
     where: {email: session.user?.email},
-    include: {posts: true, sessions: true},
+    include: {
+      posts: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
+      sessions: true,
+    },
   })
 }
 

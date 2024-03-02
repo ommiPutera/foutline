@@ -91,7 +91,7 @@ function DetailTemplate({
               <Separator className="my-2" />
               <div className="flex items-center justify-end gap-2">
                 <Button disabled={isPending} onClick={onSubmit}>
-                  {isPending ? 'Membuat..' : 'Beli Rp.0'}
+                  {isPending ? 'Membeli..' : 'Beli Rp.0'}
                 </Button>
                 <DialogClose asChild>
                   <Button type="button" variant="transparent">

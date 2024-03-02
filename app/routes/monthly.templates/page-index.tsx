@@ -123,7 +123,7 @@ function Card(props: CardProps) {
     <DetailTemplate
       {...props}
       onSubmit={handleSubmit}
-      isPending={fetcher.state === 'loading'}
+      isPending={fetcher.state !== 'idle'}
     >
       <Button asChild variant="transparent" className="!h-full w-full !p-0">
         <div className="flex flex-col gap-3">

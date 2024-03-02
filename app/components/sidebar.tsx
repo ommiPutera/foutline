@@ -91,22 +91,27 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
 
 function Favorite() {
   const {user} = useRootLoader()
+
   const posts: Post[] = user?.posts.filter(
     (post: Post) => post.isFavorite === true,
   )
 
   const contentRef = React.useRef(null)
+
   const isPostEmpty = !posts?.length
 
+  const [value, setValue] = React.useState<string>(!isPostEmpty ? 'item-1' : '')
+
   return (
-    <Accordion type="single" collapsible value={!isPostEmpty ? 'item-1' : ''}>
+    <Accordion type="single" collapsible value={value}>
       <AccordionItem value="item-1" className="border-0">
         <Button
           asChild
           variant="ghost"
+          onClick={() => setValue(value === 'item-1' ? '' : 'item-1')}
           className="w-fit justify-start p-0 px-4 pl-5 text-[13.5px] font-semibold tracking-tight"
         >
-          <AccordionTrigger data-count={posts.length}>
+          <AccordionTrigger data-count={posts.length} className="!no-underline">
             Halaman Favorit
           </AccordionTrigger>
         </Button>

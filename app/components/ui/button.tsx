@@ -13,7 +13,7 @@ const variants = {
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   ghost: 'hover:bg-secondary hover:dark:bg-zinc-800 focus-visible:bg-accent',
   transparent:
-    'bg-none focus-visible:bg-none hover:[&:has(svg)]:before:bg-gray-300/20',
+    'bg-none focus-visible:bg-none hover:[&:has(svg)]:before:bg-gray-100/10',
   link: 'text-primary underline-offset-4 hover:underline',
 }
 
