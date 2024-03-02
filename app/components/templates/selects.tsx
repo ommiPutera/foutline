@@ -2,13 +2,13 @@ import clsx from 'clsx'
 import {icons} from 'lucide-react'
 import {ToggleGroupItem} from '../ui/toggle-group.tsx'
 
-function BasicNotes({disabled = true}: {disabled?: boolean}) {
+function BasicNotes({disabled = false}: {disabled?: boolean}) {
   return (
     <PageSelectItem
       disabled={disabled}
-      title="Catatan biasa"
+      title="Catatan"
       color="blue"
-      value="basic-notes"
+      value="note"
       iconName="PenLine"
     />
   )
@@ -42,7 +42,7 @@ function MonthlyExpenses({disabled = false}: {disabled?: boolean}) {
       title="Keuangan bulanan"
       color="orange"
       value="monthly"
-      iconName="ShoppingBag"
+      iconName="ArrowRightLeft"
     />
   )
 }

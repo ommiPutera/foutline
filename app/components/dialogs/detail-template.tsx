@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {PostType, type Post} from '@prisma/client'
+
 import {
   Dialog,
   DialogClose,
@@ -13,6 +15,7 @@ import {Button} from '../ui/button.tsx'
 import {Separator} from '../ui/separator.tsx'
 
 import PageIcon from '../page-icon.tsx'
+import {cn} from '~/lib/utils.ts'
 
 function DetailTemplate({
   children,
@@ -20,6 +23,7 @@ function DetailTemplate({
   onTrigger,
   title,
   author,
+  type,
   imgSrc,
   description,
   onSubmit,
@@ -30,10 +34,20 @@ function DetailTemplate({
   onTrigger?: () => void
   title: string
   author: string
+  type: string
   imgSrc: string
   description: string
   onSubmit: () => void
-}) {
+} & Pick<Post, 'type'>) {
+  const getTypeStr = () => {
+    switch (type) {
+      case 'MONTHLY_PLANNING':
+        return 'Keuangan Bulanan'
+      case 'BASIC_NOTES':
+        return 'Catatan'
+    }
+  }
+
   return (
     <Dialog modal>
       <DialogTrigger asChild onClick={onTrigger}>
@@ -61,9 +75,17 @@ function DetailTemplate({
                 <p className="text-sm font-normal leading-6">{description}</p>
               </div>
               <div>
-                <div className="bg-monthly-background border-monthly/30 flex w-fit items-center gap-2 rounded-md border px-3 py-2">
-                  <PageIcon />
-                  <p className="text-xs font-medium">Keuangan Bulanan</p>
+                <div
+                  className={cn(
+                    'flex w-fit items-center gap-2 rounded-md border px-3 py-2',
+                    type === PostType.MONTHLY_PLANNING &&
+                      'bg-monthly-background border-monthly/30',
+                    type === PostType.BASIC_NOTES &&
+                      'bg-note-background border-note/30',
+                  )}
+                >
+                  <PageIcon type={type} />
+                  <p className="text-xs font-medium">{getTypeStr()}</p>
                 </div>
               </div>
               <Separator className="my-2" />

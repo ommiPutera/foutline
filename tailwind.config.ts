@@ -74,6 +74,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--monthly))',
           background: 'hsl(var(--monthly-background))',
         },
+        note: {
+          DEFAULT: 'hsl(var(--note))',
+          background: 'hsl(var(--note-background))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -39,8 +39,11 @@
     --sidebar-width-xl: 320px;
     --header-height: 59px;
 
-    --monthly: 38 64% 37%;
+    --monthly: 25 93% 52%;
     --monthly-background: 36 100% 97%;
+
+    --note: 218 91% 60%;
+    --note-background: 216 95% 93%;
   }
 
   .dark {
@@ -73,8 +76,10 @@
     --ring: 151 92% 30%;
 
     --header-height: 59px;
-    --monthly: 38 64% 37%;
+
     --monthly-background: 30 13% 12%;
+
+    --note-background: 216 93% 6%;
   }
 }
 

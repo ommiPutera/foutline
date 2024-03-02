@@ -1,9 +1,5 @@
-// import React from "react";
-
 import {type Post} from '@prisma/client'
-
 import {useFetcher} from '@remix-run/react'
-
 import {ChevronLeft, ChevronRight} from 'lucide-react'
 
 import DetailTemplate from '~/components/dialogs/detail-template.tsx'
@@ -29,27 +25,9 @@ const templates: CardProps[] = [
     author: 'Foutline',
     imgSrc: '/templates/monthly-1.png',
     templateId: 't_empty',
-    type: 'MONTHLY_PLANNING',
+    type: 'BASIC_NOTES',
     description:
-      'Mulailah mencatat keuangan bulanan Anda dari halaman kosong dan perkirakan semua pemasukan dan pengeluaran. Dengan begitu, Anda akan memiliki gambaran yang lebih jelas untuk mengelola transaksi bulanan Anda.',
-  },
-  {
-    title: 'Keuangan Pegawai',
-    author: 'Foutline',
-    imgSrc: '/templates/monthly-1.png',
-    templateId: 'full_time_job',
-    type: 'MONTHLY_PLANNING',
-    description:
-      'Kelola uang Anda dengan bijak, terutama jika Anda memiliki pekerjaan full-time. Tentukan anggaran pengeluaran Anda dengan cermat, dan catat setiap transfer pendapatan-biaya. Dengan langkah-langkah ini, Anda akan memiliki pemahaman yang lebih baik tentang setiap sen uang Anda.',
-  },
-  {
-    title: 'Keuangan Freelancer',
-    author: 'Foutline',
-    imgSrc: '/templates/monthly-1.png',
-    templateId: 'full_time_job',
-    type: 'MONTHLY_PLANNING',
-    description:
-      'Manajemen finansial yang cerdas sangat krusial, terutama bagi para freelancer. Tetapkan anggaran pengeluaran secara detail, dan catat setiap transaksi pemasukan dan biaya. Dengan pendekatan ini, Anda akan mendapatkan pemahaman yang lebih mendalam tentang setiap aspek keuangan Anda.',
+      'Mulailah mencatat semua aspek kebiasaan dan pikiran Anda. Dengan cara ini, Anda dapat lebih memahami pola pikiran yang memengaruhi kebiasaan sehari-hari dan meningkatkan kesadaran mental Anda.',
   },
 ]
 
@@ -60,36 +38,37 @@ function PageIndex() {
     <div className="px-3.5 py-6">
       <div className="mx-auto max-w-screen-md">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold">Keuangan Bulanan</h2>
+          <h2 className="text-lg font-bold">Catatan</h2>
           <div className="flex gap-2">
-            <Button disabled variant="secondary" size="icon">
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
             <Tooltip>
               <TooltipTrigger asChild>
                 <ButtonLink
-                  href="/note/templates"
+                  href="/monthly/templates"
                   variant="secondary"
                   size="icon"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronLeft className="h-4 w-4" />
                 </ButtonLink>
               </TooltipTrigger>
               <TooltipContent side="bottom">
-                <p>Catatan</p>
+                <p>Keuangan Bulanan</p>
               </TooltipContent>
             </Tooltip>
+            <Button disabled variant="secondary" size="icon">
+              <ChevronRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col gap-8">
           <div className="flex max-w-xs flex-col gap-2">
             <h3 className="text-2xl font-bold leading-tight tracking-wide">
-              Template Keuangan Bulanan
+              Template Catatan Pribadi Anda
             </h3>
             <p className="text-muted-foreground text-sm">
-              Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan keuangan
-              bulanan, semuanya di satu tempat yang terorganisir.
+              Lacak tujuan, kebiasaan, dan rutinitas harian Anda. Buatlah
+              jurnal, atur pengingat, dan pantau kemajuan untuk mencapai diri
+              terbaik Anda!
             </p>
           </div>
           <fetcher.Form method="POST">

@@ -48,7 +48,7 @@ function CreatePostDialog({
       <DialogPortal>
         <DialogContent className="border-muted h-full max-w-[650px] border md:h-fit">
           <DialogHeader>
-            <DialogTitle>Buat halaman</DialogTitle>
+            <DialogTitle>Buat Halaman</DialogTitle>
             <Content value={value} setValue={setValue} />
             <DialogFooter className="flex w-full items-center justify-end gap-2 md:gap-0">
               <DialogClose asChild>

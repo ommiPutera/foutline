@@ -7,7 +7,7 @@ export function getPostType(type: PostType) {
       typeName = 'monthly'
       break
     case 'BASIC_NOTES':
-      typeName = 'basic'
+      typeName = 'note'
       break
   }
 

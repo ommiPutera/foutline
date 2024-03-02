@@ -24,14 +24,14 @@ function Explore() {
               iconName="ArrowRightLeft"
               title="Keuangan Bulanan"
               description="Catat pengeluaran dan pemasukan Anda setiap bulan agar lebih teratur dan terkendali."
-              className="bg-monthly-background [&>svg]:stroke-orange-500"
+              className="bg-monthly-background [&>svg]:stroke-monthly"
             />
             <Card
-              disabled
+              href="/note/templates"
               iconName="PencilLine"
               title="Catatan"
               description="Lacak kebiasaan, dan rutinitas harian Anda, sambil membuat jurnal, mengatur pengingat."
-              className="bg-blue-100/80 [&>svg]:stroke-blue-500"
+              className="bg-note-background [&>svg]:stroke-note"
             />
             <Card
               disabled
