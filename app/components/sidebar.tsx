@@ -62,7 +62,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
             title="Pengaturan"
             isMatch={false}
           />
-          <NavItem disabled iconName="Trash2" title="Sampah" />
+          <NavItem disabled iconName="Trash" title="Sampah" />
           <Favorite />
         </div>
       </div>

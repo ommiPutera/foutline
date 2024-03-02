@@ -4,7 +4,7 @@ import {NavItem} from '~/components/sidebar.tsx'
 function Settings() {
   return (
     <div className="">
-      <div className="border-border fixed z-50 hidden h-full w-full max-w-[var(--sidebar-width)] border-r px-3.5 py-6 md:block">
+      <div className="border-border fixed left-[var(--sidebar-width)] z-50 hidden h-full w-full max-w-[var(--sidebar-width)] border-r px-3.5 py-6 md:block">
         <div className="flex flex-col gap-4">
           <div className="ml-5">
             <h4 className="text-xl font-bold">Pengaturan</h4>

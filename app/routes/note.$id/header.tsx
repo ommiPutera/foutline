@@ -3,7 +3,7 @@ import React from 'react'
 import {useLoaderData, useSubmit} from '@remix-run/react'
 import {FormType, type LoaderData} from './route.tsx'
 
-import {ChevronRight, Copy, Menu, Star, Tag, Trash2} from 'lucide-react'
+import {ChevronRight, Copy, Menu, Star, Tag, Trash} from 'lucide-react'
 
 import {Button} from '~/components/ui/button.tsx'
 import {
@@ -189,7 +189,7 @@ function Remove() {
         }
         className="w-full justify-start rounded-md px-3"
       >
-        <Trash2 size="16" className="mr-2" />
+        <Trash size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
       </Button>
     </div>

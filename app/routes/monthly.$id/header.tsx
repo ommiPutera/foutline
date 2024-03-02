@@ -14,7 +14,7 @@ import {
   Pause,
   Star,
   Tag,
-  Trash2,
+  Trash,
   icons,
 } from 'lucide-react'
 
@@ -349,7 +349,7 @@ function Remove() {
         }
         className="w-full justify-start rounded-md px-3"
       >
-        <Trash2 size="16" className="mr-2" />
+        <Trash size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
       </Button>
     </div>

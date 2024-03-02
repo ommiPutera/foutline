@@ -94,7 +94,7 @@ function StartWriting({
           <PencilLine className="mr-2 h-3.5 w-3.5" />
         </span>
         <span className="line-clamp-1">
-          Mulai mencatat atau perbarui catatan keuangan bulanan..
+          Mulai mencatat atau perbarui catatan pribadi Anda..
         </span>
       </Button>
     </div>

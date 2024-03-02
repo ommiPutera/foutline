@@ -1,12 +1,11 @@
 import {PostStatus, type Post} from '@prisma/client'
 
 import {
-  json,
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@remix-run/node'
-import {useLocation} from '@remix-run/react'
+import {defer, useLocation} from '@remix-run/react'
 
 import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
@@ -50,7 +49,7 @@ export async function loader({request, params}: LoaderFunctionArgs) {
 
   if (!id || !post) return redirect('/')
   const data: LoaderData = {post: post, postId: id}
-  return json(data)
+  return defer(data)
 }
 
 export async function action({request}: ActionFunctionArgs) {

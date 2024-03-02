@@ -31,9 +31,9 @@ function More({id, type}: Pick<Post, 'id' | 'type'>) {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="border-muted-foreground/60 h-fit w-48 px-2 py-1"
-        align="end"
-        side="right"
+        className="border-muted-foreground/60 mb-2 h-fit w-48 px-2 py-1"
+        align="start"
+        side="top"
         forceMount
       >
         <Open id={id} type={type} />

@@ -7,6 +7,7 @@ import {type Props as EditorProps} from './content.tsx'
 import {rupiah} from '~/utils/currency.ts'
 
 import {ButtonHide, Title} from './right-sheet.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 type Props = {
   isOpen: boolean
@@ -47,6 +48,7 @@ function Sum({
 }
 
 function Summary({
+  editor,
   incomesValues,
   expensesValues,
 }: Pick<Props, 'editor' | 'incomesValues' | 'expensesValues'>) {
@@ -56,51 +58,63 @@ function Summary({
 
   return (
     <div className="flex flex-col gap-5">
-      <Income amount={totalIncome} />
-      <Expense amount={totalExpense} />
-      <FreeCash amount={freeCash} />
+      <Income amount={totalIncome} isPending={!editor} />
+      <Expense amount={totalExpense} isPending={!editor} />
+      <FreeCash amount={freeCash} isPending={!editor} />
     </div>
   )
 }
 
-function Income({amount}: {amount: number}) {
+function Income({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
         <div className="h-2 w-2 rounded-full bg-green-300"></div>
         Pemasukan
       </h5>
-      <p className="text-sm font-semibold tracking-tight">
-        {!amount ? rupiah(0) : rupiah(amount)}
-      </p>
+      {isPending ? (
+        <Skeleton className="h-5 w-[120px] rounded-sm" />
+      ) : (
+        <p className="text-sm font-semibold tracking-tight">
+          {!amount ? rupiah(0) : rupiah(amount)}
+        </p>
+      )}
     </div>
   )
 }
 
-function Expense({amount}: {amount: number}) {
+function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
         <div className="h-2 w-2 rounded-full bg-red-300"></div>
         Pengeluaran
       </h5>
-      <p className="text-sm font-semibold tracking-tight">
-        {!amount ? rupiah(0) : rupiah(amount)}
-      </p>
+      {isPending ? (
+        <Skeleton className="h-5 w-[120px] rounded-sm" />
+      ) : (
+        <p className="text-sm font-semibold tracking-tight">
+          {!amount ? rupiah(0) : rupiah(amount)}
+        </p>
+      )}
     </div>
   )
 }
 
-function FreeCash({amount}: {amount: number}) {
+function FreeCash({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
         <div className="h-2 w-2 rounded-full bg-gray-200"></div>
         Belum dialokasikan (Free Cash)
       </h5>
-      <p className="text-sm font-semibold tracking-tight">
-        {!amount ? rupiah(0) : rupiah(amount)}
-      </p>
+      {isPending ? (
+        <Skeleton className="h-5 w-[120px] rounded-sm" />
+      ) : (
+        <p className="text-sm font-semibold tracking-tight">
+          {!amount ? rupiah(0) : rupiah(amount)}
+        </p>
+      )}
     </div>
   )
 }
