@@ -1,9 +1,15 @@
 import type {Session} from '@prisma/client'
 import {PrismaClient} from '@prisma/client'
+
 import {withAccelerate} from '@prisma/extension-accelerate'
+
 import {remember} from '@epic-web/remember'
+
 import chalk from 'chalk'
+
 import {redirect} from '@remix-run/node'
+
+import {welcomePreview, welcomeTemp} from './welcome-source.ts'
 
 const logThreshold = 500
 // const sessionExpirationTime = 1000 * 20
@@ -56,6 +62,20 @@ async function createSession(
   })
 }
 
+async function createWelcomeCard(id: string, fullName: string) {
+  return prisma.post.create({
+    data: {
+      title: 'Selamt datang di Foutline',
+      isPublished: true,
+      userId: id,
+      authorId: id,
+      preview: welcomePreview(fullName),
+      content: welcomeTemp(fullName),
+      type: 'BASIC_NOTES',
+    },
+  })
+}
+
 async function getUserFormSessionId(sessionId: string) {
   const session = await prisma.session.findUnique({
     where: {id: sessionId},
@@ -77,4 +97,10 @@ async function getUserFormSessionId(sessionId: string) {
   })
 }
 
-export {prisma, sessionExpirationTime, getUserFormSessionId, createSession}
+export {
+  prisma,
+  sessionExpirationTime,
+  getUserFormSessionId,
+  createSession,
+  createWelcomeCard,
+}

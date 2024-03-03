@@ -66,7 +66,8 @@ function Editor({
       if (editor) {
         const json = editor.getJSON()
         const text = editor.getText()
-
+        console.log('text: ', text)
+        console.log('json.content: ', json.content)
         setContent(json.content)
         setPreview(text)
         getEditor(editor)

@@ -9,7 +9,7 @@ import {
   kindeClient,
   sessionIdKey,
 } from '~/utils/session.server.ts'
-import {createSession} from '~/utils/prisma.server.ts'
+import {createSession, createWelcomeCard} from '~/utils/prisma.server.ts'
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const {sessionManager, session, signUp} = await getSessionManager(request)
@@ -35,13 +35,12 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
         kindeId: kindeUser.id,
         request: request,
       })
-      console.log('USER: ', user)
 
       const userSession = await createSession({userId: user?.id})
+      const post = await createWelcomeCard(user?.id, user?.fullName)
 
-      console.log('USER session: ', userSession)
       session.set(sessionIdKey, userSession.id)
-      return redirect('/', {
+      return redirect('/note/' + post.id, {
         headers: {
           'Set-Cookie': await commitSession(session),
         },

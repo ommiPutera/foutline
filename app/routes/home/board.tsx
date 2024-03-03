@@ -63,8 +63,6 @@ function Tools() {
 function Cards() {
   const {posts} = useLoaderData<LoaderData>()
 
-  // let pendingItems = usePendingItems();
-
   if (!posts?.length) return <></>
   return (
     <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
