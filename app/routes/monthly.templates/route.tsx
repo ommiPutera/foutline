@@ -1,4 +1,4 @@
-import {type ActionFunction} from '@remix-run/node'
+import {type MetaFunction, type ActionFunction} from '@remix-run/node'
 
 import {getUser} from '~/utils/session.server.ts'
 
@@ -10,6 +10,10 @@ import {
   t_empty,
   full_time_job,
 } from './resource.tsx'
+
+export const meta: MetaFunction = ({data}) => {
+  return [{title: 'Template Keuangan Bulanan | Foutline'}]
+}
 
 export const action: ActionFunction = async ({request}) => {
   const formData = await request.formData()

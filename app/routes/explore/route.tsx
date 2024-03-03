@@ -1,7 +1,15 @@
+import {type MetaFunction} from '@remix-run/node'
+
 import {icons} from 'lucide-react'
+
 import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {Separator} from '~/components/ui/separator.tsx'
+
 import {cn} from '~/lib/utils.ts'
+
+export const meta: MetaFunction = ({data}) => {
+  return [{title: 'Jelajahi | Foutline'}]
+}
 
 function Explore() {
   return (

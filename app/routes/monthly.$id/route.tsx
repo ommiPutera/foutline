@@ -2,6 +2,7 @@ import {PostStatus, type Post} from '@prisma/client'
 
 import {
   redirect,
+  type MetaFunction,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@remix-run/node'
@@ -35,6 +36,10 @@ export enum FormType {
   UPDATE_STATUS = 'UPDATE_STATUS',
   DELETE = 'DELETE',
   FAVORITE = 'FAVORITE',
+}
+
+export const meta: MetaFunction<typeof loader> = ({data}) => {
+  return [{title: `${data?.post?.title} | Foutline`}]
 }
 
 export async function loader({request, params}: LoaderFunctionArgs) {

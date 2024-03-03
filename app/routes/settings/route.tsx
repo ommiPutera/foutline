@@ -1,4 +1,5 @@
 import {Outlet} from '@remix-run/react'
+
 import {NavItem} from '~/components/sidebar.tsx'
 
 function Settings() {

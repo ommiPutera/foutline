@@ -1,3 +1,5 @@
+import {type MetaFunction} from '@remix-run/node'
+
 import {
   Select,
   SelectContent,
@@ -8,6 +10,10 @@ import {
 
 import {Theme, getSystemTheme, useTheme} from '~/utils/theme-provider.tsx'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
+
+export const meta: MetaFunction = ({data}) => {
+  return [{title: 'Preferensi Pengguna | Foutline'}]
+}
 
 function Settings() {
   return (

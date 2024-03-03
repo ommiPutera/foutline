@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Grid3X3, HeartHandshake, Sparkles} from 'lucide-react'
 
-import {Button, ButtonLink} from '../ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {
   Dialog,
   DialogClose,
@@ -12,9 +12,13 @@ import {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog.tsx'
-import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.tsx'
-import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.tsx'
+} from '~/components/ui/dialog.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/ui/tooltip.tsx'
+import {ToggleGroup, ToggleGroupItem} from '~/components/ui/toggle-group.tsx'
 
 import {
   BasicNotes,
@@ -24,7 +28,6 @@ import {
   MonthlyExpenses,
   RegularSaving,
 } from './selects.tsx'
-// import { PocketGroup } from './pocket.tsx'
 
 import {rupiah} from '~/utils/currency.ts'
 
@@ -39,6 +42,8 @@ function CreatePostDialog({
   withoutTooltip?: boolean
 }) {
   const [value, setValue] = React.useState('')
+
+  const Comp = !value ? Button : ButtonLink
 
   return (
     <Dialog modal>
@@ -57,13 +62,13 @@ function CreatePostDialog({
                 <Button variant="transparent">Batalkan</Button>
               </DialogClose>
               <DialogClose asChild>
-                <ButtonLink
+                <Comp
                   disabled={!value}
                   to={`/${value}/templates`}
                   className="w-full md:w-fit"
                 >
                   Lanjutkan
-                </ButtonLink>
+                </Comp>
               </DialogClose>
             </DialogFooter>
           </DialogHeader>

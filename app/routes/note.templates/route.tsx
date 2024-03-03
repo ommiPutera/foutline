@@ -1,10 +1,14 @@
-import {type ActionFunction} from '@remix-run/node'
+import {type MetaFunction, type ActionFunction} from '@remix-run/node'
 
 import {getUser} from '~/utils/session.server.ts'
 
 import {PageIndex} from './page-index.tsx'
 import {createPost} from './queries.ts'
 import {preview_t_empty, t_empty} from './resource.tsx'
+
+export const meta: MetaFunction = ({data}) => {
+  return [{title: 'Template Catatan Pribadi | Foutline'}]
+}
 
 export const action: ActionFunction = async ({request}) => {
   const formData = await request.formData()
