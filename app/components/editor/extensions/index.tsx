@@ -21,12 +21,12 @@ export const BasicExtensions = [
     },
     bulletList: {
       HTMLAttributes: {
-        class: 'list-disc list-outside leading-3',
+        class: 'list-disc list-outside ml-4 text-sm leading-3',
       },
     },
     orderedList: {
       HTMLAttributes: {
-        class: 'list-decimal list-outside leading-3',
+        class: 'list-decimal list-outside ml-4 text-sm leading-3',
       },
     },
     listItem: {

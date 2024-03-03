@@ -273,7 +273,7 @@ const CommandList = ({
                   },
                 )}
               >
-                <Icon className="stroke-background h-3 w-3" />
+                <Icon className="h-3 w-3 stroke-zinc-950" />
               </div>
               <p className="text-xs font-medium">{title}</p>
             </button>
