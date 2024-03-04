@@ -30,7 +30,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const { profile } = useRootLoader()
 
   return (
-    <div className={cn('flex h-full min-h-screen flex-col', className)}>
+    <div className={cn('flex h-screen overflow-y-scroll no-scrollbar flex-col', className)}>
       <div className="mb-4 flex flex-col justify-between space-y-1 pb-6 pt-3">
         <div className="flex flex-1 flex-col place-content-start px-3 py-2">
           <NavItem href="/home" iconName="Home" title="Beranda" />
