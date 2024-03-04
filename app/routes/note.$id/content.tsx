@@ -48,6 +48,7 @@ function Wrapper({editor, getEditor}: Props) {
         <Content
           isFocus={isFocus}
           setIsFocus={setIsFocus}
+          editor={editor}
           getEditor={getEditor}
         />
       </div>
@@ -102,15 +103,25 @@ function StartWriting({
 }
 
 function Content({
+  editor,
   isFocus,
   setIsFocus,
   getEditor,
-}: TFocus & Pick<Props, 'getEditor'>) {
+}: TFocus & Pick<Props, 'getEditor' | 'editor'>) {
   const {post} = useLoaderData<LoaderData>()
+
+  const location = useLocation()
 
   const [content, setContent] = React.useState<any>(post?.content)
   const [preview, setPreview] = React.useState<any>(post?.preview)
   const [title, setTitle] = React.useState<any>(post?.content)
+  const [characterLength, setCharacterLength] = React.useState<number>(0)
+
+  React.useEffect(() => {
+    if (location.pathname) {
+      setCharacterLength(Number(editor?.getText().length))
+    }
+  }, [editor, location.pathname])
 
   return (
     <div className="mx-auto mb-52 flex w-full max-w-lg justify-center">
@@ -129,9 +140,11 @@ function Content({
           setPreview={setPreview}
           title={title}
           setTitle={setTitle}
+          setCharacterLength={setCharacterLength}
           getEditor={getEditor}
         />
         <Footer
+          characterLength={characterLength}
           isFocus={isFocus}
           setIsFocus={setIsFocus}
           content={content}
@@ -144,12 +157,14 @@ function Content({
 }
 
 function Footer({
+  characterLength,
   isFocus,
   setIsFocus,
   title,
   content,
   preview,
-}: TFocus & Pick<Post, 'title' | 'content' | 'preview'>) {
+}: TFocus &
+  Pick<Post, 'title' | 'content' | 'preview'> & {characterLength: number}) {
   const {postId, post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
@@ -193,6 +208,11 @@ function Footer({
               </kbd>
             </div>
           </Button>
+          {characterLength > 0 && (
+            <div className="text-muted-foreground text-xs">
+              {990 - characterLength + ' karakter tersisa'}
+            </div>
+          )}
           <Button
             size="sm"
             className="w-fit"
