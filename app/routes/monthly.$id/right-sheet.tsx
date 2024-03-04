@@ -45,7 +45,7 @@ function ButtonOpen({
   return (
     <div
       data-state={isOpen ? 'open' : 'closed'}
-      className="fixed right-4 top-20 transition delay-500 duration-0 data-[state=closed]:opacity-100 data-[state=open]:opacity-0"
+      className="fixed right-7 top-20 transition delay-500 duration-0 data-[state=closed]:opacity-100 data-[state=open]:opacity-0"
     >
       <Button
         variant="secondary"

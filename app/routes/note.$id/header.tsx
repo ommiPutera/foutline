@@ -30,8 +30,8 @@ function Header() {
 
   if (!post) return <></>
   return (
-    <header className="bg-background fixed left-[var(--sidebar-width)] right-0 top-0 z-10 w-[calc(100%_-_var(--sidebar-width))] border-b">
-      <div className="flex h-12 items-center justify-between gap-6 px-3.5">
+    <header className="bg-background fixed left-[var(--sidebar-width)] right-0 top-0 z-10 w-[calc(100%_-_var(--sidebar-width))]">
+      <div className="flex h-14 items-center justify-between gap-6 px-5">
         <div className="flex items-center gap-2">
           <p className="line-clamp-1 text-sm font-medium">Catatan</p>
           <ChevronRight className="h-4 w-4" />
