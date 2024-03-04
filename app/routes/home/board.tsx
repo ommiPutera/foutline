@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react'
+import React, {Suspense} from 'react'
 
-import { Await, useLoaderData } from '@remix-run/react'
+import {Await, useLoaderData} from '@remix-run/react'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { LayoutGrid, List, Plus } from 'lucide-react'
+import {LayoutGrid, List, Plus} from 'lucide-react'
 
 import FilterButton from '~/components/board/filter-button.tsx'
 import SortButton from '~/components/board/sort-button.tsx'
@@ -12,11 +12,11 @@ import {
   CreatePostContent,
   CreatePostDialog,
 } from '~/components/templates/dialogs.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
 import CardItem from './card.tsx'
-import { type LoaderData } from './route.tsx'
-import { Skeleton } from '~/components/ui/skeleton.tsx'
+import {type LoaderData} from './route.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 function Board() {
   return (
@@ -29,7 +29,7 @@ function Board() {
 }
 
 function Tools() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   return <></>
   if (!posts?.length) return <></>
@@ -62,12 +62,12 @@ function Tools() {
 }
 
 function Cards() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   return (
     <Suspense fallback={<SkeletonCard />}>
       <Await resolve={posts as unknown as Post[]}>
-        {(posts) => (
+        {posts => (
           <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {posts.map(post => (
               <CardItem key={post.id} {...(post as any as Post)} />
@@ -80,13 +80,13 @@ function Cards() {
 }
 
 function NewCard() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   return (
     <Suspense fallback={<> Loading.....</>}>
       <Await resolve={posts}>
-        {(posts) => {
+        {posts => {
           if (posts?.length) return <></>
           return (
             <div className="flex flex-col items-center justify-center gap-6 md:py-20">
@@ -107,11 +107,12 @@ function NewCard() {
                   Halaman yang Anda buat akan muncul di sini..
                 </h4>
                 <p className="text-muted-foreground text-sm font-light">
-                  Semua perhitungan keuangan Anda telah di enkripsi, semua informasi
-                  keuangan Anda aman dan terproteksi.
+                  Semua perhitungan keuangan Anda telah di enkripsi, semua
+                  informasi keuangan Anda aman dan terproteksi.
                 </p>
               </div>
-            </div>)
+            </div>
+          )
         }}
       </Await>
     </Suspense>
@@ -120,9 +121,9 @@ function NewCard() {
 
 function SkeletonCard() {
   return (
-    <div className='grid grid-cols-2 gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 items-start'>
+    <div className="grid grid-cols-2 items-start gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {[1, 2, 3, 4, 5, 6, 7].map(() => (
-        <div className="border border-border w-full flex flex-col space-y-3 bg-muted/20 dark:bg-zinc-900 p-3 rounded-lg">
+        <div className="border-border bg-muted/20 flex w-full flex-col space-y-3 rounded-lg border p-3 dark:bg-zinc-900">
           <Skeleton className="h-[150px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-md" />
           <Skeleton className="h-[30px] w-full rounded-md" />
@@ -132,4 +133,4 @@ function SkeletonCard() {
   )
 }
 
-export { Board }
+export {Board}

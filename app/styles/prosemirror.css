@@ -12,8 +12,8 @@
 }
 
 .tiptap p.is-editor-empty:first-child::before {
-    @apply text-muted-foreground;
-  }
+  @apply text-muted-foreground;
+}
 
 /* TASK LIST */
 ul[class^='not-prose'] p {
@@ -41,7 +41,7 @@ ul[data-type='taskList'] li > label input[type='checkbox'] {
   display: grid;
   place-content: center;
   border-radius: 3px;
-  @apply border-primary/80 cursor-pointer checked:bg-primary checked:border-primary mt-[0.085rem] h-[1.1em] w-[1.1em] rounded-sm border bg-transparent md:mt-[0.2em] md:h-[0.9em] md:w-[0.9em];
+  @apply border-primary/80 checked:bg-primary checked:border-primary mt-[0.085rem] h-[1.1em] w-[1.1em] cursor-pointer rounded-sm border bg-transparent md:mt-[0.2em] md:h-[0.9em] md:w-[0.9em];
 
   &::before {
     content: '';

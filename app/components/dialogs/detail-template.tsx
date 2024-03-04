@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PostType, type Post } from '@prisma/client'
+import {PostType, type Post} from '@prisma/client'
 
 import {
   Dialog,
@@ -11,11 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import { Button } from '../ui/button.tsx'
-import { Separator } from '../ui/separator.tsx'
+import {Button} from '../ui/button.tsx'
+import {Separator} from '../ui/separator.tsx'
 
 import PageIcon from '../page-icon.tsx'
-import { cn } from '~/lib/utils.ts'
+import {cn} from '~/lib/utils.ts'
 
 function DetailTemplate({
   children,
@@ -79,9 +79,9 @@ function DetailTemplate({
                   className={cn(
                     'flex w-fit items-center gap-2 rounded-md border px-3 py-2',
                     type === PostType.MONTHLY_PLANNING &&
-                    'bg-monthly-background border-monthly/30',
+                      'bg-monthly-background border-monthly/30',
                     type === PostType.BASIC_NOTES &&
-                    'bg-note-background border-note/30',
+                      'bg-note-background border-note/30',
                   )}
                 >
                   <PageIcon type={type} />
