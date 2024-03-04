@@ -1,7 +1,11 @@
 import React from 'react'
 
 import {useFetcher, useLoaderData, useSubmit} from '@remix-run/react'
+
 import {PostStatus} from '@prisma/client'
+
+import {id as IDNLocale} from 'date-fns/locale'
+import {formatDistance} from 'date-fns'
 
 import {FormType, type LoaderData} from './route.tsx'
 
@@ -11,6 +15,7 @@ import {
   ChevronsRight,
   Copy,
   Menu,
+  NotebookText,
   Pause,
   Star,
   Tag,
@@ -25,7 +30,7 @@ import {
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
 
-import {cn} from '~/lib/utils.ts'
+import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
 function Header() {
   const {post} = useLoaderData<LoaderData>()
@@ -33,7 +38,7 @@ function Header() {
   if (!post) return <></>
   return (
     <header className="bg-background fixed left-[var(--sidebar-width)] right-0 top-0 z-10 w-[calc(100%_-_var(--sidebar-width))] border-b">
-      <div className="flex h-16 items-center justify-between gap-6 px-3.5">
+      <div className="flex h-12 items-center justify-between gap-6 px-3.5">
         <div className="flex items-center gap-2">
           <p className="line-clamp-1 text-sm font-medium">Keuangan bulanan</p>
           <ChevronRight className="h-4 w-4" />
@@ -44,6 +49,15 @@ function Header() {
           </p>
         </div>
         <div className="flex items-center gap-1.5">
+          <p className="text-muted-foreground text-xs">
+            {capitalizeFirstLetter(
+              formatDistance(new Date(post?.updatedAt), new Date(), {
+                addSuffix: true,
+                includeSeconds: true,
+                locale: IDNLocale,
+              }),
+            )}
+          </p>
           <Label />
           <Status />
           <More />
@@ -271,13 +285,14 @@ function More() {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-48 px-2 py-1"
+        className="h-fit w-56 px-2 py-1"
         align="end"
         side="bottom"
         forceMount
       >
         <Favorite />
         <Duplicate />
+        <SaveAsTemplate />
         <Remove />
       </PopoverContent>
     </Popover>
@@ -369,6 +384,22 @@ function Remove() {
       >
         <Trash size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
+      </Button>
+    </div>
+  )
+}
+
+function SaveAsTemplate() {
+  return (
+    <div className="my-1">
+      <Button
+        disabled
+        variant="ghost"
+        size="sm"
+        className="w-full justify-start rounded-md px-3"
+      >
+        <NotebookText size="16" className="mr-2" />
+        <span>Simpan sebagai template</span>
       </Button>
     </div>
   )

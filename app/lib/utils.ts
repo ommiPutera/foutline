@@ -26,5 +26,6 @@ export function getUrlFromString(str: string) {
 }
 
 export function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  const time = string.charAt(0).toUpperCase() + string.slice(1)
+  return time.includes('Kurang dari') ? 'Baru saja diedit' : time
 }

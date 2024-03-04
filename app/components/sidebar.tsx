@@ -77,10 +77,10 @@ function Create() {
       <Button
         asChild
         variant="ghost"
-        className="w-full cursor-pointer justify-start text-[13.5px] font-semibold tracking-tight"
+        className="w-full cursor-pointer justify-start text-[13px] font-semibold tracking-tight"
       >
         <span>
-          <Plus className="mr-4 h-5 w-5 " strokeWidth={2.1} />
+          <Plus className="mr-4 h-4 w-4 " strokeWidth={2.1} />
           Buat Halaman
         </span>
       </Button>
@@ -146,7 +146,7 @@ function Favorite() {
           asChild
           variant="ghost"
           onClick={() => setValue(value === 'item-1' ? '' : 'item-1')}
-          className="w-fit justify-start p-0 px-4 pl-5 text-[13.5px] font-semibold tracking-tight"
+          className="w-fit justify-start p-0 px-4 pl-5 text-[13px] font-semibold tracking-tight"
         >
           <AccordionTrigger data-count={posts.length} className="!no-underline">
             Halaman Favorit
@@ -163,7 +163,7 @@ function Favorite() {
                     prefetch="intent"
                     size="sm"
                     type="button"
-                    className="text-muted-foreground hover:text-foreground ml-6 flex justify-between rounded-md text-xs font-normal"
+                    className="text-muted-foreground hover:text-foreground ml-5 flex justify-between rounded-md text-xs font-normal"
                   >
                     {post.title.length > 23
                       ? `${post.title.substring(0, 23)}..`
@@ -234,8 +234,8 @@ function Files() {
     >
       <div className="flex flex-col gap-2 py-5">
         <div className="relative flex items-center px-5">
-          <GalleryHorizontalEnd className="mr-4 h-5 w-5" />
-          <h4 className="text-[13.5px] font-semibold leading-none tracking-tight">
+          <GalleryHorizontalEnd className="mr-4 h-4 w-4" />
+          <h4 className="text-[13px] font-semibold leading-none tracking-tight">
             Koleksi Halaman
           </h4>
         </div>
@@ -317,13 +317,13 @@ function NavItem({
       href={href}
       variant="ghost"
       className={cn(
-        'w-full justify-start text-[13.5px] font-semibold tracking-tight',
+        'w-full justify-start text-[13px] font-medium tracking-tight',
         location.pathname === href && isMatch && 'bg-secondary/80 font-bold',
       )}
     >
       <Icon
         className={cn(
-          'mr-4 h-5 w-5 stroke-[2.1px]',
+          'mr-4 h-4 w-4 stroke-[2.1px]',
           location.pathname === href && isMatch && 'stroke-[2.4px]',
         )}
       />
