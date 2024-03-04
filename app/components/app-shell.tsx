@@ -1,9 +1,9 @@
-import {Link, useLocation} from '@remix-run/react'
-import {PanelLeft} from 'lucide-react'
+import { Link, useLocation } from '@remix-run/react'
+import { PanelLeft } from 'lucide-react'
 import React from 'react'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {Sidebar} from './sidebar.tsx'
-import {Button} from './ui/button.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { Sidebar } from './sidebar.tsx'
+import { Button } from './ui/button.tsx'
 import {
   Sheet,
   SheetContent,
@@ -11,16 +11,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet.tsx'
-import {getLogo} from './outline-logo.tsx'
+import { getLogo } from './outline-logo.tsx'
 
-function AppShell({children}: React.HTMLAttributes<HTMLDivElement>) {
-  const {isAuthenticated} = useRootLoader()
+function AppShell({ children }: React.HTMLAttributes<HTMLDivElement>) {
+  const { isAuthenticated } = useRootLoader()
 
   if (!isAuthenticated) return <>{children}</>
   return <Shell>{children}</Shell>
 }
 
-function Shell({children}: React.HTMLAttributes<HTMLDivElement>) {
+function Shell({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const Logo = getLogo('md')
   return (
     <div className="bg-background h-full">
@@ -101,7 +101,7 @@ function MobileSidebar() {
           <SheetContent
             onClose={() => setIsOpen(false)}
             side="left"
-            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] overflow-y-scroll px-2 pb-0"
+            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] px-2 pb-0"
           >
             <SheetHeader>
               <SheetTitle className="px-7 text-left">Menu</SheetTitle>
