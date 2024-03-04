@@ -1,5 +1,5 @@
-import {InputRule} from '@tiptap/core'
-import {Color} from '@tiptap/extension-color'
+import { InputRule } from '@tiptap/core'
+import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import TiptapLink from '@tiptap/extension-link'
@@ -21,12 +21,12 @@ export const BasicExtensions = [
     },
     bulletList: {
       HTMLAttributes: {
-        class: 'list-disc list-outside ml-4 text-sm leading-3',
+        class: 'list-disc list-outside ml-6 text-sm leading-3',
       },
     },
     orderedList: {
       HTMLAttributes: {
-        class: 'list-decimal list-outside ml-4 text-sm leading-3',
+        class: 'list-decimal list-outside ml-6 text-sm leading-3',
       },
     },
     listItem: {
@@ -57,10 +57,10 @@ export const BasicExtensions = [
       return [
         new InputRule({
           find: /^(?:---|—-|___\s|\*\*\*\s)$/,
-          handler: ({state, range, match}) => {
+          handler: ({ state, range, match }) => {
             const attributes = {}
 
-            const {tr} = state
+            const { tr } = state
             const start = range.from
             let end = range.to
 
