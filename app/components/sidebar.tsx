@@ -344,7 +344,6 @@ function usePendingDelete() {
   type PendingItem = ReturnType<typeof useFetchers>[number] & {
     formData: FormData
   }
-  console.log('CALL: ', useFetchers())
   return useFetchers()
     .filter((fetcher): fetcher is PendingItem => {
       if (!fetcher.formData) return false

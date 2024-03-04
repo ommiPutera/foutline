@@ -1,13 +1,13 @@
 import React from 'react'
 
-import type {Content, Editor as EditorType} from '@tiptap/core'
+import type { Content, Editor as EditorType } from '@tiptap/core'
 
-import {useFetcher, useLoaderData} from '@remix-run/react'
+import { useFetcher, useLoaderData } from '@remix-run/react'
 
 import Editor from '~/components/editor/index.tsx'
 
-import {type Post} from '@prisma/client'
-import {FormType, type LoaderData, type TFocus} from './route.tsx'
+import { type Post } from '@prisma/client'
+import { FormType, type LoaderData, type TFocus } from './route.tsx'
 
 type Props = Pick<Post, 'title' | 'content' | 'preview'> & {
   setContent: React.Dispatch<React.SetStateAction<any>>
@@ -31,7 +31,7 @@ function PageEditor({
 
   getEditor,
 }: Props) {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
@@ -52,7 +52,7 @@ function PageEditor({
         preview: preview,
         postJSON: JSON.stringify(content),
       },
-      {method: 'POST'},
+      { method: 'POST' },
     )
     editor.chain().blur().run()
     setTimeout(() => {
