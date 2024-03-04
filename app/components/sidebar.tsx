@@ -77,7 +77,7 @@ function Create() {
       <Button
         asChild
         variant="ghost"
-        className="w-full cursor-pointer justify-start text-[13px] font-semibold tracking-tight"
+        className="w-full cursor-pointer justify-start text-[13px] font-medium tracking-tight"
       >
         <span>
           <Plus className="mr-4 h-4 w-4 " strokeWidth={2.1} />
@@ -146,7 +146,7 @@ function Favorite() {
           asChild
           variant="ghost"
           onClick={() => setValue(value === 'item-1' ? '' : 'item-1')}
-          className="w-fit justify-start p-0 px-4 pl-5 text-[13px] font-semibold tracking-tight"
+          className="w-fit justify-start p-0 px-4 pl-5 text-[13px] font-medium tracking-tight"
         >
           <AccordionTrigger data-count={posts.length} className="!no-underline">
             Halaman Favorit
@@ -318,7 +318,9 @@ function NavItem({
       variant="ghost"
       className={cn(
         'w-full justify-start text-[13px] font-medium tracking-tight',
-        location.pathname === href && isMatch && 'bg-secondary/80 font-bold',
+        location.pathname === href &&
+          isMatch &&
+          'bg-secondary/80 font-semibold',
       )}
     >
       <Icon
