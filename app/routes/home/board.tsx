@@ -4,60 +4,19 @@ import {Await, useLoaderData} from '@remix-run/react'
 
 import type {Post} from '@prisma/client'
 
-import {LayoutGrid, List, Plus} from 'lucide-react'
-
-import FilterButton from '~/components/board/filter-button.tsx'
-import SortButton from '~/components/board/sort-button.tsx'
-import {
-  CreatePostContent,
-  CreatePostDialog,
-} from '~/components/templates/dialogs.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import {CreatePostContent} from '~/components/templates/dialogs.tsx'
+import {ButtonLink} from '~/components/ui/button.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 import CardItem from './card.tsx'
 import {type LoaderData} from './route.tsx'
-import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 function Board() {
   return (
     <section className="flex w-full flex-col gap-4 px-3.5 py-6 md:gap-3 lg:pr-4">
-      <Tools />
       <Cards />
       <NewCard />
     </section>
-  )
-}
-
-function Tools() {
-  const {posts} = useLoaderData<LoaderData>()
-
-  return <></>
-  if (!posts?.length) return <></>
-  return (
-    <div className="bg-background flex items-center justify-between">
-      <div className="hidden md:flex md:items-center md:gap-1">
-        <Button size="icon" variant="ghost">
-          <LayoutGrid size={16} />
-        </Button>
-        <Button size="icon" variant="ghost">
-          <List size={16} />
-        </Button>
-      </div>
-      <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
-        <div className="flex items-center gap-2">
-          <FilterButton />
-          <SortButton />
-        </div>
-        <CreatePostDialog withoutTooltip>
-          <Button asChild size="sm" className="w-fit cursor-pointer">
-            <div className="flex items-center gap-2">
-              <Plus size={16} />
-              Halaman baru
-            </div>
-          </Button>
-        </CreatePostDialog>
-      </div>
-    </div>
   )
 }
 
@@ -122,8 +81,11 @@ function NewCard() {
 function SkeletonCard() {
   return (
     <div className="grid grid-cols-2 items-start gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      {[1, 2, 3, 4, 5, 6, 7].map(() => (
-        <div className="border-border bg-muted/20 flex w-full flex-col space-y-3 rounded-lg border p-3 dark:bg-zinc-900">
+      {[1, 2, 3, 4, 5, 6, 7].map(item => (
+        <div
+          key={item}
+          className="border-border bg-muted/20 flex w-full flex-col space-y-3 rounded-lg border p-3 dark:bg-zinc-900"
+        >
           <Skeleton className="h-[150px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-md" />
           <Skeleton className="h-[30px] w-full rounded-md" />
