@@ -54,14 +54,14 @@ function DetailTemplate({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="min-h-screen overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
+        <DialogContent className="min-h-screen no-scrollbar overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
             <DialogTitle className="text-2xl md:ml-4">{title}</DialogTitle>
             <p className="text-muted-foreground text-sm md:ml-4">
               Kreator: {author}
             </p>
           </DialogHeader>
-          <div className="mx-auto flex w-[90vw] max-w-screen-lg flex-col items-start justify-between gap-10 md:w-full md:flex-row">
+          <div className="mx-auto flex w-[90vw] h-full overflow-y-scroll no-scrollbar max-w-screen-lg flex-col items-start justify-between gap-10 md:w-full md:flex-row">
             <div className="w-full max-w-xl">
               <img
                 src={imgSrc}
