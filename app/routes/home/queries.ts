@@ -13,6 +13,7 @@ export async function getHomeData({
   return prisma.post.findMany({
     where: {
       authorId: userId,
+      deletedAt: null,
     },
     orderBy: {[orderField]: order},
   })
@@ -32,10 +33,9 @@ export async function favoritePost({
   })
 }
 
-export async function deletePost({id}: {id: string}) {
-  return await prisma.post.delete({
-    where: {
-      id: id,
-    },
+export async function deletePost({id}: Pick<Post, 'id'>) {
+  return await prisma.post.update({
+    where: {id},
+    data: {deletedAt: new Date()},
   })
 }

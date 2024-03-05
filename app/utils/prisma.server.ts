@@ -88,6 +88,7 @@ async function getUserFormSessionId(sessionId: string) {
     where: {email: session.user?.email},
     include: {
       posts: {
+        where: {deletedAt: null},
         orderBy: {
           createdAt: 'desc',
         },

@@ -52,9 +52,8 @@ export async function favoritePost({
 }
 
 export async function deletePost({id}: Pick<Post, 'id'>) {
-  return await prisma.post.delete({
-    where: {
-      id: id,
-    },
+  return await prisma.post.update({
+    where: {id},
+    data: {deletedAt: new Date()},
   })
 }

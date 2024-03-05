@@ -30,11 +30,12 @@ model Post {
   authorId    String
   userId      String?
   createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  deletedAt   DateTime?
   isFavorite  Boolean    @default(false)
   isLocked    Boolean    @default(false)
   isPublished Boolean    @default(false)
   type        PostType   @default(BASIC_NOTES)
-  updatedAt   DateTime   @default(now())
   status      PostStatus @default(NOT_STARTED)
   user        User?      @relation(fields: [userId], references: [id])
 

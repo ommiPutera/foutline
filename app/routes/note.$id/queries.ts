@@ -1,4 +1,5 @@
 import {type PostStatus, type Post} from '@prisma/client'
+
 import {prisma} from '~/utils/prisma.server.ts'
 
 export async function updateContent({
@@ -52,9 +53,8 @@ export async function favoritePost({
 }
 
 export async function deletePost({id}: Pick<Post, 'id'>) {
-  return await prisma.post.delete({
-    where: {
-      id: id,
-    },
+  return await prisma.post.update({
+    where: {id},
+    data: {deletedAt: new Date()},
   })
 }
