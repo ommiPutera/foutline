@@ -54,14 +54,14 @@ function DetailTemplate({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="inset-y-auto h-fit !rounded-2xl px-10 py-8 md:mt-12 md:max-h-[75vh] md:max-w-[980px]">
+        <DialogContent className="h-screen overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
-            <DialogTitle className="ml-4 text-2xl">{title}</DialogTitle>
-            <p className="text-muted-foreground ml-4 text-sm">
+            <DialogTitle className="text-2xl md:ml-4">{title}</DialogTitle>
+            <p className="text-muted-foreground text-sm md:ml-4">
               Kreator: {author}
             </p>
           </DialogHeader>
-          <div className="mx-auto flex w-full max-w-screen-lg items-start justify-between gap-10">
+          <div className="mx-auto flex w-[90vw] max-w-screen-lg flex-col items-start justify-between gap-10 md:w-full md:flex-row">
             <div className="w-full max-w-xl">
               <img
                 src={imgSrc}
@@ -69,7 +69,7 @@ function DetailTemplate({
                 className="cursor-pointer rounded-xl object-cover p-0 shadow-xl"
               />
             </div>
-            <div className="flex h-full w-[380px] flex-col gap-8">
+            <div className="flex h-full w-full max-w-[380px] flex-col gap-8">
               <div className="flex flex-col gap-4">
                 <p className="text-lg font-semibold">Tentang template ini</p>
                 <p className="text-sm font-normal leading-6">{description}</p>

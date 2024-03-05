@@ -86,7 +86,7 @@ function MobileSidebar() {
   return (
     <div>
       <div
-        className="fixed left-0 top-0 h-screen w-6 md:hidden"
+        className="fixed left-0 top-0 min-h-screen w-6 md:hidden"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         onTouchMove={onTouchMove}
@@ -101,7 +101,7 @@ function MobileSidebar() {
           <SheetContent
             onClose={() => setIsOpen(false)}
             side="left"
-            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] px-2 pb-0"
+            className="no-scrollbar w-[calc(1rem_+_var(--sidebar-width))] overflow-y-scroll px-2 pb-0"
           >
             <SheetHeader>
               <SheetTitle className="px-7 text-left">Menu</SheetTitle>

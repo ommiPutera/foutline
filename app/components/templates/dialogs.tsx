@@ -51,7 +51,7 @@ function CreatePostDialog({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="border-muted h-full max-w-[650px] border md:h-fit">
+        <DialogContent className="border-muted no-scrollbar h-full max-w-[650px] overflow-y-scroll border md:h-fit">
           <DialogHeader>
             <DialogTitle>
               <span className="text-2xl">Buat Halaman</span>

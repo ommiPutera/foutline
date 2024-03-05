@@ -81,7 +81,7 @@ function PageIndex() {
             </Tooltip>
           </div>
         </div>
-        <Separator className="my-6" />
+        <Separator className="my-6 h-0 md:h-full" />
         <div className="flex flex-col gap-8">
           <div className="flex max-w-xs flex-col gap-2">
             <h3 className="text-2xl font-bold leading-tight tracking-wide">

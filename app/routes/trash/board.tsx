@@ -28,9 +28,9 @@ function Cards() {
 
 function NoCards() {
   return (
-    <div className="flex flex-col items-center justify-center gap-1 md:py-20">
+    <div className="flex flex-col items-center justify-center gap-1 text-center md:py-20">
       <h3 className="text-lg font-bold">Sampah Kosong</h3>
-      <p className="text-sm font-medium">
+      <p className="text-sm font-normal">
         Pindahkan halaman yang tidak Anda butuhkan ke sampah.
       </p>
     </div>

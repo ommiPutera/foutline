@@ -37,7 +37,7 @@ function Wrapper({editor, getEditor}: Props) {
   }, [location.pathname])
 
   return (
-    <div className="flex w-full flex-col gap-8 px-3.5 pt-24 lg:pr-0">
+    <div className="flex w-full flex-col gap-8 pt-0 md:px-3.5 md:pt-24 lg:pr-0">
       <Topper />
       <div className="flex flex-col gap-4">
         <StartWriting
@@ -58,7 +58,7 @@ function Wrapper({editor, getEditor}: Props) {
 
 function Topper() {
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
+    <div className="mx-auto flex w-full max-w-lg flex-col gap-4 px-3.5 md:px-0">
       <div className="bg-note-background flex h-12 w-12 items-center justify-center rounded-full">
         <PencilLine className="stroke-note h-4 w-4" strokeWidth={2.5} />
       </div>
@@ -81,7 +81,7 @@ function StartWriting({
 }: TFocus & Pick<Props, 'editor'>) {
   if (isFocus) return <></>
   return (
-    <div className="mx-auto w-full max-w-lg">
+    <div className="mx-auto w-full max-w-lg px-3.5 md:px-0">
       <Button
         variant="secondary"
         onClick={() => {
@@ -124,11 +124,11 @@ function Content({
   }, [editor, location.pathname])
 
   return (
-    <div className="mx-auto mb-52 flex w-full max-w-lg justify-center">
+    <div className="mx-auto mb-4 flex w-full max-w-lg justify-center md:mb-52">
       <div
         className={cn(
-          'border-border flex h-fit w-full flex-col gap-4 rounded-xl border-2 border-dashed bg-white dark:bg-zinc-900 md:gap-3',
-          isFocus && 'shadow-border border-muted-foreground/30 shadow-xl',
+          'border-border flex h-fit w-full flex-col gap-4 rounded-xl md:gap-3 md:border-2 md:border-dashed md:bg-white dark:md:bg-zinc-900',
+          isFocus && 'shadow-border border-muted-foreground/30 md:shadow-xl',
         )}
       >
         <PageEditor
@@ -185,7 +185,7 @@ function Footer({
     )
 
   return (
-    <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl bg-white dark:bg-zinc-900">
+    <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl md:bg-white dark:md:bg-zinc-900">
       <div className="bg-muted-foreground/30 mx-auto h-[1px] w-[93%]" />
       <div className="w-full px-4 pb-2">
         <div className="flex w-full items-center justify-between">
@@ -201,7 +201,7 @@ function Footer({
           >
             <div className="flex items-center gap-2">
               <p className="text-muted-foreground text-xs">Batalkan</p>
-              <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
+              <kbd className="bg-muted text-muted-foreground pointer-events-none hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 md:inline-flex">
                 <span className="text-muted-foreground/90 text-xs font-semibold">
                   Esc
                 </span>
@@ -209,7 +209,7 @@ function Footer({
             </div>
           </Button>
           {characterLength > 0 && (
-            <div className="text-muted-foreground text-xs">
+            <div className="text-muted-foreground hidden text-xs md:block">
               {990 - characterLength + ' karakter tersisa'}
             </div>
           )}
@@ -235,7 +235,7 @@ function Footer({
           >
             <div className="flex items-center gap-2">
               <p className="text-muted-foreground text-xs">Selesai</p>
-              <div className="flex gap-1">
+              <div className="hidden gap-1 md:flex">
                 <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
                   <span className="text-muted-foreground/90 text-base font-semibold">
                     ⌘

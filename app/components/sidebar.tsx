@@ -2,7 +2,7 @@ import React from 'react'
 
 import type {Post, PostType} from '@prisma/client'
 
-import {useFetchers, useLocation} from '@remix-run/react'
+import {type LinkProps, useFetchers, useLocation} from '@remix-run/react'
 
 import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
 
@@ -32,13 +32,18 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'no-scrollbar flex h-screen flex-col overflow-y-scroll',
+        'no-scrollbar flex min-h-screen flex-col overflow-y-scroll',
         className,
       )}
     >
       <div className="mb-4 flex flex-col justify-between space-y-1 pb-6 pt-3">
         <div className="flex flex-1 flex-col place-content-start px-3 py-2">
-          <NavItem href="/home" iconName="Home" title="Beranda" />
+          <NavItem
+            href="/home"
+            prefetch="intent"
+            iconName="Home"
+            title="Beranda"
+          />
           <NavItem
             href="/explore"
             iconName="Search"
@@ -57,7 +62,12 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
             title="Pengaturan"
             isMatch={false}
           />
-          <NavItem href="/trash" iconName="Trash" title="Sampah" />
+          <NavItem
+            href="/trash"
+            prefetch="intent"
+            iconName="Trash"
+            title="Sampah"
+          />
           <Favorite />
         </div>
       </div>
@@ -295,12 +305,14 @@ function EmptyState() {
 
 function NavItem({
   href,
+  prefetch,
   iconName,
   title,
   isMatch = true,
   disabled,
 }: {
   href?: string
+  prefetch?: LinkProps['prefetch']
   iconName: keyof typeof icons
   title: string
   isMatch?: boolean
@@ -315,6 +327,7 @@ function NavItem({
     <Comp
       disabled={disabled}
       href={href}
+      prefetch={prefetch}
       variant="ghost"
       className={cn(
         'w-full justify-start text-[13px] font-medium tracking-tight',
