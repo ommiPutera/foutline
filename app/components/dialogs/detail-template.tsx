@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PostType, type Post } from '@prisma/client'
+import {PostType, type Post} from '@prisma/client'
 
 import {
   Dialog,
@@ -11,11 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import { Button } from '../ui/button.tsx'
-import { Separator } from '../ui/separator.tsx'
+import {Button} from '../ui/button.tsx'
+import {Separator} from '../ui/separator.tsx'
 
 import PageIcon from '../page-icon.tsx'
-import { cn } from '~/lib/utils.ts'
+import {cn} from '~/lib/utils.ts'
 
 function DetailTemplate({
   children,
@@ -54,14 +54,14 @@ function DetailTemplate({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="min-h-screen no-scrollbar overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
+        <DialogContent className="no-scrollbar h-full overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
             <DialogTitle className="text-2xl md:ml-4">{title}</DialogTitle>
             <p className="text-muted-foreground text-sm md:ml-4">
               Kreator: {author}
             </p>
           </DialogHeader>
-          <div className="mx-auto flex w-[90vw] h-full overflow-y-scroll no-scrollbar max-w-screen-lg flex-col items-start justify-between gap-10 md:w-full md:flex-row">
+          <div className="no-scrollbar mx-auto flex h-full w-[90vw] max-w-screen-lg flex-col items-start justify-between gap-10 overflow-y-scroll md:w-full md:flex-row">
             <div className="w-full max-w-xl">
               <img
                 src={imgSrc}
@@ -79,9 +79,9 @@ function DetailTemplate({
                   className={cn(
                     'flex w-fit items-center gap-2 rounded-md border px-3 py-2',
                     type === PostType.MONTHLY_PLANNING &&
-                    'bg-monthly-background border-monthly/30',
+                      'bg-monthly-background border-monthly/30',
                     type === PostType.BASIC_NOTES &&
-                    'bg-note-background border-note/30',
+                      'bg-note-background border-note/30',
                   )}
                 >
                   <PageIcon type={type} />
