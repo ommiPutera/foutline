@@ -62,30 +62,32 @@ export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
+  const id = formPayload['id']
+
   switch (formPayload._action) {
     case FormType.DELETE: {
-      if (typeof formPayload.id !== 'string') {
+      if (typeof id !== 'string') {
         return {formError: `Form not submitted correctly.`}
       }
-      await deletePost({id: formPayload.id})
+      await deletePost({id: id})
       return redirect('/', {})
     }
     case FormType.FAVORITE: {
       if (
-        typeof formPayload.id !== 'string' ||
+        typeof id !== 'string' ||
         typeof formPayload.isFavorite !== 'string'
       ) {
         return {formError: `Form not submitted correctly.`}
       }
       return await favoritePost({
-        id: formPayload.id,
+        id: id,
         isFavorite: formPayload.isFavorite === 'true' ? true : false,
       })
     }
     case FormType.UPDATE_CONTENT: {
       if (
         typeof formPayload.title !== 'string' ||
-        typeof formPayload.id !== 'string' ||
+        typeof id !== 'string' ||
         typeof formPayload.postJSON !== 'string' ||
         typeof formPayload.preview !== 'string'
       ) {
@@ -94,7 +96,6 @@ export async function action({request}: ActionFunctionArgs) {
 
       const title =
         formPayload.title.length === 0 ? 'tanpa judul' : formPayload.title
-      const id = formPayload.id
       const preview =
         formPayload.preview.length > 160
           ? `${formPayload.preview.substring(0, 160)}..`
@@ -109,7 +110,7 @@ export async function action({request}: ActionFunctionArgs) {
       })
     }
     case FormType.UPDATE_STATUS: {
-      if (typeof formPayload.id !== 'string') {
+      if (typeof id !== 'string') {
         return {formError: `Form not submitted correctly.`}
       }
       if (
@@ -118,7 +119,7 @@ export async function action({request}: ActionFunctionArgs) {
         formPayload.status === PostStatus.UNDERWAY
       ) {
         const post = await updateStatusPost({
-          id: formPayload.id,
+          id: id,
           status: formPayload.status,
         })
         return {post}

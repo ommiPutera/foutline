@@ -24,6 +24,21 @@ export enum FormType {
   FAVORITE = 'FAVORITE',
 }
 
+export async function loader({request}: LoaderFunctionArgs) {
+  const user: User = await getUser(request)
+  if (!user) throw new Response('Not found', {status: 404})
+
+  let order = 'desc'
+  let orderField = 'createdAt'
+
+  const posts = getHomeData({
+    userId: user.id,
+    order: order,
+    orderField: orderField,
+  })
+  return defer({posts})
+}
+
 export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
@@ -50,21 +65,6 @@ export async function action({request}: ActionFunctionArgs) {
       })
     }
   }
-}
-
-export async function loader({request}: LoaderFunctionArgs) {
-  const user: User = await getUser(request)
-  if (!user) throw new Response('Not found', {status: 404})
-
-  let order = 'desc'
-  let orderField = 'createdAt'
-
-  const posts = getHomeData({
-    userId: user.id,
-    order: order,
-    orderField: orderField,
-  })
-  return defer({posts})
 }
 
 export {Board as default}

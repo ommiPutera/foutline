@@ -30,7 +30,6 @@ function Settings() {
 
 function ThemeSetting() {
   const {requestInfo} = useRootLoader()
-
   const [theme, setTheme] = useTheme()
 
   const systemTheme = getSystemTheme()

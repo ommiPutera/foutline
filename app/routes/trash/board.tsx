@@ -1,8 +1,8 @@
-import { useLoaderData } from '@remix-run/react'
+import {useLoaderData} from '@remix-run/react'
 
-import { type Post } from '@prisma/client'
+import {type Post} from '@prisma/client'
 
-import { type LoaderData } from './route.tsx'
+import {type LoaderData} from './route.tsx'
 import CardItem from './card.tsx'
 
 function Board() {
@@ -14,7 +14,7 @@ function Board() {
 }
 
 function Cards() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <NoCards />
   return (
@@ -29,10 +29,12 @@ function Cards() {
 function NoCards() {
   return (
     <div className="flex flex-col items-center justify-center gap-1 md:py-20">
-      <h3 className='text-lg font-bold'>Sampah Kosong</h3>
-      <p className='text-sm font-medium'>Pindahkan halaman yang tidak Anda butuhkan ke sampah.</p>
+      <h3 className="text-lg font-bold">Sampah Kosong</h3>
+      <p className="text-sm font-medium">
+        Pindahkan halaman yang tidak Anda butuhkan ke sampah.
+      </p>
     </div>
   )
 }
 
-export { Board }
+export {Board}

@@ -1,15 +1,19 @@
-import {type User, type Post} from '@prisma/client'
+import {type Post, type User} from '@prisma/client'
 
-import {Board} from './board.tsx'
-
+import {
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from '@remix-run/node'
 import {json, useLocation} from '@remix-run/react'
-import {type ActionFunctionArgs, type LoaderFunctionArgs} from '@remix-run/node'
 
 import {getUser} from '~/utils/session.server.ts'
-import {deletePost, getHomeData, restorePost} from './queries.ts'
 
 import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
+
+import {Board} from './board.tsx'
+import {deletePost, getHomeData, restorePost} from './queries.ts'
 
 export enum FormType {
   DELETE = 'DELETE',
@@ -20,27 +24,8 @@ export type LoaderData = {
   posts: Post[] | null
 }
 
-export async function action({request}: ActionFunctionArgs) {
-  const formData = await request.formData()
-  const formPayload = Object.fromEntries(formData)
-  const _action = String(formPayload['_action'])
-
-  switch (_action) {
-    case FormType.DELETE: {
-      if (typeof formPayload.id !== 'string') {
-        return {formError: `Form not submitted correctly.`}
-      }
-      return await deletePost({id: formPayload.id})
-    }
-    case FormType.RESTORE: {
-      if (typeof formPayload.id !== 'string') {
-        return {formError: `Form not submitted correctly.`}
-      }
-      return await restorePost({
-        id: formPayload.id,
-      })
-    }
-  }
+export const meta: MetaFunction = () => {
+  return [{title: 'Sampah | Foutline'}]
 }
 
 export async function loader({request}: LoaderFunctionArgs) {
@@ -52,6 +37,29 @@ export async function loader({request}: LoaderFunctionArgs) {
   })
 
   return json({posts})
+}
+
+export async function action({request}: ActionFunctionArgs) {
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+  const _action = String(formPayload['_action'])
+
+  const id = formPayload['id']
+
+  switch (_action) {
+    case FormType.DELETE: {
+      if (typeof id !== 'string') {
+        return {formError: `Form not submitted correctly.`}
+      }
+      return await deletePost({id: id})
+    }
+    case FormType.RESTORE: {
+      if (typeof id !== 'string') {
+        return {formError: `Form not submitted correctly.`}
+      }
+      return await restorePost({id: id})
+    }
+  }
 }
 
 export {Board as default}

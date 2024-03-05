@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
+import {useFetcher, useLoaderData, useSubmit} from '@remix-run/react'
 
-import { PostStatus } from '@prisma/client'
+import {PostStatus} from '@prisma/client'
 
-import { id as IDNLocale } from 'date-fns/locale'
-import { formatDistance } from 'date-fns'
+import {id as IDNLocale} from 'date-fns/locale'
+import {formatDistance} from 'date-fns'
 
-import { FormType, type LoaderData } from './route.tsx'
+import {FormType, type LoaderData} from './route.tsx'
 
 import {
   CheckCheck,
@@ -23,17 +23,17 @@ import {
   icons,
 } from 'lucide-react'
 
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
 
-import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
+import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
 function Header() {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   if (!post) return <></>
   return (
@@ -107,7 +107,7 @@ function Label() {
 }
 
 function Status() {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
@@ -169,9 +169,9 @@ function Status() {
               'flex items-center gap-2 rounded-lg',
               status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
               status === PostStatus.NOT_STARTED &&
-              'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
+                'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
               status === PostStatus.UNDERWAY &&
-              'bg-blue-500/30 hover:!bg-blue-500/20',
+                'bg-blue-500/30 hover:!bg-blue-500/20',
             )}
           >
             <Icon className="h-4 w-4" strokeWidth={2.5} />
@@ -198,7 +198,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'NOT_STARTED',
                 },
-                { method: 'POST' },
+                {method: 'POST'},
               )
             }}
             className="w-full justify-start rounded-md px-3"
@@ -221,7 +221,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'UNDERWAY',
                 },
-                { method: 'POST' },
+                {method: 'POST'},
               )
             }}
           >
@@ -243,7 +243,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'COMPLETED',
                 },
-                { method: 'POST' },
+                {method: 'POST'},
               )
             }}
           >
@@ -300,7 +300,7 @@ function More() {
 }
 
 function Favorite() {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean | undefined>(
     post?.isFavorite,
@@ -354,7 +354,7 @@ function Favorite() {
 }
 
 function Remove() {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   const deleteFetcher = useFetcher()
 
@@ -406,7 +406,7 @@ function SaveAsTemplate() {
 }
 
 function Duplicate() {
-  const { post } = useLoaderData<LoaderData>()
+  const {post} = useLoaderData<LoaderData>()
 
   // const submit = useSubmit()
 
