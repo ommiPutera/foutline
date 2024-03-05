@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {PostType, type Post} from '@prisma/client'
+import { PostType, type Post } from '@prisma/client'
 
 import {
   Dialog,
@@ -11,11 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog.tsx'
-import {Button} from '../ui/button.tsx'
-import {Separator} from '../ui/separator.tsx'
+import { Button } from '../ui/button.tsx'
+import { Separator } from '../ui/separator.tsx'
 
 import PageIcon from '../page-icon.tsx'
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
 function DetailTemplate({
   children,
@@ -54,7 +54,7 @@ function DetailTemplate({
         {children}
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="h-screen overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
+        <DialogContent className="min-h-screen overflow-y-scroll px-2 py-6 sm:inset-y-auto md:mt-12 md:h-fit md:max-h-[75vh] md:max-w-[980px] md:!rounded-2xl md:px-10 md:py-8">
           <DialogHeader className="mx-auto mb-8 w-full max-w-screen-lg">
             <DialogTitle className="text-2xl md:ml-4">{title}</DialogTitle>
             <p className="text-muted-foreground text-sm md:ml-4">
@@ -79,9 +79,9 @@ function DetailTemplate({
                   className={cn(
                     'flex w-fit items-center gap-2 rounded-md border px-3 py-2',
                     type === PostType.MONTHLY_PLANNING &&
-                      'bg-monthly-background border-monthly/30',
+                    'bg-monthly-background border-monthly/30',
                     type === PostType.BASIC_NOTES &&
-                      'bg-note-background border-note/30',
+                    'bg-note-background border-note/30',
                   )}
                 >
                   <PageIcon type={type} />
