@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {useFetcher, useLoaderData, useSubmit} from '@remix-run/react'
-import {FormType, type LoaderData} from './route.tsx'
+import { useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
+import { FormType, type LoaderData } from './route.tsx'
 
-import {id as IDNLocale} from 'date-fns/locale'
-import {formatDistance} from 'date-fns'
+import { id as IDNLocale } from 'date-fns/locale'
+import { formatDistance } from 'date-fns'
 
 import {
   ChevronRight,
@@ -13,20 +13,20 @@ import {
   NotebookText,
   Star,
   Tag,
-  Trash,
+  Trash2,
 } from 'lucide-react'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
 
-import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
+import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
 
 function Header() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   if (!post) return <></>
   return (
@@ -142,7 +142,7 @@ function More() {
 }
 
 function Favorite() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean | undefined>(
     post?.isFavorite,
@@ -212,7 +212,7 @@ function SaveAsTemplate() {
 }
 
 function Remove() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const deleteFetcher = useFetcher()
 
@@ -240,7 +240,7 @@ function Remove() {
         }
         className="w-full justify-start rounded-md px-3"
       >
-        <Trash size="16" className="mr-2" />
+        <Trash2 size="16" className="mr-2" />
         <span>Pindahkan ke sampah</span>
       </Button>
     </div>
@@ -248,7 +248,7 @@ function Remove() {
 }
 
 function Duplicate() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   // const submit = useSubmit()
 
