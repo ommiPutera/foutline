@@ -380,10 +380,15 @@ function Remove() {
             },
           )
         }
+        disabled={deleteFetcher.state !== 'idle'}
         className="w-full justify-start rounded-md px-3"
       >
         <Trash2 size="16" className="mr-2" />
-        <span>Pindahkan ke sampah</span>
+        <span>
+          {deleteFetcher.state !== 'idle'
+            ? 'Memindahkan'
+            : 'Pindahkan ke sampah'}
+        </span>
       </Button>
     </div>
   )

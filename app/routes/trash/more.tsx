@@ -9,15 +9,16 @@ import {Button} from '~/components/ui/button.tsx'
 
 import type {Post} from '@prisma/client'
 
-import {type FetcherWithComponents, useSubmit} from '@remix-run/react'
+import {type FetcherWithComponents} from '@remix-run/react'
 
 import {FormType} from './route.tsx'
 import {useCardStore} from './card.tsx'
 
 function More({
   id,
+  itemFetcher,
 }: Pick<Post, 'id'> & {
-  deleteFetcher: FetcherWithComponents<unknown>
+  itemFetcher: FetcherWithComponents<unknown>
 }) {
   const {setIdCardFocus} = useCardStore()
   return (
@@ -38,15 +39,17 @@ function More({
         side="top"
         forceMount
       >
-        <Restore id={id} />
-        <Remove id={id} />
+        <Restore id={id} itemFetcher={itemFetcher} />
+        <Remove id={id} itemFetcher={itemFetcher} />
       </PopoverContent>
     </Popover>
   )
 }
 
-function Restore({id}: Pick<Post, 'id'>) {
-  const submit = useSubmit()
+function Restore({
+  id,
+  itemFetcher,
+}: Pick<Post, 'id'> & {itemFetcher: FetcherWithComponents<unknown>}) {
   return (
     <div className="my-1">
       <Button
@@ -54,7 +57,7 @@ function Restore({id}: Pick<Post, 'id'>) {
         variant="ghost"
         size="sm"
         onClick={() => {
-          submit(
+          itemFetcher.submit(
             {
               id,
               _action: FormType.RESTORE,
@@ -75,8 +78,10 @@ function Restore({id}: Pick<Post, 'id'>) {
   )
 }
 
-function Remove({id}: Pick<Post, 'id'>) {
-  const submit = useSubmit()
+function Remove({
+  id,
+  itemFetcher,
+}: Pick<Post, 'id'> & {itemFetcher: FetcherWithComponents<unknown>}) {
   return (
     <div className="my-1">
       <Button
@@ -84,7 +89,7 @@ function Remove({id}: Pick<Post, 'id'>) {
         variant="ghost"
         size="sm"
         onClick={() => {
-          submit(
+          itemFetcher.submit(
             {
               id,
               _action: FormType.DELETE,

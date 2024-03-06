@@ -38,6 +38,8 @@ function CardItem(post: Post) {
   const {id, preview, title, updatedAt, type, status} = post
   const {idCardFocus, setIdCardFocus} = useCardStore()
 
+  const [isDeleting, setIsDeleting] = React.useState(false)
+
   const location = useLocation()
   const deleteFetcher = useFetcher()
 
@@ -47,7 +49,16 @@ function CardItem(post: Post) {
     }
   }, [location.pathname, setIdCardFocus])
 
-  return deleteFetcher.state !== 'idle' ? null : (
+  React.useEffect(() => {
+    if (
+      deleteFetcher.state === 'loading' ||
+      deleteFetcher.state === 'submitting'
+    ) {
+      setIsDeleting(true)
+    }
+  }, [deleteFetcher])
+
+  return isDeleting ? null : (
     <Link to={`/${getPostType(type)}/${id}`} prefetch="intent">
       <Card
         key={id}

@@ -36,8 +36,10 @@ function CardItem(post: Post) {
   const {id, preview, title, updatedAt, type, status} = post
   const {idCardFocus, setIdCardFocus} = useCardStore()
 
+  const [isRestore, setIsRestore] = React.useState(false)
+
   const location = useLocation()
-  const deleteFetcher = useFetcher()
+  const itemFetcher = useFetcher()
 
   React.useEffect(() => {
     if (location.pathname) {
@@ -45,7 +47,13 @@ function CardItem(post: Post) {
     }
   }, [location.pathname, setIdCardFocus])
 
-  return deleteFetcher.state !== 'idle' ? null : (
+  React.useEffect(() => {
+    if (itemFetcher.state === 'loading' || itemFetcher.state === 'submitting') {
+      setIsRestore(true)
+    }
+  }, [itemFetcher])
+
+  return isRestore ? null : (
     <Card
       key={id}
       className={cn(
@@ -117,7 +125,7 @@ function CardItem(post: Post) {
             onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
             className="visible relative flex w-fit items-center gap-1"
           >
-            <More {...(post as any as Post)} deleteFetcher={deleteFetcher} />
+            <More {...(post as any as Post)} itemFetcher={itemFetcher} />
           </div>
         </div>
       </CardFooter>
