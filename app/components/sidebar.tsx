@@ -18,6 +18,11 @@ import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {Progress} from '~/components/ui/progress.tsx'
 import {ScrollArea} from '~/components/ui/scroll-area.tsx'
 import {UserNav} from '~/components/user-nav.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/ui/tooltip.tsx'
 
 import {cn} from '~/lib/utils.ts'
 
@@ -25,6 +30,8 @@ import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
 import {FormType} from '~/routes/home/route.tsx'
+
+import {getTypeStr} from '~/utils/misc.tsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
@@ -261,26 +268,32 @@ function Files() {
         <div className="mx-2 py-1 pb-6">
           {!isPostEmpty ? (
             [...columns.values()]?.map((post, i) => (
-              <ButtonLink
-                href={`${getPostType(post.type)}/${post.id}`}
-                key={`${post}-${i}`}
-                variant="ghost"
-                size="sm"
-                prefetch="intent"
-                className={cn(
-                  'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
-                  location.pathname ===
-                    `/${getPostType(post.type)}/${post.id}` &&
-                    '!text-foreground font-semibold dark:bg-zinc-800',
-                )}
-              >
-                <FileText className="mr-2 h-3.5 w-3.5" />
-                <p className="whitespace-nowrap text-xs">
-                  {post.title.length > 23
-                    ? `${post.title.substring(0, 23)}..`
-                    : post.title}
-                </p>
-              </ButtonLink>
+              <Tooltip key={`${post}-${i}`}>
+                <TooltipTrigger asChild>
+                  <ButtonLink
+                    href={`${getPostType(post.type)}/${post.id}`}
+                    variant="ghost"
+                    size="sm"
+                    prefetch="intent"
+                    className={cn(
+                      'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
+                      location.pathname ===
+                        `/${getPostType(post.type)}/${post.id}` &&
+                        '!text-foreground font-semibold dark:bg-zinc-800',
+                    )}
+                  >
+                    <FileText className="mr-2 h-3.5 w-3.5" />
+                    <p className="whitespace-nowrap text-xs">
+                      {post.title.length > 23
+                        ? `${post.title.substring(0, 23)}..`
+                        : post.title}
+                    </p>
+                  </ButtonLink>
+                </TooltipTrigger>
+                <TooltipContent side="right" align="center">
+                  <p>{getTypeStr(post.type)}</p>
+                </TooltipContent>
+              </Tooltip>
             ))
           ) : (
             <EmptyState />

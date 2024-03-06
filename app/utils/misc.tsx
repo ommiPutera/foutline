@@ -1,3 +1,4 @@
+import {type Post} from '@prisma/client'
 import type {LinkProps} from '@remix-run/react'
 import {Link, useRouteError} from '@remix-run/react'
 import React from 'react'
@@ -87,9 +88,19 @@ function getRequiredServerEnvVar(key: string, devValue?: string) {
   return getRequiredEnvVarFromObj(process.env, key, devValue)
 }
 
+const getTypeStr = (type: Post['type']) => {
+  switch (type) {
+    case 'MONTHLY_PLANNING':
+      return 'Keuangan Bulanan'
+    case 'BASIC_NOTES':
+      return 'Catatan'
+  }
+}
+
 export {
   AnchorOrLink,
   getErrorMessage,
+  getTypeStr,
   useCapturedRouteError,
   getRequiredServerEnvVar,
 }

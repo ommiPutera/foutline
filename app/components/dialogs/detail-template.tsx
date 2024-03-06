@@ -10,12 +10,15 @@ import {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog.tsx'
-import {Button} from '../ui/button.tsx'
-import {Separator} from '../ui/separator.tsx'
+} from '~/components/ui/dialog.tsx'
+import {Button} from '~/components/ui/button.tsx'
+import {Separator} from '~/components/ui/separator.tsx'
 
 import PageIcon from '../page-icon.tsx'
+
 import {cn} from '~/lib/utils.ts'
+
+import {getTypeStr} from '~/utils/misc.tsx'
 
 function DetailTemplate({
   children,
@@ -39,15 +42,6 @@ function DetailTemplate({
   description: string
   onSubmit: () => void
 } & Pick<Post, 'type'>) {
-  const getTypeStr = () => {
-    switch (type) {
-      case 'MONTHLY_PLANNING':
-        return 'Keuangan Bulanan'
-      case 'BASIC_NOTES':
-        return 'Catatan'
-    }
-  }
-
   return (
     <Dialog modal>
       <DialogTrigger asChild onClick={onTrigger}>
@@ -85,7 +79,7 @@ function DetailTemplate({
                   )}
                 >
                   <PageIcon type={type} />
-                  <p className="text-xs font-medium">{getTypeStr()}</p>
+                  <p className="text-xs font-medium">{getTypeStr(type)}</p>
                 </div>
               </div>
               <Separator className="my-2" />
