@@ -1,23 +1,23 @@
 import React from 'react'
 
-import {useLoaderData} from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 import _ from 'lodash'
 
-import type {Editor as EditorType, JSONContent} from '@tiptap/core'
+import type { Editor as EditorType, JSONContent } from '@tiptap/core'
 
-import {usePositionStore} from '~/components/editor/extensions/monthly.tsx'
+import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
 
-import {getNumberFromString} from '~/utils/get-number-from-string.ts'
+import { getNumberFromString } from '~/utils/get-number-from-string.ts'
 
 import Content from './content.tsx'
 import Header from './header.tsx'
 import RightSheet from './right-sheet.tsx'
 
-import type {LoaderData} from './route.tsx'
+import type { LoaderData } from './route.tsx'
 
 function PageIndex() {
-  const {postId} = useLoaderData<LoaderData>()
+  const { postId } = useLoaderData<LoaderData>()
 
   return (
     <main
@@ -42,7 +42,9 @@ function Wrapper() {
     setEditor(tiptapEditor)
 
     const json = tiptapEditor.getJSON()
-    const taskLists = _.filter(json.content, {type: 'taskList'})
+    if (!json.content) return null
+
+    const taskLists = _.filter(json.content, { type: 'taskList' })
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
@@ -51,7 +53,7 @@ function Wrapper() {
     if (position) {
       tiptapEditor
         .chain()
-        .command(({tr}) => {
+        .command(({ tr }) => {
           const currentNode = tr.doc.nodeAt(position)
           if (
             currentNode?.attrs?.pocket !== 'none' &&
@@ -79,10 +81,10 @@ function Wrapper() {
     }
 
     const incomes = _.filter(taskItems, {
-      attrs: {for: 'monthly-income', checked: true},
+      attrs: { for: 'monthly-income', checked: true },
     })
     const expenses = _.filter(taskItems, {
-      attrs: {for: 'monthly-expense', checked: true},
+      attrs: { for: 'monthly-expense', checked: true },
     })
 
     let incomesValues: number[] = []
@@ -98,6 +100,27 @@ function Wrapper() {
       const values = getValues(expense.content[0])
       expensesValues.push(values)
     }
+
+    let grouped = new Map<string, any>()
+    let id: string = ''
+    for (var item of json.content) {
+      if (item.type === 'heading' && item?.content?.[0]) {
+        id = item?.content[0].text ?? ''
+        grouped.set(id, { title: item?.content[0].text, content: [] })
+      }
+      if (item.type === 'taskList' && item.content) {
+        let prev = grouped.get(id)
+        // console.log("prev: ", prev)
+        grouped.set(id, { title: id, content: [...prev?.content, ...item?.content] })
+        // grouped.
+        // console.log(grouped)
+        console.log('id: ', id)
+        console.log('item: ', item)
+      }
+    }
+
+    console.log('json: ', json.content)
+    console.log('grouped: ', [...grouped.values()])
 
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
@@ -121,4 +144,4 @@ export const getValues = (content: JSONContent | undefined): number => {
   return getNumberFromString(content.content[0].text)
 }
 
-export {PageIndex}
+export { PageIndex }
