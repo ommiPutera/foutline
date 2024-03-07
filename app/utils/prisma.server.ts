@@ -65,7 +65,7 @@ async function createSession(
 async function createWelcomeCard(id: string, fullName: string) {
   return prisma.post.create({
     data: {
-      title: 'Selamt datang di Foutline',
+      title: 'Selamt datang di Foutline ✨',
       isPublished: true,
       userId: id,
       authorId: id,

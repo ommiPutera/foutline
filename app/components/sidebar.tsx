@@ -51,12 +51,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
             iconName="Home"
             title="Beranda"
           />
-          <NavItem
-            href="/explore"
-            iconName="Search"
-            title="Jelajahi"
-            isMatch={false}
-          />
+          <NavItem href="/explore" iconName="Search" title="Jelajahi" />
           <Create />
         </div>
         <div className="flex-2 place-content-center">
@@ -182,8 +177,8 @@ function Favorite() {
                     type="button"
                     className="text-muted-foreground hover:text-foreground ml-5 flex justify-between rounded-md text-xs font-normal"
                   >
-                    {post.title.length > 23
-                      ? `${post.title.substring(0, 23)}..`
+                    {post.title.length > 28
+                      ? `${post.title.substring(0, 28)}..`
                       : post.title}
                   </ButtonLink>
                 </div>
@@ -252,7 +247,7 @@ function Files() {
       <div className="flex flex-col gap-2 py-5">
         <div className="relative flex items-center px-5">
           <GalleryHorizontalEnd className="mr-4 h-4 w-4" />
-          <h4 className="text-[13px] font-semibold leading-none tracking-tight">
+          <h4 className="text-[13px] font-medium leading-none tracking-tight">
             Koleksi Halaman
           </h4>
         </div>
@@ -279,7 +274,7 @@ function Files() {
                       'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
                       location.pathname ===
                         `/${getPostType(post.type)}/${post.id}` &&
-                        '!text-foreground font-semibold dark:bg-zinc-800',
+                        '!text-foreground font-bold dark:bg-zinc-800',
                     )}
                   >
                     <FileText className="mr-2 h-3.5 w-3.5" />
@@ -344,15 +339,13 @@ function NavItem({
       variant="ghost"
       className={cn(
         'w-full justify-start text-[13px] font-medium tracking-tight',
-        location.pathname === href &&
-          isMatch &&
-          'bg-secondary/80 font-semibold',
+        location.pathname === href && isMatch && 'bg-secondary/80 font-bold',
       )}
     >
       <Icon
         className={cn(
           'mr-4 h-4 w-4 stroke-[2.1px]',
-          location.pathname === href && isMatch && 'stroke-[2.4px]',
+          location.pathname === href && isMatch && 'stroke-[2.7px]',
         )}
       />
       {title}

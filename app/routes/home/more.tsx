@@ -44,7 +44,7 @@ function More({
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-56 px-2 py-1"
+        className="mt-1 h-fit w-56 px-2 py-1"
         align="start"
         side="top"
         forceMount

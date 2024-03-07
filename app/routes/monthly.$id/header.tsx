@@ -10,13 +10,13 @@ import {formatDistance} from 'date-fns'
 import {FormType, type LoaderData} from './route.tsx'
 
 import {
-  CheckCheck,
+  CheckCircle,
   ChevronRight,
-  ChevronsRight,
+  ClipboardPenLine,
   Copy,
   Menu,
   NotebookText,
-  Pause,
+  TrafficCone,
   Star,
   Tag,
   Trash2,
@@ -97,7 +97,7 @@ function Label() {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-48 px-2 py-1"
+        className="mt-1 h-fit w-48 px-2 py-1"
         align="end"
         side="bottom"
         forceMount
@@ -138,11 +138,11 @@ function Status() {
   const getIconName = (): keyof typeof icons => {
     switch (status) {
       case 'NOT_STARTED':
-        return 'Pause'
+        return 'TrafficCone'
       case 'COMPLETED':
-        return 'CheckCheck'
+        return 'CheckCircle'
       case 'UNDERWAY':
-        return 'ChevronsRight'
+        return 'ClipboardPenLine'
     }
   }
 
@@ -165,29 +165,29 @@ function Status() {
           <Button
             variant={isFocus ? 'secondary' : 'ghost'}
             size="sm"
-            className={cn(
-              'flex items-center gap-2 rounded-lg',
-              status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
-              status === PostStatus.NOT_STARTED &&
-                'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
-              status === PostStatus.UNDERWAY &&
-                'bg-blue-500/30 hover:!bg-blue-500/20',
-            )}
+            className={cn('flex items-center gap-2 rounded-lg')}
           >
-            <Icon className="h-4 w-4" strokeWidth={2.5} />
+            <Icon
+              className={cn(
+                'h-4 w-4',
+                status === PostStatus.COMPLETED && 'stroke-green-500',
+                status === PostStatus.UNDERWAY && 'stroke-blue-400',
+              )}
+              strokeWidth={2.5}
+            />
             <p className="text-[13px]">{getStatusStr()}</p>
           </Button>
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-48 px-2 py-1"
+        className="mt-1 h-fit w-48 px-2 py-1"
         align="center"
         side="bottom"
         forceMount
       >
         <div className="my-1">
           <Button
-            variant="ghost"
+            variant={status === PostStatus.NOT_STARTED ? 'outline' : 'ghost'}
             size="sm"
             onClick={() => {
               setValue('NOT_STARTED')
@@ -203,13 +203,13 @@ function Status() {
             }}
             className="w-full justify-start rounded-md px-3"
           >
-            <Pause size="16" className="mr-2" />
+            <TrafficCone size="16" className={cn('mr-2')} />
             <span>Belum Berjalan</span>
           </Button>
         </div>
         <div className="my-1">
           <Button
-            variant="ghost"
+            variant={status === PostStatus.UNDERWAY ? 'outline' : 'ghost'}
             size="sm"
             className="w-full justify-start rounded-md px-3"
             onClick={() => {
@@ -225,13 +225,19 @@ function Status() {
               )
             }}
           >
-            <ChevronsRight size="16" className="mr-2" />
+            <ClipboardPenLine
+              size="16"
+              className={cn(
+                'mr-2',
+                status === PostStatus.UNDERWAY && 'stroke-blue-400',
+              )}
+            />
             <span>Sedang Berjalan</span>
           </Button>
         </div>
         <div className="my-1">
           <Button
-            variant="ghost"
+            variant={status === PostStatus.COMPLETED ? 'outline' : 'ghost'}
             size="sm"
             className="w-full justify-start rounded-md px-3"
             onClick={() => {
@@ -247,7 +253,13 @@ function Status() {
               )
             }}
           >
-            <CheckCheck size="16" className="mr-2" />
+            <CheckCircle
+              size="16"
+              className={cn(
+                'mr-2',
+                status === PostStatus.COMPLETED && 'stroke-green-500',
+              )}
+            />
             <span>Selesai</span>
           </Button>
         </div>
@@ -285,7 +297,7 @@ function More() {
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="h-fit w-56 px-2 py-1"
+        className="mt-1 h-fit w-56 px-2 py-1"
         align="end"
         side="bottom"
         forceMount
