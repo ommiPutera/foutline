@@ -2,14 +2,14 @@ import React from 'react'
 
 import _ from 'lodash'
 
-import {type Props as EditorProps} from './content.tsx'
+import { type Props as EditorProps } from './content.tsx'
 
-import {rupiah} from '~/utils/currency.ts'
+import { rupiah } from '~/utils/currency.ts'
 
-import {ButtonHide, Title} from './right-sheet.tsx'
-import {Skeleton} from '~/components/ui/skeleton.tsx'
-import {Button} from '~/components/ui/button.tsx'
-import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import { ButtonHide, Title } from './right-sheet.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
+import { Button } from '~/components/ui/button.tsx'
+import { ScrollArea } from '~/components/ui/scroll-area.tsx'
 
 type Props = {
   isOpen: boolean
@@ -83,38 +83,52 @@ function Summary({
   )
 }
 
-function Detail({groupedTaskItems}: {groupedTaskItems: any}) {
+function Detail({ groupedTaskItems }: { groupedTaskItems: any }) {
   const [isOpen, setIsOpen] = React.useState(false)
   return (
     <div className="relative pb-24">
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="flex flex-col gap-3 overflow-hidden data-[state=closed]:h-[170px] data-[state=open]:h-full"
+        className="flex flex-col gap-3 overflow-hidden data-[state=closed]:max-h-[170px] data-[state=open]:h-full"
       >
         {groupedTaskItems.map(
           (item: {
             title: string
             incomeTotal: number
             expenseTotal: number
-          }) => (
-            <div className="flex flex-col gap-1.5" key={item.title}>
-              <h4 className="text-sm">{item.title}</h4>
-              <div>
-                <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
-                  <div className="h-2 w-2 rounded-full bg-green-300"></div>
-                  {Number(item.incomeTotal) || Number(item.incomeTotal) === 0
-                    ? rupiah(item.incomeTotal)
-                    : 'Tunggu..'}
-                </h5>
-                <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
-                  <div className="h-2 w-2 rounded-full bg-red-300"></div>
-                  {Number(item.incomeTotal) || Number(item.incomeTotal) === 0
-                    ? rupiah(item.expenseTotal)
-                    : 'Tunggu..'}
-                </h5>
+          }) => {
+            if (
+              Number(item.incomeTotal) === 0 &&
+              Number(item.incomeTotal) === 0
+            ) return <></>
+            return (
+              <div className="flex flex-col gap-1.5" key={item.title}>
+                <h4 className="text-sm">{item.title}</h4>
+                <div>
+                  {Number(item.incomeTotal) === 0 ? (
+                    <></>
+                  ) : (
+                    <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
+                      <div className="h-2 w-2 rounded-full bg-green-300"></div>
+                      {Number(item.incomeTotal)
+                        ? rupiah(item.incomeTotal)
+                        : 'Tunggu..'}
+                    </h5>
+                  )}
+                  {Number(item.incomeTotal) === 0 ? (
+                    <></>
+                  ) : (
+                    <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
+                      <div className="h-2 w-2 rounded-full bg-red-300"></div>
+                      {Number(item.incomeTotal)
+                        ? rupiah(item.expenseTotal)
+                        : 'Tunggu..'}
+                    </h5>
+                  )}
+                </div>
               </div>
-            </div>
-          ),
+            )
+          },
         )}
       </div>
       {!isOpen && (
@@ -134,7 +148,7 @@ function Detail({groupedTaskItems}: {groupedTaskItems: any}) {
   )
 }
 
-function Income({amount, isPending}: {amount: number; isPending: boolean}) {
+function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -152,7 +166,7 @@ function Income({amount, isPending}: {amount: number; isPending: boolean}) {
   )
 }
 
-function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
+function Expense({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -170,7 +184,7 @@ function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
   )
 }
 
-function FreeCash({amount, isPending}: {amount: number; isPending: boolean}) {
+function FreeCash({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
