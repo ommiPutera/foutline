@@ -102,15 +102,15 @@ function Detail({groupedTaskItems}: {groupedTaskItems: any}) {
               <div>
                 <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
                   <div className="h-2 w-2 rounded-full bg-green-300"></div>
-                  {typeof item.incomeTotal === 'number'
+                  {Number(item.incomeTotal) || Number(item.incomeTotal) === 0
                     ? rupiah(item.incomeTotal)
-                    : 'tunggu..'}
+                    : 'Tunggu..'}
                 </h5>
                 <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
                   <div className="h-2 w-2 rounded-full bg-red-300"></div>
-                  {typeof item.expenseTotal === 'number'
+                  {Number(item.incomeTotal) || Number(item.incomeTotal) === 0
                     ? rupiah(item.expenseTotal)
-                    : 'tunggu..'}
+                    : 'Tunggu..'}
                 </h5>
               </div>
             </div>
