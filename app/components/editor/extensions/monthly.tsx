@@ -218,7 +218,6 @@ export const MonthlyExtensions = [
               return false
             }
 
-            // console.log(updatedNode.attrs)
             listItem.dataset.checked = updatedNode.attrs.checked
             if (updatedNode.attrs.checked) {
               listItem.setAttribute('data-pocket', updatedNode.attrs.pocket)

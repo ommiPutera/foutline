@@ -79,16 +79,18 @@ function Editor({
 
   React.useEffect(() => {
     if (editor && defaultContent && !hydrated) {
+      // getEditor(editor)
       editor.commands.setContent(defaultContent as any)
       setCharacterLength(editor.getText().length)
       setHydrated(true)
     }
-  }, [editor, defaultContent, hydrated, getEditor, setCharacterLength])
+  }, [editor, defaultContent, hydrated, setCharacterLength])
 
   React.useEffect(() => {
     if (location.pathname && editor) {
-      getEditor(editor)
+      // 1. setContent and then 2 getEditor
       editor.commands.setContent(post?.content as any)
+      getEditor(editor)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, location.pathname, post?.content])

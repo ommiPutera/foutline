@@ -107,7 +107,7 @@ function Wrapper() {
     for (var item of json.content) {
       if (item.type === 'heading' && item?.content?.[0]) {
         id = item?.content[0].text ?? ''
-        grouped.set(id, {title: item?.content[0].text, content: [], attrs: {}})
+        grouped.set(id, {title: item?.content[0].text, content: []})
       }
       if (item.type === 'taskList' && item.content) {
         let prev = grouped.get(id)
@@ -128,23 +128,8 @@ function Wrapper() {
     // @ts-ignore
     for (var item of [...grouped.values()]) {
       if (!item.content) break
-      if (item.content?.length === 1) {
-        let income = 0
-        let expense = 0
-        if (item?.content[0]?.attrs?.for === 'monthly-income') {
-          income = getValues(item?.content[0]?.content?.[0])
-        }
-        if (item?.content[0]?.attrs?.for === 'monthly-expense') {
-          expense = getValues(item?.content[0]?.content?.[0])
-        }
-        groupedTaskItems.push({
-          title: item.title,
-          incomeTotal: income,
-          expenseTotal: expense,
-        })
-      }
       let title = ''
-      if (item.content?.length > 1) {
+      if (item.content?.length) {
         title = item.title
         groupedTaskItems.push({
           title: item.title,
@@ -156,14 +141,20 @@ function Wrapper() {
             const idx = groupedTaskItems.findIndex(a => a.title === title)
             let income = 0
             let expense = 0
-            if (itemContent?.attrs?.for === 'monthly-income') {
+            if (
+              itemContent?.attrs?.for === 'monthly-income' &&
+              itemContent?.attrs.checked === true
+            ) {
               income = getValues(itemContent?.content?.[0])
             }
             const prevIncome = Number(groupedTaskItems?.[idx]?.incomeTotal)
             // @ts-ignore
             groupedTaskItems[idx].incomeTotal = prevIncome + income
 
-            if (itemContent?.attrs?.for === 'monthly-expense') {
+            if (
+              itemContent?.attrs?.for === 'monthly-expense' &&
+              itemContent?.attrs.checked === true
+            ) {
               expense = getValues(itemContent?.content?.[0])
             }
             const prevExpense = Number(groupedTaskItems?.[idx]?.expenseTotal)
@@ -174,7 +165,6 @@ function Wrapper() {
       }
     }
 
-    console.log('groupedTaskItems: ', groupedTaskItems)
     setGroupedTaskItems(groupedTaskItems)
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
