@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {cssBundleHref} from '@remix-run/css-bundle'
 import {
   json,
@@ -14,18 +16,22 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useNavigation,
 } from '@remix-run/react'
 
+import {useSpinDelay} from 'spin-delay'
+
+import LoadingBar from 'react-top-loading-bar'
+
 import AppShell from '~/components/app-shell.tsx'
-// import Footer from '~/components/footer.tsx'
 import Navbar from '~/components/navbar.tsx'
 import {TooltipProvider} from '~/components/ui/tooltip.tsx'
 
 import prosemirrorStyles from '~/styles/prosemirror.css'
 import globalStyles from '~/styles/globals.css'
 
-import {getKindeSession, getUser} from './utils/session.server.ts'
-import {ThemeProvider, useTheme} from './utils/theme-provider.tsx'
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
+import {ThemeProvider, useTheme} from '~/utils/theme-provider.tsx'
 import {getThemeSession} from '~/utils/theme.server.ts'
 
 export type LoaderData = SerializeFrom<typeof loader>
@@ -112,6 +118,33 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
 ]
 
+function PageLoadingMessage() {
+  const navigation = useNavigation()
+  const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
+    delay: 500,
+    minDuration: 200,
+  })
+
+  const [progress, setProgress] = React.useState(0)
+
+  React.useEffect(() => {
+    if (navigation.state === 'idle' || progress >= 100) return setProgress(0)
+
+    const interval = setInterval(() => {
+      setProgress(prev => prev + 20)
+    }, 200)
+
+    return () => {
+      clearInterval(interval)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showLoader])
+
+  if (!showLoader) return <></>
+  // @ts-ignore
+  return <LoadingBar color="#ffa500" progress={progress} />
+}
+
 export default function AppWithProviders() {
   const {requestInfo} = useLoaderData<LoaderData>()
   return (
@@ -149,9 +182,9 @@ function App() {
         <Links />
       </head>
       <body>
+        <PageLoadingMessage />
         <Navbar />
         <OutletWithShell />
-        {/* <Footer /> */}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

@@ -8,7 +8,6 @@ import {
   createCookie,
   createCookieSessionStorage,
   createFileSessionStorage,
-  redirect,
 } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 import {
