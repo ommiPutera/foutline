@@ -1,23 +1,23 @@
 import React from 'react'
 
-import { useLoaderData } from '@remix-run/react'
+import {useLoaderData} from '@remix-run/react'
 
 import _ from 'lodash'
 
-import type { Editor as EditorType, JSONContent } from '@tiptap/core'
+import type {Editor as EditorType, JSONContent} from '@tiptap/core'
 
-import { usePositionStore } from '~/components/editor/extensions/monthly.tsx'
+import {usePositionStore} from '~/components/editor/extensions/monthly.tsx'
 
-import { getNumberFromString } from '~/utils/get-number-from-string.ts'
+import {getNumberFromString} from '~/utils/get-number-from-string.ts'
 
 import Content from './content.tsx'
 import Header from './header.tsx'
 import RightSheet from './right-sheet.tsx'
 
-import type { LoaderData } from './route.tsx'
+import type {LoaderData} from './route.tsx'
 
 function PageIndex() {
-  const { postId } = useLoaderData<LoaderData>()
+  const {postId} = useLoaderData<LoaderData>()
 
   return (
     <main
@@ -33,6 +33,7 @@ function PageIndex() {
 function Wrapper() {
   const [editor, setEditor] = React.useState<EditorType | undefined>(undefined)
 
+  const [groupedTaskItems, setGroupedTaskItems] = React.useState<any[]>([])
   const [incomesValues, setIncomesValues] = React.useState<number[]>([])
   const [expensesValues, setExpensesValues] = React.useState<number[]>([])
 
@@ -44,7 +45,7 @@ function Wrapper() {
     const json = tiptapEditor.getJSON()
     if (!json.content) return null
 
-    const taskLists = _.filter(json.content, { type: 'taskList' })
+    const taskLists = _.filter(json.content, {type: 'taskList'})
 
     const position = usePositionStore.getState().postion
     const setPos = usePositionStore.getState().setPos
@@ -53,7 +54,7 @@ function Wrapper() {
     if (position) {
       tiptapEditor
         .chain()
-        .command(({ tr }) => {
+        .command(({tr}) => {
           const currentNode = tr.doc.nodeAt(position)
           if (
             currentNode?.attrs?.pocket !== 'none' &&
@@ -81,10 +82,10 @@ function Wrapper() {
     }
 
     const incomes = _.filter(taskItems, {
-      attrs: { for: 'monthly-income', checked: true },
+      attrs: {for: 'monthly-income', checked: true},
     })
     const expenses = _.filter(taskItems, {
-      attrs: { for: 'monthly-expense', checked: true },
+      attrs: {for: 'monthly-expense', checked: true},
     })
 
     let incomesValues: number[] = []
@@ -106,22 +107,75 @@ function Wrapper() {
     for (var item of json.content) {
       if (item.type === 'heading' && item?.content?.[0]) {
         id = item?.content[0].text ?? ''
-        grouped.set(id, { title: item?.content[0].text, content: [] })
+        grouped.set(id, {title: item?.content[0].text, content: [], attrs: {}})
       }
       if (item.type === 'taskList' && item.content) {
         let prev = grouped.get(id)
-        // console.log("prev: ", prev)
-        grouped.set(id, { title: id, content: [...prev?.content, ...item?.content] })
-        // grouped.
-        // console.log(grouped)
-        console.log('id: ', id)
-        console.log('item: ', item)
+        grouped.set(id, {
+          title: id,
+          content: [...prev?.content, ...item?.content],
+          attrs: {...prev?.attrs, ...item?.attrs},
+        })
       }
     }
 
-    console.log('json: ', json.content)
-    console.log('grouped: ', [...grouped.values()])
+    let groupedTaskItems: {
+      title: string
+      incomeTotal: number
+      expenseTotal: number
+    }[] = []
 
+    // @ts-ignore
+    for (var item of [...grouped.values()]) {
+      if (!item.content) break
+      if (item.content?.length === 1) {
+        let income = 0
+        let expense = 0
+        if (item?.content[0]?.attrs?.for === 'monthly-income') {
+          income = getValues(item?.content[0]?.content?.[0])
+        }
+        if (item?.content[0]?.attrs?.for === 'monthly-expense') {
+          expense = getValues(item?.content[0]?.content?.[0])
+        }
+        groupedTaskItems.push({
+          title: item.title,
+          incomeTotal: income,
+          expenseTotal: expense,
+        })
+      }
+      let title = ''
+      if (item.content?.length > 1) {
+        title = item.title
+        groupedTaskItems.push({
+          title: item.title,
+          incomeTotal: 0,
+          expenseTotal: 0,
+        })
+        for (var itemContent of item.content) {
+          if (item.title === title) {
+            const idx = groupedTaskItems.findIndex(a => a.title === title)
+            let income = 0
+            let expense = 0
+            if (itemContent?.attrs?.for === 'monthly-income') {
+              income = getValues(itemContent?.content?.[0])
+            }
+            const prevIncome = Number(groupedTaskItems?.[idx]?.incomeTotal)
+            // @ts-ignore
+            groupedTaskItems[idx].incomeTotal = prevIncome + income
+
+            if (itemContent?.attrs?.for === 'monthly-expense') {
+              expense = getValues(itemContent?.content?.[0])
+            }
+            const prevExpense = Number(groupedTaskItems?.[idx]?.expenseTotal)
+            // @ts-ignore
+            groupedTaskItems[idx].expenseTotal = prevExpense + expense
+          }
+        }
+      }
+    }
+
+    console.log('groupedTaskItems: ', groupedTaskItems)
+    setGroupedTaskItems(groupedTaskItems)
     setIncomesValues(incomesValues)
     setExpensesValues(expensesValues)
     return null
@@ -132,6 +186,7 @@ function Wrapper() {
       <Content editor={editor} setEditor={setEditor} getEditor={getEditor} />
       <RightSheet
         editor={editor}
+        groupedTaskItems={groupedTaskItems}
         expensesValues={expensesValues}
         incomesValues={incomesValues}
       />
@@ -144,4 +199,4 @@ export const getValues = (content: JSONContent | undefined): number => {
   return getNumberFromString(content.content[0].text)
 }
 
-export { PageIndex }
+export {PageIndex}

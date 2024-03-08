@@ -13,12 +13,18 @@ import {type Props as EditorProps} from './content.tsx'
 
 import Sum from './sum.tsx'
 
-type Props = {incomesValues: number[]; expensesValues: number[]} & Pick<
-  EditorProps,
-  'editor'
->
+type Props = {
+  groupedTaskItems: any
+  incomesValues: number[]
+  expensesValues: number[]
+} & Pick<EditorProps, 'editor'>
 
-function RightSheet({editor, incomesValues, expensesValues}: Props) {
+function RightSheet({
+  editor,
+  groupedTaskItems,
+  incomesValues,
+  expensesValues,
+}: Props) {
   const [isOpen, setIsOpen] = React.useState(true)
 
   return (
@@ -28,6 +34,7 @@ function RightSheet({editor, incomesValues, expensesValues}: Props) {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         editor={editor}
+        groupedTaskItems={groupedTaskItems}
         incomesValues={incomesValues}
         expensesValues={expensesValues}
       />
@@ -78,11 +85,19 @@ function ButtonHide({
   )
 }
 
-function Title() {
+function Title({
+  title,
+  tooltipDesc,
+  desc,
+}: {
+  title: string
+  tooltipDesc: string
+  desc: string
+}) {
   return (
     <div>
       <div className="flex items-center text-base font-bold">
-        Perhitungan
+        {title}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="transparent" size="icon">
@@ -91,15 +106,12 @@ function Title() {
           </TooltipTrigger>
           <TooltipContent side="top">
             <p className="max-w-[200px] text-xs font-normal leading-4">
-              Perhitungan akan bereaksi terhadap perubahan catatan keuangan
-              bulanan
+              {tooltipDesc}
             </p>
           </TooltipContent>
         </Tooltip>
       </div>
-      <div className="text-muted-foreground max-w-[200px] text-xs">
-        Selalu pastikan pengeluaran tidak melampaui pemasukan Anda
-      </div>
+      <div className="text-muted-foreground max-w-[200px] text-xs">{desc}</div>
     </div>
   )
 }
