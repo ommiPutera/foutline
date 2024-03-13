@@ -1,22 +1,22 @@
 import React from 'react'
 
-import {useFetcher, useLoaderData, useLocation} from '@remix-run/react'
+import { useFetcher, useLoaderData, useLocation } from '@remix-run/react'
 
-import {type Post} from '@prisma/client'
+import { type Post } from '@prisma/client'
 
-import {formatDistance} from 'date-fns'
-import {id as IDNLocale} from 'date-fns/locale'
+import { formatDistance } from 'date-fns'
+import { id as IDNLocale } from 'date-fns/locale'
 
-import {ArrowRightLeft, PencilLine} from 'lucide-react'
+import { ArrowRightLeft, PencilLine } from 'lucide-react'
 
-import type {Editor as EditorType} from '@tiptap/core'
+import type { Editor as EditorType } from '@tiptap/core'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 
-import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
+import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
 
 import PageEditor from './page-editor.tsx'
-import {FormType, type LoaderData, type TFocus} from './route.tsx'
+import { FormType, type LoaderData, type TFocus } from './route.tsx'
 
 export type Props = {
   editor: EditorType | undefined
@@ -24,7 +24,7 @@ export type Props = {
   getEditor: (data: EditorType) => void
 }
 
-function Wrapper({editor, getEditor}: Props) {
+function Wrapper({ editor, getEditor }: Props) {
   const [isFocus, setIsFocus] = React.useState<boolean>(false)
 
   const location = useLocation()
@@ -39,7 +39,7 @@ function Wrapper({editor, getEditor}: Props) {
   return (
     <div className="flex w-full flex-col gap-8 px-0 pt-0 md:px-3.5 md:pt-24 lg:pr-0">
       <Topper />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <StartWriting
           isFocus={isFocus}
           setIsFocus={setIsFocus}
@@ -111,7 +111,7 @@ function Content({
   setIsFocus,
   getEditor,
 }: TFocus & Pick<Props, 'getEditor' | 'editor'>) {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const location = useLocation()
 
@@ -153,6 +153,7 @@ function Content({
           content={content}
           preview={preview}
           title={title}
+          editor={editor}
         />
       </div>
     </div>
@@ -161,14 +162,16 @@ function Content({
 
 function Footer({
   characterLength,
+  editor,
+
   isFocus,
   setIsFocus,
   title,
   content,
   preview,
 }: TFocus &
-  Pick<Post, 'title' | 'content' | 'preview'> & {characterLength: number}) {
-  const {postId, post} = useLoaderData<LoaderData>()
+  Pick<Post, 'title' | 'content' | 'preview'> & { characterLength: number, editor: Props['editor'] }) {
+  const { postId, post } = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
@@ -195,7 +198,11 @@ function Footer({
           <Button
             onClick={event => {
               event.stopPropagation()
-              setIsFocus(false)
+              editor?.chain().blur().run()
+              editor?.commands.setContent(post?.content as any)
+              setTimeout(() => {
+                setIsFocus(false)
+              }, 100)
             }}
             size="sm"
             variant="ghost"
@@ -231,7 +238,7 @@ function Footer({
                   preview: preview,
                   postJSON: JSON.stringify(content),
                 },
-                {method: 'POST'},
+                { method: 'POST' },
               )
               setIsFocus(false)
             }}

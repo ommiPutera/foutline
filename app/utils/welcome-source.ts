@@ -29,7 +29,7 @@ export const welcomeTemp = (name: string) => {
         content: [
           {
             type: 'text',
-            text: 'Selamat data di halaman catatan pertama Anda di ',
+            text: 'Selamat datang di halaman pertama Anda di ',
           },
           {
             type: 'text',

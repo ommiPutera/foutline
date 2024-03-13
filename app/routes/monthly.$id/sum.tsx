@@ -2,14 +2,14 @@ import React from 'react'
 
 import _ from 'lodash'
 
-import {type Props as EditorProps} from './content.tsx'
+import { type Props as EditorProps } from './content.tsx'
 
-import {rupiah} from '~/utils/currency.ts'
+import { rupiah } from '~/utils/currency.ts'
 
-import {ButtonHide, Title} from './right-sheet.tsx'
-import {Skeleton} from '~/components/ui/skeleton.tsx'
-import {Button} from '~/components/ui/button.tsx'
-import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import { ButtonHide, Title } from './right-sheet.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
+import { Button } from '~/components/ui/button.tsx'
+import { ScrollArea } from '~/components/ui/scroll-area.tsx'
 
 type Props = {
   isOpen: boolean
@@ -59,7 +59,7 @@ function Sum({
             )}
           </div>
           <div className="mt-20">
-            <Detail groupedTaskItems={groupedTaskItems} />
+            <Detail groupedTaskItems={groupedTaskItems} isPending={!editor} />
           </div>
         </ScrollArea>
       </div>
@@ -85,8 +85,18 @@ function Summary({
   )
 }
 
-function Detail({groupedTaskItems}: {groupedTaskItems: any}) {
+function Detail({ groupedTaskItems, isPending }: { groupedTaskItems: any, isPending: boolean }) {
   const [isOpen, setIsOpen] = React.useState(false)
+
+  if (isPending) return (
+    <div className='flex flex-col gap-4'>
+      <Skeleton className="h-5 w-[220px] rounded-sm" />
+      <Skeleton className="h-5 w-[160px] rounded-sm" />
+      <Skeleton className="h-4 w-[210px] rounded-sm" />
+      <Skeleton className="h-8 w-[210px] rounded-sm" />
+      <Skeleton className="h-4 w-full rounded-sm" />
+    </div>
+  )
 
   if (!groupedTaskItems.length) return <></>
   return (
@@ -153,7 +163,7 @@ function Detail({groupedTaskItems}: {groupedTaskItems: any}) {
   )
 }
 
-function Income({amount, isPending}: {amount: number; isPending: boolean}) {
+function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -171,7 +181,7 @@ function Income({amount, isPending}: {amount: number; isPending: boolean}) {
   )
 }
 
-function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
+function Expense({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -189,7 +199,7 @@ function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
   )
 }
 
-function FreeCash({amount, isPending}: {amount: number; isPending: boolean}) {
+function FreeCash({ amount, isPending }: { amount: number; isPending: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
