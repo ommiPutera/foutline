@@ -14,6 +14,8 @@ import {type FetcherWithComponents} from '@remix-run/react'
 import {FormType} from './route.tsx'
 import {useCardStore} from './card.tsx'
 
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
+
 function More({
   id,
   itemFetcher,
@@ -50,12 +52,14 @@ function Restore({
   id,
   itemFetcher,
 }: Pick<Post, 'id'> & {itemFetcher: FetcherWithComponents<unknown>}) {
+  const {user} = useRootLoader()
   return (
     <div className="my-1">
       <Button
         aria-label="Delete Card"
         variant="ghost"
         size="sm"
+        disabled={Boolean(user?.posts.length === 12)}
         onClick={() => {
           itemFetcher.submit(
             {

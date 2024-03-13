@@ -75,7 +75,7 @@ function PageEditor({
       setTitle={setTitle}
       setContent={setContent}
       setPreview={setPreview}
-      getEditor={getEditor}
+      getEditor={() => null}
       cbFocus={() => setIsFocus(true)}
       cbOnCancel={handleCancel}
       cbOnSave={handleSave}

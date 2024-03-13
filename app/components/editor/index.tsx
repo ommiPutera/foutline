@@ -76,11 +76,11 @@ function Editor({
 
   React.useEffect(() => {
     if (editor && defaultContent && !hydrated) {
-      // getEditor(editor)
+      getEditor(editor)
       editor.commands.setContent(defaultContent as any)
       setHydrated(true)
     }
-  }, [editor, defaultContent, hydrated])
+  }, [editor, defaultContent, hydrated, getEditor])
 
   React.useEffect(() => {
     if (location.pathname && editor) {

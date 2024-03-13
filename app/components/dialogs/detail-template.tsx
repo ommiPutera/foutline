@@ -19,6 +19,7 @@ import PageIcon from '../page-icon.tsx'
 import {cn} from '~/lib/utils.ts'
 
 import {getTypeStr} from '~/utils/misc.tsx'
+import {useRootLoader} from '~/utils/use-root-loader.tsx'
 
 function DetailTemplate({
   children,
@@ -42,6 +43,8 @@ function DetailTemplate({
   description: string
   onSubmit: () => void
 } & Pick<Post, 'type'>) {
+  const {user} = useRootLoader()
+
   return (
     <Dialog modal>
       <DialogTrigger asChild onClick={onTrigger}>
@@ -84,7 +87,10 @@ function DetailTemplate({
               </div>
               <Separator className="my-2" />
               <div className="flex items-center justify-end gap-2">
-                <Button disabled={isPending} onClick={onSubmit}>
+                <Button
+                  disabled={isPending || user?.posts.length === 12}
+                  onClick={user?.posts.length === 12 ? () => null : onSubmit}
+                >
                   {isPending ? 'Membeli..' : 'Beli Rp.0'}
                 </Button>
                 <DialogClose asChild>
