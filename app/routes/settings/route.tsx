@@ -1,6 +1,8 @@
-import {Outlet} from '@remix-run/react'
+import { Outlet, useLocation } from '@remix-run/react'
 
-import {NavItem} from '~/components/sidebar.tsx'
+import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
+import { ErrorPage } from '~/components/errors.tsx'
+import { NavItem } from '~/components/sidebar.tsx'
 
 function Settings() {
   return (
@@ -38,5 +40,22 @@ function Settings() {
     </div>
   )
 }
+
+export function ErrorBoundary() {
+  const location = useLocation()
+  return (
+    <GeneralErrorBoundary
+      statusHandlers={{
+        404: () => (
+          <ErrorPage
+            title="404 - Terjadi kesalahan"
+            subtitle={`"${location.pathname}" bukanlah sebuah halaman di outline.com`}
+          />
+        ),
+      }}
+    />
+  )
+}
+
 
 export default Settings
