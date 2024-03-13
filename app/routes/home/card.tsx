@@ -100,7 +100,11 @@ function CardItem(post: Post) {
             type === PostType.BASIC_NOTES && 'bg-note-background',
           )}
         >
-          <ContentPreview content={preview ?? ''} />
+          {preview ? (
+            <ContentPreview content={preview ?? ''} />
+          ) : (
+            <p className="text-sm italic">Kosong..</p>
+          )}
           <div
             className={cn(
               'text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t',

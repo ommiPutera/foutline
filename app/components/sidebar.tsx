@@ -3,7 +3,7 @@ import React from 'react'
 import {PostType} from '@prisma/client'
 import type {Post} from '@prisma/client'
 
-import {type LinkProps, useFetchers, useLocation} from '@remix-run/react'
+import {type LinkProps, useFetchers, useLocation, Link} from '@remix-run/react'
 
 import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
 
@@ -104,20 +104,22 @@ function Create() {
 function Billing() {
   const {user} = useRootLoader()
   return (
-    <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <p className="text-xs font-medium leading-none">
-            {user?.posts.length}/12 halaman
-          </p>
-          <Badge variant="outline" className="text-[9px]">
-            Gratis
-          </Badge>
+    <Link to="/settings/billing">
+      <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-medium leading-none">
+              {user?.posts.length}/12 halaman
+            </p>
+            <Badge variant="outline" className="text-[9px]">
+              Gratis
+            </Badge>
+          </div>
+          {/* 8.3 = 100 / 12 */}
+          <Progress value={user?.posts.length * 8.3} />
         </div>
-        {/* 8.3 = 100 / 12 */}
-        <Progress value={user?.posts.length * 8.3} />
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -295,7 +297,11 @@ function Files() {
                     <PageIcon type={post.type} />
                     <p className="text-xs">{getTypeStr(post.type)}</p>
                   </div>
-                  <ContentPreview content={post.preview ?? ''} />
+                  {post.preview ? (
+                    <ContentPreview content={post.preview ?? ''} />
+                  ) : (
+                    <p className="text-sm italic">Kosong..</p>
+                  )}
                   <div
                     className={cn(
                       'text absolute bottom-0 left-0 -mt-1 h-full w-full rounded-md bg-gradient-to-t',

@@ -10,7 +10,8 @@ const variants = {
   destructive:
     'bg-destructive text-destructive-foreground hover:bg-destructive/90',
   outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
-  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+  secondary:
+    'bg-secondary dark:bg-zinc-800 text-secondary-foreground hover:bg-secondary/80',
   ghost: 'hover:bg-secondary hover:dark:bg-zinc-800 focus-visible:bg-accent',
   transparent:
     'bg-none focus-visible:bg-none hover:[&:has(svg)]:before:bg-gray-100/10',

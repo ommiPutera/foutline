@@ -187,7 +187,7 @@ function Status() {
       >
         <div className="my-1">
           <Button
-            variant={status === PostStatus.NOT_STARTED ? 'outline' : 'ghost'}
+            variant={status === PostStatus.NOT_STARTED ? 'secondary' : 'ghost'}
             size="sm"
             onClick={() => {
               setValue('NOT_STARTED')
@@ -209,7 +209,7 @@ function Status() {
         </div>
         <div className="my-1">
           <Button
-            variant={status === PostStatus.UNDERWAY ? 'outline' : 'ghost'}
+            variant={status === PostStatus.UNDERWAY ? 'secondary' : 'ghost'}
             size="sm"
             className="w-full justify-start rounded-md px-3"
             onClick={() => {
@@ -237,7 +237,7 @@ function Status() {
         </div>
         <div className="my-1">
           <Button
-            variant={status === PostStatus.COMPLETED ? 'outline' : 'ghost'}
+            variant={status === PostStatus.COMPLETED ? 'secondary' : 'ghost'}
             size="sm"
             className="w-full justify-start rounded-md px-3"
             onClick={() => {

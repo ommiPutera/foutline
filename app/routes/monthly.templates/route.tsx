@@ -5,7 +5,7 @@ import {getUser} from '~/utils/session.server.ts'
 import {PageIndex} from './page-index.tsx'
 import {createPost} from './queries.ts'
 import {
-  previewTemp1,
+  preview_t_empty,
   previewTemp2,
   t_empty,
   full_time_job,
@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({request}) => {
   switch (templateId) {
     case 't_empty':
       content = t_empty
-      preview = previewTemp1
+      preview = preview_t_empty
       break
     case 'full_time_job':
       content = full_time_job

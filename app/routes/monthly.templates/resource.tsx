@@ -3,13 +3,7 @@ export const t_empty = {
   content: [],
 }
 
-export const previewTemp1 = `
-ini untuk template 1
-
-Rp. 90,000
-
-Rp. 10,000
-`
+export const preview_t_empty = ``
 
 export const full_time_job = {
   type: 'doc',
