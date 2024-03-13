@@ -1,6 +1,7 @@
 import React from 'react'
 
-import type {Post, PostType} from '@prisma/client'
+import {PostType} from '@prisma/client'
+import type {Post} from '@prisma/client'
 
 import {type LinkProps, useFetchers, useLocation} from '@remix-run/react'
 
@@ -28,10 +29,10 @@ import {cn} from '~/lib/utils.ts'
 
 import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import {getTypeStr} from '~/utils/misc.tsx'
 
 import {FormType} from '~/routes/home/route.tsx'
-
-import {getTypeStr} from '~/utils/misc.tsx'
+import {ContentPreview, PageIcon} from '~/routes/home/card.tsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
@@ -285,8 +286,25 @@ function Files() {
                     </p>
                   </ButtonLink>
                 </TooltipTrigger>
-                <TooltipContent side="right" align="center">
-                  <p>{getTypeStr(post.type)}</p>
+                <TooltipContent
+                  side="right"
+                  align="center"
+                  className="max-w-[220px] rounded-md p-4"
+                >
+                  <div className="mb-2 flex gap-2">
+                    <PageIcon type={post.type} />
+                    <p className="text-xs">{getTypeStr(post.type)}</p>
+                  </div>
+                  <ContentPreview content={post.preview ?? ''} />
+                  <div
+                    className={cn(
+                      'text absolute bottom-0 left-0 -mt-1 h-full w-full rounded-md bg-gradient-to-t',
+                      post.type === PostType.MONTHLY_PLANNING &&
+                        'from-monthly-background to-monthly-background/30',
+                      post.type === PostType.BASIC_NOTES &&
+                        'from-note-background to-note-background/30',
+                    )}
+                  ></div>
                 </TooltipContent>
               </Tooltip>
             ))
@@ -387,8 +405,9 @@ function usePendingDelete() {
       let id = String(fetcher.formData.get('id'))
       let type: PostType = fetcher.formData.get('type') as PostType
       let title = String(fetcher.formData.get('title'))
+      let preview = String(fetcher.formData.get('preview'))
 
-      return {id, title, type}
+      return {id, title, type, preview}
     })
 }
 
@@ -406,8 +425,9 @@ function usePendingUpdate() {
       let id = String(fetcher.formData.get('id'))
       let type: PostType = fetcher.formData.get('type') as PostType
       let title = String(fetcher.formData.get('title'))
+      let preview = String(fetcher.formData.get('preview'))
 
-      return {id, type, title}
+      return {id, type, title, preview}
     })
 }
 
