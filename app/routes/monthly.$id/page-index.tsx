@@ -110,10 +110,12 @@ function Wrapper() {
         grouped.set(id, {title: item?.content[0].text, content: []})
       }
       if (item.type === 'taskList' && item.content) {
-        let prev = grouped.get(id)
+        const prev = grouped.get(id)
         grouped.set(id, {
           title: id,
-          content: [...prev?.content, ...item?.content],
+          content: prev?.content
+            ? [...prev?.content, ...item?.content]
+            : [...item?.content],
           attrs: {...prev?.attrs, ...item?.attrs},
         })
       }
