@@ -1,11 +1,11 @@
-import { useLoaderData } from '@remix-run/react'
+import {useLoaderData} from '@remix-run/react'
 
-import { type Post } from '@prisma/client'
+import {type Post} from '@prisma/client'
 
-import { type LoaderData } from './route.tsx'
+import {type LoaderData} from './route.tsx'
 import CardItem from './card.tsx'
 
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
 function Board() {
   return (
@@ -16,15 +16,14 @@ function Board() {
 }
 
 function Cards() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <NoCards />
   return (
-    <div className='flex flex-col gap-6'>
-      <div className='px-5 flex justify-between w-full gap-4'>
+    <div className="flex flex-col gap-6">
+      <div className="flex w-full justify-between gap-4 md:px-5">
         <h4 className="text-xl font-bold">Sampah</h4>
         <Button
-          aria-label="Delete Card"
           variant="secondary"
           size="sm"
           className="w-fit justify-start rounded-md px-3"
@@ -32,7 +31,7 @@ function Cards() {
           <span>Kosongkan sampah</span>
         </Button>
       </div>
-      <div className="grid px-5 grid-cols-2 gap-3 py-0 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 md:px-5 xl:grid-cols-5 2xl:grid-cols-6">
         {posts.map(post => (
           <CardItem key={post.id} {...(post as any as Post)} />
         ))}
@@ -52,4 +51,4 @@ function NoCards() {
   )
 }
 
-export { Board }
+export {Board}

@@ -18,7 +18,6 @@ function Editor({
   setTitle,
   setContent,
   setPreview,
-  setCharacterLength,
 
   getEditor,
   defaultContent,
@@ -32,7 +31,6 @@ function Editor({
   setTitle: React.Dispatch<React.SetStateAction<string>>
   setContent: React.Dispatch<React.SetStateAction<any>>
   setPreview: React.Dispatch<React.SetStateAction<any>>
-  setCharacterLength: React.Dispatch<React.SetStateAction<number>>
 
   getEditor: (editor: EditorType) => void
   defaultContent: Pick<Post, 'content'>
@@ -70,7 +68,6 @@ function Editor({
         const text = editor.getText()
 
         setContent(json.content)
-        setCharacterLength(editor?.getText().length)
         setPreview(text)
         getEditor(editor)
       }
@@ -81,10 +78,9 @@ function Editor({
     if (editor && defaultContent && !hydrated) {
       // getEditor(editor)
       editor.commands.setContent(defaultContent as any)
-      setCharacterLength(editor.getText().length)
       setHydrated(true)
     }
-  }, [editor, defaultContent, hydrated, setCharacterLength])
+  }, [editor, defaultContent, hydrated])
 
   React.useEffect(() => {
     if (location.pathname && editor) {

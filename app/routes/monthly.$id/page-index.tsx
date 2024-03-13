@@ -150,7 +150,6 @@ function Wrapper() {
             const prevIncome = Number(groupedTaskItems?.[idx]?.incomeTotal)
             // @ts-ignore
             groupedTaskItems[idx].incomeTotal = prevIncome + income
-
             if (
               itemContent?.attrs?.for === 'monthly-expense' &&
               itemContent?.attrs.checked === true

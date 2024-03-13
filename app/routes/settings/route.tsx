@@ -1,8 +1,8 @@
-import { Outlet, useLocation } from '@remix-run/react'
+import {Outlet, useLocation} from '@remix-run/react'
 
-import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
-import { ErrorPage } from '~/components/errors.tsx'
-import { NavItem } from '~/components/sidebar.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
+import {NavItem} from '~/components/sidebar.tsx'
 
 function Settings() {
   return (
@@ -33,7 +33,7 @@ function Settings() {
         </div>
       </div>
       <div className="relative h-full w-full md:ml-auto md:w-[calc(100%_-_var(--sidebar-width))]">
-        <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl md:mt-0">
+        <div className="mx-auto mt-[var(--header-height)] max-w-screen-2xl px-8 md:mt-0">
           <Outlet />
         </div>
       </div>
@@ -56,6 +56,5 @@ export function ErrorBoundary() {
     />
   )
 }
-
 
 export default Settings

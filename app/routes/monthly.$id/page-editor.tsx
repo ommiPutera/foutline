@@ -13,7 +13,6 @@ type Props = Pick<Post, 'title' | 'content' | 'preview'> & {
   setContent: React.Dispatch<React.SetStateAction<any>>
   setPreview: React.Dispatch<React.SetStateAction<any>>
   setTitle: React.Dispatch<React.SetStateAction<string>>
-  setCharacterLength: React.Dispatch<React.SetStateAction<number>>
   getEditor: (editor: EditorType) => void
 } & TFocus
 
@@ -29,8 +28,6 @@ function PageEditor({
 
   title,
   setTitle,
-
-  setCharacterLength,
 
   getEditor,
 }: Props) {
@@ -78,7 +75,6 @@ function PageEditor({
       setTitle={setTitle}
       setContent={setContent}
       setPreview={setPreview}
-      setCharacterLength={setCharacterLength}
       getEditor={getEditor}
       cbFocus={() => setIsFocus(true)}
       cbOnCancel={handleCancel}

@@ -1,5 +1,6 @@
 import {InputRule} from '@tiptap/core'
 import {Color} from '@tiptap/extension-color'
+import CharacterCount from '@tiptap/extension-character-count'
 import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import TiptapLink from '@tiptap/extension-link'
@@ -51,6 +52,9 @@ export const BasicExtensions = [
       width: 4,
     },
     gapcursor: false,
+  }),
+  CharacterCount.configure({
+    limit: 890,
   }),
   HorizontalRule.extend({
     addInputRules() {

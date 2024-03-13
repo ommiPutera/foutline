@@ -113,18 +113,9 @@ function Content({
 }: TFocus & Pick<Props, 'getEditor' | 'editor'>) {
   const {post} = useLoaderData<LoaderData>()
 
-  const location = useLocation()
-
   const [content, setContent] = React.useState<any>(post?.content)
   const [preview, setPreview] = React.useState<any>(post?.preview)
   const [title, setTitle] = React.useState<any>(post?.content)
-  const [characterLength, setCharacterLength] = React.useState<number>(0)
-
-  React.useEffect(() => {
-    if (location.pathname) {
-      setCharacterLength(Number(editor?.getText().length))
-    }
-  }, [editor, location.pathname])
 
   return (
     <div className="mx-auto mb-4 flex w-full max-w-lg justify-center md:mb-52">
@@ -143,11 +134,9 @@ function Content({
           setPreview={setPreview}
           title={title}
           setTitle={setTitle}
-          setCharacterLength={setCharacterLength}
           getEditor={getEditor}
         />
         <Footer
-          characterLength={characterLength}
           isFocus={isFocus}
           setIsFocus={setIsFocus}
           content={content}
@@ -161,7 +150,6 @@ function Content({
 }
 
 function Footer({
-  characterLength,
   editor,
 
   isFocus,
@@ -171,7 +159,6 @@ function Footer({
   preview,
 }: TFocus &
   Pick<Post, 'title' | 'content' | 'preview'> & {
-    characterLength: number
     editor: Props['editor']
   }) {
   const {postId, post} = useLoaderData<LoaderData>()
@@ -200,7 +187,6 @@ function Footer({
         <div className="flex w-full items-center justify-between">
           <Button
             onClick={event => {
-              event.stopPropagation()
               editor?.chain().blur().run()
               editor?.commands.setContent(post?.content as any)
               setTimeout(() => {
@@ -221,9 +207,12 @@ function Footer({
               </kbd>
             </div>
           </Button>
-          {characterLength > 0 && (
+          {editor?.storage.characterCount.characters() > 0 && (
             <div className="text-muted-foreground hidden text-xs md:block">
-              {990 - characterLength + ' karakter tersisa'}
+              {editor?.storage.characterCount.characters() +
+                '/' +
+                890 +
+                ' karakter tersisa'}
             </div>
           )}
           <Button
@@ -232,7 +221,6 @@ function Footer({
             variant="ghost"
             type="button"
             onClick={event => {
-              event.stopPropagation()
               fetcher.submit(
                 {
                   _action: FormType.UPDATE_CONTENT,

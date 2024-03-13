@@ -1,5 +1,6 @@
 import type {KeyboardShortcutCommand} from '@tiptap/core'
 import {InputRule} from '@tiptap/core'
+import CharacterCount from '@tiptap/extension-character-count'
 import {Color} from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
@@ -9,10 +10,10 @@ import TaskList from '@tiptap/extension-task-list'
 import TextStyle from '@tiptap/extension-text-style'
 import TiptapUnderline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
-import CustomKeymap from './custom-keymap.ts'
-import MonthlySlashCommand from '../slash-command/monthly.tsx'
-import GetSelectedText from './selected-text.ts'
 import {create} from 'zustand'
+import MonthlySlashCommand from '../slash-command/monthly.tsx'
+import CustomKeymap from './custom-keymap.ts'
+import GetSelectedText from './selected-text.ts'
 
 interface PositionState {
   postion: number
@@ -83,6 +84,9 @@ export const MonthlyExtensions = [
   }),
   Highlight.configure({
     multicolor: true,
+  }),
+  CharacterCount.configure({
+    limit: 890,
   }),
   TaskList.configure({
     HTMLAttributes: {

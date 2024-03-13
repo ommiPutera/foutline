@@ -17,8 +17,8 @@ export const meta: MetaFunction = ({data}) => {
 
 function Settings() {
   return (
-    <div className="px-3.5 py-6">
-      <div className="flex max-w-screen-sm flex-col gap-10">
+    <div className="py-6">
+      <div className="flex max-w-screen-sm flex-col gap-6">
         <h2 className="text-lg font-bold">Preferensi Pengguna</h2>
         <div>
           <ThemeSetting />

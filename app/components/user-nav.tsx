@@ -31,7 +31,7 @@ export function UserNav({
               className="relative rounded-full"
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage src={picture ?? ''} alt="@shadcn" />
+                <AvatarImage src={picture ?? ''} alt={given_name} />
                 <AvatarFallback>
                   {given_name[0].toUpperCase()}
                   {family_name[0].toUpperCase()}
