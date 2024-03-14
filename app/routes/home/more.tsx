@@ -35,7 +35,11 @@ function More({
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
         <PopoverTrigger asChild>
-          <Button size="icon" variant="transparent" className="rounded-full">
+          <Button
+            size="icon"
+            variant="transparent"
+            className="rounded-full hover:[&:has(svg)]:before:bg-[#f7f7f6]/10"
+          >
             <MoreHorizontal
               className="stroke-foreground/80 h-4 w-4"
               strokeWidth={2.5}
