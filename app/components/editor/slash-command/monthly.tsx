@@ -1,6 +1,6 @@
-import {CommandExtension, type Command, renderItems} from './index.tsx'
+import { CommandExtension, type Command, renderItems } from './index.tsx'
 
-const getSuggestionItems = ({query}: {query: string}) => {
+const getSuggestionItems = ({ query }: { query: string }) => {
   return [
     {
       title: 'Pemasukan',
@@ -8,14 +8,14 @@ const getSuggestionItems = ({query}: {query: string}) => {
         iconName: 'ArrowDownLeft',
         color: 'green',
       },
-      command: ({editor, range}: Command) => {
+      command: ({ editor, range }: Command) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .insertContent('Rp. ')
+          .insertContent('Rp ')
           .toggleTaskList()
-          .updateAttributes('taskItem', {for: 'monthly-income'})
+          .updateAttributes('taskItem', { for: 'monthly-income' })
           .run()
       },
     },
@@ -25,14 +25,14 @@ const getSuggestionItems = ({query}: {query: string}) => {
         iconName: 'ArrowUpRight',
         color: 'red',
       },
-      command: ({editor, range}: Command) => {
+      command: ({ editor, range }: Command) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .insertContent('Rp. ')
+          .insertContent('Rp ')
           .toggleTaskList()
-          .updateAttributes('taskItem', {for: 'monthly-expense'})
+          .updateAttributes('taskItem', { for: 'monthly-expense' })
           .run()
       },
     },
@@ -42,7 +42,7 @@ const getSuggestionItems = ({query}: {query: string}) => {
         iconName: 'Text',
         color: 'default',
       },
-      command: ({editor, range}: Command) => {
+      command: ({ editor, range }: Command) => {
         editor
           .chain()
           .focus()
@@ -57,12 +57,12 @@ const getSuggestionItems = ({query}: {query: string}) => {
         iconName: 'Heading',
         color: 'default',
       },
-      command: ({editor, range}: Command) => {
+      command: ({ editor, range }: Command) => {
         editor
           .chain()
           .focus()
           .deleteRange(range)
-          .setNode('heading', {level: 3})
+          .setNode('heading', { level: 3 })
           .run()
       },
     },
