@@ -110,7 +110,7 @@ function Detail({
     <div className="relative pb-24">
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="flex flex-col gap-3 overflow-hidden data-[state=open]:h-full data-[state=closed]:max-h-[170px]"
+        className="overflow-hidden data-[state=open]:h-fit data-[state=closed]:max-h-[140px]"
       >
         {groupedTaskItems.map(
           (item: {
@@ -124,13 +124,13 @@ function Detail({
             )
               return <div key={item.title}></div>
             return (
-              <div className="flex flex-col gap-1.5" key={item.title}>
-                <h4 className="text-sm">{item.title}</h4>
+              <div className="mb-3 flex flex-col gap-1.5" key={item.title}>
+                <h4 className="text-base font-semibold">{item.title}</h4>
                 <div>
                   {Number(item.incomeTotal) === 0 ? (
                     <></>
                   ) : (
-                    <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
+                    <h5 className="text-muted-foreground flex items-center gap-2 text-sm">
                       <div className="h-2 w-2 rounded-full bg-green-300"></div>
                       {Number(item.incomeTotal)
                         ? rupiah(item.incomeTotal)
@@ -140,7 +140,7 @@ function Detail({
                   {Number(item.expenseTotal) === 0 ? (
                     <></>
                   ) : (
-                    <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
+                    <h5 className="text-muted-foreground flex items-center gap-2 text-sm">
                       <div className="h-2 w-2 rounded-full bg-red-300"></div>
                       {Number(item.expenseTotal)
                         ? rupiah(item.expenseTotal)
@@ -154,9 +154,9 @@ function Detail({
         )}
       </div>
       {!isOpen && (
-        <div className="text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t from-white to-white/50 dark:from-zinc-900 dark:to-zinc-900/20"></div>
+        <div className="text absolute bottom-0 left-0 -mt-2 h-4/6 w-full bg-gradient-to-t from-white to-white/60 dark:from-zinc-900 dark:to-zinc-900/40"></div>
       )}
-      <div className="mt-3 flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="sm"

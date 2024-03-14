@@ -101,7 +101,7 @@ function Editor({
     <div className="relative">
       {editor ? (
         <div>
-          <div className="w-full px-5 py-3">
+          <div className="w-full px-4 pb-1.5 pt-3">
             <TextareaAutosize
               ref={titletRef}
               value={title}
@@ -130,7 +130,7 @@ function Editor({
               }}
               autoComplete="off"
               placeholder="Judul"
-              className="placeholder:text-muted-foreground h-fit w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
+              className="placeholder:text-muted-foreground h-fit w-full resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold leading-tight placeholder:font-semibold focus:outline-none"
             />
           </div>
           <div ref={topFileRef}></div>
@@ -139,7 +139,7 @@ function Editor({
               editor?.chain().focus().run()
               cbFocus()
             }}
-            className="max-w-screen-l relative w-full px-5 pb-2 pr-6"
+            className="max-w-screen-l relative w-full px-4 pb-2 pr-6"
           >
             <div>
               <EditorBubbleMenu editor={editor} />

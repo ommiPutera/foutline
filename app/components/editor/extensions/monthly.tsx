@@ -10,7 +10,9 @@ import TaskList from '@tiptap/extension-task-list'
 import TextStyle from '@tiptap/extension-text-style'
 import TiptapUnderline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
+
 import {create} from 'zustand'
+
 import MonthlySlashCommand from '../slash-command/monthly.tsx'
 import CustomKeymap from './custom-keymap.ts'
 import GetSelectedText from './selected-text.ts'

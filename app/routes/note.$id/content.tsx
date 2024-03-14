@@ -58,12 +58,12 @@ function Wrapper({editor, getEditor}: Props) {
 
 function Topper() {
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col gap-4 px-3.5 md:px-0">
+    <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-3.5 md:px-0">
       <div className="bg-note-background flex h-12 w-12 items-center justify-center rounded-full">
         <PencilLine className="stroke-note h-4 w-4" strokeWidth={2.5} />
       </div>
       <div className="flex max-w-sm flex-col gap-2">
-        <h3 className="text-2xl font-bold leading-tight">
+        <h3 className="text-muted-foreground text-lg font-semibold leading-tight">
           Catatan Pribadi Anda
         </h3>
         <p className="text-muted-foreground text-sm">
@@ -80,7 +80,7 @@ function StartWriting({
   editor,
 }: TFocus & Pick<Props, 'editor'>) {
   return (
-    <div className="mx-auto w-full max-w-lg px-3.5 md:px-0">
+    <div className="mx-auto w-full max-w-xl px-3.5 md:px-0">
       <Button
         variant="outline"
         onClick={() => {
@@ -117,7 +117,7 @@ function Content({
   const [title, setTitle] = React.useState<any>(post?.content)
 
   return (
-    <div className="mx-auto mb-4 flex w-full max-w-lg justify-center md:mb-52">
+    <div className="mx-auto mb-4 flex w-full max-w-xl justify-center md:mb-52">
       <div
         className={cn(
           'border-border flex h-fit w-full flex-col gap-4 rounded-xl md:gap-3 md:border-2 md:border-dashed md:bg-white dark:md:bg-zinc-900',
