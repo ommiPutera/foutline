@@ -88,7 +88,7 @@ export const MonthlyExtensions = [
     multicolor: true,
   }),
   CharacterCount.configure({
-    limit: 890,
+    limit: 1299,
   }),
   TaskList.configure({
     HTMLAttributes: {

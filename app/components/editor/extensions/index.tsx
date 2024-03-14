@@ -54,7 +54,7 @@ export const BasicExtensions = [
     gapcursor: false,
   }),
   CharacterCount.configure({
-    limit: 890,
+    limit: 1299,
   }),
   HorizontalRule.extend({
     addInputRules() {

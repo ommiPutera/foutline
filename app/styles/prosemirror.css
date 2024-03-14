@@ -10,6 +10,20 @@
 .tiptap p {
   @apply text-foreground text-sm font-normal leading-6;
 }
+.tiptap > p:first-child {
+  margin-block-start: 0px;
+}
+.tiptap > p:last-child {
+  margin-block-end: 0px;
+}
+.tiptap > p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  line-height: 1.4rem !important;
+}
 
 .tiptap p.is-editor-empty:first-child::before {
   @apply text-muted-foreground;

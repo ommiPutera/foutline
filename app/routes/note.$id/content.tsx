@@ -37,7 +37,7 @@ function Wrapper({editor, getEditor}: Props) {
   }, [location.pathname])
 
   return (
-    <div className="flex w-full flex-col gap-8 pt-0 md:px-3.5 md:pt-24 lg:pr-0">
+    <div className="flex w-full flex-col gap-8 pt-0 md:px-5 md:pt-24 lg:pr-0">
       <Topper />
       <div className="flex flex-col gap-6">
         <StartWriting
@@ -211,7 +211,7 @@ function Footer({
             <div className="text-muted-foreground hidden text-xs md:block">
               {editor?.storage.characterCount.characters() +
                 '/' +
-                890 +
+                1299 +
                 ' karakter tersisa'}
             </div>
           )}

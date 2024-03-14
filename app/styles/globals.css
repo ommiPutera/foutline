@@ -96,6 +96,7 @@
     overflow-x: scroll;
   }
   body {
+    -webkit-font-smoothing: antialiased;
     @apply bg-background text-foreground;
   }
 
