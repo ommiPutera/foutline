@@ -22,6 +22,8 @@ import {
   updateStatusPost,
 } from './queries.ts'
 
+import {MAX_LENGTH_PREVIEW} from '~/config.ts'
+
 export type LoaderData = {
   post?: Post
   postId?: string
@@ -97,8 +99,8 @@ export async function action({request}: ActionFunctionArgs) {
       const title =
         formPayload.title.length === 0 ? 'tanpa judul' : formPayload.title
       const preview =
-        formPayload.preview.length > 160
-          ? `${formPayload.preview.substring(0, 160)}..`
+        formPayload.preview.length > MAX_LENGTH_PREVIEW
+          ? `${formPayload.preview.substring(0, MAX_LENGTH_PREVIEW)}..`
           : formPayload.preview
       const content = JSON.parse(formPayload.postJSON)
 

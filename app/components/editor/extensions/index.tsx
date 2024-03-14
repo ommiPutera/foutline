@@ -13,6 +13,8 @@ import CustomKeymap from './custom-keymap.ts'
 import BasicSlashCommand from '../slash-command/index.tsx'
 import GetSelectedText from './selected-text.ts'
 
+import {MAX_CHARACTER_EDITOR} from '~/config.ts'
+
 export const BasicExtensions = [
   StarterKit.configure({
     heading: {
@@ -54,7 +56,7 @@ export const BasicExtensions = [
     gapcursor: false,
   }),
   CharacterCount.configure({
-    limit: 1299,
+    limit: MAX_CHARACTER_EDITOR,
   }),
   HorizontalRule.extend({
     addInputRules() {

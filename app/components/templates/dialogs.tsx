@@ -54,7 +54,7 @@ function CreatePostDialog({
         <DialogContent className="border-muted no-scrollbar h-full max-w-[650px] overflow-y-scroll border md:h-fit">
           <DialogHeader>
             <DialogTitle>
-              <span className="text-2xl">Buat Halaman</span>
+              <span className="text-lg">Buat Halaman</span>
             </DialogTitle>
             <Content value={value} setValue={setValue} />
             <DialogFooter className="flex w-full items-center justify-end gap-2 md:gap-0">

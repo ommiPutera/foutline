@@ -33,7 +33,7 @@
     --input: 20 5.9% 90%;
     --ring: 151 92% 30%;
 
-    --radius: 0.5rem;
+    --radius: 0.55rem;
 
     --sidebar-width: 260px;
     --sidebar-width-xl: 320px;
@@ -68,7 +68,7 @@
     --accent: 12 6.5% 15.1%;
     --accent-foreground: 60 9.1% 97.8%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 4 80% 55%;
     --destructive-foreground: 60 9.1% 97.8%;
 
     --border: 240 4% 16%;

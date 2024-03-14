@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react'
+import React, {Suspense} from 'react'
 
-import { Await, useLoaderData } from '@remix-run/react'
+import {Await, useLoaderData} from '@remix-run/react'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { CreatePostContent } from '~/components/templates/dialogs.tsx'
-import { ButtonLink } from '~/components/ui/button.tsx'
-import { Skeleton } from '~/components/ui/skeleton.tsx'
+import {CreatePostContent} from '~/components/templates/dialogs.tsx'
+import {ButtonLink} from '~/components/ui/button.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 import CardItem from './card.tsx'
-import { type LoaderData } from './route.tsx'
+import {type LoaderData} from './route.tsx'
 
 function Board() {
   return (
@@ -21,7 +21,7 @@ function Board() {
 }
 
 function Cards() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
 
   return (
     <Suspense fallback={<SkeletonCard />}>
@@ -41,7 +41,7 @@ function Cards() {
 }
 
 function NewCard() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   return (
@@ -97,4 +97,4 @@ function SkeletonCard() {
   )
 }
 
-export { Board }
+export {Board}

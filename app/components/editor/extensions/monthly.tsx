@@ -1,7 +1,7 @@
-import type { KeyboardShortcutCommand } from '@tiptap/core'
-import { InputRule } from '@tiptap/core'
+import type {KeyboardShortcutCommand} from '@tiptap/core'
+import {InputRule} from '@tiptap/core'
 import CharacterCount from '@tiptap/extension-character-count'
-import { Color } from '@tiptap/extension-color'
+import {Color} from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import TiptapLink from '@tiptap/extension-link'
@@ -11,11 +11,13 @@ import TextStyle from '@tiptap/extension-text-style'
 import TiptapUnderline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 
-import { create } from 'zustand'
+import {create} from 'zustand'
 
 import MonthlySlashCommand from '../slash-command/monthly.tsx'
 import CustomKeymap from './custom-keymap.ts'
 import GetSelectedText from './selected-text.ts'
+
+import {MAX_CHARACTER_EDITOR} from '~/config.ts'
 
 interface PositionState {
   postion: number
@@ -24,7 +26,7 @@ interface PositionState {
 
 export const usePositionStore = create<PositionState>(set => ({
   postion: 0,
-  setPos: position => set(state => ({ postion: position })),
+  setPos: position => set(state => ({postion: position})),
 }))
 
 export const MonthlyExtensions = [
@@ -72,10 +74,10 @@ export const MonthlyExtensions = [
       return [
         new InputRule({
           find: /^(?:---|—-|___\s|\*\*\*\s)$/,
-          handler: ({ state, range, match }) => {
+          handler: ({state, range, match}) => {
             const attributes = {}
 
-            const { tr } = state
+            const {tr} = state
             const start = range.from
             let end = range.to
 
@@ -102,7 +104,7 @@ export const MonthlyExtensions = [
     multicolor: true,
   }),
   CharacterCount.configure({
-    limit: 1299,
+    limit: MAX_CHARACTER_EDITOR,
   }),
   TaskList.extend({
     addInputRules() {
@@ -110,7 +112,7 @@ export const MonthlyExtensions = [
         new InputRule({
           // find: /[0-9]\d+/,
           find: /[a-z]/g,
-          handler: ({ state, range, match }) => {
+          handler: ({state, range, match}) => {
             // const { tr } = state
             // const start = range.from
             // let end = range.to
@@ -182,7 +184,7 @@ export const MonthlyExtensions = [
       }
     },
     addNodeView() {
-      return ({ node, HTMLAttributes, getPos, editor }) => {
+      return ({node, HTMLAttributes, getPos, editor}) => {
         const listItem = document.createElement('li')
         const checkboxWrapper = document.createElement('label')
         const checkboxStyler = document.createElement('span')
@@ -200,14 +202,14 @@ export const MonthlyExtensions = [
             return
           }
 
-          const { checked } = event.target as any
+          const {checked} = event.target as any
           const setPos = usePositionStore.getState().setPos
 
           if (editor.isEditable && typeof getPos === 'function') {
             editor
               .chain()
-              .focus(undefined, { scrollIntoView: false })
-              .command(({ tr }) => {
+              .focus(undefined, {scrollIntoView: false})
+              .command(({tr}) => {
                 const position = getPos()
                 setPos(position)
 

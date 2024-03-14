@@ -109,9 +109,9 @@ function CardItem(post: Post) {
             className={cn(
               'text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t',
               type === PostType.MONTHLY_PLANNING &&
-                'from-monthly-background to-monthly-background/30',
+                'from-monthly-background to-monthly-background/60',
               type === PostType.BASIC_NOTES &&
-                'from-note-background to-note-background/30',
+                'from-note-background to-note-background/60',
             )}
           ></div>
         </CardContent>
@@ -151,7 +151,7 @@ function CardItem(post: Post) {
 
 function ContentPreview({content}: {content: string | JSX.Element}) {
   return (
-    <div className="text-[11.5px] leading-4 text-black dark:text-white md:text-xs md:leading-snug">
+    <div className="text-[11.5px leading-4 text-black dark:text-white md:text-[13px] md:leading-5">
       {content}
     </div>
   )
