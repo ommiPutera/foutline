@@ -1,19 +1,19 @@
-import React, {Suspense} from 'react'
+import React, { Suspense } from 'react'
 
-import {Await, useLoaderData} from '@remix-run/react'
+import { Await, useLoaderData } from '@remix-run/react'
 
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 
-import {CreatePostContent} from '~/components/templates/dialogs.tsx'
-import {ButtonLink} from '~/components/ui/button.tsx'
-import {Skeleton} from '~/components/ui/skeleton.tsx'
+import { CreatePostContent } from '~/components/templates/dialogs.tsx'
+import { ButtonLink } from '~/components/ui/button.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
 
 import CardItem from './card.tsx'
-import {type LoaderData} from './route.tsx'
+import { type LoaderData } from './route.tsx'
 
 function Board() {
   return (
-    <section className="flex w-full flex-col gap-4 px-3.5 py-6 md:gap-3 lg:pr-4">
+    <section className="flex w-full flex-col gap-4 px-5 py-6 md:gap-3 lg:pr-4">
       <Cards />
       <NewCard />
     </section>
@@ -21,15 +21,17 @@ function Board() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   return (
     <Suspense fallback={<SkeletonCard />}>
       <Await resolve={posts as unknown as Post[]}>
         {posts => (
-          <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 md:px-5 xl:grid-cols-5 2xl:grid-cols-6">
+          <div className="columns-2 gap-2 md:columns-3 lg:columns-4 xl:columns-5 2xl:columns-6 lg:gap-3">
             {posts.map(post => (
-              <CardItem key={post.id} {...(post as any as Post)} />
+              <div key={post.id} className='mb-2 lg:mb-3'>
+                <CardItem {...(post as any as Post)} />
+              </div>
             ))}
           </div>
         )}
@@ -39,7 +41,7 @@ function Cards() {
 }
 
 function NewCard() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   return (
@@ -95,4 +97,4 @@ function SkeletonCard() {
   )
 }
 
-export {Board}
+export { Board }

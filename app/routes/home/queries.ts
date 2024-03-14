@@ -15,7 +15,7 @@ export async function getHomeData({
       authorId: userId,
       deletedAt: null,
     },
-    orderBy: {[orderField]: order},
+    orderBy: {updatedAt: 'desc'},
   })
 }
 
