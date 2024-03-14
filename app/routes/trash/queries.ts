@@ -18,6 +18,16 @@ export async function deletePost({id}: Pick<Post, 'id'>) {
   })
 }
 
+export async function deleteAllPost({allId}: {allId: string[]}) {
+  return await prisma.post.deleteMany({
+    where: {
+      id: {
+        in: allId,
+      },
+    },
+  })
+}
+
 export async function restorePost({id}: Pick<Post, 'id'>) {
   return await prisma.post.update({
     where: {id},

@@ -13,10 +13,11 @@ import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
 import {ErrorPage} from '~/components/errors.tsx'
 
 import {Board} from './board.tsx'
-import {deletePost, getHomeData, restorePost} from './queries.ts'
+import {deleteAllPost, deletePost, getHomeData, restorePost} from './queries.ts'
 
 export enum FormType {
   DELETE = 'DELETE',
+  DELETE_ALL = 'DELETE_ALL',
   RESTORE = 'RESTORE',
 }
 
@@ -45,6 +46,7 @@ export async function action({request}: ActionFunctionArgs) {
   const _action = String(formPayload['_action'])
 
   const id = formPayload['id']
+  const allId: string = formPayload['allId'] as unknown as string
 
   switch (_action) {
     case FormType.DELETE: {
@@ -52,6 +54,12 @@ export async function action({request}: ActionFunctionArgs) {
         return {formError: `Form not submitted correctly.`}
       }
       return await deletePost({id: id})
+    }
+    case FormType.DELETE_ALL: {
+      if (typeof allId !== 'string') {
+        return {formError: `Form not submitted correctly.`}
+      }
+      return await deleteAllPost({allId: allId.split(',')})
     }
     case FormType.RESTORE: {
       if (typeof id !== 'string') {

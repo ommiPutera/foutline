@@ -10,7 +10,10 @@ import {
   AlertDialogTrigger,
 } from '~/components/ui/alert-dialog.tsx'
 
-function RemoveAllInTrash({ children, cbAction }: React.HTMLAttributes<HTMLDivElement> & { cbAction: () => void }) {
+function RemoveAllInTrash({
+  children,
+  cbAction,
+}: React.HTMLAttributes<HTMLDivElement> & {cbAction: () => void}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -24,7 +27,9 @@ function RemoveAllInTrash({ children, cbAction }: React.HTMLAttributes<HTMLDivEl
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction onClick={cbAction}>Hapus selamanya</AlertDialogAction>
+          <AlertDialogAction onClick={cbAction}>
+            Hapus selamanya
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

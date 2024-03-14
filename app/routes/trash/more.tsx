@@ -99,7 +99,7 @@ function Remove({
               _action: FormType.DELETE,
             },
             {
-              method: 'POST',
+              method: 'DELETE',
               action: '.',
               navigate: false,
             },
