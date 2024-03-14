@@ -10,21 +10,21 @@ import {
   AlertDialogTrigger,
 } from '~/components/ui/alert-dialog.tsx'
 
-function RemoveAllInTrash() {
+function RemoveAllInTrash({ children, cbAction }: React.HTMLAttributes<HTMLDivElement> & { cbAction: () => void }) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>Open</AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Hapus selamanya?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Semua item dalam sampah akan dihapus selamanya dan Anda tidak akan
+            dapat memulihkannya.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Batal</AlertDialogCancel>
+          <AlertDialogAction onClick={cbAction}>Hapus selamanya</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -1,11 +1,12 @@
-import {useLoaderData} from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
-import {type Post} from '@prisma/client'
+import { type Post } from '@prisma/client'
 
-import {type LoaderData} from './route.tsx'
+import { type LoaderData } from './route.tsx'
 import CardItem from './card.tsx'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
+import RemoveAllInTrash from '~/components/templates/alerts/remove-all-in-trash.tsx'
 
 function Board() {
   return (
@@ -16,20 +17,24 @@ function Board() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   if (!posts?.length) return <NoCards />
   return (
     <div className="flex flex-col gap-6">
       <div className="flex w-full justify-between gap-4">
         <h4 className="text-xl font-bold">Sampah</h4>
-        <Button
-          variant="secondary"
-          size="sm"
-          className="w-fit justify-start rounded-md px-3"
-        >
-          <span>Kosongkan sampah</span>
-        </Button>
+        <RemoveAllInTrash cbAction={() => {
+          console.log('heii')
+        }}>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="w-fit justify-start rounded-md px-3"
+          >
+            <span>Kosongkan sampah</span>
+          </Button>
+        </RemoveAllInTrash>
       </div>
       <div className="columns-2 gap-2 md:columns-3 lg:columns-4 lg:gap-3 xl:columns-5 2xl:columns-6">
         {posts.map(post => (
@@ -53,4 +58,4 @@ function NoCards() {
   )
 }
 
-export {Board}
+export { Board }
