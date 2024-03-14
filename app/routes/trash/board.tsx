@@ -9,7 +9,7 @@ import {Button} from '~/components/ui/button.tsx'
 
 function Board() {
   return (
-    <section className="flex w-full flex-col gap-4 px-3.5 py-6 md:gap-3 lg:pr-4">
+    <section className="flex w-full flex-col gap-4 px-5 py-6 md:gap-3 lg:pr-4">
       <Cards />
     </section>
   )
@@ -21,7 +21,7 @@ function Cards() {
   if (!posts?.length) return <NoCards />
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex w-full justify-between gap-4 md:px-5">
+      <div className="flex w-full justify-between gap-4">
         <h4 className="text-xl font-bold">Sampah</h4>
         <Button
           variant="secondary"
@@ -31,9 +31,11 @@ function Cards() {
           <span>Kosongkan sampah</span>
         </Button>
       </div>
-      <div className="grid grid-cols-2 gap-3 py-0 md:grid-cols-4 md:px-5 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="columns-2 gap-2 md:columns-3 lg:columns-4 lg:gap-3 xl:columns-5 2xl:columns-6">
         {posts.map(post => (
-          <CardItem key={post.id} {...(post as any as Post)} />
+          <div key={post.id} className="mb-2 lg:mb-3">
+            <CardItem {...(post as any as Post)} />
+          </div>
         ))}
       </div>
     </div>

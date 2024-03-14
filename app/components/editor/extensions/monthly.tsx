@@ -32,18 +32,32 @@ export const MonthlyExtensions = [
     heading: {
       HTMLAttributes: {
         class: 'font-medium',
-        autocomplete: 'off',
-        autocorrect: 'off',
-        autocapitalize: 'off',
-        spellcheck: false,
       },
     },
-    paragraph: {
+    bulletList: {
       HTMLAttributes: {
-        autocomplete: 'off',
-        autocorrect: 'off',
-        autocapitalize: 'off',
-        spellcheck: false,
+        class: 'list-disc list-outside ml-6 text-sm leading-3',
+      },
+    },
+    orderedList: {
+      HTMLAttributes: {
+        class: 'list-decimal list-outside ml-6 text-sm leading-3',
+      },
+    },
+    listItem: {
+      HTMLAttributes: {
+        class: 'leading-normal',
+      },
+    },
+    blockquote: {
+      HTMLAttributes: {
+        class: 'border-l-4 border-gray-100 dark:border-gray-800',
+      },
+    },
+    codeBlock: {
+      HTMLAttributes: {
+        class:
+          'rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800',
       },
     },
     horizontalRule: false,
@@ -126,12 +140,12 @@ export const MonthlyExtensions = [
       const shortcuts: {
         [key: string]: KeyboardShortcutCommand
       } = {
+        // @ts-ignore
         Enter: () => {
           const isTaskItem = this.editor.getAttributes('taskItem')?.for
+
           if (isTaskItem) {
             return this.editor.chain().splitBlock().exitCode().run()
-          } else {
-            return this.editor.commands.splitBlock()
           }
         },
         Backspace: () => {
