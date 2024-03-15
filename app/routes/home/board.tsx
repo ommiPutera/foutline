@@ -1,15 +1,15 @@
-import React, {Suspense} from 'react'
+import React, { Suspense } from 'react'
 
-import {Await, useLoaderData} from '@remix-run/react'
+import { Await, useLoaderData } from '@remix-run/react'
 
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 
-import {CreatePostContent} from '~/components/templates/dialogs.tsx'
-import {ButtonLink} from '~/components/ui/button.tsx'
-import {Skeleton} from '~/components/ui/skeleton.tsx'
+import { CreatePostContent } from '~/components/templates/dialogs.tsx'
+import { ButtonLink } from '~/components/ui/button.tsx'
+import { Skeleton } from '~/components/ui/skeleton.tsx'
 
 import CardItem from './card.tsx'
-import {type LoaderData} from './route.tsx'
+import { type LoaderData } from './route.tsx'
 
 function Board() {
   return (
@@ -21,15 +21,15 @@ function Board() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
 
   return (
     <Suspense fallback={<SkeletonCard />}>
       <Await resolve={posts as unknown as Post[]}>
         {posts => (
-          <div className="columns-2 gap-2 md:columns-3 xl:columns-5 xl:gap-3 2xl:columns-6">
+          <div className="columns-2 gap-3 md:columns-3 xl:columns-5 xl:gap-4 2xl:columns-6">
             {posts.map(post => (
-              <div key={post.id} className="mb-2 xl:mb-3">
+              <div key={post.id} className="mb-3 xl:mb-4">
                 <CardItem {...(post as any as Post)} />
               </div>
             ))}
@@ -41,7 +41,7 @@ function Cards() {
 }
 
 function NewCard() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   return (
@@ -97,4 +97,4 @@ function SkeletonCard() {
   )
 }
 
-export {Board}
+export { Board }
