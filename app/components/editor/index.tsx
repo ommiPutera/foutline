@@ -139,7 +139,7 @@ function Editor({
               editor?.chain().focus().run()
               cbFocus()
             }}
-            className="max-w-screen-l relative w-full px-4 pb-2 pr-6"
+            className="relative w-full px-4 pb-2 pr-6"
           >
             <div>
               <EditorBubbleMenu editor={editor} />

@@ -10,21 +10,30 @@ const TooltipTrigger = TooltipPrimitive.Trigger
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({className, children, sideOffset = 4, ...props}, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={cn(
-      'bg-muted z-50 overflow-hidden rounded-sm px-2.5 py-1.5 text-[11px] dark:bg-zinc-800',
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <TooltipPrimitive.TooltipArrow className="fill-muted h-1.5 w-3 dark:fill-zinc-800" />
-  </TooltipPrimitive.Content>
-))
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
+    noIndicator?: boolean
+  }
+>(
+  (
+    {className, children, sideOffset = 4, noIndicator = false, ...props},
+    ref,
+  ) => (
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        'bg-muted z-50 overflow-hidden rounded-sm px-2.5 py-1.5 text-[11px] dark:bg-zinc-900',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      {!noIndicator && (
+        <TooltipPrimitive.TooltipArrow className="fill-muted h-1.5 w-3 dark:fill-zinc-800" />
+      )}
+    </TooltipPrimitive.Content>
+  ),
+)
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export {Tooltip, TooltipTrigger, TooltipContent, TooltipProvider}

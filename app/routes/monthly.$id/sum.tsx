@@ -31,13 +31,13 @@ function Sum({
     <>
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:w-0 data-[state=open]:w-[340px] data-[state=closed]:duration-300 data-[state=open]:duration-500"
+        className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:w-0 data-[state=open]:w-[var(--sidebar-width-xl)] data-[state=closed]:duration-300 data-[state=open]:duration-500"
       ></div>
       <div
         data-state={isOpen ? 'open' : 'closed'}
-        className="data-[state=open]:animate-in data-[state=closed]:animate-out no-scrollbar fixed right-0 h-screen overflow-y-scroll bg-white transition-all ease-in-out data-[state=closed]:w-0 data-[state=open]:w-[340px] data-[state=closed]:duration-300 data-[state=open]:duration-500 dark:bg-zinc-900"
+        className="data-[state=open]:animate-in data-[state=closed]:animate-out no-scrollbar fixed right-0 h-screen overflow-y-scroll bg-white transition-all ease-in-out data-[state=closed]:w-0 data-[state=open]:w-[var(--sidebar-width-xl)] data-[state=closed]:duration-300 data-[state=open]:duration-500 dark:bg-zinc-900"
       >
-        <ScrollArea className="relative h-[100vh] w-[340px] px-6">
+        <ScrollArea className="relative h-[100vh] w-[var(--sidebar-width-xl)] px-6">
           <div className="sticky top-16 z-10 flex flex-col gap-8 bg-white pb-4 dark:bg-zinc-900">
             <ButtonHide setIsOpen={setIsOpen} />
             <Title

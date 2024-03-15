@@ -291,7 +291,8 @@ function Files() {
                 <TooltipContent
                   side="right"
                   align="center"
-                  className="max-w-[220px] rounded-md p-4"
+                  className="max-w-[210px] rounded-md p-4"
+                  noIndicator
                 >
                   <div className="mb-2 flex gap-2">
                     <PageIcon type={post.type} />

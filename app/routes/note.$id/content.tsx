@@ -60,7 +60,7 @@ function Wrapper({editor, getEditor}: Props) {
 
 function Topper() {
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-3.5 md:px-0">
+    <div className="mx-auto flex w-full max-w-lg flex-col gap-4 px-3.5 md:px-0">
       <div className="bg-note-background flex h-12 w-12 items-center justify-center rounded-full">
         <PencilLine className="stroke-note h-4 w-4" strokeWidth={2.5} />
       </div>
@@ -82,7 +82,7 @@ function StartWriting({
   editor,
 }: TFocus & Pick<Props, 'editor'>) {
   return (
-    <div className="mx-auto w-full max-w-xl px-3.5 md:px-0">
+    <div className="mx-auto w-full max-w-lg px-3.5 md:px-0">
       <Button
         variant="outline"
         onClick={() => {
@@ -119,7 +119,7 @@ function Content({
   const [title, setTitle] = React.useState<any>(post?.content)
 
   return (
-    <div className="mx-auto mb-4 flex w-full max-w-xl justify-center md:mb-52">
+    <div className="mx-auto mb-4 flex w-full max-w-lg justify-center md:mb-52">
       <div
         className={cn(
           'border-border flex h-fit w-full flex-col gap-4 rounded-xl md:gap-3 md:border-2 md:border-dashed md:bg-white dark:md:bg-zinc-900',
@@ -183,7 +183,7 @@ function Footer({
 
   return (
     <div className="sticky bottom-0 flex flex-col gap-2 rounded-b-xl md:bg-white dark:md:bg-zinc-900">
-      <div className="bg-muted-foreground/30 mx-auto h-[1px] w-[93%]" />
+      <div className="bg-muted-foreground/10 mx-auto h-[1px] w-[93%]" />
       <div className="w-full px-4 pb-2">
         <div className="flex w-full items-center justify-between">
           <Button
@@ -201,16 +201,16 @@ function Footer({
             type="button"
           >
             <div className="flex items-center gap-2">
-              <p className="text-muted-foreground text-xs">Batalkan</p>
+              <p className="text-muted-foreground text-[11px]">Batalkan</p>
               <kbd className="bg-muted text-muted-foreground pointer-events-none hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 md:inline-flex">
-                <span className="text-muted-foreground/90 text-xs font-semibold">
+                <span className="text-muted-foreground/90 text-[9px] font-semibold">
                   Esc
                 </span>
               </kbd>
             </div>
           </Button>
           {editor?.storage.characterCount.characters() > 0 && (
-            <div className="text-muted-foreground hidden text-xs md:block">
+            <div className="text-muted-foreground hidden text-[11px] md:block">
               {editor?.storage.characterCount.characters() +
                 '/' +
                 MAX_CHARACTER_EDITOR +
@@ -238,16 +238,16 @@ function Footer({
             }}
           >
             <div className="flex items-center gap-2">
-              <p className="text-muted-foreground text-xs">Selesai</p>
+              <p className="text-muted-foreground text-[11px]">Selesai</p>
               <div className="hidden gap-1 md:flex">
                 <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
-                  <span className="text-muted-foreground/90 text-base font-semibold">
+                  <span className="text-muted-foreground/90 text-[14px] font-semibold">
                     ⌘
                   </span>
                 </kbd>
-                <p className="text-muted-foreground text-xs">+</p>
+                <p className="text-muted-foreground text-[11px]">+</p>
                 <kbd className="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
-                  <span className="text-muted-foreground/90 text-xs font-semibold">
+                  <span className="text-muted-foreground/90 text-[9px] font-semibold">
                     S
                   </span>
                 </kbd>
