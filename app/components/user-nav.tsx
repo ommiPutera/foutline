@@ -50,7 +50,7 @@ export function UserNav({
         </PopoverTrigger>
       </div>
       <PopoverContent
-        className="-ml-1 mb-3 h-fit w-[233px] px-2 py-1"
+        className="-ml-1 mb-3 h-fit w-[calc(var(--sidebar-width)_-_25px)] px-2 py-1"
         align="start"
         side="top"
         forceMount

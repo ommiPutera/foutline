@@ -40,7 +40,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'no-scrollbar flex min-h-screen flex-col overflow-y-scroll',
+        'no-scrollbar flex h-screen min-h-screen flex-col overflow-y-scroll',
         className,
       )}
     >
@@ -180,8 +180,8 @@ function Favorite() {
                     type="button"
                     className="text-muted-foreground hover:text-foreground ml-5 flex justify-between rounded-md text-xs font-normal"
                   >
-                    {post.title.length > 28
-                      ? `${post.title.substring(0, 28)}..`
+                    {post.title.length > 21
+                      ? `${post.title.substring(0, 21)}..`
                       : post.title}
                   </ButtonLink>
                 </div>
@@ -266,7 +266,7 @@ function Files() {
         <div className="mx-2 py-1 pb-6">
           {!isPostEmpty ? (
             [...columns.values()]?.map((post, i) => (
-              <Tooltip key={`${post}-${i}`}>
+              <Tooltip key={`${post}-${i}`} disableHoverableContent>
                 <TooltipTrigger asChild>
                   <ButtonLink
                     href={`${getPostType(post.type)}/${post.id}`}
@@ -291,12 +291,12 @@ function Files() {
                 <TooltipContent
                   side="right"
                   align="center"
-                  className="max-w-[210px] rounded-md p-4"
+                  className="ml-8 w-full max-w-[210px] rounded-lg border border-zinc-300/50 p-4 shadow-md"
                   noIndicator
                 >
                   <div className="mb-2 flex gap-2">
                     <PageIcon type={post.type} />
-                    <p className="text-xs">{getTypeStr(post.type)}</p>
+                    <p className="text-xs font-bold">{getTypeStr(post.type)}</p>
                   </div>
                   {post.preview ? (
                     <ContentPreview content={post.preview ?? ''} />
@@ -305,11 +305,11 @@ function Files() {
                   )}
                   <div
                     className={cn(
-                      'text absolute bottom-0 left-0 -mt-1 h-full w-full rounded-md bg-gradient-to-t',
+                      'text absolute bottom-0 left-0 -mt-1 ml-8 h-full w-full max-w-[210px] rounded-lg bg-gradient-to-t p-4',
                       post.type === PostType.MONTHLY_PLANNING &&
-                        'from-monthly-background to-monthly-background/30',
+                        'from-monthly-background to-monthly-background/10',
                       post.type === PostType.BASIC_NOTES &&
-                        'from-note-background to-note-background/30',
+                        'from-note-background to-note-background/10',
                     )}
                   ></div>
                 </TooltipContent>
