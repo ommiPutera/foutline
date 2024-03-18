@@ -50,7 +50,8 @@ function Sum({
               incomesValues={incomesValues}
               expensesValues={expensesValues}
             />
-            {Boolean(groupedTaskItems.length) && (
+            {(Boolean(incomesValues?.length) ||
+              Boolean(expensesValues?.length)) && (
               <Title
                 title="Detail"
                 tooltipDesc="Selalu pastikan heading transaksi konsisten"
@@ -59,7 +60,13 @@ function Sum({
             )}
           </div>
           <div className="mt-20">
-            <Detail groupedTaskItems={groupedTaskItems} isPending={!editor} />
+            <Detail
+              groupedTaskItems={groupedTaskItems}
+              isHidden={Boolean(
+                incomesValues?.length || expensesValues?.length,
+              )}
+              isPending={!editor}
+            />
           </div>
         </ScrollArea>
       </div>
@@ -87,9 +94,11 @@ function Summary({
 
 function Detail({
   groupedTaskItems,
+  isHidden,
   isPending,
 }: {
   groupedTaskItems: any
+  isHidden: boolean
   isPending: boolean
 }) {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -105,7 +114,7 @@ function Detail({
       </div>
     )
 
-  if (!groupedTaskItems.length) return <></>
+  if (!isHidden) return <></>
   return (
     <div className="relative pb-24">
       <div

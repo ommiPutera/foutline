@@ -86,12 +86,11 @@ function StartWriting({
   return (
     <div className="mx-auto w-full max-w-lg px-3.5 md:px-0">
       <Button
-        variant="outline"
+        variant="secondary"
         onClick={() => {
           editor?.chain().focus().run()
           setIsFocus(true)
         }}
-        disabled={isFocus}
         type="button"
         className="text-muted-foreground w-full justify-start rounded-xl py-6 font-normal dark:bg-zinc-900 dark:hover:bg-zinc-800"
       >
@@ -99,9 +98,21 @@ function StartWriting({
           <PencilLine className="mr-2 h-3.5 w-3.5" />
         </span>
         <span className="line-clamp-1">
-          {isFocus
-            ? "Tekan '/' untuk perintah.."
-            : 'Mulai mencatat atau perbarui catatan keuangan bulanan..'}
+          {isFocus ? (
+            <div className="flex items-center gap-2">
+              <p className="text-muted-foreground text-sm">
+                Ketik apapun atau tekan{' '}
+              </p>
+              <kbd className="bg-muted text-muted-foreground pointer-events-none hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 md:inline-flex">
+                <span className="text-muted-foreground/90 text-[11px] font-semibold">
+                  /
+                </span>
+              </kbd>
+              <p className="text-muted-foreground text-sm"> untuk perintah..</p>
+            </div>
+          ) : (
+            'Mulai mencatat atau perbarui catatan keuangan bulanan..'
+          )}
         </span>
       </Button>
     </div>

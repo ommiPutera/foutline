@@ -1,11 +1,11 @@
-import {useLoaderData, useSubmit} from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 
-import {type Post} from '@prisma/client'
+import { type Post } from '@prisma/client'
 
-import {FormType, type LoaderData} from './route.tsx'
+import { FormType, type LoaderData } from './route.tsx'
 import CardItem from './card.tsx'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import RemoveAllInTrash from '~/components/templates/alerts/remove-all-in-trash.tsx'
 import React from 'react'
 
@@ -18,7 +18,7 @@ function Board() {
 }
 
 function Cards() {
-  const {posts} = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<LoaderData>()
   const [items, setItems] = React.useState<Post[] | []>([...(posts as any)])
 
   const submit = useSubmit()
@@ -30,7 +30,7 @@ function Cards() {
         <h4 className="text-xl font-bold">Sampah</h4>
         <RemoveAllInTrash
           cbAction={() => {
-            let allId = items.map(({id}) => id)
+            let allId = items.map(({ id }) => id)
             setItems([])
             submit(
               {
@@ -46,7 +46,7 @@ function Cards() {
           }}
         >
           <Button
-            variant="secondary"
+            variant="outline"
             size="sm"
             className="w-fit justify-start rounded-md px-3"
           >
@@ -76,4 +76,4 @@ function NoCards() {
   )
 }
 
-export {Board}
+export { Board }
