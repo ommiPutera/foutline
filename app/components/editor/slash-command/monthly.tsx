@@ -37,9 +37,9 @@ const getSuggestionItems = ({query}: {query: string}) => {
       },
     },
     {
-      title: 'Text',
+      title: 'Tanggal',
       icon: {
-        iconName: 'Text',
+        iconName: 'Calendar',
         color: 'default',
       },
       command: ({editor, range}: Command) => {
@@ -48,13 +48,16 @@ const getSuggestionItems = ({query}: {query: string}) => {
           .focus()
           .deleteRange(range)
           .toggleNode('paragraph', 'paragraph')
+          .toggleItalic()
+          .insertContent('--- Tanggal: ')
+          .updateAttributes('paragraph', {for: 'date-str'})
           .run()
       },
     },
     {
-      title: 'Heading',
+      title: 'Sub judul',
       icon: {
-        iconName: 'Heading',
+        iconName: 'Heading3',
         color: 'default',
       },
       command: ({editor, range}: Command) => {

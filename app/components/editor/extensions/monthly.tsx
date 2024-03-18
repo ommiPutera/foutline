@@ -18,6 +18,7 @@ import CustomKeymap from './custom-keymap.ts'
 import GetSelectedText from './selected-text.ts'
 
 import {MAX_CHARACTER_EDITOR} from '~/config.ts'
+import Paragraph from '@tiptap/extension-paragraph'
 
 interface PositionState {
   postion: number
@@ -36,38 +37,9 @@ export const MonthlyExtensions = [
         class: 'font-medium',
       },
     },
-    bulletList: {
-      HTMLAttributes: {
-        class: 'list-disc list-outside ml-6 text-sm leading-3',
-      },
-    },
-    orderedList: {
-      HTMLAttributes: {
-        class: 'list-decimal list-outside ml-6 text-sm leading-3',
-      },
-    },
-    listItem: {
-      HTMLAttributes: {
-        class: 'leading-normal',
-      },
-    },
-    blockquote: {
-      HTMLAttributes: {
-        class: 'border-l-4 border-gray-100 dark:border-gray-800',
-      },
-    },
-    codeBlock: {
-      HTMLAttributes: {
-        class:
-          'rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800',
-      },
-    },
-    horizontalRule: false,
-    dropcursor: {
-      color: '#DBEAFE',
-      width: 4,
-    },
-    gapcursor: false,
+    bulletList: false,
+    orderedList: false,
+    listItem: false,
   }),
   HorizontalRule.extend({
     addInputRules() {
@@ -105,6 +77,19 @@ export const MonthlyExtensions = [
   }),
   CharacterCount.configure({
     limit: MAX_CHARACTER_EDITOR,
+  }),
+  Paragraph.extend({
+    addAttributes() {
+      return {
+        for: {
+          default: '',
+          keepOnSplit: false,
+          renderHTML: attributes => ({
+            'data-for': attributes.for,
+          }),
+        },
+      }
+    },
   }),
   TaskList.extend({
     addInputRules() {
@@ -162,7 +147,12 @@ export const MonthlyExtensions = [
           const isTaskItem = this.editor.getAttributes('taskItem')?.for
 
           if (isTaskItem) {
-            return this.editor.chain().splitBlock().exitCode().run()
+            return this.editor
+              .chain()
+              .splitBlock()
+              .toggleTaskList()
+              .exitCode()
+              .run()
           }
         },
         Backspace: () => {
@@ -273,7 +263,7 @@ export const MonthlyExtensions = [
     HTMLAttributes: {
       class: 'flex items-start',
     },
-    nested: true,
+    nested: false,
   }),
   MonthlySlashCommand,
   TiptapUnderline,
