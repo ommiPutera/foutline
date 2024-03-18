@@ -1,2 +1,3 @@
 export const MAX_LENGTH_PREVIEW = 180
-export const MAX_CHARACTER_EDITOR = 1299
+export const MAX_CHARACTER_EDITOR = 8299
+// export const MAX_CHARACTER_EDITOR = 1299
