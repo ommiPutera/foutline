@@ -16,6 +16,11 @@ function Hero() {
 
   return (
     <div className="px-5vw mx-auto max-w-screen-xl py-4 md:pb-44 md:pt-16">
+      content
+    </div>
+  )
+  return (
+    <div className="px-5vw mx-auto max-w-screen-xl py-4 md:pb-44 md:pt-16">
       <div className="mx-auto flex flex-col items-center gap-12 text-center md:gap-14">
         <div className="flex flex-col items-center gap-3">
           <h2 className="max-w-xl text-4xl font-semibold md:max-w-4xl md:text-5xl md:leading-none">
