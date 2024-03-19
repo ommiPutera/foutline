@@ -13,7 +13,7 @@ module.exports = {
       padding: '2rem',
       screens: {
         md: '425px',
-        lg: '1024px',
+        lg: '1064px',
         xl: '1440px', // this is the "design resolution"
       },
       borderRadius: {

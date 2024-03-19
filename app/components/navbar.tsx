@@ -21,7 +21,7 @@ function Navbar() {
   if (isAuthenticated) return <></>
   return (
     <div className="use-matter bg-background">
-      <div className="mx-auto flex h-20 max-w-screen-xl items-center md:h-24">
+      <div className="mx-auto inset-x-0 flex h-20 max-w-screen-xl items-center md:h-28 backdrop-blur-md fixed bg-background/60 w-full z-[99999] top-0">
         <nav className="px-5vw flex w-full items-center">
           <div className="flex flex-1 place-content-start items-center gap-6">
             <Link to="/" prefetch="intent">
@@ -35,11 +35,11 @@ function Navbar() {
           <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
             <ButtonLink
               to="/login"
-              variant="transparent"
+              variant="ghost"
               size="lg"
-              className="font-normal"
+              className="rounded-full"
             >
-              Login
+              <span className='mb-1 font-normal'>Masuk</span>
             </ButtonLink>
           </div>
           <MobileNav />

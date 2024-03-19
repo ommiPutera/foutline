@@ -1,17 +1,17 @@
-import {Button, ButtonLink} from '../ui/button.tsx'
+import { Button, ButtonLink } from '../ui/button.tsx'
 
 function Hero() {
   return (
-    <div className="px-5vw mx-auto flex max-w-screen-xl flex-col gap-2 py-4 md:flex-row md:gap-8 md:pb-32 md:pt-12">
-      <div className="mt-16 w-full max-w-[440px]">
+    <div className="px-5vw mx-auto flex max-w-screen-xl flex-col gap-2 py-4 md:flex-row md:gap-8 md:py-32">
+      <div className="mt-16 w-full">
         <div className="flex flex-col gap-6">
           <div className="cursor-none">
             <Button variant="outline" size="sm" className="rounded-full">
               Ready to be more productive? 👀
             </Button>
           </div>
-          <h2 className="max-w-xl text-5xl font-normal tracking-tight md:max-w-lg md:text-5xl">
-            Personal financial management and tracker.
+          <h2 className="max-w-xl text-5xl font-normal tracking-tight md:text-6xl w-full">
+            Personal financial management tool and tracker.
           </h2>
           <p className="text-base font-light text-black/70 dark:text-white/70 md:max-w-xs md:font-light">
             Solusi manajamen keuangan yang berbasis{' '}
@@ -20,13 +20,13 @@ function Hero() {
           </p>
           <div className="mt-4">
             <ButtonLink className="rounded-full" to="/login">
-              Mulai coba
+              Mulai coba gratis
             </ButtonLink>
           </div>
         </div>
       </div>
       <div className="relative w-full">
-        <div className="absolute left-0 top-0 hidden w-[900px] rounded-xl border px-1 shadow-xl md:block">
+        <div className="absolute left-0 top-0 hidden w-[880px] rounded-xl border px-1 shadow-2xl shadow-monthly-background md:block">
           <img
             src="/hero.png"
             alt=""
