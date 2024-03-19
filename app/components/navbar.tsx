@@ -28,10 +28,10 @@ function Navbar() {
               <Logo />
             </Link>
           </div>
-          <div>
+          {/* <div>
             <button onClick={() => setTheme(Theme.LIGHT)}>light</button>
             <button onClick={() => setTheme(Theme.DARK)}>dark</button>
-          </div>
+          </div> */}
           <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
             <ButtonLink
               to="/login"
