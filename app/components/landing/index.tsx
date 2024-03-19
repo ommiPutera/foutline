@@ -2,7 +2,7 @@ import Hero from './hero.tsx'
 
 function Landing() {
   return (
-    <div className="use-matter">
+    <div className="use-matter overflow-hidden">
       <Hero />
     </div>
   )
