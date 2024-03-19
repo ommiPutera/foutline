@@ -64,7 +64,7 @@ ul[data-type='taskList'] li > label input[type='checkbox'] {
     border-right: 1px solid #fff;
     visibility: hidden;
     @apply mb-[1px] flex h-[7.5px] w-[4px] items-center justify-center;
-    @apply border-b-2 border-r-2 border-white dark:border-zinc-950;
+    @apply border-background border-b-2 border-r-2;
   }
 
   &:checked::before {

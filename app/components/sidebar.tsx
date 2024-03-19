@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {PostType} from '@prisma/client'
 import type {Post} from '@prisma/client'
+import {PostType} from '@prisma/client'
 
-import {type LinkProps, useFetchers, useLocation, Link} from '@remix-run/react'
+import {Link, useFetchers, useLocation, type LinkProps} from '@remix-run/react'
 
 import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
 
@@ -18,21 +18,20 @@ import {Badge} from '~/components/ui/badge.tsx'
 import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {Progress} from '~/components/ui/progress.tsx'
 import {ScrollArea} from '~/components/ui/scroll-area.tsx'
-import {UserNav} from '~/components/user-nav.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
+import {UserNav} from '~/components/user-nav.tsx'
 
 import {cn} from '~/lib/utils.ts'
 
 import {getPostType} from '~/utils/get-post-type.ts'
 import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {getTypeStr} from '~/utils/misc.tsx'
 
+import {ContentPreview} from '~/routes/home/card.tsx'
 import {FormType} from '~/routes/home/route.tsx'
-import {ContentPreview, PageIcon} from '~/routes/home/card.tsx'
 
 export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
   const {profile} = useRootLoader()
@@ -282,8 +281,8 @@ function Files() {
                   >
                     <FileText className="mr-2 h-3.5 w-3.5" />
                     <p className="whitespace-nowrap text-xs">
-                      {post.title.length > 23
-                        ? `${post.title.substring(0, 23)}..`
+                      {post.title.length > 20
+                        ? `${post.title.substring(0, 20)}..`
                         : post.title}
                     </p>
                   </ButtonLink>
@@ -291,13 +290,9 @@ function Files() {
                 <TooltipContent
                   side="right"
                   align="center"
-                  className="ml-8 w-full max-w-[180px] rounded-lg border border-zinc-300/50 p-4 shadow-md"
+                  className="ml-8 w-full max-w-[198px] rounded-lg border border-zinc-300/50 p-4 shadow-md"
                   noIndicator
                 >
-                  <div className="mb-2 flex gap-2">
-                    <PageIcon type={post.type} />
-                    <p className="text-xs font-bold">{getTypeStr(post.type)}</p>
-                  </div>
                   {post.preview ? (
                     <ContentPreview content={post.preview ?? ''} />
                   ) : (
@@ -305,7 +300,7 @@ function Files() {
                   )}
                   <div
                     className={cn(
-                      'text absolute bottom-0 left-0 -mt-1 ml-8 h-full w-full max-w-[180px] rounded-lg bg-gradient-to-t p-4',
+                      'text absolute bottom-0 left-0 -mt-1 ml-8 h-full w-full max-w-[198px] rounded-lg bg-gradient-to-t p-4',
                       post.type === PostType.MONTHLY_PLANNING &&
                         'from-monthly-background to-monthly-background/10',
                       post.type === PostType.BASIC_NOTES &&
