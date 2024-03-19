@@ -1,19 +1,21 @@
-import {Link} from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import React from 'react'
-import {BurgerMenu} from '~/utils/icons.tsx'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
-import {getLogo} from './outline-logo.tsx'
+import { BurgerMenu } from '~/utils/icons.tsx'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
+import { getLogo } from './outline-logo.tsx'
 
-import {ButtonLink} from '~/components/ui/button.tsx'
+import { ButtonLink } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverPortal,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
+import { Theme, useTheme } from '~/utils/theme-provider.tsx'
 
 function Navbar() {
-  const {isAuthenticated} = useRootLoader()
+  const { isAuthenticated } = useRootLoader()
+  const [, setTheme] = useTheme()
   const Logo = getLogo()
 
   if (isAuthenticated) return <></>
@@ -25,6 +27,10 @@ function Navbar() {
             <Link to="/" prefetch="intent">
               <Logo />
             </Link>
+          </div>
+          <div>
+            <button onClick={() => setTheme(Theme.LIGHT)}>light</button>
+            <button onClick={() => setTheme(Theme.DARK)}>dark</button>
           </div>
           <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
             <ButtonLink
@@ -57,7 +63,7 @@ function MobileNav() {
   )
 }
 
-function MobileMenuList({isOpen}: {isOpen: boolean}) {
+function MobileMenuList({ isOpen }: { isOpen: boolean }) {
   React.useEffect(() => {
     if (isOpen) {
       document.body.classList.add('fixed')
