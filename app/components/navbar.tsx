@@ -28,11 +28,11 @@ function Navbar() {
               <Logo />
             </Link>
           </div>
-          <div>
+          {/* <div>
             <button onClick={() => setTheme(Theme.LIGHT)}>light</button>
             <button onClick={() => setTheme(Theme.DARK)}>dark</button>
-          </div>
-          {/* <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
+          </div> */}
+          <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
             <ButtonLink
               to="/login"
               variant="ghost"
@@ -41,7 +41,7 @@ function Navbar() {
             >
               <span className='mb-1 font-normal'>Masuk</span>
             </ButtonLink>
-          </div> */}
+          </div>
           <MobileNav />
         </nav>
       </div>
