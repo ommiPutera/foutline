@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {create} from 'zustand'
+import { create } from 'zustand'
 
-import {formatDistance} from 'date-fns'
-import {id as IDNLocale} from 'date-fns/locale'
+import { formatDistance } from 'date-fns'
+import { id as IDNLocale } from 'date-fns/locale'
 
 import {
   Card,
@@ -14,11 +14,11 @@ import {
 } from '~/components/ui/card.tsx'
 import PageIcon from '~/components/page-icon.tsx'
 
-import {PostStatus, type Post, PostType} from '@prisma/client'
+import { PostStatus, type Post, PostType } from '@prisma/client'
 
-import {useFetcher, useLocation} from '@remix-run/react'
+import { useFetcher, useLocation } from '@remix-run/react'
 
-import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
+import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
 
 import More from './more.tsx'
 
@@ -29,12 +29,12 @@ interface CardState {
 
 const useCardStore = create<CardState>(set => ({
   idCardFocus: '',
-  setIdCardFocus: id => set(() => ({idCardFocus: id})),
+  setIdCardFocus: id => set(() => ({ idCardFocus: id })),
 }))
 
 function CardItem(post: Post) {
-  const {id, preview, title, updatedAt, type, status} = post
-  const {idCardFocus, setIdCardFocus} = useCardStore()
+  const { id, preview, title, updatedAt, type, status } = post
+  const { idCardFocus, setIdCardFocus } = useCardStore()
 
   const [isRestore, setIsRestore] = React.useState(false)
 
@@ -57,7 +57,7 @@ function CardItem(post: Post) {
     <Card
       key={id}
       className={cn(
-        'hover:border-muted-foreground/60 col-span-1 h-fit cursor-pointer overflow-hidden border-[1.5px]',
+        'hover:border-muted-foreground/60 col-span-1 flex flex-col justify-between cursor-pointer overflow-hidden border-[1.5px] h-[210px] max-w-[400px]',
         idCardFocus === id && 'border-muted-foreground/60',
       )}
     >
@@ -85,19 +85,23 @@ function CardItem(post: Post) {
       </CardHeader>
       <CardContent
         className={cn(
-          'relative pb-2',
+          'relative pb-2 h-full',
           type === PostType.MONTHLY_PLANNING && 'bg-monthly-background',
           type === PostType.BASIC_NOTES && 'bg-note-background',
         )}
       >
-        <ContentPreview content={preview ?? ''} />
+        {preview ? (
+          <ContentPreview content={preview ?? ''} />
+        ) : (
+          <p className="text-sm italic">Kosong..</p>
+        )}
         <div
           className={cn(
             'text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t',
             type === PostType.MONTHLY_PLANNING &&
-              'from-monthly-background to-monthly-background/40',
+            'from-monthly-background to-monthly-background/40',
             type === PostType.BASIC_NOTES &&
-              'from-note-background to-note-background/40',
+            'from-note-background to-note-background/40',
           )}
         ></div>
       </CardContent>
@@ -110,7 +114,7 @@ function CardItem(post: Post) {
       >
         <div className="flex flex-1 flex-col justify-end gap-1.5">
           <CardBadge status={status} type={type} />
-          <div className="text-muted-foreground line-clamp-2 text-[9px]">
+          <div className="text-muted-foreground line-clamp-2 text-[9px] md:text-[10px]">
             {capitalizeFirstLetter(
               formatDistance(new Date(updatedAt), new Date(), {
                 addSuffix: true,
@@ -133,15 +137,15 @@ function CardItem(post: Post) {
   )
 }
 
-function ContentPreview({content}: {content: string | JSX.Element}) {
+function ContentPreview({ content }: { content: string | JSX.Element }) {
   return (
-    <div className="text-[11.5px leading-4 text-black dark:text-white md:text-[13px] md:leading-5">
+    <div className="text-[11.5px] leading-4 text-black dark:text-white md:leading-4">
       {content}
     </div>
   )
 }
 
-function CardBadge({status, type}: Pick<Post, 'status' | 'type'>) {
+function CardBadge({ status, type }: Pick<Post, 'status' | 'type'>) {
   const getStatusStr = () => {
     switch (status) {
       case 'NOT_STARTED':
@@ -160,9 +164,9 @@ function CardBadge({status, type}: Pick<Post, 'status' | 'type'>) {
         'text-foreground line-clamp-1 w-fit rounded-sm px-1.5 py-[3.5px] text-[10px] leading-none',
         status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
         status === PostStatus.NOT_STARTED &&
-          'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
+        'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
         status === PostStatus.UNDERWAY &&
-          'bg-blue-500/30 hover:!bg-blue-500/20',
+        'bg-blue-500/30 hover:!bg-blue-500/20',
       )}
     >
       {getStatusStr()}
@@ -171,4 +175,4 @@ function CardBadge({status, type}: Pick<Post, 'status' | 'type'>) {
 }
 
 export default CardItem
-export {PageIcon, useCardStore}
+export { PageIcon, useCardStore }

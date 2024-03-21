@@ -150,7 +150,7 @@ function CardItem(post: Post) {
 
 function ContentPreview({ content }: { content: string | JSX.Element }) {
   return (
-    <div className="text-[11.5px] leading-4 text-black dark:text-white md:text-[11px] md:leading-4">
+    <div className="text-[11.5px] leading-4 text-black dark:text-white md:leading-4">
       {content}
     </div>
   )
