@@ -4,7 +4,7 @@ import { BurgerMenu } from '~/utils/icons.tsx'
 import { useRootLoader } from '~/utils/use-root-loader.tsx'
 import { getLogo } from './outline-logo.tsx'
 
-import { ButtonLink } from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
@@ -28,10 +28,11 @@ function Navbar() {
               <Logo />
             </Link>
           </div>
-          {/* <div>
-            <button onClick={() => setTheme(Theme.LIGHT)}>light</button>
-            <button onClick={() => setTheme(Theme.DARK)}>dark</button>
-          </div> */}
+          <div>
+            <Button onClick={() => setTheme(Theme.LIGHT)} variant="transparent" className='rounded-full' size="lg">Tentang</Button>
+            <Button onClick={() => setTheme(Theme.LIGHT)} variant="transparent" className='rounded-full' size="lg">Fitur</Button>
+            <Button onClick={() => setTheme(Theme.DARK)} variant="transparent" className='rounded-full' size="lg">Pricing</Button>
+          </div>
           <div className="hidden flex-1 place-content-end items-center gap-3 md:flex">
             <ButtonLink
               to="/login"
@@ -39,7 +40,14 @@ function Navbar() {
               size="lg"
               className="rounded-full"
             >
-              <span className='mb-1 font-normal'>Masuk</span>
+              <span>Masuk</span>
+            </ButtonLink>
+            <ButtonLink
+              to="/register"
+              size="lg"
+              variant="primary"
+            >
+              <span>Daftar</span>
             </ButtonLink>
           </div>
           <MobileNav />

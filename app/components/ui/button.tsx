@@ -7,12 +7,13 @@ import { AnchorOrLink } from '~/utils/misc.tsx'
 const variants = {
   default:
     'bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:bg-primary/90',
+  primary: "bg-blue-500 hover:bg-blue-400 text-white !rounded-full",
   destructive:
     'bg-destructive text-destructive-foreground hover:bg-destructive/90',
   outline: 'border border-input hover:bg-zinc-800 hover:text-accent-foreground',
   secondary:
     'bg-secondary dark:bg-zinc-800 text-secondary-foreground hover:bg-secondary/80',
-  ghost: 'hover:bg-secondary hover:dark:bg-zinc-800 focus-visible:bg-zinc-800',
+  ghost: 'hover:bg-secondary hover:dark:bg-zinc-800 focus-visible:bg-secondary',
   transparent:
     'bg-none focus-visible:bg-none hover:[&:has(svg)]:before:bg-gray-100/10',
   link: 'text-primary underline-offset-4 hover:underline',
@@ -27,7 +28,7 @@ const sizes = {
 }
 
 const buttonVariants = cva(
-  'relative inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50',
+  'relative inline-flex items-center justify-center whitespace-nowrap font-normal tracking-tight ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: { ...variants },
