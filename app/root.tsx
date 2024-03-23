@@ -122,7 +122,7 @@ function PageLoadingMessage() {
   const navigation = useNavigation()
   const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
     delay: 500,
-    minDuration: 400,
+    minDuration: 800,
   })
 
   const [progress, setProgress] = React.useState(0)

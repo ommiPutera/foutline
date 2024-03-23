@@ -1,8 +1,8 @@
-import {Outlet, useLocation} from '@remix-run/react'
+import { Outlet, useLocation } from '@remix-run/react'
 
-import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
-import {ErrorPage} from '~/components/errors.tsx'
-import {NavItem} from '~/components/sidebar.tsx'
+import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
+import { ErrorPage } from '~/components/errors.tsx'
+import { NavItem } from '~/components/sidebar.tsx'
 
 function Settings() {
   return (
@@ -20,7 +20,7 @@ function Settings() {
             />
             <NavItem
               iconName="Infinity"
-              title="Tagihan - Go Unlimited"
+              title="Tagihan"
               href="/settings/billing"
             />
             <NavItem
