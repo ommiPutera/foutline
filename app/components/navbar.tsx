@@ -21,7 +21,7 @@ function Navbar() {
   if (isAuthenticated) return <></>
   return (
     <div className="use-matter bg-background">
-      <div className="mx-auto inset-x-0 flex h-20 max-w-screen-xl items-center md:h-28 w-full z-[99999]">
+      <div className="mx-auto inset-x-0 flex h-20 max-w-screen-3xl items-center md:h-28 w-full z-[99999]">
         <nav className="px-5vw flex w-full items-center">
           <div className="flex flex-1 place-content-start items-center gap-6">
             <Link to="/" prefetch="intent">
