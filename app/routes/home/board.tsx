@@ -24,39 +24,39 @@ function Cards() {
   const { posts, favorites } = useLoaderData<LoaderData>()
 
   return (
-    <div className='flex flex-col gap-14 mt-1'>
-      <div className='flex flex-col gap-4'>
-        <h4 className='text-sm font-bold ml-4'>Favorit</h4>
-        <Suspense fallback={<SkeletonCard />}>
-          <Await resolve={favorites as unknown as Post[]}>
-            {favorites => (
-              <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-                {favorites.map(post => (
-                  <div key={post.id}>
-                    <CardItem {...(post as any as Post)} />
-                  </div>
-                ))}
+    <div className='flex flex-col mt-1'>
+      <Suspense fallback={<SkeletonCard />}>
+        <Await resolve={favorites as unknown as Post[]}>
+          {favorites => favorites.length ? (
+            <>
+              <div className='flex flex-col gap-4'>
+                <h4 className='text-sm font-bold ml-4'>Favorit</h4>
+                <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+                  {favorites.map(post => (
+                    <div key={post.id}>
+                      <CardItem {...(post as any as Post)} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            )}
-          </Await>
-        </Suspense>
-      </div>
-      <div className='flex flex-col gap-4'>
-        <h4 className='text-sm font-bold ml-4'>Lainnya</h4>
-        <Suspense fallback={<SkeletonCard />}>
-          <Await resolve={posts as unknown as Post[]}>
-            {posts => (
-              <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-                {posts.map(post => (
-                  <div key={post.id}>
-                    <CardItem {...(post as any as Post)} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </Await>
-        </Suspense>
-      </div>
+              <h4 className='text-sm font-bold ml-4 mt-14 mb-4'>Lainnya</h4>
+            </>
+          ) : null}
+        </Await>
+      </Suspense>
+      <Suspense fallback={<SkeletonCard />}>
+        <Await resolve={posts as unknown as Post[]}>
+          {posts => posts.length ? (
+            <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+              {posts.map(post => (
+                <div key={post.id}>
+                  <CardItem {...(post as any as Post)} />
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </Await>
+      </Suspense>
     </div>
   )
 }
