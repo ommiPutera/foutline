@@ -5,15 +5,18 @@ export async function getHomeData({
   userId,
   order,
   orderField,
+  isFavorite
 }: {
   userId: string
   order: string
-  orderField: string
+    orderField: string
+  isFavorite: boolean
 }) {
   return prisma.post.findMany({
     where: {
       authorId: userId,
       deletedAt: null,
+      isFavorite: isFavorite
     },
     orderBy: {updatedAt: 'desc'},
   })
