@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { cssBundleHref } from '@remix-run/css-bundle'
+import {cssBundleHref} from '@remix-run/css-bundle'
 import {
   json,
   type LoaderFunctionArgs,
@@ -19,28 +19,28 @@ import {
   useNavigation,
 } from '@remix-run/react'
 
-import { useSpinDelay } from 'spin-delay'
+import {useSpinDelay} from 'spin-delay'
 
-import NProgress from "nprogress"
-import nProgressStyles from "nprogress/nprogress.css";
+import NProgress from 'nprogress'
+import nProgressStyles from 'nprogress/nprogress.css'
 
 import AppShell from '~/components/app-shell.tsx'
 import Navbar from '~/components/navbar.tsx'
-import { TooltipProvider } from '~/components/ui/tooltip.tsx'
+import {TooltipProvider} from '~/components/ui/tooltip.tsx'
 
 import prosemirrorStyles from '~/styles/prosemirror.css'
 import globalStyles from '~/styles/globals.css'
 
-import { getKindeSession, getUser } from '~/utils/session.server.ts'
-import { ThemeProvider, useTheme } from '~/utils/theme-provider.tsx'
-import { getThemeSession } from '~/utils/theme.server.ts'
+import {getKindeSession, getUser} from '~/utils/session.server.ts'
+import {ThemeProvider, useTheme} from '~/utils/theme-provider.tsx'
+import {getThemeSession} from '~/utils/theme.server.ts'
 
 export type LoaderData = SerializeFrom<typeof loader>
-export const handle: { id: string } = {
+export const handle: {id: string} = {
   id: 'root',
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({request}: LoaderFunctionArgs) {
   const [themeSession, kindeSession, userFromSession] = await Promise.all([
     getThemeSession(request),
     getKindeSession(request),
@@ -58,13 +58,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     },
   }
   const headers: HeadersInit = new Headers()
-  return json(data, { headers })
+  return json(data, {headers})
 }
 
 export const meta: MetaFunction = () => {
   return [
-    { viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' },
-    { title: 'Foutline | Catatan keuangan Anda' },
+    {viewport: 'width=device-width,initial-scale=1,viewport-fit=cover'},
+    {title: 'Foutline | Catatan keuangan Anda'},
   ]
 }
 
@@ -112,16 +112,16 @@ export const links: LinksFunction = () => [
     color: '#ffffff',
     href: '/safari-pinned-tab.svg',
   },
-  { rel: 'icon', href: '/favicon.ico' },
-  { rel: 'manifest', href: '/site.webmanifest' },
-  { rel: 'stylesheet', href: globalStyles },
-  { rel: 'stylesheet', href: prosemirrorStyles },
-  { rel: 'stylesheet', href: nProgressStyles },
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+  {rel: 'icon', href: '/favicon.ico'},
+  {rel: 'manifest', href: '/site.webmanifest'},
+  {rel: 'stylesheet', href: globalStyles},
+  {rel: 'stylesheet', href: prosemirrorStyles},
+  {rel: 'stylesheet', href: nProgressStyles},
+  ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
 ]
 
 export default function AppWithProviders() {
-  const { requestInfo } = useLoaderData<LoaderData>()
+  const {requestInfo} = useLoaderData<LoaderData>()
   return (
     <ThemeProvider specifiedTheme={requestInfo?.session.theme}>
       <TooltipProvider delayDuration={100}>

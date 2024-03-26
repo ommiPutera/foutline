@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { create } from 'zustand'
+import {create} from 'zustand'
 
-import { formatDistance } from 'date-fns'
-import { id as IDNLocale } from 'date-fns/locale'
+import {formatDistance} from 'date-fns'
+import {id as IDNLocale} from 'date-fns/locale'
 
 import {
   Card,
@@ -14,12 +14,12 @@ import {
 } from '~/components/ui/card.tsx'
 import PageIcon from '~/components/page-icon.tsx'
 
-import { PostStatus, type Post, PostType } from '@prisma/client'
-import { Link, useFetcher, useLocation } from '@remix-run/react'
+import {PostStatus, type Post, PostType} from '@prisma/client'
+import {Link, useFetcher, useLocation} from '@remix-run/react'
 
-import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
+import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
 
-import { getPostType } from '~/utils/get-post-type.ts'
+import {getPostType} from '~/utils/get-post-type.ts'
 
 import Favorite from './favorite.tsx'
 import More from './more.tsx'
@@ -31,12 +31,12 @@ interface CardState {
 
 const useCardStore = create<CardState>(set => ({
   idCardFocus: '',
-  setIdCardFocus: id => set(() => ({ idCardFocus: id })),
+  setIdCardFocus: id => set(() => ({idCardFocus: id})),
 }))
 
 function CardItem(post: Post) {
-  const { id, preview, title, updatedAt, type, status } = post
-  const { idCardFocus, setIdCardFocus } = useCardStore()
+  const {id, preview, title, updatedAt, type, status} = post
+  const {idCardFocus, setIdCardFocus} = useCardStore()
 
   const [isDeleting, setIsDeleting] = React.useState(false)
 
@@ -59,14 +59,11 @@ function CardItem(post: Post) {
   }, [deleteFetcher])
 
   return isDeleting ? null : (
-    <Link
-      to={`/${getPostType(type)}/${id}`}
-      prefetch="intent"
-    >
+    <Link to={`/${getPostType(type)}/${id}`} prefetch="intent">
       <Card
         key={id}
         className={cn(
-          'hover:border-muted-foreground/60 col-span-1 flex flex-col justify-between cursor-pointer overflow-hidden border-[1.5px] h-[210px] max-w-[400px]',
+          'hover:border-muted-foreground/60 col-span-1 flex h-[210px] max-w-[400px] cursor-pointer flex-col justify-between overflow-hidden border-[1.5px]',
           idCardFocus === id && 'border-muted-foreground/60',
         )}
       >
@@ -94,7 +91,7 @@ function CardItem(post: Post) {
         </CardHeader>
         <CardContent
           className={cn(
-            'relative pb-2 h-full',
+            'relative h-full pb-2',
             type === PostType.MONTHLY_PLANNING && 'bg-monthly-background',
             type === PostType.BASIC_NOTES && 'bg-note-background',
           )}
@@ -108,9 +105,9 @@ function CardItem(post: Post) {
             className={cn(
               'text absolute bottom-0 left-0 -mt-1 h-full w-full bg-gradient-to-t',
               type === PostType.MONTHLY_PLANNING &&
-              'from-monthly-background to-monthly-background/40',
+                'from-monthly-background to-monthly-background/40',
               type === PostType.BASIC_NOTES &&
-              'from-note-background to-note-background/40',
+                'from-note-background to-note-background/40',
             )}
           ></div>
         </CardContent>
@@ -148,7 +145,7 @@ function CardItem(post: Post) {
   )
 }
 
-function ContentPreview({ content }: { content: string | JSX.Element }) {
+function ContentPreview({content}: {content: string | JSX.Element}) {
   return (
     <div className="text-[11.5px] leading-4 text-black dark:text-white md:leading-4">
       {content}
@@ -156,7 +153,7 @@ function ContentPreview({ content }: { content: string | JSX.Element }) {
   )
 }
 
-function CardBadge({ status, type }: Pick<Post, 'status' | 'type'>) {
+function CardBadge({status, type}: Pick<Post, 'status' | 'type'>) {
   const getStatusStr = () => {
     switch (status) {
       case 'NOT_STARTED':
@@ -175,9 +172,9 @@ function CardBadge({ status, type }: Pick<Post, 'status' | 'type'>) {
         'text-foreground line-clamp-1 w-fit rounded-sm px-1.5 py-[3.5px] text-[9px] leading-none md:text-[10px]',
         status === PostStatus.COMPLETED && 'bg-ring/30 hover:!bg-ring/20',
         status === PostStatus.NOT_STARTED &&
-        'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
+          'bg-muted-foreground/20 hover:!bg-muted-foreground/10',
         status === PostStatus.UNDERWAY &&
-        'bg-blue-500/30 hover:!bg-blue-500/20',
+          'bg-blue-500/30 hover:!bg-blue-500/20',
       )}
     >
       {getStatusStr()}
@@ -186,4 +183,4 @@ function CardBadge({ status, type }: Pick<Post, 'status' | 'type'>) {
 }
 
 export default CardItem
-export { PageIcon, useCardStore, ContentPreview }
+export {PageIcon, useCardStore, ContentPreview}

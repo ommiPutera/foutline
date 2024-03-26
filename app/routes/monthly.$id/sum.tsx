@@ -2,15 +2,15 @@ import React from 'react'
 
 import _ from 'lodash'
 
-import { type Props as EditorProps } from './content.tsx'
+import {type Props as EditorProps} from './content.tsx'
 
-import { rupiah } from '~/utils/currency.ts'
+import {rupiah} from '~/utils/currency.ts'
 
-import { ButtonHide, Title } from './right-sheet.tsx'
-import { Skeleton } from '~/components/ui/skeleton.tsx'
-import { Button } from '~/components/ui/button.tsx'
-import { ScrollArea } from '~/components/ui/scroll-area.tsx'
-import { Separator } from '~/components/ui/separator.tsx'
+import {ButtonHide, Title} from './right-sheet.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
+import {Button} from '~/components/ui/button.tsx'
+import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import {Separator} from '~/components/ui/separator.tsx'
 
 type Props = {
   isOpen: boolean
@@ -39,7 +39,7 @@ function Sum({
         className="data-[state=open]:animate-in data-[state=closed]:animate-out no-scrollbar fixed right-0 h-screen overflow-y-scroll bg-white transition-all ease-in-out data-[state=closed]:w-0 data-[state=open]:w-[var(--sidebar-width-xl)] data-[state=closed]:duration-300 data-[state=open]:duration-500 dark:bg-zinc-900"
       >
         <ScrollArea className="relative h-[100vh] w-[var(--sidebar-width-xl)] px-6">
-          <div className="sticky top-0 pt-16 z-10 flex flex-col gap-4 bg-white pb-4 dark:bg-zinc-900">
+          <div className="sticky top-0 z-10 flex flex-col gap-4 bg-white pb-4 pt-16 dark:bg-zinc-900">
             <ButtonHide setIsOpen={setIsOpen} />
             <Title
               title="Perhitungan"
@@ -51,15 +51,15 @@ function Sum({
               incomesValues={incomesValues}
               expensesValues={expensesValues}
             />
-            <Separator className='my-3' />
+            <Separator className="my-3" />
             {(Boolean(incomesValues?.length) ||
               Boolean(expensesValues?.length)) && (
-                <Title
-                  title="Detail"
-                  tooltipDesc="Selalu pastikan heading transaksi konsisten"
-                  desc="Secara lengkap transaksi anda terorganisir disini"
-                />
-              )}
+              <Title
+                title="Detail"
+                tooltipDesc="Selalu pastikan heading transaksi konsisten"
+                desc="Secara lengkap transaksi anda terorganisir disini"
+              />
+            )}
           </div>
           <div className="mt-2">
             <Detail
@@ -181,7 +181,7 @@ function Detail({
   )
 }
 
-function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
+function Income({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -199,7 +199,7 @@ function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
   )
 }
 
-function Expense({ amount, isPending }: { amount: number; isPending: boolean }) {
+function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -217,7 +217,7 @@ function Expense({ amount, isPending }: { amount: number; isPending: boolean }) 
   )
 }
 
-function FreeCash({ amount, isPending }: { amount: number; isPending: boolean }) {
+function FreeCash({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">

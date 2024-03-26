@@ -11,26 +11,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 
-import type {Post} from '@prisma/client'
+import type { Post } from '@prisma/client'
 
-import {type FetcherWithComponents} from '@remix-run/react'
+import { type FetcherWithComponents, useFetcher } from '@remix-run/react'
 
-import {getPostType} from '~/utils/get-post-type.ts'
+import { getPostType } from '~/utils/get-post-type.ts'
 
-import {FormType} from './route.tsx'
-import {useCardStore} from './card.tsx'
+import { FormType } from './route.tsx'
+import { useCardStore } from './card.tsx'
 
 function More({
   id,
   title,
   type,
+  content,
+  preview,
   deleteFetcher,
-}: Pick<Post, 'id' | 'type' | 'title'> & {
+}: Pick<Post, 'id' | 'type' | 'title' | 'content' | 'preview'> & {
   deleteFetcher: FetcherWithComponents<unknown>
 }) {
-  const {setIdCardFocus} = useCardStore()
+  const { setIdCardFocus } = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
@@ -55,7 +57,7 @@ function More({
       >
         <Open id={id} type={type} />
         <SaveAsTemplate id={id} />
-        <Duplicate id={id} />
+        <Duplicate id={id} type={type} content={content} preview={preview} />
         <Remove
           id={id}
           title={title}
@@ -67,7 +69,7 @@ function More({
   )
 }
 
-function Open({id, type}: Pick<Post, 'id' | 'type'>) {
+function Open({ id, type }: Pick<Post, 'id' | 'type'>) {
   return (
     <div className="my-1">
       <ButtonLink
@@ -122,7 +124,7 @@ function Remove({
   )
 }
 
-function SaveAsTemplate({id}: Pick<Post, 'id'>) {
+function SaveAsTemplate({ id }: Pick<Post, 'id'>) {
   return (
     <div className="my-1">
       <Button
@@ -138,17 +140,39 @@ function SaveAsTemplate({id}: Pick<Post, 'id'>) {
   )
 }
 
-function Duplicate({id}: Pick<Post, 'id'>) {
+function Duplicate({
+  id,
+  type,
+  content,
+  preview,
+}: Pick<Post, 'id' | 'type' | 'content' | 'preview'>) {
+  const fetcher = useFetcher()
   return (
     <div className="my-1">
       <Button
-        disabled
+        disabled={fetcher.state !== 'idle'}
         variant="ghost"
         size="sm"
         className="w-full justify-start rounded-md px-3"
+        onClick={() =>
+          fetcher.submit(
+            {
+              type: type,
+              _action: FormType.DUPLICATE,
+              content: JSON.stringify(content),
+              preview: preview,
+            },
+            {
+              method: 'POST',
+              action: '/home',
+              navigate: false,
+              fetcherKey: `card:${id}`,
+            },
+          )
+        }
       >
         <Copy size="16" className="mr-2" />
-        <span>Duplikat</span>
+        <span>{fetcher.state !== 'idle' ? "Duplikat..." : "Duplikat"}</span>
       </Button>
     </div>
   )

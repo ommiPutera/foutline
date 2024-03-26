@@ -5,7 +5,9 @@ import {
 } from '@remix-run/node'
 import { defer, useLocation } from '@remix-run/react'
 
-import type { Post, User } from '@prisma/client'
+import type { Post, PostType, User } from '@prisma/client'
+
+import { type JSONContent } from '@tiptap/core'
 
 import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
 import { ErrorPage } from '~/components/errors.tsx'
@@ -13,7 +15,12 @@ import { ErrorPage } from '~/components/errors.tsx'
 import { getUser } from '~/utils/session.server.ts'
 
 import { Board } from './board.tsx'
-import { deletePost, favoritePost, getHomeData } from './queries.ts'
+import {
+  deletePost,
+  duplicatePost,
+  favoritePost,
+  getHomeData,
+} from './queries.ts'
 
 export type LoaderData = {
   posts: Post[] | null
@@ -23,6 +30,7 @@ export type LoaderData = {
 export enum FormType {
   DELETE = 'DELETE',
   FAVORITE = 'FAVORITE',
+  DUPLICATE = 'DUPLICATE',
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -36,13 +44,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     userId: user.id,
     order: order,
     orderField: orderField,
-    isFavorite: false
+    isFavorite: false,
   })
   const favorites = getHomeData({
     userId: user.id,
     order: order,
     orderField: orderField,
-    isFavorite: true
+    isFavorite: true,
   })
   return defer({ posts, favorites })
 }
@@ -51,6 +59,9 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
   const _action = String(formPayload['_action'])
+
+  const user = await getUser(request)
+  if (!user) return { formError: 'invalid' }
 
   switch (_action) {
     case FormType.DELETE: {
@@ -70,6 +81,24 @@ export async function action({ request }: ActionFunctionArgs) {
       return await favoritePost({
         id: formPayload.id,
         isFavorite: formPayload.isFavorite === 'true' ? true : false,
+      })
+    }
+    case FormType.DUPLICATE: {
+      if (
+        typeof formPayload.content !== 'string' ||
+        typeof formPayload.preview !== 'string' ||
+        typeof formPayload.type !== 'string'
+      ) {
+        return { formError: `Form not submitted correctly.` }
+      }
+
+      return await duplicatePost({
+        authorId: user.id,
+        isPublished: true,
+        content: formPayload.content as any as JSONContent,
+        preview: formPayload.preview,
+        type: formPayload.type as PostType,
+        redirectTo: '/monthly/',
       })
     }
   }

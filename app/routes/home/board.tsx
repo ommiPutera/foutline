@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react'
+import React, {Suspense} from 'react'
 
-import { Await, useLoaderData } from '@remix-run/react'
+import {Await, useLoaderData} from '@remix-run/react'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { CreatePostContent } from '~/components/templates/dialogs.tsx'
-import { ButtonLink } from '~/components/ui/button.tsx'
-import { Skeleton } from '~/components/ui/skeleton.tsx'
+import {CreatePostContent} from '~/components/templates/dialogs.tsx'
+import {ButtonLink} from '~/components/ui/button.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
 
 import CardItem from './card.tsx'
-import { type LoaderData } from './route.tsx'
+import {type LoaderData} from './route.tsx'
 
 function Board() {
   return (
@@ -21,40 +21,44 @@ function Board() {
 }
 
 function Cards() {
-  const { posts, favorites } = useLoaderData<LoaderData>()
+  const {posts, favorites} = useLoaderData<LoaderData>()
 
   return (
-    <div className='flex flex-col mt-1'>
+    <div className="mt-1 flex flex-col">
       <Suspense fallback={<SkeletonCard />}>
         <Await resolve={favorites as unknown as Post[]}>
-          {favorites => favorites.length ? (
-            <>
-              <div className='flex flex-col gap-4'>
-                <h4 className='text-sm font-bold ml-4'>Favorit</h4>
-                <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-                  {favorites.map(post => (
-                    <div key={post.id}>
-                      <CardItem {...(post as any as Post)} />
-                    </div>
-                  ))}
+          {favorites =>
+            favorites.length ? (
+              <>
+                <div className="flex flex-col gap-4">
+                  <h4 className="ml-4 text-sm font-bold">Favorit</h4>
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-3 2xl:grid-cols-6">
+                    {favorites.map(post => (
+                      <div key={post.id}>
+                        <CardItem {...(post as any as Post)} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <h4 className='text-sm font-bold ml-4 mt-14 mb-4'>Lainnya</h4>
-            </>
-          ) : null}
+                <h4 className="mb-4 ml-4 mt-14 text-sm font-bold">Lainnya</h4>
+              </>
+            ) : null
+          }
         </Await>
       </Suspense>
       <Suspense fallback={<SkeletonCard />}>
         <Await resolve={posts as unknown as Post[]}>
-          {posts => posts.length ? (
-            <div className="grid gap-3 xl:gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-              {posts.map(post => (
-                <div key={post.id}>
-                  <CardItem {...(post as any as Post)} />
-                </div>
-              ))}
-            </div>
-          ) : null}
+          {posts =>
+            posts.length ? (
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-3 2xl:grid-cols-6">
+                {posts.map(post => (
+                  <div key={post.id}>
+                    <CardItem {...(post as any as Post)} />
+                  </div>
+                ))}
+              </div>
+            ) : null
+          }
         </Await>
       </Suspense>
     </div>
@@ -62,7 +66,7 @@ function Cards() {
 }
 
 function NewCard() {
-  const { posts } = useLoaderData<LoaderData>()
+  const {posts} = useLoaderData<LoaderData>()
   const [value, setValue] = React.useState('')
 
   return (
@@ -118,4 +122,4 @@ function SkeletonCard() {
   )
 }
 
-export { Board }
+export {Board}

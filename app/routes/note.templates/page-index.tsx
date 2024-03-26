@@ -1,9 +1,9 @@
-import { type Post } from '@prisma/client'
-import { useFetcher } from '@remix-run/react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import {type Post} from '@prisma/client'
+import {useFetcher} from '@remix-run/react'
+import {ChevronLeft, ChevronRight} from 'lucide-react'
 
 import DetailTemplate from '~/components/dialogs/detail-template.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 import {
   Tooltip,
   TooltipContent,
@@ -37,7 +37,7 @@ function PageIndex() {
     <div className="px-3.5 py-6">
       <div className="mx-auto max-w-screen-md">
         <div className="flex flex-col gap-8">
-          <div className='flex justify-between items-start'>
+          <div className="flex items-start justify-between">
             <div className="flex max-w-xs flex-col gap-2">
               <h3 className="text-2xl font-bold leading-tight tracking-wide">
                 Template Catatan
@@ -82,7 +82,7 @@ function PageIndex() {
 }
 
 function Card(props: CardProps) {
-  const { title, author, imgSrc, templateId } = props
+  const {title, author, imgSrc, templateId} = props
 
   const fetcher = useFetcher()
 
@@ -91,7 +91,7 @@ function Card(props: CardProps) {
       {
         templateId: templateId,
       },
-      { method: 'POST', action: '.' },
+      {method: 'POST', action: '.'},
     )
   }
 
@@ -123,4 +123,4 @@ function Card(props: CardProps) {
   )
 }
 
-export { PageIndex }
+export {PageIndex}

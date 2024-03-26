@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { PanelLeftClose, PanelRightClose, Info } from 'lucide-react'
+import {PanelLeftClose, PanelRightClose, Info} from 'lucide-react'
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import { Button } from '~/components/ui/button.tsx'
+import {Button} from '~/components/ui/button.tsx'
 
-import { type Props as EditorProps } from './content.tsx'
+import {type Props as EditorProps} from './content.tsx'
 
 import Sum from './sum.tsx'
 
@@ -116,4 +116,4 @@ function Title({
   )
 }
 
-export { ButtonHide, Title, RightSheet as default }
+export {ButtonHide, Title, RightSheet as default}

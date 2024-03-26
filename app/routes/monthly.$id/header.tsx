@@ -1,19 +1,18 @@
 import React from 'react'
 
-import {useFetcher, useLoaderData, useSubmit} from '@remix-run/react'
+import { useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
 
-import {PostStatus} from '@prisma/client'
+import { PostStatus } from '@prisma/client'
 
-import {id as IDNLocale} from 'date-fns/locale'
-import {formatDistance} from 'date-fns'
+import { id as IDNLocale } from 'date-fns/locale'
+import { formatDistance } from 'date-fns'
 
-import {FormType, type LoaderData} from './route.tsx'
+import { FormType, type LoaderData } from './route.tsx'
 
 import {
   CheckCircle,
   ChevronRight,
   ClipboardPenLine,
-  Copy,
   Menu,
   NotebookText,
   TrafficCone,
@@ -23,17 +22,17 @@ import {
   icons,
 } from 'lucide-react'
 
-import {Button} from '~/components/ui/button.tsx'
+import { Button } from '~/components/ui/button.tsx'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
 
-import {capitalizeFirstLetter, cn} from '~/lib/utils.ts'
+import { capitalizeFirstLetter, cn } from '~/lib/utils.ts'
 
 function Header() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   if (!post) return <></>
   return (
@@ -107,7 +106,7 @@ function Label() {
 }
 
 function Status() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const fetcher = useFetcher()
 
@@ -198,7 +197,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'NOT_STARTED',
                 },
-                {method: 'POST'},
+                { method: 'POST' },
               )
             }}
             className="w-full justify-start rounded-md px-3"
@@ -221,7 +220,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'UNDERWAY',
                 },
-                {method: 'POST'},
+                { method: 'POST' },
               )
             }}
           >
@@ -249,7 +248,7 @@ function Status() {
                   id: post?.id as string,
                   status: 'COMPLETED',
                 },
-                {method: 'POST'},
+                { method: 'POST' },
               )
             }}
           >
@@ -303,7 +302,6 @@ function More() {
         forceMount
       >
         <Favorite />
-        <Duplicate />
         <SaveAsTemplate />
         <Remove />
       </PopoverContent>
@@ -312,7 +310,7 @@ function More() {
 }
 
 function Favorite() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const [isFavorited, setIsFavorited] = React.useState<boolean | undefined>(
     post?.isFavorite,
@@ -366,7 +364,7 @@ function Favorite() {
 }
 
 function Remove() {
-  const {post} = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<LoaderData>()
 
   const deleteFetcher = useFetcher()
 
@@ -417,36 +415,6 @@ function SaveAsTemplate() {
       >
         <NotebookText size="16" className="mr-2" />
         <span>Simpan sebagai template</span>
-      </Button>
-    </div>
-  )
-}
-
-function Duplicate() {
-  const {post} = useLoaderData<LoaderData>()
-
-  // const submit = useSubmit()
-
-  if (!post) return <></>
-  return (
-    <div className="my-1">
-      <Button
-        disabled
-        variant="ghost"
-        size="sm"
-        // onClick={() =>
-        //   submit(
-        //     {
-        //       id: post.id,
-        //       _action: FormType.DELETE,
-        //     },
-        //     { method: 'POST' },
-        //   )
-        // }
-        className="w-full justify-start rounded-md px-3"
-      >
-        <Copy size="16" className="mr-2" />
-        <span>Duplikat</span>
       </Button>
     </div>
   )
