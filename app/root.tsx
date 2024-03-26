@@ -21,7 +21,8 @@ import {
 
 import { useSpinDelay } from 'spin-delay'
 
-import LoadingBar from 'react-top-loading-bar'
+import NProgress from "nprogress"
+import nProgressStyles from "nprogress/nprogress.css";
 
 import AppShell from '~/components/app-shell.tsx'
 import Navbar from '~/components/navbar.tsx'
@@ -115,33 +116,9 @@ export const links: LinksFunction = () => [
   { rel: 'manifest', href: '/site.webmanifest' },
   { rel: 'stylesheet', href: globalStyles },
   { rel: 'stylesheet', href: prosemirrorStyles },
+  { rel: 'stylesheet', href: nProgressStyles },
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ]
-
-function PageLoadingMessage() {
-  const navigation = useNavigation()
-  const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
-    delay: 500,
-    minDuration: 800,
-  })
-
-  const [progress, setProgress] = React.useState(0)
-
-  React.useEffect(() => {
-    if (navigation.state === 'idle' || progress >= 100) return setProgress(0)
-
-    const interval = setInterval(() => {
-      setProgress(prev => prev + 20)
-    }, 200)
-
-    return () => clearInterval(interval)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showLoader])
-
-  if (!showLoader) return <></>
-  // @ts-ignore
-  return <LoadingBar color="#3b81f6" progress={progress} />
-}
 
 export default function AppWithProviders() {
   const { requestInfo } = useLoaderData<LoaderData>()
@@ -164,6 +141,17 @@ function OutletWithShell() {
 
 function App() {
   const [theme] = useTheme()
+  const navigation = useNavigation()
+  const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
+    delay: 600,
+    minDuration: 1200,
+  })
+
+  React.useEffect(() => {
+    if (navigation.state === 'loading' && showLoader) NProgress.start()
+    if (navigation.state === 'idle' && !showLoader) NProgress.done()
+  }, [navigation.state, showLoader])
+
   return (
     <html lang="en" className={`${theme}`} data-color-scheme={theme}>
       <head>
@@ -180,7 +168,6 @@ function App() {
         <Links />
       </head>
       <body>
-        <PageLoadingMessage />
         <Navbar />
         <OutletWithShell />
         <ScrollRestoration />
