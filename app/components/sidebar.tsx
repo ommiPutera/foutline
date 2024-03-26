@@ -1,40 +1,40 @@
 import React from 'react'
 
-import type {Post} from '@prisma/client'
-import {PostType} from '@prisma/client'
+import type { Post } from '@prisma/client'
+import { PostType } from '@prisma/client'
 
-import {Link, useFetchers, useLocation, type LinkProps} from '@remix-run/react'
+import { Link, useFetchers, useLocation, type LinkProps } from '@remix-run/react'
 
-import {FileText, GalleryHorizontalEnd, Plus, icons} from 'lucide-react'
+import { FileText, GalleryHorizontalEnd, Plus, icons } from 'lucide-react'
 
-import {CreatePostDialog} from '~/components/templates/dialogs.tsx'
+import { CreatePostDialog } from '~/components/templates/dialogs.tsx'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '~/components/ui/accordion.tsx'
-import {Badge} from '~/components/ui/badge.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
-import {Progress} from '~/components/ui/progress.tsx'
-import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import { Badge } from '~/components/ui/badge.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import { Progress } from '~/components/ui/progress.tsx'
+import { ScrollArea } from '~/components/ui/scroll-area.tsx'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/ui/tooltip.tsx'
-import {UserNav} from '~/components/user-nav.tsx'
+import { UserNav } from '~/components/user-nav.tsx'
 
-import {cn} from '~/lib/utils.ts'
+import { cn } from '~/lib/utils.ts'
 
-import {getPostType} from '~/utils/get-post-type.ts'
-import {useRootLoader} from '~/utils/use-root-loader.tsx'
+import { getPostType } from '~/utils/get-post-type.ts'
+import { useRootLoader } from '~/utils/use-root-loader.tsx'
 
-import {ContentPreview} from '~/routes/home/card.tsx'
-import {FormType} from '~/routes/home/route.tsx'
+import { ContentPreview } from '~/routes/home/card.tsx'
+import { FormType } from '~/routes/home/route.tsx'
 
-export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
-  const {profile} = useRootLoader()
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const { profile } = useRootLoader()
 
   return (
     <div
@@ -101,7 +101,7 @@ function Create() {
 }
 
 function Billing() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   return (
     <Link to="/settings/billing">
       <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
@@ -123,7 +123,7 @@ function Billing() {
 }
 
 function Favorite() {
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
 
   let pendingItems = usePendingFavorite()
 
@@ -140,7 +140,7 @@ function Favorite() {
     if (column.isFavorite === 'false') {
       columns.delete(column.id)
     } else {
-      columns.set(column.id, {...column})
+      columns.set(column.id, { ...column })
     }
   }
 
@@ -199,7 +199,7 @@ function Files() {
   const [isScroll, setIsScroll] = React.useState(false)
   const topFileRef = React.useRef(null)
 
-  const {user} = useRootLoader()
+  const { user } = useRootLoader()
   const location = useLocation()
 
   const posts: Post[] = user?.posts
@@ -212,12 +212,12 @@ function Files() {
   let columns = new Map<string, ColumnWithItems>()
   for (let column of [...posts]) {
     if (pendingDelete[0]) columns.delete(pendingDelete[0].id)
-    columns.set(column.id, {...column})
+    columns.set(column.id, { ...column })
   }
 
   for (let column of [...posts]) {
     if (pendingUpdate[0]?.id === column.id) {
-      columns.set(column.id, {...column, title: pendingUpdate[0].title})
+      columns.set(column.id, { ...column, title: pendingUpdate[0].title })
     }
   }
 
@@ -275,8 +275,8 @@ function Files() {
                     className={cn(
                       'text-muted-foreground hover:text-foreground w-full justify-start rounded-md !py-5 font-light',
                       location.pathname ===
-                        `/${getPostType(post.type)}/${post.id}` &&
-                        '!text-foreground font-bold dark:bg-zinc-800',
+                      `/${getPostType(post.type)}/${post.id}` &&
+                      '!text-foreground font-bold dark:bg-zinc-800',
                     )}
                   >
                     <FileText className="mr-2 h-3.5 w-3.5" />
@@ -290,7 +290,7 @@ function Files() {
                 <TooltipContent
                   side="right"
                   align="center"
-                  className="ml-8 w-full max-w-[198px] rounded-lg border border-zinc-300/50 p-4 shadow-md"
+                  className="ml-8 w-[198px] rounded-lg border border-zinc-300/50 p-4 shadow-md !animate-none"
                   noIndicator
                 >
                   {post.preview ? (
@@ -300,11 +300,11 @@ function Files() {
                   )}
                   <div
                     className={cn(
-                      'text absolute bottom-0 left-0 -mt-1 ml-8 h-full w-full max-w-[198px] rounded-lg bg-gradient-to-t p-4',
+                      'absolute bottom-0 left-0 -mt-1 ml-8 h-full w-[198px] rounded-lg bg-gradient-to-t p-4',
                       post.type === PostType.MONTHLY_PLANNING &&
-                        'from-monthly-background to-monthly-background/10',
+                      'from-monthly-background to-monthly-background/10',
                       post.type === PostType.BASIC_NOTES &&
-                        'from-note-background to-note-background/10',
+                      'from-note-background to-note-background/10',
                     )}
                   ></div>
                 </TooltipContent>
@@ -389,7 +389,7 @@ function usePendingFavorite() {
       let title = String(fetcher.formData.get('title'))
       let isFavorite = String(fetcher.formData.get('isFavorite'))
 
-      return {id, type, title, isFavorite}
+      return { id, type, title, isFavorite }
     })
 }
 
@@ -409,7 +409,7 @@ function usePendingDelete() {
       let title = String(fetcher.formData.get('title'))
       let preview = String(fetcher.formData.get('preview'))
 
-      return {id, title, type, preview}
+      return { id, title, type, preview }
     })
 }
 
@@ -429,8 +429,8 @@ function usePendingUpdate() {
       let title = String(fetcher.formData.get('title'))
       let preview = String(fetcher.formData.get('preview'))
 
-      return {id, type, title, preview}
+      return { id, type, title, preview }
     })
 }
 
-export {NavItem}
+export { NavItem }
