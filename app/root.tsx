@@ -143,8 +143,8 @@ function App() {
   const [theme] = useTheme()
   const navigation = useNavigation()
   const showLoader = useSpinDelay(Boolean(navigation.state !== 'idle'), {
-    delay: 600,
-    minDuration: 1200,
+    delay: 400,
+    minDuration: 1000,
   })
 
   React.useEffect(() => {

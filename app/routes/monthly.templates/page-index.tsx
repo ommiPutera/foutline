@@ -1,14 +1,13 @@
 // import React from "react";
 
-import {type Post} from '@prisma/client'
+import { type Post } from '@prisma/client'
 
-import {useFetcher} from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 
-import {ChevronLeft, ChevronRight} from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import DetailTemplate from '~/components/dialogs/detail-template.tsx'
-import {Button, ButtonLink} from '~/components/ui/button.tsx'
-import {Separator} from '~/components/ui/separator.tsx'
+import { Button, ButtonLink } from '~/components/ui/button.tsx'
 import {
   Tooltip,
   TooltipContent,
@@ -59,38 +58,36 @@ function PageIndex() {
   return (
     <div className="px-3.5 py-6">
       <div className="mx-auto max-w-screen-md">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold">Keuangan Bulanan</h2>
-          <div className="flex gap-2">
-            <Button disabled variant="secondary" size="icon">
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <ButtonLink
-                  href="/note/templates"
-                  variant="secondary"
-                  size="icon"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </ButtonLink>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <p>Catatan</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </div>
-        <Separator className="my-6 h-0 md:h-full" />
         <div className="flex flex-col gap-8">
-          <div className="flex max-w-xs flex-col gap-2">
-            <h3 className="text-2xl font-bold leading-tight tracking-wide">
-              Template Keuangan Bulanan
-            </h3>
-            <p className="text-muted-foreground text-sm">
-              Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan keuangan
-              bulanan, semuanya di satu tempat yang terorganisir.
-            </p>
+          <div className='flex justify-between items-start'>
+            <div className="flex max-w-xs flex-col gap-2">
+              <h3 className="text-2xl font-bold leading-tight tracking-wide">
+                Template Keuangan Bulanan
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Rancang anggaran, lacak pengeluaran, dan tetapkan tujuan keuangan
+                bulanan, semuanya di satu tempat yang terorganisir.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button disabled variant="secondary" size="icon">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ButtonLink
+                    href="/note/templates"
+                    variant="secondary"
+                    size="icon"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </ButtonLink>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Catatan</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </div>
           <fetcher.Form method="POST">
             <div className="mb-32 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -106,7 +103,7 @@ function PageIndex() {
 }
 
 function Card(props: CardProps) {
-  const {title, author, imgSrc, templateId} = props
+  const { title, author, imgSrc, templateId } = props
 
   const fetcher = useFetcher()
 
@@ -115,7 +112,7 @@ function Card(props: CardProps) {
       {
         templateId: templateId,
       },
-      {method: 'POST', action: '.'},
+      { method: 'POST', action: '.' },
     )
   }
 
@@ -147,4 +144,4 @@ function Card(props: CardProps) {
   )
 }
 
-export {PageIndex}
+export { PageIndex }
