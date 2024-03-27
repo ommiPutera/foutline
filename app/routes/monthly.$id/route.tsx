@@ -50,7 +50,7 @@ export async function loader({request, params}: LoaderFunctionArgs) {
 
   const {id} = params
   const user = await getUser(request)
-  const post: Post = await user.posts.filter(
+  const post: Post | undefined = await user?.posts.filter(
     (item: {id: string}) => item.id === id,
   )[0]
 

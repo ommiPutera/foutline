@@ -73,15 +73,15 @@ export function UserNav({
 function UserSettings() {
   return (
     <div className="my-2">
-      <Button
+      <ButtonLink
+        to="/settings/account"
         variant="ghost"
         size="default"
-        disabled
         className="w-full justify-start rounded-md px-3"
       >
         <UserCircle size="19" className="mr-3" />
         <span>Pusat Akun</span>
-      </Button>
+      </ButtonLink>
     </div>
   )
 }

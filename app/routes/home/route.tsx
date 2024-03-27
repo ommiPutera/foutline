@@ -35,7 +35,7 @@ export enum FormType {
 }
 
 export async function loader({request}: LoaderFunctionArgs) {
-  const user: User = await getUser(request)
+  const user: User | null = await getUser(request)
   if (!user) throw new Response('Not found', {status: 404})
 
   let order = 'desc'

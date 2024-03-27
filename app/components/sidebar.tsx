@@ -43,7 +43,7 @@ export function Sidebar({className}: React.HTMLAttributes<HTMLDivElement>) {
         className,
       )}
     >
-      <div className="mb-4 flex flex-col justify-between space-y-1 pb-6 pt-3">
+      <div className="mb-4 flex flex-col justify-between space-y-1 pb-6 pt-1">
         <div className="flex flex-1 flex-col place-content-start px-3 py-2">
           <NavItem
             href="/home"
@@ -102,24 +102,26 @@ function Create() {
 
 function Billing() {
   const {user} = useRootLoader()
-  return (
-    <Link to="/settings/billing">
-      <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-medium leading-none">
-              {user?.posts.length}/12 halaman
-            </p>
-            <Badge variant="outline" className="text-[9px]">
-              Gratis
-            </Badge>
+
+  if (user?.posts)
+    return (
+      <Link to="/settings/billing">
+        <div className="mx-4 rounded-lg border bg-white p-3 dark:bg-zinc-900">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-medium leading-none">
+                {user?.posts.length}/12 halaman
+              </p>
+              <Badge variant="outline" className="text-[9px]">
+                Gratis
+              </Badge>
+            </div>
+            {/* 8.3 = 100 / 12 */}
+            <Progress value={user?.posts.length * 8.3} />
           </div>
-          {/* 8.3 = 100 / 12 */}
-          <Progress value={user?.posts.length * 8.3} />
         </div>
-      </div>
-    </Link>
-  )
+      </Link>
+    )
 }
 
 function Favorite() {
@@ -128,8 +130,8 @@ function Favorite() {
   let pendingItems = usePendingFavorite()
 
   const posts: Post[] = user?.posts.filter(
-    (post: Post) => post.isFavorite === true,
-  )
+    post => post.isFavorite === true,
+  ) as any
 
   const contentRef = React.useRef(null)
 
@@ -202,7 +204,7 @@ function Files() {
   const {user} = useRootLoader()
   const location = useLocation()
 
-  const posts: Post[] = user?.posts
+  const posts: Post[] = user?.posts as any
 
   let pendingDelete = usePendingDelete()
   let pendingUpdate = usePendingUpdate()

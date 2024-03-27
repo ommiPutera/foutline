@@ -1,8 +1,6 @@
 import type {Session} from '@prisma/client'
 import {PrismaClient} from '@prisma/client'
 
-import {withAccelerate} from '@prisma/extension-accelerate'
-
 import {remember} from '@epic-web/remember'
 
 import chalk from 'chalk'
@@ -17,7 +15,7 @@ const sessionExpirationTime = 1000 * 60 * 60 * 24 * 1
 const prisma =
   process.env.NODE_ENV === 'development'
     ? remember('prisma', getClient)
-    : new PrismaClient().$extends(withAccelerate())
+    : new PrismaClient()
 
 function getClient(): PrismaClient {
   // NOTE: during development if you change anything in this function, remember

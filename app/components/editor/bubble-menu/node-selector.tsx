@@ -1,4 +1,5 @@
 import type {Editor} from '@tiptap/core'
+import type {LucideIcon} from 'lucide-react'
 import {
   Check,
   ChevronDown,
@@ -13,7 +14,6 @@ import {
 } from 'lucide-react'
 import * as Popover from '@radix-ui/react-popover'
 import type {Dispatch, FC, SetStateAction} from 'react'
-import {type BubbleMenuItem} from './index.tsx'
 
 interface NodeSelectorProps {
   editor: Editor
@@ -26,7 +26,12 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
   isOpen,
   setIsOpen,
 }) => {
-  const items: BubbleMenuItem[] = [
+  const items: {
+    name: string
+    icon: LucideIcon
+    command: () => boolean
+    isActive: () => boolean
+  }[] = [
     {
       name: 'Text',
       icon: TextIcon,

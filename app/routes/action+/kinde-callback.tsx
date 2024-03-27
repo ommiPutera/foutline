@@ -36,6 +36,8 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
         request: request,
       })
 
+      if (!user) return undefined
+
       const userSession = await createSession({userId: user?.id})
       const post = await createWelcomeCard(user?.id, user?.fullName)
 

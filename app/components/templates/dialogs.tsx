@@ -175,13 +175,6 @@ function UpdatePocket({
         </DialogHeader>
         <div className="mt-4 flex flex-col gap-4">
           <div className="text-sm font-medium">{rupiah(value)}</div>
-          {/* <PocketGroup
-            dataset={dataset}
-            onChange={onChange}
-            onClose={() => {
-              setIsOpen(false)
-            }}
-          /> */}
         </div>
       </DialogContent>
     </Dialog>
