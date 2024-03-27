@@ -1,8 +1,8 @@
-import {Slot} from '@radix-ui/react-slot'
-import {cva, type VariantProps} from 'class-variance-authority'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
-import {cn} from '~/lib/utils.ts'
-import {AnchorOrLink} from '~/utils/misc.tsx'
+import { cn } from '~/lib/utils.ts'
+import { AnchorOrLink } from '~/utils/misc.tsx'
 
 const variants = {
   default:
@@ -20,9 +20,9 @@ const variants = {
 }
 
 const sizes = {
-  lg: 'h-12 md:h-11 px-6 rounded-md text-md',
-  default: 'h-10 md:h-10 px-5 rounded-md text-sm',
-  sm: 'h-8 md:h-8 px-4 rounded-md text-xs',
+  lg: 'h-12 md:h-11 px-4 rounded-md text-md',
+  default: 'h-9 md:h-9 px-3 rounded-md text-sm',
+  sm: 'h-7 md:h-7 px-2 rounded-md text-xs',
   icon: 'h-8 w-8 rounded-sm hover:[&:has(svg)]:before:rounded-full hover:[&:has(svg)]:before:content-[""] hover:[&:has(svg)]:before:absolute hover:[&:has(svg)]:before:z-[0] hover:[&:has(svg)]:before:w-7 hover:[&:has(svg)]:before:h-7',
   'icon-sm': 'h-5 w-5',
 }
@@ -31,8 +31,8 @@ const buttonVariants = cva(
   'relative inline-flex items-center justify-center whitespace-nowrap font-normal tracking-tight ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-[1px] focus-visible:ring-ring focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
-      variant: {...variants},
-      size: {...sizes},
+      variant: { ...variants },
+      size: { ...sizes },
     },
     defaultVariants: {
       variant: 'default',
@@ -43,18 +43,18 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {className, variant, size, asChild = false, ...props},
+  { className, variant, size, asChild = false, ...props },
   ref,
 ) {
   const Comp = asChild ? Slot : 'button'
   return (
     <Comp
-      className={cn(buttonVariants({variant, size, className}))}
+      className={cn(buttonVariants({ variant, size, className }))}
       ref={ref}
       {...props}
     />
@@ -68,8 +68,8 @@ Button.displayName = 'Button'
 const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithRef<typeof AnchorOrLink> & ButtonProps
->(function ButtonLink({children, asChild = false, ...props}, ref) {
-  const {variant, size, disabled} = props
+>(function ButtonLink({ children, asChild = false, ...props }, ref) {
+  const { variant, size, disabled } = props
   return (
     <Button asChild variant={variant} size={size} className={props.className}>
       <AnchorOrLink ref={ref} disabled={disabled} {...props}>
@@ -80,4 +80,4 @@ const ButtonLink = React.forwardRef<
 })
 ButtonLink.displayName = 'ButtonLink'
 
-export {Button, ButtonLink, buttonVariants}
+export { Button, ButtonLink, buttonVariants }
