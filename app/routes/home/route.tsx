@@ -3,24 +3,25 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@remix-run/node'
-import { defer, useLocation } from '@remix-run/react'
+import {defer, useLocation} from '@remix-run/react'
 
-import type { Post, PostType, User } from '@prisma/client'
+import type {Post, PostType, User} from '@prisma/client'
 
-import { type JSONContent } from '@tiptap/core'
+import {type JSONContent} from '@tiptap/core'
 
-import { GeneralErrorBoundary } from '~/components/error-boundry.tsx'
-import { ErrorPage } from '~/components/errors.tsx'
+import {GeneralErrorBoundary} from '~/components/error-boundry.tsx'
+import {ErrorPage} from '~/components/errors.tsx'
 
-import { getUser } from '~/utils/session.server.ts'
+import {getUser} from '~/utils/session.server.ts'
 
-import { Board } from './board.tsx'
+import {Board} from './board.tsx'
 import {
   deletePost,
   duplicatePost,
   favoritePost,
   getHomeData,
 } from './queries.ts'
+import {getTypeRoute} from '~/utils/misc.tsx'
 
 export type LoaderData = {
   posts: Post[] | null
@@ -33,9 +34,9 @@ export enum FormType {
   DUPLICATE = 'DUPLICATE',
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({request}: LoaderFunctionArgs) {
   const user: User = await getUser(request)
-  if (!user) throw new Response('Not found', { status: 404 })
+  if (!user) throw new Response('Not found', {status: 404})
 
   let order = 'desc'
   let orderField = 'createdAt'
@@ -52,23 +53,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
     orderField: orderField,
     isFavorite: true,
   })
-  return defer({ posts, favorites })
+  return defer({posts, favorites})
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
   const _action = String(formPayload['_action'])
 
   const user = await getUser(request)
-  if (!user) return { formError: 'invalid' }
+  if (!user) return {formError: 'invalid'}
 
   switch (_action) {
     case FormType.DELETE: {
       if (typeof formPayload.id !== 'string') {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
-      await deletePost({ id: formPayload.id })
+      await deletePost({id: formPayload.id})
       return redirect('/', {})
     }
     case FormType.FAVORITE: {
@@ -76,7 +77,7 @@ export async function action({ request }: ActionFunctionArgs) {
         typeof formPayload.id !== 'string' ||
         typeof formPayload.isFavorite !== 'string'
       ) {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
       return await favoritePost({
         id: formPayload.id,
@@ -89,7 +90,7 @@ export async function action({ request }: ActionFunctionArgs) {
         typeof formPayload.preview !== 'string' ||
         typeof formPayload.type !== 'string'
       ) {
-        return { formError: `Form not submitted correctly.` }
+        return {formError: `Form not submitted correctly.`}
       }
 
       return await duplicatePost({
@@ -98,13 +99,13 @@ export async function action({ request }: ActionFunctionArgs) {
         content: formPayload.content as any as JSONContent,
         preview: formPayload.preview,
         type: formPayload.type as PostType,
-        redirectTo: '/monthly/',
+        redirectTo: getTypeRoute(formPayload.type as PostType),
       })
     }
   }
 }
 
-export { Board as default }
+export {Board as default}
 
 export function ErrorBoundary() {
   const location = useLocation()

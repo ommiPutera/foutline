@@ -11,16 +11,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover.tsx'
-import { Button, ButtonLink } from '~/components/ui/button.tsx'
+import {Button, ButtonLink} from '~/components/ui/button.tsx'
 
-import type { Post } from '@prisma/client'
+import type {Post} from '@prisma/client'
 
-import { type FetcherWithComponents, useFetcher } from '@remix-run/react'
+import {type FetcherWithComponents, useFetcher} from '@remix-run/react'
 
-import { getPostType } from '~/utils/get-post-type.ts'
+import {getPostType} from '~/utils/get-post-type.ts'
 
-import { FormType } from './route.tsx'
-import { useCardStore } from './card.tsx'
+import {FormType} from './route.tsx'
+import {useCardStore} from './card.tsx'
 
 function More({
   id,
@@ -32,7 +32,7 @@ function More({
 }: Pick<Post, 'id' | 'type' | 'title' | 'content' | 'preview'> & {
   deleteFetcher: FetcherWithComponents<unknown>
 }) {
-  const { setIdCardFocus } = useCardStore()
+  const {setIdCardFocus} = useCardStore()
   return (
     <Popover onOpenChange={v => (v ? setIdCardFocus(id) : setIdCardFocus(''))}>
       <div className="flex h-full">
@@ -69,7 +69,7 @@ function More({
   )
 }
 
-function Open({ id, type }: Pick<Post, 'id' | 'type'>) {
+function Open({id, type}: Pick<Post, 'id' | 'type'>) {
   return (
     <div className="my-1">
       <ButtonLink
@@ -124,7 +124,7 @@ function Remove({
   )
 }
 
-function SaveAsTemplate({ id }: Pick<Post, 'id'>) {
+function SaveAsTemplate({id}: Pick<Post, 'id'>) {
   return (
     <div className="my-1">
       <Button
@@ -172,7 +172,7 @@ function Duplicate({
         }
       >
         <Copy size="16" className="mr-2" />
-        <span>{fetcher.state !== 'idle' ? "Duplikat..." : "Duplikat"}</span>
+        <span>{fetcher.state !== 'idle' ? 'Duplikat...' : 'Duplikat'}</span>
       </Button>
     </div>
   )

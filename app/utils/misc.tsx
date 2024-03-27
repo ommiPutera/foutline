@@ -97,10 +97,20 @@ const getTypeStr = (type: Post['type']) => {
   }
 }
 
+const getTypeRoute = (type: Post['type']) => {
+  switch (type) {
+    case 'MONTHLY_PLANNING':
+      return '/monthly/'
+    case 'BASIC_NOTES':
+      return '/note/'
+  }
+}
+
 export {
   AnchorOrLink,
   getErrorMessage,
   getTypeStr,
+  getTypeRoute,
   useCapturedRouteError,
   getRequiredServerEnvVar,
 }

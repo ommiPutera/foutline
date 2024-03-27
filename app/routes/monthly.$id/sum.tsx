@@ -56,7 +56,7 @@ function Sum({
               Boolean(expensesValues?.length)) && (
               <Title
                 title="Detail"
-                tooltipDesc="Selalu pastikan heading transaksi konsisten"
+                tooltipDesc="Pastikan sub judul pada setiap transaksi konsisten"
                 desc="Secara lengkap transaksi anda terorganisir disini"
               />
             )}
