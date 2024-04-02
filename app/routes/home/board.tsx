@@ -22,7 +22,6 @@ function Board() {
 
 function Cards() {
   const {posts, favorites} = useLoaderData<LoaderData>()
-
   return (
     <div className="mt-1 flex flex-col">
       <Suspense fallback={<SkeletonCard />}>

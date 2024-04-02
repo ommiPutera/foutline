@@ -134,7 +134,7 @@ function Content({
     <div className="mx-auto mb-4 flex w-full max-w-lg justify-center md:mb-52">
       <div
         className={cn(
-          'border-border flex h-fit w-full flex-col gap-4 rounded-xl md:gap-3 md:border-2 md:border-dashed md:bg-white dark:md:bg-zinc-900',
+          'border-border/60 flex h-fit w-full flex-col gap-4 rounded-xl md:gap-3 md:border-2 md:border-dashed md:bg-white/60 dark:md:bg-zinc-900/60',
           isFocus && 'shadow-border border-muted-foreground/30 md:shadow-xl',
         )}
       >

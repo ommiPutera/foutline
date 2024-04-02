@@ -22,7 +22,7 @@ export async function getHomeData({
       deletedAt: null,
       isFavorite: isFavorite,
     },
-    orderBy: {updatedAt: 'desc'},
+    orderBy: {createdAt: 'desc'},
   })
 }
 

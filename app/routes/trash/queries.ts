@@ -8,7 +8,7 @@ export async function getHomeData({userId}: {userId: string}) {
       authorId: userId,
       deletedAt: {not: null},
     },
-    orderBy: {updatedAt: 'desc'},
+    orderBy: {createdAt: 'desc'},
   })
 }
 
