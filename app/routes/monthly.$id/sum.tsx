@@ -2,15 +2,15 @@ import React from 'react'
 
 import _ from 'lodash'
 
-import { type Props as EditorProps } from './content.tsx'
+import {type Props as EditorProps} from './content.tsx'
 
-import { rupiah } from '~/utils/currency.ts'
+import {rupiah} from '~/utils/currency.ts'
 
-import { ButtonHide, Title } from './right-sheet.tsx'
-import { Skeleton } from '~/components/ui/skeleton.tsx'
-import { Button } from '~/components/ui/button.tsx'
-import { ScrollArea } from '~/components/ui/scroll-area.tsx'
-import { Separator } from '~/components/ui/separator.tsx'
+import {ButtonHide, Title} from './right-sheet.tsx'
+import {Skeleton} from '~/components/ui/skeleton.tsx'
+import {Button} from '~/components/ui/button.tsx'
+import {ScrollArea} from '~/components/ui/scroll-area.tsx'
+import {Separator} from '~/components/ui/separator.tsx'
 
 type Props = {
   isOpen: boolean
@@ -54,12 +54,12 @@ function Sum({
             <Separator className="my-3" />
             {(Boolean(incomesValues?.length) ||
               Boolean(expensesValues?.length)) && (
-                <Title
-                  title="Detail"
-                  tooltipDesc="Pastikan sub judul pada setiap transaksi konsisten"
-                  desc="Secara lengkap transaksi anda terorganisir disini"
-                />
-              )}
+              <Title
+                title="Detail"
+                tooltipDesc="Pastikan sub judul pada setiap transaksi konsisten"
+                desc="Secara lengkap transaksi anda terorganisir disini"
+              />
+            )}
           </div>
           <div className="mt-2">
             <Detail
@@ -141,7 +141,7 @@ function Detail({
                   {Number(item.incomeTotal) === 0 ? (
                     <></>
                   ) : (
-                    <h5 className="flex items-center gap-2 text-xs text-foreground">
+                    <h5 className="text-foreground flex items-center gap-2 text-xs">
                       <div className="h-2 w-2 rounded-full bg-green-400 dark:bg-green-300"></div>
                       {Number(item.incomeTotal)
                         ? rupiah(item.incomeTotal)
@@ -181,7 +181,7 @@ function Detail({
   )
 }
 
-function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
+function Income({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -192,14 +192,14 @@ function Income({ amount, isPending }: { amount: number; isPending: boolean }) {
         <Skeleton className="h-5 w-[120px] rounded-sm" />
       ) : (
         <p className="text-sm font-semibold tracking-tight text-green-400 dark:text-green-300">
-          +{" "}{!amount ? rupiah(0) : rupiah(amount)}
+          + {!amount ? rupiah(0) : rupiah(amount)}
         </p>
       )}
     </div>
   )
 }
 
-function Expense({ amount, isPending }: { amount: number; isPending: boolean }) {
+function Expense({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
@@ -210,14 +210,14 @@ function Expense({ amount, isPending }: { amount: number; isPending: boolean }) 
         <Skeleton className="h-5 w-[120px] rounded-sm" />
       ) : (
         <p className="text-sm font-semibold tracking-tight text-red-400 dark:text-red-300">
-          -{" "}{!amount ? rupiah(0) : rupiah(amount)}
+          - {!amount ? rupiah(0) : rupiah(amount)}
         </p>
       )}
     </div>
   )
 }
 
-function FreeCash({ amount, isPending }: { amount: number; isPending: boolean }) {
+function FreeCash({amount, isPending}: {amount: number; isPending: boolean}) {
   return (
     <div className="flex flex-col gap-1">
       <h5 className="text-muted-foreground flex items-center gap-2 text-xs">
